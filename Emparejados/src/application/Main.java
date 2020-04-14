@@ -7,7 +7,8 @@ import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
-	//ejemplo a ver si hace push	@Override
+
+	@Override
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = new BorderPane();
@@ -19,9 +20,8 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	//ejemplo Kiko
+
 	public static void main(String[] args) {
 		launch(args);
 	}
 }
-//Prueba Marc2

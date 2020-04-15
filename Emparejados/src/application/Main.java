@@ -13,7 +13,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage){
 		try {
 			
-			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("ControladorMenuPrincipal.fxml"));
+			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuPrincipal.fxml"));
 	        Parent root = myLoader.load();
 	        
 			Scene scene = new Scene(root,400,400);

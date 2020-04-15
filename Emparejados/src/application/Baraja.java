@@ -11,25 +11,25 @@ public class Baraja {
 	String nombre;
 	Image imagenDorso;
 	Carta[] baraja;
-	int tamaño;
+	int tamanyo;
 	
 	public Baraja(String n, Image imgD, int t) {
 		nombre = n;
 		imagenDorso = imgD;
-		tamaño = t;
-		inicializarBaraja(tamaño);
+		tamanyo = t;
+		inicializarBaraja(tamanyo);
 	}
 	
 	public String getNombre() {
 		return nombre;
 	}
 	
-	public Image getImaneDorso() {
+	public Image getImagenDorso() {
 		return imagenDorso;
 	}
 	
-	public int getTamaño() {
-		return tamaño;
+	public int getTamanyo() {
+		return tamanyo;
 	}
 	
 	public Carta getCarta(int pos) {
@@ -44,17 +44,17 @@ public class Baraja {
 		imagenDorso = nuevaImagen;
 	}
 	
-	public void setTamaño(int nuevoTamaño) {
-		tamaño = nuevoTamaño;
-		inicializarBaraja(tamaño);
+	public void setTamanyo(int nuevoTamanyo) {
+		tamanyo = nuevoTamanyo;
+		inicializarBaraja(tamanyo);
 	}
 	
 	public void setCarta(Carta nuevaCarta, int pos) {
 		baraja[pos] = nuevaCarta;
 	}
 	
-	public void inicializarBaraja(int tamaño) {
-		for(int i = 0; i < tamaño; i++) {
+	public void inicializarBaraja(int tamanyo) {
+		for(int i = 0; i < tamanyo; i++) {
 			baraja[i] = null;
 		}
 	}

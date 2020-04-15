@@ -23,14 +23,17 @@ public class ControladorMenuPrincipal {
     @FXML
     void partidaEstandarHandler(ActionEvent event) {
     	 try {
-             Stage newStage = new Stage();
-             FXMLLoader myLoader = new FXMLLoader(getClass().getResource("ControladorPartida.fxml"));
+             FXMLLoader myLoader = new FXMLLoader(getClass().getResource("partida.fxml"));
              Parent root = myLoader.load();
              
-             Scene scene = new Scene(root, 470, 420);
+             Stage newStage = new Stage();
+             ControladorPartida controladorP = myLoader.<ControladorPartida>getController();
+             controladorP.iniciarPartida(newStage);
+             
+             Scene scene = new Scene(root, 400, 400);
              scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
              newStage.setScene(scene);
-             newStage.setTitle("Program's information");
+             newStage.setTitle("Partida Estándar");
              newStage.setResizable(false);
              newStage.show();  
              } catch (IOException e) {

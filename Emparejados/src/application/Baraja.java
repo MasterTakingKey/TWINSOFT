@@ -24,7 +24,7 @@ public class Baraja {
 		return nombre;
 	}
 	
-	public Image getImaneDorso() {
+	public Image getImagenDorso() {
 		return imagenDorso;
 	}
 	

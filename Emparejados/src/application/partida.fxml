@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ToolBar maxHeight="-Infinity" prefHeight="48.0" prefWidth="894.0">
         <items>
@@ -60,7 +60,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="229.0" spacing="20.0">
                <children>
-                <Button fx:id="pausa" mnemonicParsing="false" onAction="#pausar_partida" prefHeight="26.0" prefWidth="66.0" text="Pause">
+                <Button fx:id="pausa" mnemonicParsing="false" onAction="#pausarPartida" prefHeight="26.0" prefWidth="66.0" text="Pause">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -100,82 +100,82 @@
             <Cursor fx:constant="OPEN_HAND" />
          </cursor>
          <children>
-            <ImageView fx:id="carta_0_0" fitHeight="121.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="carta00" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_1_0" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <ImageView fx:id="carta10" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_2_0" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+            <ImageView fx:id="carta20" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_0_1" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+            <ImageView fx:id="carta01" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_3_0" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+            <ImageView fx:id="carta30" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_1_1" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="carta11" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_2_1" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <ImageView fx:id="carta21" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_3_1" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <ImageView fx:id="carta31" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_0_2" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+            <ImageView fx:id="carta02" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_1_2" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <ImageView fx:id="carta12" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_2_2" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <ImageView fx:id="carta22" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_3_2" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <ImageView fx:id="carta32" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_0_2" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+            <ImageView fx:id="carta03" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_1_3" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <ImageView fx:id="carta13" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_2_3" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <ImageView fx:id="carta23" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="carta_3_3" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestracarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <ImageView fx:id="carta33" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <image>
                   <Image url="@../imagenes/dorso_aldeano.png" />
                </image>

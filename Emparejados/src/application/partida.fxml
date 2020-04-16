@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ToolBar maxHeight="-Infinity" prefHeight="48.0" prefWidth="894.0">
         <items>
@@ -34,7 +34,7 @@
                <children>
                   <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Desktop/CARLOS/UNIVERSIDAD/3rCURSO/PSW/temporizadot.png" />
+                        <Image url="@../imagenes/temporizador.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="tiempo" lineSpacing="20.0" prefHeight="24.0" prefWidth="43.0" text="1:00">
@@ -48,7 +48,7 @@
                <children>
                   <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Desktop/CARLOS/UNIVERSIDAD/3rCURSO/PSW/puntuacionç.png" />
+                        <Image url="@../imagenes/puntuacion.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="puntos" prefHeight="24.0" prefWidth="43.0" text="20">
@@ -70,7 +70,7 @@
                   </Button>
                   <ImageView fx:id="usuario" fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Desktop/CARLOS/UNIVERSIDAD/3rCURSO/PSW/usuario.png" />
+                        <Image url="@../imagenes/usuario.png" />
                      </image>
                   </ImageView>
                </children>

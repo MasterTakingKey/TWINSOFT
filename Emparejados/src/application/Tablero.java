@@ -7,7 +7,8 @@ public class Tablero {
 	
 	public Tablero(int t) {
 		tamaño = t;
-		inicializarTablero(tamaño);
+		tablero = new Carta[t][t];
+		//inicializarTablero(tamaño);
 	}
 	
 	public int getTamaño() {

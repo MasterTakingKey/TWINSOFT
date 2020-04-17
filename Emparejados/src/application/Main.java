@@ -1,5 +1,6 @@
 package application;
 	
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -10,8 +11,8 @@ import javafx.scene.Scene;
 public class Main extends Application {
 
 	@Override
-	public void start(Stage primaryStage){
-		try {
+	public void start(Stage primaryStage) throws Exception {
+		/**try {
 			
 			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
 	        Parent root = myLoader.load();
@@ -26,6 +27,16 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		*/
+		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
+        Parent root = myLoader.load();  
+        ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
+        menuPrincipal.iniciarMenuPrincipal(primaryStage);
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Menú principal");
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
 	}
 
 	public static void main(String[] args) {

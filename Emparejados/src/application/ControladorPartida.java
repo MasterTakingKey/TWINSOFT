@@ -1,9 +1,12 @@
 package application;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,7 +18,7 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ControladorPartida {
+public class ControladorPartida implements Initializable {
 
     @FXML
     private Label tiempo;
@@ -110,15 +113,16 @@ public class ControladorPartida {
 
     private boolean soundOn = true;
     
-    @FXML
-    public void initialize() {
-    	//crearBaraja();
-    	//crearTablero();
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		crearBaraja();
+    	crearTablero();
     	esPrimeraCarta = true;
     	cartasGiradas = 0;
     	Musica.setCycleCount(AudioClip.INDEFINITE);
     	Musica.play();
-    } 
+	} 
     
     public void iniciarPartida(Stage stage){
         primaryStage = stage;
@@ -154,8 +158,8 @@ public class ControladorPartida {
     	cartasGiradas++;
     	ImageView imagenSeleccionada = (ImageView) event.getSource();
     	String nombreCarta = imagenSeleccionada.getId();
-    	int posicionX = Integer.parseInt(nombreCarta.substring(5, 5));
-    	int posicionY = Integer.parseInt(nombreCarta.substring(6, 6));
+    	int posicionX = Integer.parseInt(nombreCarta.substring(5, 6));
+    	int posicionY = Integer.parseInt(nombreCarta.substring(6, 7));
     	Carta cartaSeleccionada = tableroPartida.getCarta(posicionX, posicionY);
     	imagenSeleccionada.setImage(cartaSeleccionada.imagenFrente);
     	if(esPrimeraCarta) {
@@ -177,6 +181,8 @@ public class ControladorPartida {
     public void parejaCorrecta() {
     	if(soundOn)Acierto.play();
     	//Sumar puntos
+    	primeraImagen.setDisable(true);
+    	segundaImagen.setDisable(true);
     	if(cartasGiradas == barajaPartida.getTamanyo()) {
     		victoria();
     	}

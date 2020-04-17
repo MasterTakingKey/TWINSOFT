@@ -17,7 +17,8 @@ public class Baraja {
 		nombre = n;
 		imagenDorso = imgD;
 		tamanyo = t;
-		inicializarBaraja(tamanyo);
+		baraja = new Carta[t];
+		//inicializarBaraja(tamanyo);
 	}
 	
 	public String getNombre() {

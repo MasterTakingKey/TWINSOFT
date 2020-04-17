@@ -106,8 +106,9 @@ public class ControladorPartida {
     AudioClip Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto1.mp3").toString());
     AudioClip Victoria = new AudioClip(getClass().getResource("/sonidos/Victoria.mp3").toString());
     AudioClip Derrota = new AudioClip(getClass().getResource("/sonidos/Derrota1.mp3").toString());
-    AudioClip Musica = new AudioClip(getClass().getResource("/sonidos/Music2.mp3").toString());
+   AudioClip Musica = new AudioClip(getClass().getResource("/sonidos/Music2.mp3").toString());
 
+    private boolean soundOn = true;
     
     @FXML
     public void initialize() {
@@ -149,7 +150,7 @@ public class ControladorPartida {
 
     @FXML
     void muestraCarta(MouseEvent event) {
-    	voltearCarta.play();
+    	if(soundOn)voltearCarta.play();
     	cartasGiradas++;
     	ImageView imagenSeleccionada = (ImageView) event.getSource();
     	String nombreCarta = imagenSeleccionada.getId();
@@ -174,7 +175,7 @@ public class ControladorPartida {
     }
     
     public void parejaCorrecta() {
-    	Acierto.play();
+    	if(soundOn)Acierto.play();
     	//Sumar puntos
     	if(cartasGiradas == barajaPartida.getTamanyo()) {
     		victoria();
@@ -182,7 +183,7 @@ public class ControladorPartida {
     }
     
     public void parejaIncorrecta() {
-    	Error.play();
+    	if(soundOn)Error.play();
     	//Restar puntos
     	primeraImagen.setImage(barajaPartida.getImagenDorso());
     	segundaImagen.setImage(barajaPartida.getImagenDorso());
@@ -190,7 +191,7 @@ public class ControladorPartida {
     }
     
     public void victoria() {
-    	Victoria.play();
+    	if(soundOn)Victoria.play();
     	//Mensaje victoria
     }
 
@@ -214,6 +215,16 @@ public class ControladorPartida {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+    }
+    
+    public void mute() {
+    	Musica.stop();;
+    	soundOn = false;
+    }
+    
+    public void unmute() {
+    	Musica.play();
+    	soundOn = true;
     }
 
 }

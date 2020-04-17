@@ -6,8 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ControladorMenuPause {
@@ -25,6 +27,11 @@ public class ControladorMenuPause {
     private ImageView imageSound;
     
     private Stage partidaStage;
+    
+    private boolean SoundOn = true;
+    
+    Image Sound1 = new Image("../imagenes/sonido_on.png");
+    Image Sound0 = new Image("../imagenes/sonido_off.png");
 
     void initData(Stage partida) {
     	partidaStage = partida;
@@ -60,12 +67,40 @@ public class ControladorMenuPause {
 
     @FXML
     void clickRetry(MouseEvent event) {
-
+    	try {
+	    	Stage stage = (Stage) imageRetry.getScene().getWindow();
+	    	stage.close();
+	    	partidaStage.close();
+	    	Stage newStage = new Stage();
+	        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("partida.fxml"));
+	        ControladorPartida controlador = myLoader.<ControladorPartida>getController();
+	        Parent root = myLoader.load();
+	         
+	        Scene scene = new Scene(root, 400, 400);
+	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+	        newStage.setScene(scene);
+	        newStage.setTitle("Menu de Pausa");
+	        newStage.setResizable(false);
+	        newStage.initModality(Modality.APPLICATION_MODAL);
+	        newStage.show();
+    	}catch(IOException e) {
+    		e.printStackTrace();
+    	}
     }
 
     @FXML
     void clickSound(MouseEvent event) {
-
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("partida.fxml"));
+    	ControladorPartida controlador = loader.<ControladorPartida>getController();
+    	if(SoundOn) {
+    		imageSound.setImage(Sound0);
+    		controlador.mute();
+    		SoundOn = false;
+    	}else {
+    		imageSound.setImage(Sound1);
+    		controlador.unmute();
+    		SoundOn = true;
+    	}
     }
 
 }

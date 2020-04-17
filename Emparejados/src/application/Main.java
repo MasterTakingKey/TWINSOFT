@@ -13,10 +13,10 @@ public class Main extends Application {
 	public void start(Stage primaryStage){
 		try {
 			
-			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuPrincipal.fxml"));
+			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
 	        Parent root = myLoader.load();
 	        
-			Scene scene = new Scene(root,400,400);
+			Scene scene = new Scene(root,600,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("TWINS by TwinSoft");
 			primaryStage.setResizable(false);

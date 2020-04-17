@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="383.0" prefWidth="626.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<AnchorPane prefHeight="383.0" prefWidth="626.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.241" fx:controller="application.ControladorMenuPrincipal">
    <children>
       <Button fx:id="partidaEstandar" layoutX="218.0" layoutY="205.0" mnemonicParsing="false" onAction="#partidaEstandarHandler" prefHeight="70.0" prefWidth="193.0" text="Partida Estándar" />
       <Text layoutX="160.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menú Principal" wrappingWidth="309.025390625">

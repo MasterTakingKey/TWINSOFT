@@ -30,8 +30,8 @@ public class ControladorMenuPause {
     
     private boolean SoundOn = true;
     
-    Image Sound1 = new Image("../imagenes/sonido_on.png");
-    Image Sound0 = new Image("../imagenes/sonido_off.png");
+    Image Sound1 = new Image("/imagenes/sonido_on.png");
+    Image Sound0 = new Image("/imagenes/sonido_off.png");
 
     void initData(Stage partida) {
     	partidaStage = partida;
@@ -44,7 +44,7 @@ public class ControladorMenuPause {
     	partidaStage.close();
     	try {
             Stage newStage = new Stage();
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("ControladorPartida.fxml"));
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ControladorPartida.fxml"));
             Parent root = myLoader.load();
             
             Scene scene = new Scene(root, 470, 420);
@@ -72,7 +72,7 @@ public class ControladorMenuPause {
 	    	stage.close();
 	    	partidaStage.close();
 	    	Stage newStage = new Stage();
-	        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("partida.fxml"));
+	        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
 	        ControladorPartida controlador = myLoader.<ControladorPartida>getController();
 	        Parent root = myLoader.load();
 	         
@@ -90,7 +90,7 @@ public class ControladorMenuPause {
 
     @FXML
     void clickSound(MouseEvent event) {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("partida.fxml"));
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
     	ControladorPartida controlador = loader.<ControladorPartida>getController();
     	if(SoundOn) {
     		imageSound.setImage(Sound0);

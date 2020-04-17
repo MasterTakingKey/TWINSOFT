@@ -103,7 +103,7 @@ public class ControladorPartida {
     
     AudioClip voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
     AudioClip Error = new AudioClip(getClass().getResource("/sonidos/Error1.mp3").toString());
-    AudioClip Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto1.mp3").toString());
+    AudioClip Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto.mp3").toString());
     AudioClip Victoria = new AudioClip(getClass().getResource("/sonidos/Victoria.mp3").toString());
     AudioClip Derrota = new AudioClip(getClass().getResource("/sonidos/Derrota1.mp3").toString());
    AudioClip Musica = new AudioClip(getClass().getResource("/sonidos/Music2.mp3").toString());
@@ -112,8 +112,8 @@ public class ControladorPartida {
     
     @FXML
     public void initialize() {
-    	crearBaraja();
-    	crearTablero();
+    	//crearBaraja();
+    	//crearTablero();
     	esPrimeraCarta = true;
     	cartasGiradas = 0;
     	Musica.setCycleCount(AudioClip.INDEFINITE);
@@ -127,18 +127,18 @@ public class ControladorPartida {
     }
     
     public void crearBaraja() {
-    	imagenDorso = new Image("..\\imagenes\\dorso_aldeano.png");
+    	imagenDorso = new Image("/imagenes/dorso_aldeano.png");
     	barajaPartida = new Baraja("Animales", imagenDorso, 16);
     	int index = 0;
     	for(int i = 0; i < 2; i++) {
-    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("..\\imagenes\\elefante.png"), 0), index++);
-    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("..\\imagenes\\hipopotamo.png"), 1), index++);
-    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("..\\imagenes\\jirafa.png"), 2), index++);
-    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("..\\imagenes\\leon.png"), 3), index++);
-    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("..\\imagenes\\mono.png"), 4), index++);
-    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("..\\imagenes\\rinoceronte.png"), 5), index++);
-    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("..\\imagenes\\serpiente.png"), 6), index++);
-    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("..\\imagenes\\zebra.png"), 7), index++);
+    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("/imagenes/elefante.png"), 0), index++);
+    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("/imagenes/hipopotamo.png"), 1), index++);
+    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("/imagenes/jirafa.png"), 2), index++);
+    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("/imagenes/leon.png"), 3), index++);
+    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("/imagenes/mono.png"), 4), index++);
+    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("/imagenes/rinoceronte.png"), 5), index++);
+    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("/imagenes/serpiente.png"), 6), index++);
+    		barajaPartida.setCarta(new Carta(barajaPartida.getImagenDorso(), new Image("/imagenes/zebra.png"), 7), index++);
     	}
     	barajaPartida.barajar();
     }
@@ -199,7 +199,7 @@ public class ControladorPartida {
     void pausarPartida(ActionEvent event) {
     	try {
             Stage newStage = new Stage();
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("MenuPausa.fxml"));
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPausa.fxml"));
             ControladorMenuPause controlador = myLoader.<ControladorMenuPause>getController();
             Stage stage = (Stage) pausa.getScene().getWindow();
             controlador.initData(stage);

@@ -28,6 +28,11 @@ public class ControladorMenuPause {
     
     private Stage partidaStage;
     
+    private Scene primaryScene;
+    
+    private String primaryTitle;
+
+    
     private boolean SoundOn = true;
     
     Image Sound1 = new Image("/imagenes/sonido_on.png");
@@ -35,6 +40,8 @@ public class ControladorMenuPause {
 
     void initData(Stage partida) {
     	partidaStage = partida;
+    	primaryScene = partidaStage.getScene();
+        primaryTitle = partidaStage.getTitle();
     }
     
     @FXML

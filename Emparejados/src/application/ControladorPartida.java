@@ -202,25 +202,16 @@ public class ControladorPartida implements Initializable {
     }
 
     @FXML
-    void pausarPartida(ActionEvent event) {
-    	try {
-            Stage newStage = new Stage();
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPausa.fxml"));
-            ControladorMenuPause controlador = myLoader.<ControladorMenuPause>getController();
-            Stage stage = (Stage) pausa.getScene().getWindow();
-            controlador.initData(stage);
-            Parent root = myLoader.load();
-            
-            Scene scene = new Scene(root, 400, 400);
-            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-            newStage.setScene(scene);
-            newStage.setTitle("Menu de Pausa");
-            newStage.setResizable(false);
-            newStage.initModality(Modality.APPLICATION_MODAL);
-            newStage.show();  
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    void pausarPartida(ActionEvent event) throws Exception {
+    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
+        Parent root = (Parent) myLoader.load();
+        ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
+        controladorMenuPausa.initData(primaryStage);
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("PAUSA");
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
     
     public void mute() {

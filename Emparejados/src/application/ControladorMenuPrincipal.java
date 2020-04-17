@@ -35,30 +35,10 @@ public class ControladorMenuPrincipal implements Initializable {
         primaryScene = primaryStage.getScene();
         primaryTitle = primaryStage.getTitle();
 
-}
+    }
     
     @FXML
     void partidaEstandarHandler(ActionEvent event) throws IOException {
-    	 /**try {
-             FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
-             Parent root = myLoader.load();
-             
-             Stage newStage = new Stage();
-             ControladorPartida controladorP = myLoader.<ControladorPartida>getController();
-             controladorP.iniciarPartida(newStage);
-             
-             Scene scene = new Scene(root, 1000, 650);
-             scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-             newStage.setScene(scene);
-             newStage.setTitle("Partida Estándar");
-             newStage.setResizable(false);
-             newStage.show();
-             
-             
-             } catch (IOException e) {
-                 e.printStackTrace();
-             }
-             */
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
         Parent root = (Parent) myLoader.load();
         ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();
@@ -66,6 +46,7 @@ public class ControladorMenuPrincipal implements Initializable {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Partida Estándar");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

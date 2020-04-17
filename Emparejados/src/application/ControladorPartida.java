@@ -109,7 +109,7 @@ public class ControladorPartida implements Initializable {
     AudioClip Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto.mp3").toString());
     AudioClip Victoria = new AudioClip(getClass().getResource("/sonidos/Victoria.mp3").toString());
     AudioClip Derrota = new AudioClip(getClass().getResource("/sonidos/Derrota1.mp3").toString());
-   AudioClip Musica = new AudioClip(getClass().getResource("/sonidos/Music2.mp3").toString());
+   AudioClip Musica = new AudioClip(getClass().getResource("/sonidos/Music.mp3").toString());
 
     private boolean soundOn = true;
     
@@ -203,6 +203,7 @@ public class ControladorPartida implements Initializable {
 
     @FXML
     void pausarPartida(ActionEvent event) throws Exception {
+    	Musica.stop();
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
         Parent root = (Parent) myLoader.load();
         ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();

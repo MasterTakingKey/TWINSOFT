@@ -138,7 +138,7 @@ public class ControladorPartida implements Initializable {
 	private StringProperty Time = new SimpleStringProperty("");
 	
 	
-	private static final int TIEMPO_PART_ESTANDAR = 20;
+	private static final int TIEMPO_PART_ESTANDAR = 300;
     
 
 	@Override

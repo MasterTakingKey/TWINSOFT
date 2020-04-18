@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -49,7 +50,7 @@ public class ControladorMenuPause {
     	Stage stage = (Stage) imageClose.getScene().getWindow();
     	stage.close();
     	partidaStage.close();
-    	try {
+    	try {/*
             Stage newStage = new Stage();
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ControladorPartida.fxml"));
             Parent root = myLoader.load();
@@ -59,7 +60,16 @@ public class ControladorMenuPause {
             newStage.setScene(scene);
             newStage.setTitle("Program's information");
             newStage.setResizable(false);
-            newStage.show();  
+            newStage.show();  */
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
+            Parent root = myLoader.load();  
+            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
+            menuPrincipal.iniciarMenuPrincipal(partidaStage);
+            Scene scene = new Scene(root);
+            partidaStage.setTitle("TWINS by Twinsoft");
+            partidaStage.setScene(scene);
+            partidaStage.setResizable(false);
+            partidaStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
         }
@@ -73,27 +83,19 @@ public class ControladorMenuPause {
     }
 
     @FXML
-    void clickRetry(MouseEvent event) {
-    	try {
-	    	Stage stage = (Stage) imageRetry.getScene().getWindow();
-	    	stage.close();
-	    	partidaStage.close();
-	    	Stage newStage = new Stage();
-	        FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
-	        ControladorPartida controlador = myLoader.<ControladorPartida>getController();
-	        Parent root = myLoader.load();
-	         
-	        Scene scene = new Scene(root, 400, 400);
-	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-	        newStage.setScene(scene);
-	        newStage.setTitle("Menu de Pausa");
-	        newStage.setResizable(false);
-	        newStage.initModality(Modality.APPLICATION_MODAL);
-	        newStage.show();
-    	}catch(IOException e) {
-    		e.printStackTrace();
-    	}
+    void clickRetry(MouseEvent event) throws IOException{
+    	
+    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
+        Parent root = (Parent) myLoader.load();
+        ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();
+        controladorPartida.iniciarPartida(partidaStage);
+        Scene scene = new Scene(root);
+        partidaStage.setScene(scene);
+        partidaStage.setTitle("Partida Estándar");
+        partidaStage.setResizable(false);
+        partidaStage.show();
     }
+    
 
     @FXML
     void clickSound(MouseEvent event) {

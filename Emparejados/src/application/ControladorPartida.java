@@ -5,7 +5,13 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,11 +25,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ControladorPartida implements Initializable {
 
     @FXML
-    private Label tiempo;
+    private Label tiempo = new Label();
 
     @FXML
     private Label puntos;
@@ -82,6 +89,9 @@ public class ControladorPartida implements Initializable {
     @FXML
     private ImageView carta33;
     
+    @FXML
+    private Label resultado;
+    
     private Baraja barajaPartida;
     
     private Tablero tableroPartida;
@@ -121,9 +131,14 @@ public class ControladorPartida implements Initializable {
 	
 	private int tiempoPausa;
 	
-	private int counter;
+	private Integer counter;
 	
-	private static final int TIEMPO_PART_ESTANDAR = 300;
+	private Timeline timeline;
+	
+	private StringProperty Time = new SimpleStringProperty("");
+	
+	
+	private static final int TIEMPO_PART_ESTANDAR = 20;
     
 
 	@Override
@@ -135,9 +150,11 @@ public class ControladorPartida implements Initializable {
     	tiempoPausa = 0;
     	Pausa = false;
     	victoria = false;
+    	tiempo.textProperty().bind(Time);
     	Musica.setCycleCount(AudioClip.INDEFINITE);
     	Musica.play();
     	iniciaTiempo(TIEMPO_PART_ESTANDAR);
+    	resultado.setVisible(false);
 	} 
     
     public void iniciarPartida(Stage stage){
@@ -215,11 +232,15 @@ public class ControladorPartida implements Initializable {
     public void victoria() {
     	victoria = true;
     	if(soundOn)Victoria.play();
+    	resultado.setVisible(true);
     	//Mensaje victoria
     }
     
     public void derrota() {
     	if(soundOn)Derrota.play();
+    	Musica.stop();
+    	resultado.setText("DERROTA");
+    	resultado.setVisible(true);
     	//Mensaje derrota
     }
 
@@ -239,7 +260,7 @@ public class ControladorPartida implements Initializable {
     }
     
     public void mute() {
-    	Musica.stop();;
+    	Musica.stop();
     	soundOn = false;
     }
     
@@ -249,30 +270,41 @@ public class ControladorPartida implements Initializable {
     }
 
     public void iniciaTiempo(int tpartida) {
-    	Timer timer = new Timer(); //new timer
-        counter = tpartida; //inicializamos el contador al tiempo de partida
-        TimerTask task = new TimerTask() {         
-            public void run() {                
-            	setTimer(counter); //modificamos el label de la interfaz.
-                counter --;
-                if (counter == -1){
-                    timer.cancel();   
-                    derrota();
-                } else if(victoria){
-                    timer.cancel();
-                }else if(Pausa){
-                    timer.cancel();
-                    //Veremos como lo hacemos para pausar el tiempo, guardar en variable o lo que sea
-                }
-            }
-        };
-    timer.scheduleAtFixedRate(task, 1000, 1000);
-    }
+    	 counter = tpartida; 
+         // update timerLabel
+         //tiempo.setText(counter.toString());
+    	 setTimer(counter);
+         timeline = new Timeline();
+         timeline.setCycleCount(Timeline.INDEFINITE);
+         timeline.getKeyFrames().add(
+                 new KeyFrame(Duration.seconds(1),
+                   new EventHandler() {
+                     // KeyFrame event handler
+                     public void handle(Event event) {
+                    	 counter--;
+                         // update timerLabel
+                         //tiempo.setText(counter.toString());
+                    	 setTimer(counter);
+                         if (counter <= 0) {
+                             timeline.stop();
+                             derrota();
+                         } else if(victoria){
+                        	 timeline.stop();
+                         }else if(Pausa){
+                        	 timeline.stop();
+                             //Veremos como lo hacemos para pausar el tiempo, guardar en variable o lo que sea
+                         }
+                       }
+                 }));
+         timeline.playFromStart();
+     }
+    
     public void setTimer(int seconds) {
     	int mins = seconds / 60;
     	int secs = seconds - mins * 60;
-    	String time = mins + ":" + secs;
-    	tiempo.setText(time);	
+    	String Secs = String.format("%02d", secs);
+    	Time.set(Integer.toString(mins) + ":" + Secs);
+    	//System.out.println(Time);
     }
 
 }

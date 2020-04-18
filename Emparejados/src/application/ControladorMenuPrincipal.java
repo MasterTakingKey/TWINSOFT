@@ -49,5 +49,6 @@ public class ControladorMenuPrincipal implements Initializable {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+    
 
 }

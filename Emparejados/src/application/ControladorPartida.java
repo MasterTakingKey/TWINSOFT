@@ -2,6 +2,8 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -97,6 +99,8 @@ public class ControladorPartida implements Initializable {
     private Image imagenDorso;
     
     private boolean esPrimeraCarta;
+     
+    private boolean victoria;
     
     private Stage primaryStage;
     
@@ -112,6 +116,14 @@ public class ControladorPartida implements Initializable {
    AudioClip Musica = new AudioClip(getClass().getResource("/sonidos/Music.mp3").toString());
 
     private boolean soundOn = true;
+
+	private boolean Pausa ;
+	
+	private int tiempoPausa;
+	
+	private int counter;
+	
+	private static final int TIEMPO_PART_ESTANDAR = 300;
     
 
 	@Override
@@ -120,8 +132,12 @@ public class ControladorPartida implements Initializable {
     	crearTablero();
     	esPrimeraCarta = true;
     	cartasGiradas = 0;
+    	tiempoPausa = 0;
+    	Pausa = false;
+    	victoria = false;
     	Musica.setCycleCount(AudioClip.INDEFINITE);
     	Musica.play();
+    	iniciaTiempo(TIEMPO_PART_ESTANDAR);
 	} 
     
     public void iniciarPartida(Stage stage){
@@ -197,12 +213,19 @@ public class ControladorPartida implements Initializable {
     }
     
     public void victoria() {
+    	victoria = true;
     	if(soundOn)Victoria.play();
     	//Mensaje victoria
+    }
+    
+    public void derrota() {
+    	if(soundOn)Derrota.play();
+    	//Mensaje derrota
     }
 
     @FXML
     void pausarPartida(ActionEvent event) throws Exception {
+    	Pausa = true;
     	Musica.stop();
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
         Parent root = (Parent) myLoader.load();
@@ -223,6 +246,33 @@ public class ControladorPartida implements Initializable {
     public void unmute() {
     	Musica.play();
     	soundOn = true;
+    }
+
+    public void iniciaTiempo(int tpartida) {
+    	Timer timer = new Timer(); //new timer
+        counter = tpartida; //inicializamos el contador al tiempo de partida
+        TimerTask task = new TimerTask() {         
+            public void run() {                
+            	setTimer(counter); //modificamos el label de la interfaz.
+                counter --;
+                if (counter == -1){
+                    timer.cancel();   
+                    derrota();
+                } else if(victoria){
+                    timer.cancel();
+                }else if(Pausa){
+                    timer.cancel();
+                    //Veremos como lo hacemos para pausar el tiempo, guardar en variable o lo que sea
+                }
+            }
+        };
+    timer.scheduleAtFixedRate(task, 1000, 1000);
+    }
+    public void setTimer(int seconds) {
+    	int mins = seconds / 60;
+    	int secs = seconds - mins * 60;
+    	String time = mins + ":" + secs;
+    	tiempo.setText(time);	
     }
 
 }

@@ -50,17 +50,7 @@ public class ControladorMenuPause {
     	Stage stage = (Stage) imageClose.getScene().getWindow();
     	stage.close();
     	partidaStage.close();
-    	try {/*
-            Stage newStage = new Stage();
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ControladorPartida.fxml"));
-            Parent root = myLoader.load();
-            
-            Scene scene = new Scene(root, 470, 420);
-            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-            newStage.setScene(scene);
-            newStage.setTitle("Program's information");
-            newStage.setResizable(false);
-            newStage.show();  */
+    	try {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
             Parent root = myLoader.load();  
             ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
@@ -77,9 +67,13 @@ public class ControladorMenuPause {
     }
 
     @FXML
-    void clickPlay(MouseEvent event) {
+    void clickPlay(MouseEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
+    	Parent root = (Parent) loader.load();
+    	ControladorPartida controlador = loader.getController();
     	Stage stage = (Stage) imagePlay.getScene().getWindow();
     	stage.close();
+    	controlador.reaunudarPartida();
     }
 
     @FXML
@@ -98,8 +92,9 @@ public class ControladorMenuPause {
     
 
     @FXML
-    void clickSound(MouseEvent event) {
+    void clickSound(MouseEvent event) throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
+    	Parent root = (Parent) loader.load();
     	ControladorPartida controlador = loader.<ControladorPartida>getController();
     	if(SoundOn) {
     		imageSound.setImage(Sound0);

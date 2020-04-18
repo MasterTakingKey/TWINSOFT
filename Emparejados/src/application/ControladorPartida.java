@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -148,6 +149,7 @@ public class ControladorPartida implements Initializable {
     	esPrimeraCarta = true;
     	cartasGiradas = 0;
     	tiempoPausa = 0;
+    	timeline = new Timeline();
     	Pausa = false;
     	victoria = false;
     	tiempo.textProperty().bind(Time);
@@ -255,9 +257,17 @@ public class ControladorPartida implements Initializable {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("PAUSA");
         stage.setResizable(false);
         stage.show();
+        //timeline.play();
+    }
+    public void reaunudarPartida() {
+    	Pausa = false;
+    	System.out.println("Reaunude la partida. Pausa: " + Pausa);
+    	timeline.play();
+    	//iniciaTiempo(tiempoPausa);
     }
     
     public void mute() {
@@ -275,7 +285,6 @@ public class ControladorPartida implements Initializable {
          // update timerLabel
          //tiempo.setText(counter.toString());
     	 setTimer(counter);
-         timeline = new Timeline();
          timeline.setCycleCount(Timeline.INDEFINITE);
          timeline.getKeyFrames().add(
                  new KeyFrame(Duration.seconds(1),
@@ -292,7 +301,14 @@ public class ControladorPartida implements Initializable {
                          } else if(victoria){
                         	 timeline.stop();
                          }else if(Pausa){
-                        	 timeline.stop();
+                        	 timeline.pause();
+                        	 tiempoPausa = counter;
+                        	 /*try {
+								timeline.wait();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}*/
                              //Veremos como lo hacemos para pausar el tiempo, guardar en variable o lo que sea
                          }
                        }
@@ -305,7 +321,8 @@ public class ControladorPartida implements Initializable {
     	int secs = seconds - mins * 60;
     	String Secs = String.format("%02d", secs);
     	Time.set(Integer.toString(mins) + ":" + Secs);
-    	//System.out.println(Time);
+    	
+    	System.out.println(Time);
     }
 
 }

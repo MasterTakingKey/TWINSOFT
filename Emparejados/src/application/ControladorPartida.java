@@ -253,10 +253,11 @@ public class ControladorPartida implements Initializable {
         ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
         controladorMenuPausa.initData(primaryStage);
         Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("PAUSA");
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("PAUSA");
+        stage.setResizable(false);
+        stage.show();
     }
     
     public void mute() {

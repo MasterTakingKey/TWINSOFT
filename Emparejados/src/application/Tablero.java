@@ -3,34 +3,34 @@ package application;
 public class Tablero {
 
 	Carta[][] tablero;
-	int tamaño;
+	int tamanyo;
 	
 	public Tablero(int t) {
-		tamaño = t;
+		tamanyo = t;
 		tablero = new Carta[t][t];
-		//inicializarTablero(tamaño);
+		//inicializarTablero(tamanyo);
 	}
 	
-	public int getTamaño() {
-		return tamaño;
+	public int getTamanyo() {
+		return tamanyo;
 	}
 	
 	public Carta getCarta(int x, int y) {
 		return tablero[x][y];
 	}
 	
-	public void setTamaño(int nuevoTamaño) {
-		tamaño = nuevoTamaño;
-		inicializarTablero(tamaño);
+	public void setTamanyo(int nuevoTamanyo) {
+		tamanyo = nuevoTamanyo;
+		inicializarTablero(tamanyo);
 	}
 	
 	public void setCarta(Carta nuevaCarta, int x, int y) {
 		tablero[x][y] = nuevaCarta;
 	}
 	
-	public void inicializarTablero(int tamaño) {
-		for(int i = 0; i < tamaño; i++) {
-			for(int j = 0; j < tamaño; j++) {
+	public void inicializarTablero(int tamanyo) {
+		for(int i = 0; i < tamanyo; i++) {
+			for(int j = 0; j < tamanyo; j++) {
 				tablero[i][j] = null;
 			}
 		}
@@ -38,8 +38,8 @@ public class Tablero {
 	
     public void llenarTablero(Baraja baraja) {
     	int index = 0;
-    	for(int x = 0; x < tamaño; x++) {
-    		for(int y = 0; y < tamaño; y++)	{
+    	for(int x = 0; x < tamanyo; x++) {
+    		for(int y = 0; y < tamanyo; y++)	{
         			tablero[x][y] = baraja.getCarta(index++);
     		}
     	}

@@ -5,3 +5,5 @@ tmp/
 *.swp
 *.project
 *.pydevproject
+*.jar
+.classpath

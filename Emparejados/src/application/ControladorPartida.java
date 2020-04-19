@@ -1,4 +1,5 @@
 package application;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -6,6 +7,10 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -129,11 +134,13 @@ public class ControladorPartida implements Initializable {
     AudioClip Acierto;
     AudioClip Victoria;
     AudioClip Derrota;
-   AudioClip Musica = new AudioClip(getClass().getResource("/sonidos/Music.mp3").toString());
+    private Clip clip;
 
     private boolean soundOn;
 
 	private boolean Pausa; 
+	
+	private long tiempoMusica = 0L;
 	
 	private int puntuacion;
 	
@@ -168,8 +175,11 @@ public class ControladorPartida implements Initializable {
         Victoria = new AudioClip(getClass().getResource("/sonidos/Victoria.mp3").toString());
         Derrota = new AudioClip(getClass().getResource("/sonidos/Derrota1.mp3").toString());
     	tiempo.textProperty().bind(Time);
-    	Musica.setCycleCount(AudioClip.INDEFINITE);
-    	Musica.play();
+    	try {
+			playMusic();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     	iniciaTiempo(TIEMPO_PART_ESTANDAR);
     	resultado.setVisible(false);
 	} 
@@ -180,6 +190,16 @@ public class ControladorPartida implements Initializable {
         primaryTitle = primaryStage.getTitle();
         soundOn = true;
     }
+    
+    public void playMusic() throws Exception{
+	    File Musica = new File("src/sonidos/Music2.wav");
+	    AudioInputStream audioInput = AudioSystem.getAudioInputStream(Musica);
+	    clip = AudioSystem.getClip();
+	    clip.open(audioInput);
+	    clip.setMicrosecondPosition(tiempoMusica);
+	    clip.start();
+	    clip.loop(clip.LOOP_CONTINUOUSLY); 
+	}
     
     public void crearBaraja() {
     	imagenDorso = new Image("/imagenes/dorso_aldeano.png");
@@ -237,8 +257,6 @@ public class ControladorPartida implements Initializable {
     }
     
     public void parejaCorrecta() {
-    	//puntuacion.add(10);
-    	//puntuacion.set(10);
     	sumaPuntos(10, false);
     	Acierto.play();
     	//Sumar puntos
@@ -250,7 +268,6 @@ public class ControladorPartida implements Initializable {
     }
     
     public void parejaIncorrecta() {
-    	//puntuacion.subtract(1);
     	sumaPuntos(-1, true);
     	parejasFalladas.add(primeraCarta.getId());
     	Error.play();
@@ -282,9 +299,10 @@ public class ControladorPartida implements Initializable {
    }
     
     public void victoria() {
+    	timeline.stop();
     	victoria = true;
     	Victoria.play();
-    	Musica.stop();
+    	clip.stop();
     	resultado.setVisible(true);
     	//Mensaje victoria
     }
@@ -296,7 +314,7 @@ public class ControladorPartida implements Initializable {
     public void derrota() {
     	derrota = true;
     	Derrota.play();
-    	Musica.stop();
+    	clip.stop();
     	resultado.setText("DERROTA");
     	resultado.setVisible(true);
     	//Mensaje derrota
@@ -309,7 +327,8 @@ public class ControladorPartida implements Initializable {
     @FXML
     void pausarPartida(ActionEvent event) throws Exception {
     	Pausa = true;
-    	Musica.stop();
+    	tiempoMusica = clip.getMicrosecondPosition();
+    	clip.stop();
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
         Parent root = (Parent) myLoader.load();
         ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
@@ -330,8 +349,8 @@ public class ControladorPartida implements Initializable {
     	//iniciaTiempo(tiempoPausa);
     	soundOn = Sound;
     	if(soundOn) {
-    		Musica.setVolume(1.0);
-    		Musica.play();
+    		clip.setMicrosecondPosition(tiempoMusica);
+    		clip.start();
     		voltearCarta.setVolume(1.0);
     		Error.setVolume(1.0);
     		Acierto.setVolume(1.0);
@@ -339,8 +358,7 @@ public class ControladorPartida implements Initializable {
     		Derrota.setVolume(1.0);
     	}
     	else {
-    		Musica.stop();
-    		Musica.setVolume(0);
+    		clip.stop();
     		voltearCarta.setVolume(0);
     		Error.setVolume(0);
     		Acierto.setVolume(0);
@@ -367,17 +385,8 @@ public class ControladorPartida implements Initializable {
                          if (counter <= 0) {
                              timeline.stop();
                              derrota();
-                         } else if(victoria){
-                        	 timeline.stop();
-                         }else if(Pausa){
+                         } else if(Pausa){
                         	 timeline.pause();
-                        	 /*try {
-								timeline.wait();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}*/
-                             //Veremos como lo hacemos para pausar el tiempo, guardar en variable o lo que sea
                          }
                        }
                  }));

@@ -1,6 +1,7 @@
 package application;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -34,7 +37,7 @@ public class ControladorPartida implements Initializable {
     private Label tiempo = new Label();
 
     @FXML
-    private Label puntos;
+    private Label puntos = new Label();
 
     @FXML
     private Button pausa;
@@ -130,9 +133,9 @@ public class ControladorPartida implements Initializable {
 
     private boolean soundOn;
 
-	private boolean Pausa ;
+	private boolean Pausa; 
 	
-	private int tiempoPausa;
+	private int puntuacion;
 	
 	private Integer counter;
 	
@@ -140,6 +143,9 @@ public class ControladorPartida implements Initializable {
 	
 	private StringProperty Time = new SimpleStringProperty("");
 	
+	private ArrayList<Integer> parejasFalladas;
+	
+	long tiempoPrimera;
 	
 	private static final int TIEMPO_PART_ESTANDAR = 60; //Tiempo para partida estándar, por defecto 1 minuto
     
@@ -150,11 +156,12 @@ public class ControladorPartida implements Initializable {
     	crearTablero();
     	esPrimeraCarta = true;
     	cartasGiradas = 0;
-    	tiempoPausa = 0;
     	timeline = new Timeline();
     	Pausa = false;
     	victoria = false;
     	derrota = false;
+    	tiempoPrimera = 0;
+    	parejasFalladas = new ArrayList<Integer>(tableroPartida.getNumParejas());
     	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
         Error = new AudioClip(getClass().getResource("/sonidos/Error1.mp3").toString());
         Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto.mp3").toString());
@@ -207,10 +214,14 @@ public class ControladorPartida implements Initializable {
     	Carta cartaSeleccionada = tableroPartida.getCarta(posicionX, posicionY);
     	imagenSeleccionada.setImage(cartaSeleccionada.imagenFrente);
     	if(esPrimeraCarta) {
+    		tiempoPrimera= System.currentTimeMillis();
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
     		esPrimeraCarta = false;
     	} else {
+    		long tiempoSegunda= System.currentTimeMillis();
+    		System.out.println("Tiempo de la primera: " + tiempoPrimera + " // Tiempo de la segunda:" + tiempoSegunda);
+    		if (tiempoPrimera + 5000 <= tiempoSegunda) sumaPuntos(-5, false);
     		segundaCarta = cartaSeleccionada;
     		segundaImagen = imagenSeleccionada;
     		if(primeraCarta == segundaCarta) {
@@ -226,6 +237,9 @@ public class ControladorPartida implements Initializable {
     }
     
     public void parejaCorrecta() {
+    	//puntuacion.add(10);
+    	//puntuacion.set(10);
+    	sumaPuntos(10, false);
     	Acierto.play();
     	//Sumar puntos
     	primeraImagen.setDisable(true);
@@ -236,12 +250,36 @@ public class ControladorPartida implements Initializable {
     }
     
     public void parejaIncorrecta() {
+    	//puntuacion.subtract(1);
+    	sumaPuntos(-1, true);
+    	parejasFalladas.add(primeraCarta.getId());
     	Error.play();
     	//Restar puntos
     	primeraImagen.setImage(barajaPartida.getImagenDorso());
     	segundaImagen.setImage(barajaPartida.getImagenDorso());
     	cartasGiradas-= 2;
     }
+    
+    public int sumaPuntos(int p, boolean parInc) {
+    	puntuacion += p;
+    	if (parInc) puntuacion -= parejaIncRepetida(primeraCarta.getId());
+    	if (puntuacion < 0) puntuacion = 0;
+    	puntos.setText(Integer.toString(puntuacion));
+    	return puntuacion;
+    }
+    
+   public int parejaIncRepetida(int id) {
+	   int res = 0;
+	   if (parejasFalladas.contains(id)) {
+		   ArrayList aux = (ArrayList) parejasFalladas.clone();
+		   while(aux.contains(id)) {
+			   aux.remove((Object)id);
+			   res++;
+		   }   
+	   }
+	   System.out.println("ha fallado la pareja: " + id + " Y resta un total de:" + res);
+	   return res;
+   }
     
     public void victoria() {
     	victoria = true;

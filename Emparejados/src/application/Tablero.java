@@ -14,6 +14,9 @@ public class Tablero {
 	public int getTamanyo() {
 		return tamanyo;
 	}
+	public int getNumParejas() {
+		return tamanyo * tamanyo / 2;
+	}
 	
 	public Carta getCarta(int x, int y) {
 		return tablero[x][y];

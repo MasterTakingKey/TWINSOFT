@@ -52,7 +52,7 @@
                         <Image url="@../imagenes/puntuacion.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="puntos" prefHeight="24.0" prefWidth="43.0" text="20">
+                  <Label fx:id="puntos" prefHeight="24.0" prefWidth="43.0" text="0">
                      <font>
                         <Font size="21.0" />
                      </font>

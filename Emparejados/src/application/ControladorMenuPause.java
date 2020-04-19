@@ -73,9 +73,13 @@ public class ControladorMenuPause {
 
     @FXML
     void clickPlay(MouseEvent event) throws IOException {
-    	Stage stage = (Stage) imagePlay.getScene().getWindow();
-    	stage.close();
-    	cPartida.reanudarPartida(SoundOn);
+    	boolean victoria = cPartida.isVictoria();
+    	boolean derrota = cPartida.isDerrota();
+    	if (!derrota && !victoria) {
+	    	Stage stage = (Stage) imagePlay.getScene().getWindow();
+	    	stage.close();
+	    	cPartida.reanudarPartida(SoundOn);
+    	}
     }
 
     @FXML

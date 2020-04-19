@@ -112,6 +112,8 @@ public class ControladorPartida implements Initializable {
     private boolean esPrimeraCarta;
      
     private boolean victoria;
+
+	private boolean derrota;
     
     private Stage primaryStage;
     
@@ -139,7 +141,7 @@ public class ControladorPartida implements Initializable {
 	private StringProperty Time = new SimpleStringProperty("");
 	
 	
-	private static final int TIEMPO_PART_ESTANDAR = 300;
+	private static final int TIEMPO_PART_ESTANDAR = 60; //Tiempo para partida estándar, por defecto 1 minuto
     
 
 	@Override
@@ -152,6 +154,7 @@ public class ControladorPartida implements Initializable {
     	timeline = new Timeline();
     	Pausa = false;
     	victoria = false;
+    	derrota = false;
     	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
         Error = new AudioClip(getClass().getResource("/sonidos/Error1.mp3").toString());
         Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto.mp3").toString());
@@ -243,17 +246,27 @@ public class ControladorPartida implements Initializable {
     public void victoria() {
     	victoria = true;
     	Victoria.play();
+    	Musica.stop();
     	resultado.setVisible(true);
     	//Mensaje victoria
     }
     
+    public boolean isVictoria() {
+		return victoria;
+	}
+    
     public void derrota() {
+    	derrota = true;
     	Derrota.play();
     	Musica.stop();
     	resultado.setText("DERROTA");
     	resultado.setVisible(true);
     	//Mensaje derrota
     }
+    
+    public boolean isDerrota() {
+		return derrota;
+	}
 
     @FXML
     void pausarPartida(ActionEvent event) throws Exception {
@@ -271,11 +284,10 @@ public class ControladorPartida implements Initializable {
         stage.setTitle("PAUSA");
         stage.setResizable(false);
         stage.show();
-        //timeline.play();
     }
     public void reanudarPartida(boolean Sound) {
     	Pausa = false;
-    	System.out.println("Reaunude la partida. Pausa: " + Pausa);
+    	//System.out.println("Reaunude la partida. Pausa: " + Pausa);
     	timeline.play();
     	//iniciaTiempo(tiempoPausa);
     	soundOn = Sound;
@@ -321,7 +333,6 @@ public class ControladorPartida implements Initializable {
                         	 timeline.stop();
                          }else if(Pausa){
                         	 timeline.pause();
-                        	 tiempoPausa = counter;
                         	 /*try {
 								timeline.wait();
 							} catch (InterruptedException e) {
@@ -340,8 +351,8 @@ public class ControladorPartida implements Initializable {
     	int secs = seconds - mins * 60;
     	String Secs = String.format("%02d", secs);
     	Time.set(Integer.toString(mins) + ":" + Secs);
-    	
-    	System.out.println(Time);
+    	//System.out.println(Time);
     }
+
 
 }

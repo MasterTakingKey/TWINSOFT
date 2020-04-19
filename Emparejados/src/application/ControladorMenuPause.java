@@ -34,15 +34,20 @@ public class ControladorMenuPause {
     private String primaryTitle;
 
     
-    private boolean SoundOn = true;
+    private boolean SoundOn;
+    
+    private ControladorPartida cPartida;
     
     Image Sound1 = new Image("/imagenes/sonido_on.png");
     Image Sound0 = new Image("/imagenes/sonido_off.png");
 
-    void initData(Stage partida) {
+    void initData(Stage partida, boolean soundOn) {
     	partidaStage = partida;
     	primaryScene = partidaStage.getScene();
         primaryTitle = partidaStage.getTitle();
+        SoundOn = soundOn;
+        if(SoundOn) imageSound.setImage(Sound1);
+        else imageSound.setImage(Sound0);
     }
     
     @FXML
@@ -68,12 +73,9 @@ public class ControladorMenuPause {
 
     @FXML
     void clickPlay(MouseEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
-    	Parent root = (Parent) loader.load();
-    	ControladorPartida controlador = loader.getController();
     	Stage stage = (Stage) imagePlay.getScene().getWindow();
     	stage.close();
-    	controlador.reaunudarPartida();
+    	cPartida.reanudarPartida(SoundOn);
     }
 
     @FXML
@@ -85,26 +87,27 @@ public class ControladorMenuPause {
         controladorPartida.iniciarPartida(partidaStage);
         Scene scene = new Scene(root);
         partidaStage.setScene(scene);
-        partidaStage.setTitle("Partida Estándar");
+        partidaStage.setTitle("Partida Estandar");
         partidaStage.setResizable(false);
         partidaStage.show();
+        Stage stage = (Stage) imagePlay.getScene().getWindow();
+    	stage.close();
     }
     
 
     @FXML
     void clickSound(MouseEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
-    	Parent root = (Parent) loader.load();
-    	ControladorPartida controlador = loader.<ControladorPartida>getController();
     	if(SoundOn) {
     		imageSound.setImage(Sound0);
-    		controlador.mute();
     		SoundOn = false;
     	}else {
     		imageSound.setImage(Sound1);
-    		controlador.unmute();
     		SoundOn = true;
     	}
+    }
+    
+    public void setControladorPartida(ControladorPartida partida) {
+    	this.cPartida = partida;
     }
 
 }

@@ -45,7 +45,7 @@ public class ControladorMenuPrincipal implements Initializable {
         controladorPartida.iniciarPartida(primaryStage);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Partida Estándar");
+        primaryStage.setTitle("Partida Estandar");
         primaryStage.setResizable(false);
         primaryStage.show();
     }

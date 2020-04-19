@@ -119,14 +119,14 @@ public class ControladorPartida implements Initializable {
     
     private String primaryTitle;
     
-    AudioClip voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
-    AudioClip Error = new AudioClip(getClass().getResource("/sonidos/Error1.mp3").toString());
-    AudioClip Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto.mp3").toString());
-    AudioClip Victoria = new AudioClip(getClass().getResource("/sonidos/Victoria.mp3").toString());
-    AudioClip Derrota = new AudioClip(getClass().getResource("/sonidos/Derrota1.mp3").toString());
+    AudioClip voltearCarta;
+    AudioClip Error;
+    AudioClip Acierto;
+    AudioClip Victoria;
+    AudioClip Derrota;
    AudioClip Musica = new AudioClip(getClass().getResource("/sonidos/Music.mp3").toString());
 
-    private boolean soundOn = true;
+    private boolean soundOn;
 
 	private boolean Pausa ;
 	
@@ -152,6 +152,11 @@ public class ControladorPartida implements Initializable {
     	timeline = new Timeline();
     	Pausa = false;
     	victoria = false;
+    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
+        Error = new AudioClip(getClass().getResource("/sonidos/Error1.mp3").toString());
+        Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto.mp3").toString());
+        Victoria = new AudioClip(getClass().getResource("/sonidos/Victoria.mp3").toString());
+        Derrota = new AudioClip(getClass().getResource("/sonidos/Derrota1.mp3").toString());
     	tiempo.textProperty().bind(Time);
     	Musica.setCycleCount(AudioClip.INDEFINITE);
     	Musica.play();
@@ -163,6 +168,7 @@ public class ControladorPartida implements Initializable {
         primaryStage = stage;
         primaryScene = primaryStage.getScene();
         primaryTitle = primaryStage.getTitle();
+        soundOn = true;
     }
     
     public void crearBaraja() {
@@ -189,7 +195,7 @@ public class ControladorPartida implements Initializable {
 
     @FXML
     void muestraCarta(MouseEvent event) {
-    	if(soundOn)voltearCarta.play();
+    	voltearCarta.play();
     	cartasGiradas++;
     	ImageView imagenSeleccionada = (ImageView) event.getSource();
     	String nombreCarta = imagenSeleccionada.getId();
@@ -214,7 +220,7 @@ public class ControladorPartida implements Initializable {
     }
     
     public void parejaCorrecta() {
-    	if(soundOn)Acierto.play();
+    	Acierto.play();
     	//Sumar puntos
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
@@ -224,7 +230,7 @@ public class ControladorPartida implements Initializable {
     }
     
     public void parejaIncorrecta() {
-    	if(soundOn)Error.play();
+    	Error.play();
     	//Restar puntos
     	primeraImagen.setImage(barajaPartida.getImagenDorso());
     	segundaImagen.setImage(barajaPartida.getImagenDorso());
@@ -233,13 +239,13 @@ public class ControladorPartida implements Initializable {
     
     public void victoria() {
     	victoria = true;
-    	if(soundOn)Victoria.play();
+    	Victoria.play();
     	resultado.setVisible(true);
     	//Mensaje victoria
     }
     
     public void derrota() {
-    	if(soundOn)Derrota.play();
+    	Derrota.play();
     	Musica.stop();
     	resultado.setText("DERROTA");
     	resultado.setVisible(true);
@@ -253,7 +259,8 @@ public class ControladorPartida implements Initializable {
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
         Parent root = (Parent) myLoader.load();
         ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
-        controladorMenuPausa.initData(primaryStage);
+        controladorMenuPausa.initData(primaryStage, soundOn);
+        controladorMenuPausa.setControladorPartida(this);
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -263,23 +270,32 @@ public class ControladorPartida implements Initializable {
         stage.show();
         //timeline.play();
     }
-    public void reaunudarPartida() {
+    public void reanudarPartida(boolean Sound) {
     	Pausa = false;
     	System.out.println("Reaunude la partida. Pausa: " + Pausa);
     	timeline.play();
     	//iniciaTiempo(tiempoPausa);
+    	soundOn = Sound;
+    	if(soundOn) {
+    		Musica.setVolume(1.0);
+    		Musica.play();
+    		voltearCarta.setVolume(1.0);
+    		Error.setVolume(1.0);
+    		Acierto.setVolume(1.0);
+    		Victoria.setVolume(1.0);
+    		Derrota.setVolume(1.0);
+    	}
+    	else {
+    		Musica.stop();
+    		Musica.setVolume(0);
+    		voltearCarta.setVolume(0);
+    		Error.setVolume(0);
+    		Acierto.setVolume(0);
+    		Victoria.setVolume(0);
+    		Derrota.setVolume(0);
+    	}
     }
     
-    public void mute() {
-    	Musica.stop();
-    	soundOn = false;
-    }
-    
-    public void unmute() {
-    	Musica.play();
-    	soundOn = true;
-    }
-
     public void iniciaTiempo(int tpartida) {
     	 counter = tpartida; 
          // update timerLabel

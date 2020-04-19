@@ -210,12 +210,15 @@ public class ControladorPartida implements Initializable {
     	} else {
     		segundaCarta = cartaSeleccionada;
     		segundaImagen = imagenSeleccionada;
-    		if(primeraCarta.getId() == segundaCarta.getId()) {
-    			parejaCorrecta();
-    		} else {
-    			parejaIncorrecta();
-    		}
-    		esPrimeraCarta = true;
+    		if(primeraCarta == segundaCarta) {
+    			Error.play();
+    		}else if(primeraCarta.getId() == segundaCarta.getId()) {
+    				parejaCorrecta();
+    				esPrimeraCarta = true;
+    			} else {
+    				parejaIncorrecta();
+    				esPrimeraCarta = true;
+    			}    			    	
     	}
     }
     

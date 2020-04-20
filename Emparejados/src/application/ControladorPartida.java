@@ -134,6 +134,7 @@ public class ControladorPartida implements Initializable {
     AudioClip Acierto;
     AudioClip Victoria;
     AudioClip Derrota;
+    AudioClip MismaCarta;
     private Clip clip;
 
     private boolean soundOn;
@@ -174,6 +175,7 @@ public class ControladorPartida implements Initializable {
         Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto.mp3").toString());
         Victoria = new AudioClip(getClass().getResource("/sonidos/Victoria.mp3").toString());
         Derrota = new AudioClip(getClass().getResource("/sonidos/Derrota1.mp3").toString());
+        MismaCarta = new AudioClip(getClass().getResource("/sonidos/Error2.mp3").toString());
     	tiempo.textProperty().bind(Time);
     	try {
 			playMusic();
@@ -245,7 +247,7 @@ public class ControladorPartida implements Initializable {
     		segundaCarta = cartaSeleccionada;
     		segundaImagen = imagenSeleccionada;
     		if(primeraCarta == segundaCarta) {
-    			Error.play();
+    			MismaCarta.play();
     		}else if(primeraCarta.getId() == segundaCarta.getId()) {
     				parejaCorrecta();
     				esPrimeraCarta = true;

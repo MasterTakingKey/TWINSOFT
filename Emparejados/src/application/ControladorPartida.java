@@ -226,8 +226,7 @@ public class ControladorPartida implements Initializable {
     }
 
     @FXML
-    void muestraCarta(MouseEvent event) {
-    	voltearCarta.play();
+    void muestraCarta(MouseEvent event) {    	
     	cartasGiradas++;
     	ImageView imagenSeleccionada = (ImageView) event.getSource();
     	String nombreCarta = imagenSeleccionada.getId();
@@ -236,6 +235,7 @@ public class ControladorPartida implements Initializable {
     	Carta cartaSeleccionada = tableroPartida.getCarta(posicionX, posicionY);
     	imagenSeleccionada.setImage(cartaSeleccionada.imagenFrente);
     	if(esPrimeraCarta) {
+    		voltearCarta.play();
     		tiempoPrimera= System.currentTimeMillis();
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
@@ -249,9 +249,11 @@ public class ControladorPartida implements Initializable {
     		if(primeraCarta == segundaCarta) {
     			MismaCarta.play();
     		}else if(primeraCarta.getId() == segundaCarta.getId()) {
+    				voltearCarta.play();
     				parejaCorrecta();
     				esPrimeraCarta = true;
     			} else {
+    				voltearCarta.play();
     				parejaIncorrecta();
     				esPrimeraCarta = true;
     			}    			    	

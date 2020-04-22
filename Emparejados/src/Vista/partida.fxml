@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorPartida">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="894.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorPartida">
    <children>
       <ToolBar maxHeight="-Infinity" prefHeight="48.0" prefWidth="894.0">
         <items>
@@ -84,7 +84,7 @@
             <Insets bottom="5.0" top="20.0" />
          </VBox.margin>
       </ToolBar>
-      <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="894.0">
+      <StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="894.0" style="-fx-background-color: ffffff;">
          <children>
             <GridPane prefHeight="572.0" prefWidth="894.0">
               <columnConstraints>
@@ -185,11 +185,11 @@
                   </ImageView>
                </children>
             </GridPane>
-            <Label fx:id="resultado" alignment="CENTER" contentDisplay="CENTER" prefHeight="179.0" prefWidth="500.0" text="VICTORIA" textAlignment="CENTER" textFill="#2e20e5">
-               <font>
-                  <Font size="96.0" />
-               </font>
-            </Label>
+            <ImageView fx:id="resultado" fitHeight="427.0" fitWidth="544.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/resultado_victoria.png" />
+               </image>
+            </ImageView>
          </children>
       </StackPane>
    </children>

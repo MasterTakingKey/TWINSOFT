@@ -31,13 +31,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ControladorPartida implements Initializable {
-
+    
     @FXML
     private Label tiempo = new Label();
 
@@ -46,6 +47,9 @@ public class ControladorPartida implements Initializable {
 
     @FXML
     private Button pausa;
+    
+    @FXML
+    private StackPane stackPane;
 
     @FXML
     private ImageView usuario;
@@ -99,7 +103,7 @@ public class ControladorPartida implements Initializable {
     private ImageView carta33;
     
     @FXML
-    private Label resultado;
+    private ImageView resultado;
     
     private Baraja barajaPartida;
     
@@ -307,6 +311,7 @@ public class ControladorPartida implements Initializable {
     	victoria = true;
     	Victoria.play();
     	clip.stop();
+    	resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
     	resultado.setVisible(true);
     	//Mensaje victoria
     }
@@ -319,8 +324,9 @@ public class ControladorPartida implements Initializable {
     	derrota = true;
     	Derrota.play();
     	clip.stop();
-    	resultado.setText("DERROTA");
+    	resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
     	resultado.setVisible(true);
+    	stackPane.setDisable(true);
     	//Mensaje derrota
     }
     

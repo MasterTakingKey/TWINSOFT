@@ -13,6 +13,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -31,13 +32,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ControladorPartida implements Initializable {
-
+    
     @FXML
     private Label tiempo = new Label();
 
@@ -46,6 +48,9 @@ public class ControladorPartida implements Initializable {
 
     @FXML
     private Button pausa;
+    
+    @FXML
+    private StackPane stackPane;
 
     @FXML
     private ImageView usuario;
@@ -99,7 +104,7 @@ public class ControladorPartida implements Initializable {
     private ImageView carta33;
     
     @FXML
-    private Label resultado;
+    private ImageView resultado;
     
     private Baraja barajaPartida;
     
@@ -155,7 +160,7 @@ public class ControladorPartida implements Initializable {
 	
 	long tiempoPrimera;
 	
-	private static final int TIEMPO_PART_ESTANDAR = 60; //Tiempo para partida estándar, por defecto 1 minuto
+	private static final int TIEMPO_PART_ESTANDAR = 60; //Tiempo para partida estï¿½ndar, por defecto 1 minuto
     
 
 	@Override
@@ -226,8 +231,7 @@ public class ControladorPartida implements Initializable {
     }
 
     @FXML
-    void muestraCarta(MouseEvent event) {
-    	voltearCarta.play();
+    void muestraCarta(MouseEvent event) {    	
     	cartasGiradas++;
     	ImageView imagenSeleccionada = (ImageView) event.getSource();
     	String nombreCarta = imagenSeleccionada.getId();
@@ -236,6 +240,7 @@ public class ControladorPartida implements Initializable {
     	Carta cartaSeleccionada = tableroPartida.getCarta(posicionX, posicionY);
     	imagenSeleccionada.setImage(cartaSeleccionada.imagenFrente);
     	if(esPrimeraCarta) {
+    		voltearCarta.play();
     		tiempoPrimera= System.currentTimeMillis();
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
@@ -249,12 +254,25 @@ public class ControladorPartida implements Initializable {
     		if(primeraCarta == segundaCarta) {
     			MismaCarta.play();
     		}else if(primeraCarta.getId() == segundaCarta.getId()) {
-    				parejaCorrecta();
+    				voltearCarta.play();
+    				PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                    pause.setOnFinished(e -> {
+                        parejaCorrecta();
+                    });
+                    pause.play();
     				esPrimeraCarta = true;
     			} else {
-    				parejaIncorrecta();
+    				voltearCarta.play();
+    				Error.play();
+    				stackPane.setDisable(true);
+    				PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                    pause.setOnFinished(e -> {
+                        parejaIncorrecta();
+                        stackPane.setDisable(false);
+                    });
+                    pause.play();
     				esPrimeraCarta = true;
-    			}    			    	
+    			}   			    	
     	}
     }
     
@@ -272,7 +290,7 @@ public class ControladorPartida implements Initializable {
     public void parejaIncorrecta() {
     	sumaPuntos(-1, true);
     	parejasFalladas.add(primeraCarta.getId());
-    	Error.play();
+    	//Error.play();
     	//Restar puntos
     	primeraImagen.setImage(barajaPartida.getImagenDorso());
     	segundaImagen.setImage(barajaPartida.getImagenDorso());
@@ -305,6 +323,7 @@ public class ControladorPartida implements Initializable {
     	victoria = true;
     	Victoria.play();
     	clip.stop();
+    	resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
     	resultado.setVisible(true);
     	//Mensaje victoria
     }
@@ -317,8 +336,9 @@ public class ControladorPartida implements Initializable {
     	derrota = true;
     	Derrota.play();
     	clip.stop();
-    	resultado.setText("DERROTA");
+    	resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
     	resultado.setVisible(true);
+    	stackPane.setDisable(true);
     	//Mensaje derrota
     }
     

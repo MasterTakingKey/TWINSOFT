@@ -255,15 +255,16 @@ public class ControladorPartida implements Initializable {
     			MismaCarta.play();
     		}else if(primeraCarta.getId() == segundaCarta.getId()) {
     				voltearCarta.play();
+    				stackPane.setDisable(true);
     				PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(e -> {
                         parejaCorrecta();
+                        stackPane.setDisable(false);
                     });
                     pause.play();
     				esPrimeraCarta = true;
     			} else {
     				voltearCarta.play();
-    				Error.play();
     				stackPane.setDisable(true);
     				PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(e -> {
@@ -279,7 +280,6 @@ public class ControladorPartida implements Initializable {
     public void parejaCorrecta() {
     	sumaPuntos(10, false);
     	Acierto.play();
-    	//Sumar puntos
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
     	if(cartasGiradas == barajaPartida.getTamanyo()) {
@@ -290,8 +290,7 @@ public class ControladorPartida implements Initializable {
     public void parejaIncorrecta() {
     	sumaPuntos(-1, true);
     	parejasFalladas.add(primeraCarta.getId());
-    	//Error.play();
-    	//Restar puntos
+    	Error.play();
     	primeraImagen.setImage(barajaPartida.getImagenDorso());
     	segundaImagen.setImage(barajaPartida.getImagenDorso());
     	cartasGiradas-= 2;
@@ -325,7 +324,6 @@ public class ControladorPartida implements Initializable {
     	clip.stop();
     	resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
     	resultado.setVisible(true);
-    	//Mensaje victoria
     }
     
     public boolean isVictoria() {
@@ -339,7 +337,6 @@ public class ControladorPartida implements Initializable {
     	resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
     	resultado.setVisible(true);
     	stackPane.setDisable(true);
-    	//Mensaje derrota
     }
     
     public boolean isDerrota() {

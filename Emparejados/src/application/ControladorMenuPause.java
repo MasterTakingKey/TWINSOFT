@@ -1,8 +1,14 @@
 package application;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,8 +16,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class ControladorMenuPause {
 
@@ -40,7 +47,7 @@ public class ControladorMenuPause {
     
     Image Sound1 = new Image("/imagenes/sonido_on.png");
     Image Sound0 = new Image("/imagenes/sonido_off.png");
-
+    
     void initData(Stage partida, boolean soundOn) {
     	partidaStage = partida;
     	primaryScene = partidaStage.getScene();
@@ -73,6 +80,10 @@ public class ControladorMenuPause {
 
     @FXML
     void clickPlay(MouseEvent event) throws IOException {
+    	reanudar();
+    }
+    
+    void reanudar() {
     	boolean victoria = cPartida.isVictoria();
     	boolean derrota = cPartida.isDerrota();
     	if (!derrota && !victoria) {
@@ -83,8 +94,7 @@ public class ControladorMenuPause {
     }
 
     @FXML
-    void clickRetry(MouseEvent event) throws IOException{
-    	
+    void clickRetry(MouseEvent event) throws IOException{ 	
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
         Parent root = (Parent) myLoader.load();
         ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();

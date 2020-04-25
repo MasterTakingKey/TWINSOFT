@@ -230,7 +230,7 @@ public class ControladorPartida implements Initializable {
     	tableroPartida = new Tablero(4);
     	tableroPartida.llenarTablero(barajaPartida);
     }
-
+    //coment para push
     @FXML
     void muestraCarta(MouseEvent event) {    	
     	cartasGiradas++;

@@ -28,7 +28,7 @@ public class ControladorMenuPrincipal implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 	}
-   
+   //pull
     public void iniciarMenuPrincipal(Stage stage){
         primaryStage = stage;
         primaryScene = primaryStage.getScene();

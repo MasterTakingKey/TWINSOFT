@@ -36,6 +36,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class ControladorPartida implements Initializable {
@@ -359,6 +360,7 @@ public class ControladorPartida implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("PAUSA");
         stage.setResizable(false);
+        stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudar();});
         stage.show();
     }
     public void reanudarPartida(boolean Sound) {

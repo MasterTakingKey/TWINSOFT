@@ -13,6 +13,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -35,6 +36,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class ControladorPartida implements Initializable {
@@ -159,7 +161,7 @@ public class ControladorPartida implements Initializable {
 	
 	long tiempoPrimera;
 	
-	private static final int TIEMPO_PART_ESTANDAR = 60; //Tiempo para partida estándar, por defecto 1 minuto
+	private static final int TIEMPO_PART_ESTANDAR = 60; //Tiempo para partida estï¿½ndar, por defecto 1 minuto
     
 
 	@Override
@@ -228,7 +230,7 @@ public class ControladorPartida implements Initializable {
     	tableroPartida = new Tablero(4);
     	tableroPartida.llenarTablero(barajaPartida);
     }
-
+    //coment para push
     @FXML
     void muestraCarta(MouseEvent event) {    	
     	cartasGiradas++;
@@ -254,20 +256,31 @@ public class ControladorPartida implements Initializable {
     			MismaCarta.play();
     		}else if(primeraCarta.getId() == segundaCarta.getId()) {
     				voltearCarta.play();
-    				parejaCorrecta();
+    				stackPane.setDisable(true);
+    				PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                    pause.setOnFinished(e -> {
+                        parejaCorrecta();
+                        stackPane.setDisable(false);
+                    });
+                    pause.play();
     				esPrimeraCarta = true;
     			} else {
     				voltearCarta.play();
-    				parejaIncorrecta();
+    				stackPane.setDisable(true);
+    				PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                    pause.setOnFinished(e -> {
+                        parejaIncorrecta();
+                        stackPane.setDisable(false);
+                    });
+                    pause.play();
     				esPrimeraCarta = true;
-    			}    			    	
+    			}   			    	
     	}
     }
     
     public void parejaCorrecta() {
     	sumaPuntos(10, false);
     	Acierto.play();
-    	//Sumar puntos
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
     	if(cartasGiradas == barajaPartida.getTamanyo()) {
@@ -279,7 +292,6 @@ public class ControladorPartida implements Initializable {
     	sumaPuntos(-1, true);
     	parejasFalladas.add(primeraCarta.getId());
     	Error.play();
-    	//Restar puntos
     	primeraImagen.setImage(barajaPartida.getImagenDorso());
     	segundaImagen.setImage(barajaPartida.getImagenDorso());
     	cartasGiradas-= 2;
@@ -313,7 +325,6 @@ public class ControladorPartida implements Initializable {
     	clip.stop();
     	resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
     	resultado.setVisible(true);
-    	//Mensaje victoria
     }
     
     public boolean isVictoria() {
@@ -327,7 +338,6 @@ public class ControladorPartida implements Initializable {
     	resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
     	resultado.setVisible(true);
     	stackPane.setDisable(true);
-    	//Mensaje derrota
     }
     
     public boolean isDerrota() {
@@ -350,6 +360,7 @@ public class ControladorPartida implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("PAUSA");
         stage.setResizable(false);
+        stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudar();});
         stage.show();
     }
     public void reanudarPartida(boolean Sound) {

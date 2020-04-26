@@ -35,12 +35,7 @@ public class ControladorMenuPause {
     private ImageView imageSound;
     
     private Stage partidaStage;
-    
-    private Scene primaryScene;
-    
-    private String primaryTitle;
 
-    
     private boolean SoundOn;
     
     private ControladorPartida cPartida;
@@ -50,8 +45,6 @@ public class ControladorMenuPause {
     
     void initData(Stage partida, boolean soundOn) {
     	partidaStage = partida;
-    	primaryScene = partidaStage.getScene();
-        primaryTitle = partidaStage.getTitle();
         SoundOn = soundOn;
         if(SoundOn) imageSound.setImage(Sound1);
         else imageSound.setImage(Sound0);

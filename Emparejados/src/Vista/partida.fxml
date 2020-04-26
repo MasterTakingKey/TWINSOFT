@@ -12,24 +12,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="894.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorPartida">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="894.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorPartida">
    <children>
       <ToolBar maxHeight="-Infinity" prefHeight="48.0" prefWidth="894.0">
         <items>
             <HBox maxHeight="-Infinity" prefHeight="29.0" prefWidth="246.0">
-               <children>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="29.0" prefWidth="142.0" text="TWINSOFT">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-               </children>
                <padding>
                   <Insets left="20.0" />
                </padding>
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/twins_logo2.png" />
+                     </image></ImageView>
+               </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="35.0" prefWidth="248.0" spacing="8.0">
                <children>
@@ -81,7 +80,7 @@
             </HBox>
         </items>
          <VBox.margin>
-            <Insets bottom="5.0" top="20.0" />
+            <Insets bottom="5.0" />
          </VBox.margin>
       </ToolBar>
       <StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="894.0" style="-fx-background-color: ffffff;">

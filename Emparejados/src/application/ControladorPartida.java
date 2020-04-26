@@ -131,10 +131,6 @@ public class ControladorPartida implements Initializable {
     
     private Stage primaryStage;
     
-    private Scene primaryScene;
-    
-    private String primaryTitle;
-    
     AudioClip voltearCarta;
     AudioClip Error;
     AudioClip Acierto;
@@ -194,8 +190,6 @@ public class ControladorPartida implements Initializable {
     
     public void iniciarPartida(Stage stage){
         primaryStage = stage;
-        primaryScene = primaryStage.getScene();
-        primaryTitle = primaryStage.getTitle();
         soundOn = true;
     }
     
@@ -230,7 +224,6 @@ public class ControladorPartida implements Initializable {
     	tableroPartida = new Tablero(4);
     	tableroPartida.llenarTablero(barajaPartida);
     }
-    //coment para push
     @FXML
     void muestraCarta(MouseEvent event) {    	
     	cartasGiradas++;

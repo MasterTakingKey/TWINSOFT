@@ -4,8 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="565.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPause">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="507.0" prefWidth="871.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPause">
    <children>
       <ImageView fx:id="imagePlay" fitHeight="127.0" fitWidth="127.0" layoutX="171.0" layoutY="142.0" onMouseClicked="#clickPlay" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -27,5 +26,14 @@
             <Image url="@../imagenes/sonido_on.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="118.0" fitWidth="412.0" layoutX="223.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/twins_logo3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="82.0" fitWidth="306.0" layoutX="551.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/by_twinsoft2.png" />
+         </image></ImageView>
    </children>
 </Pane>

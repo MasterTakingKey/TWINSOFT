@@ -17,7 +17,7 @@ public class Main extends Application {
         ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
         menuPrincipal.iniciarMenuPrincipal(primaryStage);
         Scene scene = new Scene(root);
-        primaryStage.setTitle("TWINS by Twinsoft");
+        primaryStage.setTitle("Menú Principal");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

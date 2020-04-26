@@ -109,9 +109,13 @@ public class ControladorPartida implements Initializable {
     
     private Carta segundaCarta;
     
+    private Carta cartaSeleccionada;
+    
     private ImageView primeraImagen;
     
     private ImageView segundaImagen;
+    
+    private ImageView imagenSeleccionada;
     
     private Image imagenDorso;
     
@@ -159,6 +163,7 @@ public class ControladorPartida implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		crearBaraja();
     	crearTablero();
+    	inicializarAudioClips();
     	esPrimeraCarta = true;
     	cartasGiradas = 0;
     	timeline = new Timeline();
@@ -167,7 +172,6 @@ public class ControladorPartida implements Initializable {
     	esDerrota = false;
     	tiempoPrimera = 0;
     	parejasFalladas = new ArrayList<Integer>(tableroPartida.getNumParejas());
-    	inicializarAudioClips();
     	tiempo.textProperty().bind(Time);
     	try {
 			playMusic();
@@ -226,46 +230,56 @@ public class ControladorPartida implements Initializable {
     @FXML
     void muestraCarta(MouseEvent event) {    	
     	cartasGiradas++;
-    	ImageView imagenSeleccionada = (ImageView) event.getSource();
-    	String nombreCarta = imagenSeleccionada.getId();
-    	int posicionX = Integer.parseInt(nombreCarta.substring(5, 6));
-    	int posicionY = Integer.parseInt(nombreCarta.substring(6, 7));
-    	Carta cartaSeleccionada = tableroPartida.getCarta(posicionX, posicionY);
+    	imagenSeleccionada = (ImageView) event.getSource();
+    	cartaSeleccionada = deImagenACarta(imagenSeleccionada);
     	imagenSeleccionada.setImage(cartaSeleccionada.imagenFrente);
     	if(esPrimeraCarta) {
     		voltearCarta.play();
-    		tiempoPrimera= System.currentTimeMillis();
+    		restarPuntosTiempoEntreTurnos(1);
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
     		esPrimeraCarta = false;
     	} else {
-    		long tiempoSegunda= System.currentTimeMillis();
-    		if (tiempoPrimera + 5000 <= tiempoSegunda) sumaPuntos(-5, false);
+    		restarPuntosTiempoEntreTurnos(2);
     		segundaCarta = cartaSeleccionada;
     		segundaImagen = imagenSeleccionada;
     		if(primeraCarta == segundaCarta) {
     			mismaCarta.play();
-    		}else if(primeraCarta.getId() == segundaCarta.getId()) {
-    				voltearCarta.play();
+    		} else {
+				voltearCarta.play();
+				PauseTransition pause = new PauseTransition(Duration.seconds(1));
+    			if(primeraCarta.getId() == segundaCarta.getId()) {
     				stackPane.setDisable(true);
-    				PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(e -> {
                         parejaCorrecta();
                         stackPane.setDisable(false);
-                    });
-                    pause.play();
-    				esPrimeraCarta = true;
+                    });  
     			} else {
-    				voltearCarta.play();
     				stackPane.setDisable(true);
-    				PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(e -> {
                         parejaIncorrecta();
                         stackPane.setDisable(false);
                     });
-                    pause.play();
-    				esPrimeraCarta = true;
-    			}   			    	
+    			}
+    			pause.play();
+				esPrimeraCarta = true;
+    		}			    	
+    	}
+    }
+    
+    public Carta deImagenACarta(ImageView imgSeleccionada) {
+    	String nombreCarta = imgSeleccionada.getId();
+    	int posicionX = Integer.parseInt(nombreCarta.substring(5, 6));
+    	int posicionY = Integer.parseInt(nombreCarta.substring(6, 7));
+    	return tableroPartida.getCarta(posicionX, posicionY);
+    }
+    
+    public void restarPuntosTiempoEntreTurnos(int turno) {
+    	if(turno == 1) {
+    		tiempoPrimera= System.currentTimeMillis();
+    	} else {
+    		long tiempoSegunda= System.currentTimeMillis();
+    		if (tiempoPrimera + 5000 <= tiempoSegunda) sumaPuntos(-5, false);
     	}
     }
     

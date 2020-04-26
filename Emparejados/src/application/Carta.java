@@ -8,12 +8,10 @@ public class Carta {
 	Image imagenFrente;
 	int id;
 	
-	
-
-	public Carta(Image imagenD, Image imagenF, int ident) {
-		imagenDorso = imagenD;
-		imagenFrente = imagenF;
-		id = ident;
+	public Carta(Image imagenDorso, Image imagenFrente, int id) {
+		this.imagenDorso = imagenDorso;
+		this.imagenFrente = imagenFrente;
+		this.id = id;
 	}
 	
 	public Image getImagenDorso() {
@@ -28,15 +26,15 @@ public class Carta {
 		return id;
 	}
 	
-	public void setImagenDorso(Image imagenD) {
-		imagenDorso = imagenD;
+	public void setImagenDorso(Image nuevaImagenDorso) {
+		imagenDorso = nuevaImagenDorso;
 	}
 	
-	public void setImagenFrente(Image imagenF) {
-		imagenFrente = imagenF;
+	public void setImagenFrente(Image nuevaImagenFrente) {
+		imagenFrente = nuevaImagenFrente;
 	}
 	
-	public void setId(int ident) {
-		id = ident;
+	public void setId(int nuevaId) {
+		id = nuevaId;
 	}
 }

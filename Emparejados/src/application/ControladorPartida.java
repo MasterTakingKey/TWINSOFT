@@ -1,27 +1,17 @@
 package application;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,7 +31,9 @@ import javafx.util.Duration;
 
 public class ControladorPartida implements Initializable {
     
-    @FXML
+	private static final int TIEMPO_PART_ESTANDAR = 60; //Tiempo para partida estándar, por defecto 1 minuto
+	
+	@FXML
     private Label tiempo = new Label();
 
     @FXML
@@ -107,10 +99,12 @@ public class ControladorPartida implements Initializable {
     @FXML
     private ImageView resultado;
     
-    private Baraja barajaPartida;
+    private Stage primaryStage;
     
     private Tablero tableroPartida;
     
+    private Baraja barajaPartida;
+  
     private Carta primeraCarta;
     
     private Carta segundaCarta;
@@ -119,46 +113,47 @@ public class ControladorPartida implements Initializable {
     
     private ImageView segundaImagen;
     
-    private int cartasGiradas;
-    
     private Image imagenDorso;
     
-    private boolean esPrimeraCarta;
-     
-    private boolean victoria;
-
-	private boolean derrota;
+    private int cartasGiradas;
     
-    private Stage primaryStage;
-    
-    AudioClip voltearCarta;
-    AudioClip Error;
-    AudioClip Acierto;
-    AudioClip Victoria;
-    AudioClip Derrota;
-    AudioClip MismaCarta;
-    private Clip clip;
-
-    private boolean soundOn;
-
-	private boolean Pausa; 
-	
-	private long tiempoMusica = 0L;
-	
 	private int puntuacion;
 	
 	private Integer counter;
 	
+	private ArrayList<Integer> parejasFalladas;
+	
+	private long tiempoMusica = 0L;
+	
+	private long tiempoPrimera;
+    
+    private boolean esPrimeraCarta;
+     
+    private boolean esVictoria;
+
+	private boolean esDerrota;
+	
+    private boolean soundOn;
+
+	private boolean esPausa;
+    
+    private AudioClip voltearCarta;
+    
+    private AudioClip error;
+    
+    private AudioClip acierto;
+    
+    private AudioClip victoria;
+    
+    private AudioClip derrota;
+    
+    private AudioClip mismaCarta;
+    
+    private Clip clip; 
+	
 	private Timeline timeline;
 	
 	private StringProperty Time = new SimpleStringProperty("");
-	
-	private ArrayList<Integer> parejasFalladas;
-	
-	long tiempoPrimera;
-	
-	private static final int TIEMPO_PART_ESTANDAR = 60; //Tiempo para partida estï¿½ndar, por defecto 1 minuto
-    
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -167,17 +162,12 @@ public class ControladorPartida implements Initializable {
     	esPrimeraCarta = true;
     	cartasGiradas = 0;
     	timeline = new Timeline();
-    	Pausa = false;
-    	victoria = false;
-    	derrota = false;
+    	esPausa = false;
+    	esVictoria = false;
+    	esDerrota = false;
     	tiempoPrimera = 0;
     	parejasFalladas = new ArrayList<Integer>(tableroPartida.getNumParejas());
-    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
-        Error = new AudioClip(getClass().getResource("/sonidos/Error1.mp3").toString());
-        Acierto = new AudioClip(getClass().getResource("/sonidos/Acierto.mp3").toString());
-        Victoria = new AudioClip(getClass().getResource("/sonidos/Victoria.mp3").toString());
-        Derrota = new AudioClip(getClass().getResource("/sonidos/Derrota1.mp3").toString());
-        MismaCarta = new AudioClip(getClass().getResource("/sonidos/Error2.mp3").toString());
+    	inicializarAudioClips();
     	tiempo.textProperty().bind(Time);
     	try {
 			playMusic();
@@ -191,6 +181,15 @@ public class ControladorPartida implements Initializable {
     public void iniciarPartida(Stage stage){
         primaryStage = stage;
         soundOn = true;
+    }
+    
+    public void inicializarAudioClips() {
+    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
+        error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
+        acierto = new AudioClip(getClass().getResource("/sonidos/acierto.mp3").toString());
+        victoria = new AudioClip(getClass().getResource("/sonidos/victoria.mp3").toString());
+        derrota = new AudioClip(getClass().getResource("/sonidos/derrota1.mp3").toString());
+        mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
     }
     
     public void playMusic() throws Exception{
@@ -241,12 +240,11 @@ public class ControladorPartida implements Initializable {
     		esPrimeraCarta = false;
     	} else {
     		long tiempoSegunda= System.currentTimeMillis();
-    		System.out.println("Tiempo de la primera: " + tiempoPrimera + " // Tiempo de la segunda:" + tiempoSegunda);
     		if (tiempoPrimera + 5000 <= tiempoSegunda) sumaPuntos(-5, false);
     		segundaCarta = cartaSeleccionada;
     		segundaImagen = imagenSeleccionada;
     		if(primeraCarta == segundaCarta) {
-    			MismaCarta.play();
+    			mismaCarta.play();
     		}else if(primeraCarta.getId() == segundaCarta.getId()) {
     				voltearCarta.play();
     				stackPane.setDisable(true);
@@ -273,7 +271,7 @@ public class ControladorPartida implements Initializable {
     
     public void parejaCorrecta() {
     	sumaPuntos(10, false);
-    	Acierto.play();
+    	acierto.play();
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
     	if(cartasGiradas == barajaPartida.getTamanyo()) {
@@ -284,7 +282,7 @@ public class ControladorPartida implements Initializable {
     public void parejaIncorrecta() {
     	sumaPuntos(-1, true);
     	parejasFalladas.add(primeraCarta.getId());
-    	Error.play();
+    	error.play();
     	primeraImagen.setImage(barajaPartida.getImagenDorso());
     	segundaImagen.setImage(barajaPartida.getImagenDorso());
     	cartasGiradas-= 2;
@@ -307,26 +305,25 @@ public class ControladorPartida implements Initializable {
 			   res++;
 		   }   
 	   }
-	   System.out.println("ha fallado la pareja: " + id + " Y resta un total de:" + res);
 	   return res;
    }
     
     public void victoria() {
     	timeline.stop();
-    	victoria = true;
-    	Victoria.play();
+    	esVictoria = true;
+    	victoria.play();
     	clip.stop();
     	resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
     	resultado.setVisible(true);
     }
     
     public boolean isVictoria() {
-		return victoria;
+		return esVictoria;
 	}
     
     public void derrota() {
-    	derrota = true;
-    	Derrota.play();
+    	esDerrota = true;
+    	derrota.play();
     	clip.stop();
     	resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
     	resultado.setVisible(true);
@@ -334,12 +331,12 @@ public class ControladorPartida implements Initializable {
     }
     
     public boolean isDerrota() {
-		return derrota;
+		return esDerrota;
 	}
 
     @FXML
     void pausarPartida(ActionEvent event) throws Exception {
-    	Pausa = true;
+    	esPausa = true;
     	tiempoMusica = clip.getMicrosecondPosition();
     	clip.stop();
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
@@ -357,53 +354,44 @@ public class ControladorPartida implements Initializable {
         stage.show();
     }
     public void reanudarPartida(boolean Sound) {
-    	Pausa = false;
-    	//System.out.println("Reaunude la partida. Pausa: " + Pausa);
+    	esPausa = false;
     	timeline.play();
-    	//iniciaTiempo(tiempoPausa);
     	soundOn = Sound;
     	if(soundOn) {
     		clip.setMicrosecondPosition(tiempoMusica);
     		clip.start();
     		voltearCarta.setVolume(1.0);
-    		Error.setVolume(1.0);
-    		Acierto.setVolume(1.0);
-    		Victoria.setVolume(1.0);
-    		Derrota.setVolume(1.0);
+    		error.setVolume(1.0);
+    		acierto.setVolume(1.0);
+    		victoria.setVolume(1.0);
+    		derrota.setVolume(1.0);
     	}
     	else {
     		clip.stop();
     		voltearCarta.setVolume(0);
-    		Error.setVolume(0);
-    		Acierto.setVolume(0);
-    		Victoria.setVolume(0);
-    		Derrota.setVolume(0);
+    		error.setVolume(0);
+    		acierto.setVolume(0);
+    		victoria.setVolume(0);
+    		derrota.setVolume(0);
     	}
     }
     
     public void iniciaTiempo(int tpartida) {
     	 counter = tpartida; 
-         // update timerLabel
-         //tiempo.setText(counter.toString());
     	 setTimer(counter);
          timeline.setCycleCount(Timeline.INDEFINITE);
          timeline.getKeyFrames().add(
                  new KeyFrame(Duration.seconds(1),
-                   new EventHandler() {
-                     // KeyFrame event handler
-                     public void handle(Event event) {
-                    	 counter--;
-                         // update timerLabel
-                         //tiempo.setText(counter.toString());
-                    	 setTimer(counter);
-                         if (counter <= 0) {
-                             timeline.stop();
-                             derrota();
-                         } else if(Pausa){
-                        	 timeline.pause();
-                         }
-                       }
-                 }));
+                   event -> {
+					 counter--;
+					 setTimer(counter);
+				     if (counter <= 0) {
+				         timeline.stop();
+				         derrota();
+				     } else if(esPausa){
+				    	 timeline.pause();
+				     }
+				   }));
          timeline.playFromStart();
      }
     
@@ -412,8 +400,6 @@ public class ControladorPartida implements Initializable {
     	int secs = seconds - mins * 60;
     	String Secs = String.format("%02d", secs);
     	Time.set(Integer.toString(mins) + ":" + Secs);
-    	//System.out.println(Time);
     }
-
 
 }

@@ -18,18 +18,22 @@ public class ControladorMenuPrincipal implements Initializable {
     private Button partidaEstandar;
     
     private Stage primaryStage;
+    
+    private Musica musicaFondo;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		musicaFondo = new Musica("src/sonidos/Musica2.wav", 0L);
+		musicaFondo.playMusic();
 	}
-   //pull
+
     public void iniciarMenuPrincipal(Stage stage){
         primaryStage = stage;
     }
     
     @FXML
     void partidaEstandarHandler(ActionEvent event) throws IOException {
+    	musicaFondo.stopMusic();
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
         Parent root = (Parent) myLoader.load();
         ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();

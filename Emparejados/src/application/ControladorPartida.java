@@ -1,11 +1,7 @@
 package application;
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -31,7 +27,7 @@ import javafx.util.Duration;
 
 public class ControladorPartida implements Initializable {
     
-	private static final int TIEMPO_PART_ESTANDAR = 60; //Tiempo para partida estándar, por defecto 1 minuto
+	private static final int TIEMPO_PART_ESTANDAR = 60;
 	
 	@FXML
     private Label tiempo = new Label();
@@ -119,6 +115,8 @@ public class ControladorPartida implements Initializable {
     
     private Image imagenDorso;
     
+    private Musica musicaFondo;
+    
     private int cartasGiradas;
     
 	private int puntuacion;
@@ -127,7 +125,7 @@ public class ControladorPartida implements Initializable {
 	
 	private ArrayList<Integer> parejasFalladas;
 	
-	private long tiempoMusica = 0L;
+	private long tiempoMusica;
 	
 	private long tiempoPrimera;
     
@@ -152,32 +150,19 @@ public class ControladorPartida implements Initializable {
     private AudioClip derrota;
     
     private AudioClip mismaCarta;
-    
-    private Clip clip; 
 	
 	private Timeline timeline;
 	
-	private StringProperty Time = new SimpleStringProperty("");
+	private StringProperty Time; 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		crearBaraja();
     	crearTablero();
     	inicializarAudioClips();
-    	esPrimeraCarta = true;
-    	cartasGiradas = 0;
-    	timeline = new Timeline();
-    	esPausa = false;
-    	esVictoria = false;
-    	esDerrota = false;
-    	tiempoPrimera = 0;
-    	parejasFalladas = new ArrayList<Integer>(tableroPartida.getNumParejas());
+    	inicializarVariables();
     	tiempo.textProperty().bind(Time);
-    	try {
-			playMusic();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	musicaFondo.playMusic();
     	iniciaTiempo(TIEMPO_PART_ESTANDAR);
     	resultado.setVisible(false);
 	} 
@@ -186,7 +171,7 @@ public class ControladorPartida implements Initializable {
         primaryStage = stage;
         soundOn = true;
     }
-    
+
     public void inicializarAudioClips() {
     	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
         error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
@@ -196,15 +181,18 @@ public class ControladorPartida implements Initializable {
         mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
     }
     
-    public void playMusic() throws Exception{
-	    File Musica = new File("src/sonidos/Music2.wav");
-	    AudioInputStream audioInput = AudioSystem.getAudioInputStream(Musica);
-	    clip = AudioSystem.getClip();
-	    clip.open(audioInput);
-	    clip.setMicrosecondPosition(tiempoMusica);
-	    clip.start();
-	    clip.loop(clip.LOOP_CONTINUOUSLY); 
-	}
+    public void inicializarVariables() {
+    	esPrimeraCarta = true;
+    	cartasGiradas = 0;
+    	timeline = new Timeline();
+    	esPausa = false;
+    	esVictoria = false;
+    	esDerrota = false;
+    	tiempoPrimera = 0;
+    	parejasFalladas = new ArrayList<Integer>(tableroPartida.getNumParejas());
+    	Time = new SimpleStringProperty("");
+    	musicaFondo = new Musica("src/sonidos/Musica1.wav", 0L);
+    }
     
     public void crearBaraja() {
     	imagenDorso = new Image("/imagenes/dorso_aldeano.png");
@@ -326,7 +314,7 @@ public class ControladorPartida implements Initializable {
     	timeline.stop();
     	esVictoria = true;
     	victoria.play();
-    	clip.stop();
+    	musicaFondo.stopMusic();
     	resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
     	resultado.setVisible(true);
     }
@@ -338,7 +326,7 @@ public class ControladorPartida implements Initializable {
     public void derrota() {
     	esDerrota = true;
     	derrota.play();
-    	clip.stop();
+    	musicaFondo.stopMusic();
     	resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
     	resultado.setVisible(true);
     	stackPane.setDisable(true);
@@ -351,8 +339,8 @@ public class ControladorPartida implements Initializable {
     @FXML
     void pausarPartida(ActionEvent event) throws Exception {
     	esPausa = true;
-    	tiempoMusica = clip.getMicrosecondPosition();
-    	clip.stop();
+    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	musicaFondo.stopMusic();
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
         Parent root = (Parent) myLoader.load();
         ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
@@ -372,8 +360,8 @@ public class ControladorPartida implements Initializable {
     	timeline.play();
     	soundOn = Sound;
     	if(soundOn) {
-    		clip.setMicrosecondPosition(tiempoMusica);
-    		clip.start();
+    		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
+    		musicaFondo.getClip().start();
     		voltearCarta.setVolume(1.0);
     		error.setVolume(1.0);
     		acierto.setVolume(1.0);
@@ -381,7 +369,7 @@ public class ControladorPartida implements Initializable {
     		derrota.setVolume(1.0);
     	}
     	else {
-    		clip.stop();
+    		musicaFondo.stopMusic();
     		voltearCarta.setVolume(0);
     		error.setVolume(0);
     		acierto.setVolume(0);

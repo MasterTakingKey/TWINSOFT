@@ -60,6 +60,11 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="229.0" spacing="20.0">
                <children>
+                  <ImageView fx:id="iconoSonido" fitHeight="43.0" fitWidth="65.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/sonido_on.png" />
+                     </image>
+                  </ImageView>
                 <Button fx:id="pausa" mnemonicParsing="false" onAction="#pausarPartida" prefHeight="26.0" prefWidth="66.0" text="Pause">
                      <font>
                         <Font size="15.0" />

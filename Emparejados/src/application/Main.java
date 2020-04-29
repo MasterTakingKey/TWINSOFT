@@ -14,7 +14,7 @@ public class Main extends Application {
 		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
         Parent root = myLoader.load();  
         ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
-        menuPrincipal.iniciarMenuPrincipal(primaryStage);
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, true);
         Scene scene = new Scene(root);
         primaryStage.setTitle("Menú Principal");
         primaryStage.setScene(scene);

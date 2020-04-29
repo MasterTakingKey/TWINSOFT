@@ -1,9 +1,6 @@
 package application;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,17 +32,24 @@ public class ControladorMenuPause {
     
     private ControladorPartida cPartida;
     
-    Image Sound0 = new Image("/imagenes/sonido_off.png");
+    private Image Sound0;
     
-    Image Sound1 = new Image("/imagenes/sonido_on.png");
+    private Image Sound1;
+    
+    private long tiempoMusica;
     
     void initData(Stage partida, boolean soundOn) {
     	partidaStage = partida;
         SoundOn = soundOn;
-        if(SoundOn) imageSound.setImage(Sound1);
-        else imageSound.setImage(Sound0);
+        inicializarVariables();
+		actualizarSonido();
+        actualizarImagenSonido();
+    }
+    
+    private void inicializarVariables() {
+    	Sound0 = new Image("/imagenes/sonido_off.png");
+        Sound1 = new Image("/imagenes/sonido_on.png");
         musicaFondo = new Musica("src/sonidos/Musica3.wav", 0L);
-		musicaFondo.playMusic();
     }
     
     @FXML
@@ -58,7 +62,7 @@ public class ControladorMenuPause {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
             Parent root = myLoader.load();  
             ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
-            menuPrincipal.iniciarMenuPrincipal(partidaStage);
+            menuPrincipal.iniciarMenuPrincipal(partidaStage, SoundOn);
             Scene scene = new Scene(root);
             partidaStage.setTitle("TWINS by Twinsoft");
             partidaStage.setScene(scene);
@@ -92,7 +96,7 @@ public class ControladorMenuPause {
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
         Parent root = (Parent) myLoader.load();
         ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();
-        controladorPartida.iniciarPartida(partidaStage);
+        controladorPartida.iniciarPartida(partidaStage, SoundOn);
         Scene scene = new Scene(root);
         partidaStage.setScene(scene);
         partidaStage.setTitle("Partida Estandar");
@@ -104,14 +108,33 @@ public class ControladorMenuPause {
     
 
     @FXML
-    void clickSound(MouseEvent event) throws IOException {
+    void clickSound(MouseEvent event) {
     	if(SoundOn) {
-    		imageSound.setImage(Sound0);
     		SoundOn = false;
-    	}else {
-    		imageSound.setImage(Sound1);
+    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	} else {
     		SoundOn = true;
     	}
+    	actualizarSonido();
+    	actualizarImagenSonido();
+    }
+    
+    public void actualizarSonido() {
+    	if(SoundOn) {
+    		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
+    		musicaFondo.playMusic();
+    	}
+    	else {
+    		musicaFondo.stopMusic();
+    	}
+    }
+    
+    public void actualizarImagenSonido() {
+        if(SoundOn) {
+        	imageSound.setImage(Sound1);
+        } else {
+        	imageSound.setImage(Sound0);
+        }
     }
     
     public void setControladorPartida(ControladorPartida partida) {

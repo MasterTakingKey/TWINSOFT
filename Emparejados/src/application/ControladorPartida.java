@@ -1,7 +1,5 @@
 package application;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -10,7 +8,6 @@ import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-public class ControladorPartida implements Initializable {
+public class ControladorPartida {
     
 	private static final int TIEMPO_PART_ESTANDAR = 60;
 	
@@ -34,6 +31,9 @@ public class ControladorPartida implements Initializable {
 
     @FXML
     private Label puntos = new Label();
+    
+    @FXML
+    private ImageView iconoSonido;
 
     @FXML
     private Button pausa;
@@ -115,6 +115,10 @@ public class ControladorPartida implements Initializable {
     
     private Image imagenDorso;
     
+    private Image Sound0;
+    
+    private Image Sound1;
+    
     private Musica musicaFondo;
     
     private int cartasGiradas;
@@ -135,7 +139,7 @@ public class ControladorPartida implements Initializable {
 
 	private boolean esDerrota;
 	
-    private boolean soundOn;
+    private boolean SoundOn;
 
 	private boolean esPausa;
     
@@ -155,21 +159,18 @@ public class ControladorPartida implements Initializable {
 	
 	private StringProperty Time; 
 
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		crearBaraja();
+    public void iniciarPartida(Stage stage, boolean soundOn){
+        primaryStage = stage;
+        SoundOn = soundOn;
+        crearBaraja();
     	crearTablero();
-    	inicializarAudioClips();
     	inicializarVariables();
+    	inicializarAudioClips();
+    	actualizarSonido();
+    	actualizarImagenSonido();
     	tiempo.textProperty().bind(Time);
-    	musicaFondo.playMusic();
     	iniciaTiempo(TIEMPO_PART_ESTANDAR);
     	resultado.setVisible(false);
-	} 
-    
-    public void iniciarPartida(Stage stage){
-        primaryStage = stage;
-        soundOn = true;
     }
 
     public void inicializarAudioClips() {
@@ -192,6 +193,8 @@ public class ControladorPartida implements Initializable {
     	parejasFalladas = new ArrayList<Integer>(tableroPartida.getNumParejas());
     	Time = new SimpleStringProperty("");
     	musicaFondo = new Musica("src/sonidos/Musica1.wav", 0L);
+    	Sound0 = new Image("/imagenes/sonido_off.png");
+        Sound1 = new Image("/imagenes/sonido_on.png");
     }
     
     public void crearBaraja() {
@@ -290,6 +293,18 @@ public class ControladorPartida implements Initializable {
     	cartasGiradas-= 2;
     }
     
+    public int parejaIncRepetida(int id) {
+ 	   int res = 0;
+ 	   if (parejasFalladas.contains(id)) {
+ 		   ArrayList aux = (ArrayList) parejasFalladas.clone();
+ 		   while(aux.contains(id)) {
+ 			   aux.remove((Object)id);
+ 			   res++;
+ 		   }   
+ 	   }
+ 	   return res;
+    }
+    
     public int sumaPuntos(int p, boolean parInc) {
     	puntuacion += p;
     	if (parInc) puntuacion -= parejaIncRepetida(primeraCarta.getId());
@@ -297,18 +312,6 @@ public class ControladorPartida implements Initializable {
     	puntos.setText(Integer.toString(puntuacion));
     	return puntuacion;
     }
-    
-   public int parejaIncRepetida(int id) {
-	   int res = 0;
-	   if (parejasFalladas.contains(id)) {
-		   ArrayList aux = (ArrayList) parejasFalladas.clone();
-		   while(aux.contains(id)) {
-			   aux.remove((Object)id);
-			   res++;
-		   }   
-	   }
-	   return res;
-   }
     
     public void victoria() {
     	timeline.stop();
@@ -344,7 +347,7 @@ public class ControladorPartida implements Initializable {
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
         Parent root = (Parent) myLoader.load();
         ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
-        controladorMenuPausa.initData(primaryStage, soundOn);
+        controladorMenuPausa.initData(primaryStage, SoundOn);
         controladorMenuPausa.setControladorPartida(this);
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -358,10 +361,15 @@ public class ControladorPartida implements Initializable {
     public void reanudarPartida(boolean Sound) {
     	esPausa = false;
     	timeline.play();
-    	soundOn = Sound;
-    	if(soundOn) {
+    	SoundOn = Sound;
+    	actualizarSonido();
+    	actualizarImagenSonido();
+    }
+    
+    public void actualizarSonido() {
+    	if(SoundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
-    		musicaFondo.getClip().start();
+    		musicaFondo.playMusic();
     		voltearCarta.setVolume(1.0);
     		error.setVolume(1.0);
     		acierto.setVolume(1.0);
@@ -376,6 +384,26 @@ public class ControladorPartida implements Initializable {
     		victoria.setVolume(0);
     		derrota.setVolume(0);
     	}
+    }
+    
+    public void actualizarImagenSonido() {
+        if(SoundOn) {
+        	iconoSonido.setImage(Sound1);
+        } else {
+        	iconoSonido.setImage(Sound0);
+        }
+    }
+    
+    @FXML
+    void clickSound(MouseEvent event) {
+    	if(SoundOn) {
+    		SoundOn = false;
+    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	} else {
+    		SoundOn = true;
+    	}
+    	actualizarSonido();
+    	actualizarImagenSonido();
     }
     
     public void iniciaTiempo(int tpartida) {

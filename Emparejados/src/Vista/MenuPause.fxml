@@ -4,34 +4,29 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="507.0" prefWidth="871.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPause">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="575.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="bodybg" stylesheets="@../application/estilo2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPause">
    <children>
-      <ImageView fx:id="imagePlay" fitHeight="127.0" fitWidth="127.0" layoutX="171.0" layoutY="142.0" onMouseClicked="#clickPlay" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imagePlay" fitHeight="127.0" fitWidth="127.0" layoutX="374.0" layoutY="261.0" onMouseClicked="#clickPlay" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/reanudar.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imageRetry" fitHeight="100.0" fitWidth="115.0" layoutX="375.0" layoutY="155.0" onMouseClicked="#clickRetry" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imageHome" fitHeight="100.0" fitWidth="115.0" layoutX="231.0" layoutY="274.0" onMouseClicked="#clickHome" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../imagenes/reintentar.png" />
+            <Image url="@../imagenes/home.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imageClose" fitHeight="100.0" fitWidth="115.0" layoutX="575.0" layoutY="155.0" onMouseClicked="#clickClose" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagenes/abandonar.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="imageSound" fitHeight="107.0" fitWidth="114.0" layoutX="375.0" layoutY="300.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imageSound" fitHeight="107.0" fitWidth="114.0" layoutX="536.0" layoutY="271.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/sonido_on.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="118.0" fitWidth="412.0" layoutX="223.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="118.0" fitWidth="412.0" layoutX="231.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../imagenes/twins_logo3.png" />
+            <Image url="@../imagenes/texto_pausa.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="82.0" fitWidth="306.0" layoutX="551.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="23.0" fitWidth="289.0" layoutX="618.0" layoutY="497.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/by_twinsoft2.png" />
          </image></ImageView>

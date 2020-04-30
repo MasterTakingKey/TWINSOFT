@@ -5,12 +5,10 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,6 +17,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
@@ -36,7 +35,7 @@ public class ControladorPartida {
     private ImageView iconoSonido;
 
     @FXML
-    private Button pausa;
+    private ImageView pausa;
     
     @FXML
     private StackPane stackPane;
@@ -129,6 +128,10 @@ public class ControladorPartida {
 	
 	private ArrayList<Integer> parejasFalladas;
 	
+	private double auxiliarX;
+	
+	private double auxiliarY;
+	
 	private long tiempoMusica;
 	
 	private long tiempoPrimera;
@@ -195,6 +198,8 @@ public class ControladorPartida {
     	musicaFondo = new Musica("src/sonidos/Musica1.wav", 0L);
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
+        auxiliarX = primaryStage.getX();
+        auxiliarY = primaryStage.getY();
     }
     
     public void crearBaraja() {
@@ -338,9 +343,9 @@ public class ControladorPartida {
     public boolean isDerrota() {
 		return esDerrota;
 	}
-
+ 
     @FXML
-    void pausarPartida(ActionEvent event) throws Exception {
+    void pausarPartida(MouseEvent event) throws Exception {
     	esPausa = true;
     	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     	musicaFondo.stopMusic();
@@ -349,15 +354,20 @@ public class ControladorPartida {
         ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
         controladorMenuPausa.initData(primaryStage, SoundOn);
         controladorMenuPausa.setControladorPartida(this);
+        auxiliarX = primaryStage.getX();
         Scene scene = new Scene(root);
+        scene.getStylesheets().addAll(this.getClass().getResource("estilo1.css").toExternalForm());
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("PAUSA");
         stage.setResizable(false);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudar();});
         stage.show();
+        stage.setX(auxiliarX + 3);
+        stage.setY(auxiliarY + 12);    
     }
+    
     public void reanudarPartida(boolean Sound) {
     	esPausa = false;
     	timeline.play();

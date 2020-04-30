@@ -4,12 +4,14 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class ControladorMenuPrincipal {
@@ -40,7 +42,7 @@ public class ControladorMenuPrincipal {
         actualizarImagenSonido();
     }
     
-    private void inicializarVariables() {
+    public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
         musicaFondo = new Musica("src/sonidos/Musica2.wav", 0L);
@@ -89,7 +91,13 @@ public class ControladorMenuPrincipal {
         primaryStage.setTitle("Partida Estándar");
         primaryStage.setResizable(false);
         primaryStage.show();
+        centrarVentana();
+    }
+
+    public void centrarVentana() {
+        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
+        primaryStage.setX((screen.getWidth() - primaryStage.getWidth()) / 2);
+        primaryStage.setY((screen.getHeight() - primaryStage.getHeight()) / 2);
     }
     
-
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -46,8 +47,9 @@ public class ControladorMenuPause {
     
     Optional<ButtonType> resultadoSalida;
     
-    void initData(Stage partida, boolean soundOn) {
+    void initData(Stage partida, ControladorPartida cPartida, boolean soundOn) {
     	primaryStage = partida;
+    	this.cPartida = cPartida;
         SoundOn = soundOn;
         inicializarVariables();
 		actualizarSonido();
@@ -60,24 +62,19 @@ public class ControladorMenuPause {
         musicaFondo = new Musica("src/sonidos/Musica3.wav", 0L);
     }
     
-    public void mostrarAlerta() {
-        confirmacionSalida = new Alert(AlertType.CONFIRMATION);
-        confirmacionSalida.setTitle("Confirmación");
-        confirmacionSalida.setHeaderText("¿Estás seguro de que quieres volver al menú principal?");
-        
-        ButtonType aceptar = new ButtonType("Aceptar", ButtonData.OK_DONE);    
-        ButtonType cancelar = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
-        confirmacionSalida.getButtonTypes().setAll(aceptar, cancelar);
-        
-        Optional<ButtonType> resultadoSalida = confirmacionSalida.showAndWait();
-        if (resultadoSalida.get() == aceptar){
-        	volverMenuPrincipal();
-        }
-    }
-    
     @FXML
-    void clickHome(MouseEvent event) {
-    	mostrarAlerta();
+    void clickHome(MouseEvent event) throws IOException {
+    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ConfirmacionSalirMenuP.fxml"));
+        Parent root = (Parent) myLoader.load();
+        ControladorConfirmacionSalirMenuP controladorConfirmacionSalirMenuP = myLoader.<ControladorConfirmacionSalirMenuP>getController();
+        controladorConfirmacionSalirMenuP.inicializarDatos(this);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Confirmación de salida");
+        stage.setResizable(false);
+        stage.show();
     }
     	
     
@@ -92,7 +89,7 @@ public class ControladorMenuPause {
             ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
             menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn);
             Scene scene = new Scene(root);
-            primaryStage.setTitle("TWINS by Twinsoft");
+            primaryStage.setTitle("Menú Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();
@@ -146,10 +143,6 @@ public class ControladorMenuPause {
         } else {
         	imageSound.setImage(Sound0);
         }
-    }
-    
-    public void setControladorPartida(ControladorPartida partida) {
-    	this.cPartida = partida;
     }
 
     public void centrarVentana() {

@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="894.0" style="-fx-background-color: ffffff;" styleClass="bodybg" stylesheets="@../application/estilo1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorPartida">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="894.0" style="-fx-background-color: ffffff;" styleClass="fondoTablero" stylesheets="@../application/estilo2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorPartida">
    <children>
       <ToolBar maxHeight="-Infinity" prefHeight="48.0" prefWidth="894.0">
         <items>
-            <HBox maxHeight="-Infinity" prefHeight="29.0" prefWidth="246.0">
+            <HBox maxHeight="-Infinity" prefHeight="40.0" prefWidth="270.0">
                <padding>
                   <Insets left="20.0" />
                </padding>
@@ -29,28 +29,28 @@
                      </image></ImageView>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="35.0" prefWidth="248.0" spacing="8.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="45.0" prefWidth="214.0" spacing="8.0">
                <children>
                   <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imagenes/temporizador.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="tiempo" lineSpacing="20.0" prefHeight="31.0" prefWidth="204.0" text="1:00">
+                  <Label fx:id="tiempo" lineSpacing="20.0" prefHeight="45.0" prefWidth="94.0" text="1:00">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="146.0" spacing="8.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="155.0" spacing="8.0">
                <children>
                   <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imagenes/puntuacion.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="puntos" prefHeight="24.0" prefWidth="43.0" text="0">
+                  <Label fx:id="puntos" prefHeight="45.0" prefWidth="104.0" text="0">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -61,7 +61,7 @@
                <children>
                   <ImageView fx:id="iconoSonido" fitHeight="43.0" fitWidth="65.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imagenes/sonido_on.png" />
+                        <Image url="@../imagenes/sonido_on_2.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="pausa" fitHeight="41.0" fitWidth="44.0" onMouseClicked="#pausarPartida" pickOnBounds="true" preserveRatio="true">
@@ -84,7 +84,7 @@
             <Insets bottom="5.0" />
          </VBox.margin>
       </ToolBar>
-      <StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="894.0" style="-fx-background-color: ffffff;" styleClass="bodybg" stylesheets="@../application/estilo1.css">
+      <StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="894.0" style="-fx-background-color: ffffff;" styleClass="fondoTablero" stylesheets="@../application/estilo1.css">
          <children>
             <GridPane prefHeight="572.0" prefWidth="894.0">
               <columnConstraints>
@@ -182,14 +182,14 @@
                      <image>
                         <Image url="@../imagenes/dorso_aldeano.png" />
                      </image>
-                  </ImageView>
+                  </ImageView>              
                </children>
             </GridPane>
-            <ImageView fx:id="resultado" fitHeight="427.0" fitWidth="544.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/resultado_victoria.png" />
-               </image>
-            </ImageView>
+            <Label fx:id="puntosAnyadidos" alignment="CENTER" prefHeight="141.0" prefWidth="176.0" text="+5" textFill="#fb0000">
+               <font>
+                  <Font size="81.0" />
+               </font>
+            </Label>
          </children>
       </StackPane>
    </children>

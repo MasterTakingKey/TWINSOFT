@@ -4,19 +4,25 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="489.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPrincipal">
+<AnchorPane prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPrincipal">
    <children>
-      <ImageView fitHeight="489.0" fitWidth="771.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="711.0" fitWidth="882.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/menu_principal.png" />
          </image>
       </ImageView>
-      <Button fx:id="partidaEstandar" layoutX="257.0" layoutY="210.0" mnemonicParsing="false" onAction="#partidaEstandarHandler" prefHeight="70.0" prefWidth="193.0" text="Partida Estándar" />
-      <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" layoutX="573.0" layoutY="66.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagenes/sonido_on.png" />
-         </image>
-      </ImageView>
+      <Button fx:id="jugar" layoutX="241.0" layoutY="241.0" mnemonicParsing="false" onAction="#jugarHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="JUGAR" />
+      <Button fx:id="salir" layoutX="241.0" layoutY="330.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="SALIR" />
+      <StackPane layoutX="396.0" layoutY="470.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estilo1.css">
+         <children>
+            <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/sonido_on.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

@@ -1,4 +1,5 @@
 package application;
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -15,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -30,6 +32,9 @@ public class ControladorPartida {
 
     @FXML
     private Label puntos = new Label();
+    
+    @FXML
+    private Label puntosAnyadidos;
     
     @FXML
     private ImageView iconoSonido;
@@ -91,9 +96,6 @@ public class ControladorPartida {
     @FXML
     private ImageView carta33;
     
-    @FXML
-    private ImageView resultado;
-    
     private Stage primaryStage;
     
     private Tablero tableroPartida;
@@ -152,10 +154,6 @@ public class ControladorPartida {
     
     private AudioClip acierto;
     
-    private AudioClip victoria;
-    
-    private AudioClip derrota;
-    
     private AudioClip mismaCarta;
 	
 	private Timeline timeline;
@@ -173,15 +171,12 @@ public class ControladorPartida {
     	actualizarImagenSonido();
     	tiempo.textProperty().bind(Time);
     	iniciaTiempo(TIEMPO_PART_ESTANDAR);
-    	resultado.setVisible(false);
     }
 
     public void inicializarAudioClips() {
     	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
         error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
         acierto = new AudioClip(getClass().getResource("/sonidos/acierto.mp3").toString());
-        victoria = new AudioClip(getClass().getResource("/sonidos/victoria.mp3").toString());
-        derrota = new AudioClip(getClass().getResource("/sonidos/derrota1.mp3").toString());
         mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
     }
     
@@ -196,10 +191,11 @@ public class ControladorPartida {
     	parejasFalladas = new ArrayList<Integer>(tableroPartida.getNumParejas());
     	Time = new SimpleStringProperty("");
     	musicaFondo = new Musica("src/sonidos/Musica1.wav", 0L);
-    	Sound0 = new Image("/imagenes/sonido_off.png");
-        Sound1 = new Image("/imagenes/sonido_on.png");
+    	Sound0 = new Image("/imagenes/sonido_off_2.png");
+        Sound1 = new Image("/imagenes/sonido_on_2.png");
         auxiliarX = primaryStage.getX();
         auxiliarY = primaryStage.getY();
+        puntosAnyadidos.setVisible(false);
     }
     
     public void crearBaraja() {
@@ -275,7 +271,7 @@ public class ControladorPartida {
     		tiempoPrimera= System.currentTimeMillis();
     	} else {
     		long tiempoSegunda= System.currentTimeMillis();
-    		if (tiempoPrimera + 5000 <= tiempoSegunda) sumaPuntos(-5, false);
+    		if (tiempoPrimera + 5000 <= tiempoSegunda) sumaPuntos(-2, false);
     	}
     }
     
@@ -311,9 +307,24 @@ public class ControladorPartida {
     }
     
     public int sumaPuntos(int p, boolean parInc) {
+    	if (parInc) p -= parejaIncRepetida(primeraCarta.getId());
     	puntuacion += p;
-    	if (parInc) puntuacion -= parejaIncRepetida(primeraCarta.getId());
-    	if (puntuacion < 0) puntuacion = 0;
+    	String puntosAn = "";
+    	if (p < 0) {
+    		puntosAn = Integer.toString(p);
+    		puntosAnyadidos.setTextFill(Color.RED);
+    	}else {
+    		puntosAn = "+" + Integer.toString(p);
+    		puntosAnyadidos.setTextFill(Color.GREEN);
+    	}
+    	System.out.println(puntosAn);
+    	puntosAnyadidos.setText(puntosAn);
+    	PauseTransition pause = new PauseTransition(Duration.millis(750));
+    	pause.setOnFinished(e -> {
+    		  puntosAnyadidos.setVisible(false);
+          }); 
+    	puntosAnyadidos.setVisible(true);
+    	pause.play();
     	puntos.setText(Integer.toString(puntuacion));
     	return puntuacion;
     }
@@ -321,10 +332,8 @@ public class ControladorPartida {
     public void victoria() {
     	timeline.stop();
     	esVictoria = true;
-    	victoria.play();
     	musicaFondo.stopMusic();
-    	resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
-    	resultado.setVisible(true);
+    	mostrarResultado();
     }
     
     public boolean isVictoria() {
@@ -333,39 +342,65 @@ public class ControladorPartida {
     
     public void derrota() {
     	esDerrota = true;
-    	derrota.play();
     	musicaFondo.stopMusic();
-    	resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
-    	resultado.setVisible(true);
-    	stackPane.setDisable(true);
+    	mostrarResultado();
     }
     
     public boolean isDerrota() {
 		return esDerrota;
 	}
+    
+    public void mostrarResultado() {
+    	try {
+        	String puntuacionFinal = puntos.getText();
+        	String tiempoSobrante = tiempo.getText();
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ResultadoPartida.fxml"));
+    		Parent root = (Parent) myLoader.load();
+    		ControladorResultadoPartida controladorResultadoPartida = myLoader.<ControladorResultadoPartida>getController();
+    		if(isVictoria()) {
+        	controladorResultadoPartida.iniciarVictoria(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante);
+    		} else {
+    			controladorResultadoPartida.iniciarDerrota(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante);
+    		}
+    		Scene scene = new Scene(root);
+    		Stage stage = new Stage();
+    		stage.setScene(scene);
+    		stage.initModality(Modality.APPLICATION_MODAL);
+    		stage.setResizable(false);
+    		stage.initStyle(StageStyle.UNDECORATED);
+    		stage.show();
+    		stage.setX(auxiliarX + 3);
+            stage.setY(auxiliarY + 25);
+    	} catch (IOException e) {
+    		
+    	}
+    }
  
     @FXML
-    void pausarPartida(MouseEvent event) throws Exception {
-    	esPausa = true;
-    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-    	musicaFondo.stopMusic();
-    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
-        Parent root = (Parent) myLoader.load();
-        ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
-        controladorMenuPausa.initData(primaryStage, SoundOn);
-        controladorMenuPausa.setControladorPartida(this);
-        auxiliarX = primaryStage.getX();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().addAll(this.getClass().getResource("estilo1.css").toExternalForm());
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudar();});
-        stage.show();
-        stage.setX(auxiliarX + 3);
-        stage.setY(auxiliarY + 12);    
+    void pausarPartida(MouseEvent event) {
+    	try {
+    		esPausa = true;
+    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    		musicaFondo.stopMusic();
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
+    		Parent root = (Parent) myLoader.load();
+    		ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
+    		controladorMenuPausa.initData(primaryStage, this, SoundOn);
+    		auxiliarX = primaryStage.getX();
+    		Scene scene = new Scene(root);
+    		scene.getStylesheets().addAll(this.getClass().getResource("estilo1.css").toExternalForm());
+    		Stage stage = new Stage();
+    		stage.setScene(scene);
+    		stage.initModality(Modality.APPLICATION_MODAL);
+    		stage.setResizable(false);
+    		stage.initStyle(StageStyle.UNDECORATED);
+        	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudar();});
+        	stage.show();
+        	stage.setX(auxiliarX + 3);
+        	stage.setY(auxiliarY + 25);   
+    	} catch (IOException e) {
+    		
+    	}
     }
     
     public void reanudarPartida(boolean Sound) {
@@ -383,16 +418,12 @@ public class ControladorPartida {
     		voltearCarta.setVolume(1.0);
     		error.setVolume(1.0);
     		acierto.setVolume(1.0);
-    		victoria.setVolume(1.0);
-    		derrota.setVolume(1.0);
     	}
     	else {
     		musicaFondo.stopMusic();
     		voltearCarta.setVolume(0);
     		error.setVolume(0);
     		acierto.setVolume(0);
-    		victoria.setVolume(0);
-    		derrota.setVolume(0);
     	}
     }
     

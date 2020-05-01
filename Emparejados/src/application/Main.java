@@ -6,9 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class Main extends Application {
 
@@ -18,6 +18,8 @@ public class Main extends Application {
         Parent root = myLoader.load();  
         ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
         menuPrincipal.iniciarMenuPrincipal(primaryStage, true);
+        Image image = new Image("/imagenes/Icon.png");
+        primaryStage.getIcons().add(image);
         Scene scene = new Scene(root);
         primaryStage.setTitle("Menú Principal");
         primaryStage.setScene(scene);

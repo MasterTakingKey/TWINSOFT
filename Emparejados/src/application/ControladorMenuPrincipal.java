@@ -26,13 +26,22 @@ public class ControladorMenuPrincipal {
     private Button jugar;
     
     @FXML
-    private Button partidaCarta;
+    private Button ajustes;
 
     @FXML
-    private Button juegoLibre;
+    private Button partidaRapida;
+
+    @FXML
+    private Button modoLibre;
+
+    @FXML
+    private Button porCarta;
     
     @FXML
     private Button salir;
+    
+    @FXML
+    private Button volverAtras;
     
     @FXML
     private ImageView iconoSonido;
@@ -55,6 +64,7 @@ public class ControladorMenuPrincipal {
         inicializarVariables();
 		actualizarSonido();
         actualizarImagenSonido();
+        muestraMenuP(true);
     }
     
     public void inicializarVariables() {
@@ -81,6 +91,16 @@ public class ControladorMenuPrincipal {
         }
     }
     
+    public void muestraMenuP(boolean b) {
+    	jugar.setVisible(b);
+    	ajustes.setVisible(b);
+    	salir.setVisible(b);
+    	partidaRapida.setVisible(!b);
+    	modoLibre.setVisible(!b);
+    	porCarta.setVisible(!b);
+    	volverAtras.setVisible(!b);
+    }
+    
 
     @FXML
     void clickSound(MouseEvent event) {
@@ -95,7 +115,23 @@ public class ControladorMenuPrincipal {
     }
     
     @FXML
-    void jugarHandler(ActionEvent event) throws IOException {
+    void jugarHandler(ActionEvent event) {
+    	muestraMenuP(false);
+    	
+    }
+    
+    @FXML
+    void ajustesHandler(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void modoLibreHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void partidaRapidaHandler(ActionEvent event) throws IOException {
     	musicaFondo.stopMusic();
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
         Parent root = (Parent) myLoader.load();
@@ -108,16 +144,12 @@ public class ControladorMenuPrincipal {
         primaryStage.show();
         centrarVentana();
     }
-    
-    @FXML
-    void partidaCartaHandler(ActionEvent event) {
 
-    }
-    
     @FXML
-    void juegoLibreHandler(ActionEvent event) {
-
+    void porCartaHandler(ActionEvent event) {
+    	
     }
+
     
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
@@ -131,6 +163,12 @@ public class ControladorMenuPrincipal {
         stage.setResizable(false);
         stage.show();
     }
+    
+    @FXML
+    void volverAtrasHandler(ActionEvent event) {
+    	muestraMenuP(true);
+    }
+
 
     public void centrarVentana() {
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();

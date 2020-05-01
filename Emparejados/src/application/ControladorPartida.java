@@ -343,6 +343,7 @@ public class ControladorPartida {
     	timeline.stop();
     	esVictoria = true;
     	victoria.play();
+    	bonificacionVictoria();
     	musicaFondo.stopMusic();
     	resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
     	resultado.setVisible(true);
@@ -351,6 +352,13 @@ public class ControladorPartida {
     public boolean isVictoria() {
 		return esVictoria;
 	}
+    
+    public void bonificacionVictoria() {
+    	int bonif;
+    	bonif = (int) (counter * 0.5) + tableroPartida.getNumParejas(); 
+    	sumaPuntos(bonif, false);
+    	
+    }
     
     public void derrota() {
     	esDerrota = true;

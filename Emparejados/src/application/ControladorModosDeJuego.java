@@ -1,8 +1,8 @@
 package application;
 
+
 import java.io.IOException;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,32 +10,26 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
-public class ControladorMenuPrincipal {
-
+public class ControladorModosDeJuego{
 
     @FXML
-    private Button jugar;
-    
-    @FXML
-    private Button partidaCarta;
+    private Button partidaEstandar;
 
-    @FXML
-    private Button juegoLibre;
-    
-    @FXML
-    private Button salir;
-    
     @FXML
     private ImageView iconoSonido;
+
+    @FXML
+    private Button modoLibre;
+
+    @FXML
+    private Button partPorCarta;
     
     private Stage primaryStage;
     
@@ -49,11 +43,13 @@ public class ControladorMenuPrincipal {
     
     private long tiempoMusica;
 
-    public void iniciarMenuPrincipal(Stage stage, boolean soundOn){
+    
+    public void iniciarModosdeJuego(Stage stage, boolean soundOn, Musica musicaFondo){
         primaryStage = stage;
         SoundOn = soundOn;
+        this.musicaFondo = musicaFondo;
         inicializarVariables();
-		actualizarSonido();
+		//actualizarSonido();
         actualizarImagenSonido();
     }
     
@@ -80,7 +76,6 @@ public class ControladorMenuPrincipal {
         	iconoSonido.setImage(Sound0);
         }
     }
-    
 
     @FXML
     void clickSound(MouseEvent event) {
@@ -95,7 +90,7 @@ public class ControladorMenuPrincipal {
     }
     
     @FXML
-    void jugarHandler(ActionEvent event) throws IOException {
+    void partidaEstandarHandler(ActionEvent event) throws IOException {
     	musicaFondo.stopMusic();
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
         Parent root = (Parent) myLoader.load();
@@ -109,29 +104,6 @@ public class ControladorMenuPrincipal {
         centrarVentana();
     }
     
-    @FXML
-    void partidaCartaHandler(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void juegoLibreHandler(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void salirHandler(ActionEvent event) throws IOException {
-    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ConfirmacionSalirApp.fxml"));
-        Parent root = (Parent) myLoader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Confirmación de salida");
-        stage.setResizable(false);
-        stage.show();
-    }
-
     public void centrarVentana() {
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
         primaryStage.setX((screen.getWidth() - primaryStage.getWidth()) / 2);

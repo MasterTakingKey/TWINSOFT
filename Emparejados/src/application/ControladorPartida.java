@@ -196,6 +196,7 @@ public class ControladorPartida {
         auxiliarX = primaryStage.getX();
         auxiliarY = primaryStage.getY();
         puntosAnyadidos.setVisible(false);
+        puntosAnyadidos.setStyle(null);
     }
     
     public void crearBaraja() {
@@ -331,14 +332,28 @@ public class ControladorPartida {
     
     public void victoria() {
     	timeline.stop();
-    	esVictoria = true;
-    	musicaFondo.stopMusic();
-    	mostrarResultado();
+    	bonificacionVictoria();
+    	PauseTransition pause = new PauseTransition(Duration.millis(750));
+    	pause.setOnFinished(e -> {
+    		esVictoria = true;
+        	musicaFondo.stopMusic();
+        	mostrarResultado();
+          }); 
+    	pause.play();
+    	
     }
     
     public boolean isVictoria() {
 		return esVictoria;
 	}
+    
+    public void bonificacionVictoria() {
+    	int bonif;
+    	bonif = (int) (counter * 0.5) + tableroPartida.getNumParejas(); 
+    	sumaPuntos(bonif, false);
+
+    }
+
     
     public void derrota() {
     	esDerrota = true;

@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -93,6 +94,9 @@ public class ControladorPartida {
     
     @FXML
     private ImageView resultado;
+    
+    @FXML
+    private Label puntosAnyadidos;
     
     private Stage primaryStage;
     
@@ -174,6 +178,7 @@ public class ControladorPartida {
     	tiempo.textProperty().bind(Time);
     	iniciaTiempo(TIEMPO_PART_ESTANDAR);
     	resultado.setVisible(false);
+    	puntosAnyadidos.setVisible(false);
     }
 
     public void inicializarAudioClips() {
@@ -275,7 +280,7 @@ public class ControladorPartida {
     		tiempoPrimera= System.currentTimeMillis();
     	} else {
     		long tiempoSegunda= System.currentTimeMillis();
-    		if (tiempoPrimera + 5000 <= tiempoSegunda) sumaPuntos(-5, false);
+    		if (tiempoPrimera + 5000 <= tiempoSegunda) sumaPuntos(-2, false);
     	}
     }
     
@@ -311,10 +316,26 @@ public class ControladorPartida {
     }
     
     public int sumaPuntos(int p, boolean parInc) {
+    	if (parInc) p -= parejaIncRepetida(primeraCarta.getId());
     	puntuacion += p;
-    	if (parInc) puntuacion -= parejaIncRepetida(primeraCarta.getId());
-    	if (puntuacion < 0) puntuacion = 0;
-    	puntos.setText(Integer.toString(puntuacion));
+    	//if (puntuacion < 0) puntuacion = 0; la puntuacion puede ser negativa
+    	String puntosAn = "";
+    	if (p < 0) {
+    		puntosAn = Integer.toString(p);
+    		puntosAnyadidos.setTextFill(Color.RED);
+    	}else {
+    		puntosAn = "+" + Integer.toString(p);
+    		puntosAnyadidos.setTextFill(Color.GREEN);
+    	}
+    	System.out.println(puntosAn);
+    	puntosAnyadidos.setText(puntosAn);
+    	PauseTransition pause = new PauseTransition(Duration.millis(750));
+    	pause.setOnFinished(e -> {
+    		  puntosAnyadidos.setVisible(false);
+          }); 
+    	puntosAnyadidos.setVisible(true);
+    	pause.play();
+    	puntos.setText(Integer.toString(puntuacion));	
     	return puntuacion;
     }
     

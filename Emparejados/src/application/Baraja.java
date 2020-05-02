@@ -3,7 +3,6 @@ package application;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import javafx.scene.image.Image;
 
 public class Baraja {
@@ -13,12 +12,11 @@ public class Baraja {
 	Carta[] baraja;
 	int tamanyo;
 	
-	public Baraja(String n, Image imgD, int t) {
-		nombre = n;
-		imagenDorso = imgD;
-		tamanyo = t;
-		baraja = new Carta[t];
-		//inicializarBaraja(tamanyo);
+	public Baraja(String nombre, Image imagenDorso, int tamanyo) {
+		this.nombre = nombre;
+		this.imagenDorso = imagenDorso;
+		this.tamanyo = tamanyo;
+		baraja = new Carta[tamanyo];
 	}
 	
 	public String getNombre() {
@@ -33,8 +31,8 @@ public class Baraja {
 		return tamanyo;
 	}
 	
-	public Carta getCarta(int pos) {
-		return baraja[pos];
+	public Carta getCarta(int posicion) {
+		return baraja[posicion];
 	}
 	
 	public void setNombre(String nuevoNombre) {
@@ -47,17 +45,11 @@ public class Baraja {
 	
 	public void setTamanyo(int nuevoTamanyo) {
 		tamanyo = nuevoTamanyo;
-		inicializarBaraja(tamanyo);
+
 	}
 	
-	public void setCarta(Carta nuevaCarta, int pos) {
-		baraja[pos] = nuevaCarta;
-	}
-	
-	public void inicializarBaraja(int tamanyo) {
-		for(int i = 0; i < tamanyo; i++) {
-			baraja[i] = null;
-		}
+	public void setCarta(Carta nuevaCarta, int posisicon) {
+		baraja[posisicon] = nuevaCarta;
 	}
 	
 	public void barajar() {

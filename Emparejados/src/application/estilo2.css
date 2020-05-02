@@ -1,0 +1,9 @@
+
+.fondoTablero{
+    -fx-background-image: url("/imagenes/tablero.png");
+}
+
+.label{
+	-fx-font-weight: bold;
+	-fx-font-size: 30;
+}

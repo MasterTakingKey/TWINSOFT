@@ -1,7 +1,7 @@
 package application;
+
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -27,9 +27,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-public class ControladorPartida {
+public class ControladorPartidaCarta {
     
-	private static final int TIEMPO_PART_ESTANDAR = 60;
+	private static final int TIEMPO_PART_ESTANDAR = 90;
 	
 	@FXML
     private Label tiempo = new Label();
@@ -100,11 +100,16 @@ public class ControladorPartida {
     @FXML
     private ImageView carta33;
     
+    @FXML
+    private ImageView siguienteImagenMostrada;
+    
     private Stage primaryStage;
     
     private Tablero tableroPartida;
     
     private Baraja barajaPartida;
+    
+    private Baraja barajaAuxiliar;
   
     private Carta primeraCarta;
     
@@ -112,12 +117,14 @@ public class ControladorPartida {
     
     private Carta cartaSeleccionada;
     
+    private Carta siguienteCartaMostrada;
+    
     private ImageView primeraImagen;
     
     private ImageView segundaImagen;
     
     private ImageView imagenSeleccionada;
-
+    
     private Image Sound0;
     
     private Image Sound1;
@@ -127,6 +134,8 @@ public class ControladorPartida {
     private int cartasGiradas;
     
 	private int puntuacion;
+	
+	private int indiceBarajaAuxiliar;
 	
 	private Integer counter;
 	
@@ -162,7 +171,7 @@ public class ControladorPartida {
 	
 	private StringProperty Time; 
 
-    public void iniciarPartidaEstandar(Stage stage, boolean soundOn){
+    public void iniciarPartidaCarta(Stage stage, boolean soundOn){
         primaryStage = stage;
         SoundOn = soundOn;
     	inicializarVariables();
@@ -170,20 +179,16 @@ public class ControladorPartida {
     	actualizarSonido();
     	actualizarImagenSonido();
     	barajaPartida.crearBarajaAnimales(2);
+    	barajaAuxiliar.crearBarajaAnimales(1);
     	tableroPartida.llenarTablero(barajaPartida);
+    	mostrarSiguienteCarta();
     	tiempo.textProperty().bind(Time);
     	iniciaTiempo(TIEMPO_PART_ESTANDAR);
-    }
-
-    public void inicializarAudioClips() {
-    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
-        error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
-        acierto = new AudioClip(getClass().getResource("/sonidos/acierto.mp3").toString());
-        mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
     }
     
     public void inicializarVariables() {
     	barajaPartida = new Baraja();
+    	barajaAuxiliar = new Baraja();
     	tableroPartida = new Tablero(4);
     	esPrimeraCarta = true;
     	cartasGiradas = 0;
@@ -199,8 +204,16 @@ public class ControladorPartida {
         Sound1 = new Image("/imagenes/sonido_on_2.png");
         puntosAnyadidos.setVisible(false);
         puntosAnyadidos.setStyle(null);
+        indiceBarajaAuxiliar = 0;
     }
     
+    public void inicializarAudioClips() {
+    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
+        error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
+        acierto = new AudioClip(getClass().getResource("/sonidos/acierto.mp3").toString());
+        mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
+    }
+
     @FXML
     void muestraCarta(MouseEvent event) {    	
     	cartasGiradas++;
@@ -229,12 +242,13 @@ public class ControladorPartida {
     		} else {
 				voltearCarta.play();
 				PauseTransition pause = new PauseTransition(Duration.seconds(1));
-    			if(primeraCarta.getId() == segundaCarta.getId()) {
+				if(primeraCarta.getId() == segundaCarta.getId() && primeraCarta.getId() == siguienteCartaMostrada.getId()) {
     				stackPane.setDisable(true);
                     pause.setOnFinished(e -> {
                         parejaCorrecta();
                         stackPane.setDisable(false);
-                    });  
+                        mostrarSiguienteCarta();
+                    });
     			} else {
     				stackPane.setDisable(true);
                     pause.setOnFinished(e -> {
@@ -246,6 +260,11 @@ public class ControladorPartida {
 				esPrimeraCarta = true;
     		}			    	
     	}
+    }
+    
+    public void mostrarSiguienteCarta() {
+        siguienteCartaMostrada = barajaAuxiliar.getCarta(indiceBarajaAuxiliar);
+        siguienteImagenMostrada.setImage(siguienteCartaMostrada.getImagenFrente());
     }
     
     public Carta deImagenACarta(ImageView imgSeleccionada) {
@@ -271,6 +290,8 @@ public class ControladorPartida {
     	segundaImagen.setDisable(true);
     	if(cartasGiradas == barajaPartida.getTamanyo()) {
     		victoria();
+    	} else {
+        	indiceBarajaAuxiliar++;
     	}
     }
     
@@ -369,9 +390,9 @@ public class ControladorPartida {
     		primaryStage.hide();
     		stage.setTitle("Resultado");
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "estandar");
+            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "carta");
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "estandar");
+        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "carta");
         	}
     		stage.show();
     		stage.setX(auxiliarX);
@@ -380,7 +401,7 @@ public class ControladorPartida {
     		
     	}
     }
- 
+    
     @FXML
     void pausarPartida(MouseEvent event) {
     	try {
@@ -398,14 +419,13 @@ public class ControladorPartida {
     		stage.setScene(scene);
     		stage.initModality(Modality.APPLICATION_MODAL);
     		stage.setResizable(false);
-        	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaEstandar();});
+        	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaCarta();});
         	primaryStage.hide();
-        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, this, SoundOn);
+        	controladorMenuPausa.initDataPartidaCarta(primaryStage, this, SoundOn);
         	stage.show();
         	stage.setY(auxiliarY);
         	stage.setX(auxiliarX);
         	stage.toFront();
-        	System.out.println(primaryStage.getHeight());
     	} catch (IOException e) {
     		
     	}
@@ -420,7 +440,7 @@ public class ControladorPartida {
     	timeline.play();
     	SoundOn = Sound;
     	actualizarSonido();
-    	actualizarImagenSonido();  	
+    	actualizarImagenSonido();
     }
     
     public void actualizarSonido() {
@@ -517,6 +537,13 @@ public class ControladorPartida {
     public void actualizarPosicionStage() {
     	auxiliarX = primaryStage.getX();
         auxiliarY = primaryStage.getY();
+    }
+    
+    public void delay(int segundos) {
+    	try {
+            Thread.sleep(segundos*1000);
+        } catch (InterruptedException e) {
+        }
     }
 
 }

@@ -7,9 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,7 +32,9 @@ public class ControladorMenuPause {
 
     private boolean SoundOn;
     
-    private ControladorPartida cPartida;
+    private ControladorPartida partidaEstandar;
+    
+    private ControladorPartidaCarta partidaCarta;
     
     private Image Sound0;
     
@@ -45,19 +44,30 @@ public class ControladorMenuPause {
     
     private long tiempoMusica;
     
-    private Alert confirmacionSalida;
+    private String tipoPartida;
     
     Optional<ButtonType> resultadoSalida;
     
-    void initData(Stage partida, ControladorPartida cPartida, boolean soundOn) {
+    void initDataPartidaEstandar(Stage partida, ControladorPartida partidaEstandar, boolean soundOn) {
     	primaryStage = partida;
-    	this.cPartida = cPartida;
+    	this.partidaEstandar = partidaEstandar;
         SoundOn = soundOn;
+        tipoPartida = "estandar";
         inicializarVariables();
 		actualizarSonido();
         actualizarImagenSonido();
     }
     
+    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, boolean soundOn) {
+    	primaryStage = partida;
+    	this.partidaCarta = partidaCarta;
+        SoundOn = soundOn;
+        tipoPartida = "carta";
+        inicializarVariables();
+		actualizarSonido();
+        actualizarImagenSonido();
+    }
+  
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
@@ -65,7 +75,7 @@ public class ControladorMenuPause {
         icon = new Image("/imagenes/Icon.png");
         Stage stage = (Stage) imageSound.getScene().getWindow();
         stage.getIcons().add(icon);
-        stage.setTitle("Menu de Pausa");
+        stage.setTitle("Menú de Pausa");
     }
     
     @FXML
@@ -76,7 +86,7 @@ public class ControladorMenuPause {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Confirmaciï¿½n de salida");
+        stage.setTitle("Confirmación de salida");
         stage.setResizable(false);
         ControladorConfirmacionSalirMenuP controladorConfirmacionSalirMenuP = myLoader.<ControladorConfirmacionSalirMenuP>getController();
         controladorConfirmacionSalirMenuP.inicializarDatos(this);
@@ -94,8 +104,8 @@ public class ControladorMenuPause {
             Parent root = myLoader.load();  
             ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
             menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn);
-            Scene scene = new Scene(root);
-            primaryStage.setTitle("Menï¿½ Principal");
+            Scene scene = new Scene(root, 882, 611);
+            primaryStage.setTitle("Menú Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();
@@ -107,17 +117,33 @@ public class ControladorMenuPause {
 
     @FXML
     void clickPlay(MouseEvent event) throws IOException {
-    	reanudar();
+    	if(tipoPartida == "estandar") {
+        	reanudarPartidaEstandar();
+    	} else if(tipoPartida == "carta") {
+    		reanudarPartidaCarta();
+    	}
     }
     
-    void reanudar() {
+    void reanudarPartidaEstandar() {
     	musicaFondo.stopMusic();
-    	boolean victoria = cPartida.isVictoria();
-    	boolean derrota = cPartida.isDerrota();
+    	boolean victoria = partidaEstandar.isVictoria();
+    	boolean derrota = partidaEstandar.isDerrota();
     	if (!derrota && !victoria) {
 	    	Stage stage = (Stage) imagePlay.getScene().getWindow();
 	    	stage.close();
-	    	cPartida.reanudarPartida(SoundOn, stage.getX(), stage.getY());
+	    	partidaEstandar.reanudarPartida(SoundOn, stage.getX(), stage.getY());
+    	}
+    	
+    }
+    
+    void reanudarPartidaCarta() {
+    	musicaFondo.stopMusic();
+    	boolean victoria = partidaCarta.isVictoria();
+    	boolean derrota = partidaCarta.isDerrota();
+    	if (!derrota && !victoria) {
+	    	Stage stage = (Stage) imagePlay.getScene().getWindow();
+	    	stage.close();
+	    	partidaCarta.reanudarPartida(SoundOn, stage.getX(), stage.getY());
     	}
     }
 

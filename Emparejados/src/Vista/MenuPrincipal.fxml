@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPrincipal">
+<AnchorPane prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPrincipal">
    <children>
       <ImageView fitHeight="711.0" fitWidth="882.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -25,9 +25,9 @@
          </children>
       </StackPane>
       <Button fx:id="ajustes" layoutX="242.0" layoutY="314.0" mnemonicParsing="false" onAction="#ajustesHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="AJUSTES" />
-      <Button fx:id="partidaRapida" layoutX="242.0" layoutY="195.0" mnemonicParsing="false" onAction="#partidaRapidaHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="PARTIDA RÁPIDA" />
+      <Button fx:id="partidaEstandar" layoutX="242.0" layoutY="195.0" mnemonicParsing="false" onAction="#partidaEstandarHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="PARTIDA ESTÁNDAR" />
       <Button fx:id="modoLibre" layoutX="242.0" layoutY="268.0" mnemonicParsing="false" onAction="#modoLibreHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="MODO LIBRE" />
-      <Button fx:id="porCarta" layoutX="241.0" layoutY="341.0" mnemonicParsing="false" onAction="#porCartaHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="PARTIDA POR CARTA" />
+      <Button fx:id="partidaCarta" layoutX="241.0" layoutY="341.0" mnemonicParsing="false" onAction="#partidaCartaHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="PARTIDA POR CARTA" />
       <Button fx:id="volverAtras" layoutX="242.0" layoutY="409.0" mnemonicParsing="false" onAction="#volverAtrasHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="VOLVER ATRÁS" />
    </children>
 </AnchorPane>

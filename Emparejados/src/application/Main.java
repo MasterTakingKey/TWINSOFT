@@ -20,7 +20,7 @@ public class Main extends Application {
         menuPrincipal.iniciarMenuPrincipal(primaryStage, true);
         Image icono = new Image("/imagenes/Icon.png");
         primaryStage.getIcons().add(icono);
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 882, 611);
         primaryStage.setTitle("Menú Principal");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);

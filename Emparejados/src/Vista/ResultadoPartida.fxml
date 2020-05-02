@@ -13,8 +13,8 @@
             <Image url="@../imagenes/resultado_victoria.png" />
          </image>
       </ImageView>
-      <Label fx:id="puntuacionFinal" layoutX="293.0" layoutY="369.0" prefHeight="36.0" prefWidth="424.0" text="Puntuación Final: " />
-      <Label fx:id="tiempoRestante" layoutX="293.0" layoutY="431.0" prefHeight="36.0" prefWidth="424.0" text="Tiempo Restante: " />
+      <Label fx:id="puntuacionFinal" layoutX="245.0" layoutY="369.0" prefHeight="47.0" prefWidth="472.0" text="Puntuación Final: " />
+      <Label fx:id="tiempoRestante" layoutX="245.0" layoutY="431.0" prefHeight="47.0" prefWidth="472.0" text="Tiempo Restante: " />
       <Button fx:id="salir" layoutX="173.0" layoutY="515.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" text="Salir al Menú" />
       <Button fx:id="jugar" layoutX="483.0" layoutY="515.0" mnemonicParsing="false" onAction="#jugarHandler" prefHeight="54.0" prefWidth="240.0" text="Volver a Jugar" />
    </children>

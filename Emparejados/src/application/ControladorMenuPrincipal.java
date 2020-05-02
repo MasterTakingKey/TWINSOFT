@@ -1,8 +1,6 @@
 package application;
 
 import java.io.IOException;
-
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
 public class ControladorMenuPrincipal {
 
@@ -29,13 +25,13 @@ public class ControladorMenuPrincipal {
     private Button ajustes;
 
     @FXML
-    private Button partidaRapida;
+    private Button partidaEstandar;
 
     @FXML
     private Button modoLibre;
 
     @FXML
-    private Button porCarta;
+    private Button partidaCarta;
     
     @FXML
     private Button salir;
@@ -95,9 +91,9 @@ public class ControladorMenuPrincipal {
     	jugar.setVisible(b);
     	ajustes.setVisible(b);
     	salir.setVisible(b);
-    	partidaRapida.setVisible(!b);
+    	partidaEstandar.setVisible(!b);
     	modoLibre.setVisible(!b);
-    	porCarta.setVisible(!b);
+    	partidaCarta.setVisible(!b);
     	volverAtras.setVisible(!b);
     }
     
@@ -131,23 +127,37 @@ public class ControladorMenuPrincipal {
     }
 
     @FXML
-    void partidaRapidaHandler(ActionEvent event) throws IOException {
-    	musicaFondo.stopMusic();
-    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
-        Parent root = (Parent) myLoader.load();
-        ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();
-        controladorPartida.iniciarPartida(primaryStage, SoundOn);
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Partida Estándar");
-        primaryStage.setResizable(false);
-        primaryStage.show();
-        centrarVentana();
+    void partidaEstandarHandler(ActionEvent event) {
+      	musicaFondo.stopMusic();
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn);
+      		Scene scene = new Scene(root, 894, 623);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Partida Estándar");
+      		primaryStage.setResizable(false);
+      		primaryStage.show();
+      		centrarVentana();
+      	} catch (IOException e) {}
     }
 
     @FXML
-    void porCartaHandler(ActionEvent event) {
-    	
+    void partidaCartaHandler(ActionEvent event) {
+    	musicaFondo.stopMusic();
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaCarta.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaCarta controladorPartidaCarta = myLoader.<ControladorPartidaCarta>getController();
+      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn);
+      		Scene scene = new Scene(root, 894, 820);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Partida Por Carta");
+      		primaryStage.setResizable(false);
+      		primaryStage.show();
+      		centrarVentana();
+      	} catch (IOException e) {}
     }
 
     

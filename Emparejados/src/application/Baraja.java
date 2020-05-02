@@ -12,6 +12,10 @@ public class Baraja {
 	Carta[] baraja;
 	int tamanyo;
 	
+	public Baraja() {
+		
+	}
+	
 	public Baraja(String nombre, Image imagenDorso, int tamanyo) {
 		this.nombre = nombre;
 		this.imagenDorso = imagenDorso;
@@ -57,4 +61,23 @@ public class Baraja {
 		Collections.shuffle(listaCartas);
 		listaCartas.toArray(baraja);
 	}
+	
+    public void crearBarajaAnimales(int repeticiones) {
+    	nombre = "Animales";
+    	tamanyo = 8*repeticiones;
+    	imagenDorso = new Image("/imagenes/dorso_aldeano.png");
+    	baraja = new Carta[tamanyo];
+    	int index = 0;
+    	for(int i = 0; i < repeticiones; i++) {
+    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/elefante.png"), 0), index++);
+    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/hipopotamo.png"), 1), index++);
+    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/jirafa.png"), 2), index++);
+    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/leon.png"), 3), index++);
+    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/mono.png"), 4), index++);
+    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/rinoceronte.png"), 5), index++);
+    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/serpiente.png"), 6), index++);
+    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/zebra.png"), 7), index++);
+    	}
+    	this.barajar();
+    }
 }

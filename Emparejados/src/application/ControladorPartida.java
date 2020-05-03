@@ -303,7 +303,7 @@ public class ControladorPartida {
     		puntosAn = "+" + Integer.toString(p);
     		puntosAnyadidos.setTextFill(Color.GREEN);
     	}
-    	System.out.println(puntosAn);
+    	//System.out.println(puntosAn);
     	puntosAnyadidos.setText(puntosAn);
     	PauseTransition pause = new PauseTransition(Duration.millis(750));
     	pause.setOnFinished(e -> {
@@ -590,7 +590,7 @@ public class ControladorPartida {
     }	
     
     public void corregirTamañoVentana() {
-    	thisStage.setWidth(900);
+    	thisStage.setWidth(910);
     	thisStage.setHeight(623);
     }
 

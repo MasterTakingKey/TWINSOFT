@@ -1,6 +1,8 @@
 package application;
 
 import java.io.IOException;
+
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +10,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Separator;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,33 +20,30 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class ControladorMenuPrincipal {
+public class ControladorMenuAjustes {
 
 
-    @FXML
-    private Button jugar;
-    
-    @FXML
-    private Button ajustes;
+	@FXML
+	private Button editorBarajas;
 
-    @FXML
-    private Button partidaEstandar;
+	@FXML
+	private ImageView iconoSonido;
 
-    @FXML
-    private Button modoLibre;
+	@FXML
+	private ChoiceBox<String> musicaPartida;
 
-    @FXML
-    private Button partidaCarta;
-    
-    @FXML
-    private Button salir;
-    
-    @FXML
-    private Button volverAtras;
-    
-    @FXML
-    private ImageView iconoSonido;
-    
+	@FXML
+	private ChoiceBox<String> musicaMenuP;
+
+	@FXML
+	private ChoiceBox<String> musicaPausa;
+
+	@FXML
+	private ChoiceBox<String> tema;
+
+	@FXML
+	private Button salir;
+
     private Stage primaryStage;
     
     private Stage thisStage;
@@ -56,13 +58,13 @@ public class ControladorMenuPrincipal {
     
     private long tiempoMusica;
 
-    public void iniciarMenuPrincipal(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY){
+    public void iniciarMenuAjustes(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY){
         primaryStage = stage;
         SoundOn = soundOn;
         inicializarVariables();
+        inicializaChoiceBox();
 		actualizarSonido();
         actualizarImagenSonido();
-        muestraMenuP(true);
         corregirTamañoVentana();
         if(primeraVez) { 
             centrarVentana();
@@ -70,6 +72,36 @@ public class ControladorMenuPrincipal {
             corregirPosicionVentana(anteriorX, anteriorY);
         }
     }
+    public void inicializaChoiceBox() {
+    	System.out.println("Llega hasta inicializaChoiceBox");
+    	tema = new ChoiceBox<String>(FXCollections.observableArrayList(
+    		    "Azul",
+                "Verde",
+                "Rojo",
+                "Amarillo"));
+		tema.setValue("Azul");
+    	/*tema.getItems().addAll(
+                "Azul",
+                "Verde",
+                "Rojo",
+                "Amarillo"
+            );  */
+    	musicaMenuP= new ChoiceBox<String>();
+    	cargaMusica(musicaMenuP);
+    	musicaPartida= new ChoiceBox<String>();
+    	cargaMusica(musicaPartida);
+    	musicaPausa= new ChoiceBox<String>();
+    	cargaMusica(musicaPausa); 
+    }
+    
+    public void cargaMusica(ChoiceBox<String> menu) {  
+    	System.out.println("Llega hasta cargaMusica");
+    	menu.setItems(FXCollections.observableArrayList(
+    		    "Musica1", "Musica2", "Musica3", "Musica4")
+    		);
+    	menu.setTooltip(new Tooltip("Selecciona la canción que quieres para este menú"));
+    }
+    
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
@@ -96,15 +128,7 @@ public class ControladorMenuPrincipal {
         }
     }
     
-    public void muestraMenuP(boolean b) {
-    	jugar.setVisible(b);
-    	ajustes.setVisible(b);
-    	salir.setVisible(b);
-    	partidaEstandar.setVisible(!b);
-    	modoLibre.setVisible(!b);
-    	partidaCarta.setVisible(!b);
-    	volverAtras.setVisible(!b);
-    }
+  
     
 
     @FXML
@@ -120,66 +144,10 @@ public class ControladorMenuPrincipal {
     }
     
     @FXML
-    void jugarHandler(ActionEvent event) {
-    	muestraMenuP(false);
-    	
-    }
-    
-    @FXML
-    void ajustesHandler(ActionEvent event) throws IOException {
-    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
-        Parent root = myLoader.load();  
-        ControladorMenuAjustes menuPrincipal = myLoader.<ControladorMenuAjustes>getController();
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Menú Ajustes");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        
-        Image icono = new Image("/imagenes/Icon.png");
-        primaryStage.getIcons().add(icono);
-        
-        menuPrincipal.iniciarMenuAjustes(primaryStage, true, true, 0, 0);
-        primaryStage.show();
-    }
-    
-    @FXML
-    void modoLibreHandler(ActionEvent event) {
+    void editorBarajasHandler(ActionEvent event) {
 
     }
-
-    @FXML
-    void partidaEstandarHandler(ActionEvent event) {
-      	musicaFondo.stopMusic();
-      	try {
-      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
-      		Parent root = (Parent) myLoader.load();
-      		ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();
-      		Scene scene = new Scene(root);
-      		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Partida Estándar");
-      		primaryStage.setResizable(false);
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn, thisStage.getX(), thisStage.getY());
-      		primaryStage.show();
-      	} catch (IOException e) {}
-    }
-
-    @FXML
-    void partidaCartaHandler(ActionEvent event) {
-    	musicaFondo.stopMusic();
-      	try {
-      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaCarta.fxml"));
-      		Parent root = (Parent) myLoader.load();
-      		ControladorPartidaCarta controladorPartidaCarta = myLoader.<ControladorPartidaCarta>getController();
-      		Scene scene = new Scene(root);
-      		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Partida Por Carta");
-      		primaryStage.setResizable(false);
-      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn, thisStage.getX(), thisStage.getY());
-      		primaryStage.show();
-      	} catch (IOException e) {}
-    }
-
-    
+   
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ConfirmacionSalirApp.fxml"));
@@ -195,11 +163,6 @@ public class ControladorMenuPrincipal {
         stage.show();
     }
     
-    @FXML
-    void volverAtrasHandler(ActionEvent event) {
-    	muestraMenuP(true);
-    }
-
     public void corregirTamañoVentana() {
     	thisStage.setWidth(900);
     	thisStage.setHeight(650);

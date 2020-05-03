@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuAjustes">
+   <children>
+      <ImageView fitHeight="711.0" fitWidth="882.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/menu_principal.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="editorBarajas" layoutX="169.0" layoutY="351.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="54.0" prefWidth="246.0" stylesheets="@../application/estilo1.css" text="EDITOR DE BARAJAS" />
+      <StackPane layoutX="398.0" layoutY="511.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estilo1.css">
+         <children>
+            <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/sonido_on.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <Label alignment="CENTER" layoutX="356.0" layoutY="161.0" prefHeight="54.0" prefWidth="176.0" stylesheets="@../application/estilo1.css" text="AJUSTES" />
+      <ChoiceBox fx:id="musicaPartida" layoutX="127.0" layoutY="272.0" prefHeight="25.0" prefWidth="165.0" />
+      <Label alignment="CENTER" layoutX="127.0" layoutY="235.0" prefHeight="30.0" prefWidth="165.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="PARTIDA" underline="true" />
+      <Label alignment="CENTER" layoutX="342.0" layoutY="235.0" prefHeight="30.0" prefWidth="200.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="MENU PRINCIPAL" underline="true" />
+      <Label alignment="CENTER" layoutX="576.0" layoutY="235.0" prefHeight="30.0" prefWidth="221.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="MENU PAUSA" underline="true" />
+      <ChoiceBox fx:id="musicaMenuP" layoutX="354.0" layoutY="274.0" prefHeight="25.0" prefWidth="176.0" />
+      <ChoiceBox fx:id="musicaPausa" layoutX="593.0" layoutY="274.0" prefHeight="25.0" prefWidth="188.0" />
+      <Label alignment="CENTER" layoutX="567.0" layoutY="345.0" prefHeight="30.0" prefWidth="165.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="TEMA" underline="true" />
+      <ChoiceBox fx:id="tema" layoutX="562.0" layoutY="387.0" prefHeight="25.0" prefWidth="176.0" />
+      <Button fx:id="salir" layoutX="322.0" layoutY="441.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" stylesheets="@../application/estilo1.css" text="APLICAR Y VOLVER" />
+   </children>
+</AnchorPane>

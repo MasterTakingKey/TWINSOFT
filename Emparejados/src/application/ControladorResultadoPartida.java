@@ -37,6 +37,8 @@ public class ControladorResultadoPartida {
     
     private Stage primaryStage;
     
+    private Stage thisStage;
+    
     private boolean soundOn;
     
     private Image icon;
@@ -45,7 +47,7 @@ public class ControladorResultadoPartida {
     
     private String tipoPartida;
     
-    public void iniciarResultado(Stage stage, boolean soundOn, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida){
+    public void iniciarResultado(Stage stage, boolean soundOn, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, double anteriorX, double anteriorY){
         primaryStage = stage;
         this.soundOn = soundOn;
         this.isVictoria = isVictoria;
@@ -53,9 +55,12 @@ public class ControladorResultadoPartida {
         inicializarVariables(puntuacion, tiempo);
         mostrarResultado();
         añadirIcono();
+        corregirTamañoVentana();
+        corregirPosicionVentana(anteriorX, anteriorY);
     }
  
     public void inicializarVariables(String puntuacion, String tiempo) {
+    	thisStage = (Stage) jugar.getScene().getWindow();
         victoria = new AudioClip(getClass().getResource("/sonidos/victoria.mp3").toString());
         derrota = new AudioClip(getClass().getResource("/sonidos/derrota1.mp3").toString());
         puntuacionFinal.setText(puntuacionFinal.getText() + puntuacion);
@@ -76,8 +81,7 @@ public class ControladorResultadoPartida {
     
     public void añadirIcono() {
         icon = new Image("/imagenes/Icon.png");
-        Stage stage = (Stage) jugar.getScene().getWindow();
-        stage.getIcons().add(icon);
+        thisStage.getIcons().add(icon);
     }
 
     @FXML
@@ -94,16 +98,13 @@ public class ControladorResultadoPartida {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
             Parent root = (Parent) myLoader.load();
             ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();
-            Stage stage = (Stage) salir.getScene().getWindow();
-            controladorPartida.iniciarPartidaEstandar(primaryStage, soundOn);
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Estándar");
             primaryStage.setResizable(false);
-            primaryStage.setX(stage.getX());
-            primaryStage.setY(stage.getY());
+            controladorPartida.iniciarPartidaEstandar(primaryStage, soundOn, thisStage.getX(), thisStage.getY());
             primaryStage.show();
-        	stage.close();
+        	thisStage.close();
     	} catch (IOException e) {}
     }
     
@@ -112,16 +113,13 @@ public class ControladorResultadoPartida {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaCarta.fxml"));
             Parent root = (Parent) myLoader.load();
             ControladorPartidaCarta controladorPartidaCarta = myLoader.<ControladorPartidaCarta>getController();
-            Stage stage = (Stage) salir.getScene().getWindow();
-            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, soundOn);
-            Scene scene = new Scene(root, 894, 820);
+            Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Por Carta");
             primaryStage.setResizable(false);
-            primaryStage.setX(stage.getX());
-            primaryStage.setY(stage.getY());
+            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, soundOn, thisStage.getX(), thisStage.getY());
             primaryStage.show();
-        	stage.close();
+        	thisStage.close();
     	} catch (IOException e) {}
     }
 
@@ -131,21 +129,23 @@ public class ControladorResultadoPartida {
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
         Parent root = myLoader.load();  
         ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, soundOn);
-        Scene scene = new Scene(root, 882, 611);
-        Stage stage = (Stage) salir.getScene().getWindow();
+        Scene scene = new Scene(root);
         primaryStage.setTitle("Menú Principal");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        primaryStage.setX(stage.getX());
-        primaryStage.setY(stage.getY());
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, soundOn, false, thisStage.getX(), thisStage.getY());
         primaryStage.show();
-        cerrarVentana();   
+        thisStage.close(); 
+    }
+    
+    public void corregirTamañoVentana() {
+    	primaryStage.setWidth(895);
+    	primaryStage.setHeight(627);
     }
 
-    public void cerrarVentana() {
-    	Stage stage = (Stage) salir.getScene().getWindow();
-    	stage.close();
+    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
+    	thisStage.setX(anteriorX);
+    	thisStage.setY(anteriorY);
     }
-
+    
 }

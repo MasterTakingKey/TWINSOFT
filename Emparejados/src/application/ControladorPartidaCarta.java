@@ -105,6 +105,8 @@ public class ControladorPartidaCarta {
     
     private Stage primaryStage;
     
+    private Stage thisStage;
+    
     private Tablero tableroPartida;
     
     private Baraja barajaPartida;
@@ -141,10 +143,6 @@ public class ControladorPartidaCarta {
 	
 	private ArrayList<Integer> parejasFalladas;
 	
-	private double auxiliarX;
-	
-	private double auxiliarY;
-	
 	private long tiempoMusica;
 	
 	private long tiempoPrimera;
@@ -171,7 +169,7 @@ public class ControladorPartidaCarta {
 	
 	private StringProperty Time; 
 
-    public void iniciarPartidaCarta(Stage stage, boolean soundOn){
+    public void iniciarPartidaCarta(Stage stage, boolean soundOn, double anteriorX, double anteriorY){
         primaryStage = stage;
         SoundOn = soundOn;
     	inicializarVariables();
@@ -181,6 +179,8 @@ public class ControladorPartidaCarta {
     	barajaPartida.crearBarajaAnimales(2);
     	barajaAuxiliar.crearBarajaAnimales(1);
     	tableroPartida.llenarTablero(barajaPartida);
+    	corregirTamañoVentana();
+    	corregirPosicionVentana(anteriorX, anteriorY);
     	mostrarSiguienteCarta();
     	tiempo.textProperty().bind(Time);
     	iniciaTiempo(TIEMPO_PART_ESTANDAR);
@@ -205,6 +205,7 @@ public class ControladorPartidaCarta {
         puntosAnyadidos.setVisible(false);
         puntosAnyadidos.setStyle(null);
         indiceBarajaAuxiliar = 0;
+        thisStage = (Stage) carta00.getScene().getWindow();
     }
     
     public void inicializarAudioClips() {
@@ -378,7 +379,6 @@ public class ControladorPartidaCarta {
     	try {
         	String puntuacionFinal = puntos.getText();
         	String tiempoSobrante = tiempo.getText();
-        	actualizarPosicionStage();
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ResultadoPartida.fxml"));
     		Parent root = (Parent) myLoader.load();
     		ControladorResultadoPartida controladorResultadoPartida = myLoader.<ControladorResultadoPartida>getController();
@@ -390,13 +390,11 @@ public class ControladorPartidaCarta {
     		primaryStage.hide();
     		stage.setTitle("Resultado");
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "carta");
+            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "carta", thisStage.getX(), thisStage.getY());
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "carta");
+        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "carta", thisStage.getX(), thisStage.getY());
         	}
     		stage.show();
-    		stage.setX(auxiliarX);
-            stage.setY(auxiliarY);
     	} catch (IOException e) {
     		
     	}
@@ -408,33 +406,27 @@ public class ControladorPartidaCarta {
     		esPausa = true;
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     		musicaFondo.stopMusic();
-    		actualizarPosicionStage();
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
     		Parent root = (Parent) myLoader.load();
     		ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
-    		auxiliarX = primaryStage.getX();
     		Scene scene = new Scene(root);
-    		scene.getStylesheets().addAll(this.getClass().getResource("estilo1.css").toExternalForm());
     		Stage stage = new Stage();
     		stage.setScene(scene);
     		stage.initModality(Modality.APPLICATION_MODAL);
     		stage.setResizable(false);
         	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaCarta();});
         	primaryStage.hide();
-        	controladorMenuPausa.initDataPartidaCarta(primaryStage, this, SoundOn);
+        	controladorMenuPausa.initDataPartidaCarta(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY());
         	stage.show();
-        	stage.setY(auxiliarY);
-        	stage.setX(auxiliarX);
         	stage.toFront();
     	} catch (IOException e) {
     		
     	}
     }
     
-    public void reanudarPartida(boolean Sound, double posX, double posY) {
-    	primaryStage.setX(posX);
-    	primaryStage.setY(posY);
-    	primaryStage.setHeight(652);
+    public void reanudarPartida(boolean Sound, double anteriorX, double anteriorY) {
+    	corregirTamañoVentana();
+    	corregirPosicionVentana(anteriorX, anteriorY);
     	primaryStage.show();
     	esPausa = false;
     	timeline.play();
@@ -534,9 +526,14 @@ public class ControladorPartidaCarta {
         return secondRotator;
     }
     
-    public void actualizarPosicionStage() {
-    	auxiliarX = primaryStage.getX();
-        auxiliarY = primaryStage.getY();
+    public void corregirTamañoVentana() {
+    	thisStage.setWidth(900);
+    	thisStage.setHeight(820);
+    }
+    
+    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
+    	thisStage.setX(anteriorX);
+    	thisStage.setY(anteriorY);
     }
     
     public void delay(int segundos) {

@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-public class ControladorPartida {
+public class ControladorPartidaLibre {
 	
 	@FXML
     private Label tiempo = new Label();
@@ -150,7 +150,7 @@ public class ControladorPartida {
     
     private Puntuacion puntuacion;
 
-    public void iniciarPartidaEstandar(Stage stage, boolean soundOn, double anteriorX, double anteriorY){
+    public void iniciarPartidaLibre(Stage stage, boolean soundOn, double anteriorX, double anteriorY){
     	primaryStage = stage;
         SoundOn = soundOn;
     	inicializarVariables();
@@ -374,7 +374,7 @@ public class ControladorPartida {
     		stage.setResizable(false);
         	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaEstandar();});
         	primaryStage.hide();
-        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY());
+        	controladorMenuPausa.initDataPartidaLibre(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY());
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {

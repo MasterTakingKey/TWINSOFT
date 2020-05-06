@@ -7,3 +7,10 @@
 	-fx-font-weight: bold;
 	-fx-font-size: 30;
 }
+.label2{
+	-fx-font-weight: bold;
+	-fx-background-color: white;
+	-fx-background-radius: 30;
+	-fx-font-size: 15;
+	-fx-text-fill: #4b6aff;
+}

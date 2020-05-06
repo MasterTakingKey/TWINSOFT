@@ -18,27 +18,40 @@ public class ControladorConfirmacionSalirMenuP {
     
     private Image icon;
     
-    public void inicializarDatos(ControladorMenuPause menuP) {
+    private Stage thisStage;
+    
+    public void inicializarDatos(ControladorMenuPause menuP, double anteriorX, double anteriorY, double anteriorWidth, double anteriorHeight) {
     	menuPausa = menuP;
-    	icon = new Image("/imagenes/Icon.png");
-    	Stage stage = (Stage) cancelar.getScene().getWindow();
-        stage.getIcons().add(icon);
+    	thisStage = (Stage) cancelar.getScene().getWindow();
+    	anyadirIcono();
+    	corregirTamanyoVentana();
+    	corregirPosicionVentana(anteriorX, anteriorY, anteriorWidth, anteriorHeight);
+    }
+    
+    public void anyadirIcono() {
+        icon = new Image("/imagenes/Icon.png");
+        thisStage.getIcons().add(icon);
     }
     
     @FXML
     void aceptarHandler(ActionEvent event) {
     	menuPausa.volverMenuPrincipal();
-    	cerrarVentana();
+    	thisStage.close();
     }
 
     @FXML
     void cancelarHandler(ActionEvent event) {
-    	cerrarVentana();
+    	thisStage.close();
     }
     
-    public void cerrarVentana() {
-    	Stage stage = (Stage) cancelar.getScene().getWindow();
-    	stage.close();
+    public void corregirTamanyoVentana() {
+    	thisStage.setWidth(600);
+    	thisStage.setHeight(220);
+    }
+    
+    public void corregirPosicionVentana(double anteriorX, double anteriorY, double anteriorWidth, double anteriorHeight) {
+    	thisStage.setX(anteriorX + (anteriorWidth/6));
+    	thisStage.setY(anteriorY + (anteriorHeight/3));
     }
 
 }

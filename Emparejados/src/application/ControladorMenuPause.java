@@ -29,6 +29,8 @@ public class ControladorMenuPause {
     private Musica musicaFondo;
     
     private Stage primaryStage;
+    
+    private Stage thisStage;
 
     private boolean SoundOn;
     
@@ -48,34 +50,59 @@ public class ControladorMenuPause {
     
     Optional<ButtonType> resultadoSalida;
     
-    void initDataPartidaEstandar(Stage partida, ControladorPartida partidaEstandar, boolean soundOn) {
+    void initDataPartidaEstandar(Stage partida, ControladorPartida partidaEstandar, boolean soundOn, double anteriorX, double anteriorY) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
         SoundOn = soundOn;
         tipoPartida = "estandar";
         inicializarVariables();
+        anyadirIcono();
+        corregirTamanyoVentana();
 		actualizarSonido();
         actualizarImagenSonido();
+        corregirTamanyoVentana();
+        corregirPosicionVentana(anteriorX, anteriorY);
     }
     
-    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, boolean soundOn) {
+    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, boolean soundOn, double anteriorX, double anteriorY) {
+    	primaryStage = partida;
+    	this.partidaEstandar = partidaEstandar;
+        SoundOn = soundOn;
+        tipoPartida = "estandar";
+        inicializarVariables();
+        anyadirIcono();
+        corregirTamanyoVentana();
+		actualizarSonido();
+        actualizarImagenSonido();
+        corregirTamanyoVentana();
+        corregirPosicionVentana(anteriorX, anteriorY);
+    }
+    
+    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, boolean soundOn, double anteriorX, double anteriorY) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         SoundOn = soundOn;
         tipoPartida = "carta";
         inicializarVariables();
+        anyadirIcono();
+        corregirTamanyoVentana();
 		actualizarSonido();
         actualizarImagenSonido();
+        corregirTamanyoVentana();
+        corregirPosicionVentana(anteriorX, anteriorY);
     }
   
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
         musicaFondo = new Musica("src/sonidos/Musica3.wav", 0L);
+        thisStage = (Stage) imageSound.getScene().getWindow();
+        thisStage.setTitle("Menu de Pausa");
+    }
+    
+    public void anyadirIcono() {
         icon = new Image("/imagenes/Icon.png");
-        Stage stage = (Stage) imageSound.getScene().getWindow();
-        stage.getIcons().add(icon);
-        stage.setTitle("Menú de Pausa");
+        thisStage.getIcons().add(icon);
     }
     
     @FXML
@@ -86,10 +113,10 @@ public class ControladorMenuPause {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Confirmación de salida");
+        stage.setTitle("Confirmacion de salida");
         stage.setResizable(false);
         ControladorConfirmacionSalirMenuP controladorConfirmacionSalirMenuP = myLoader.<ControladorConfirmacionSalirMenuP>getController();
-        controladorConfirmacionSalirMenuP.inicializarDatos(this);
+        controladorConfirmacionSalirMenuP.inicializarDatos(this, thisStage.getX(), thisStage.getY(), thisStage.getWidth(), thisStage.getHeight());
         stage.show();
     }
     	
@@ -103,13 +130,12 @@ public class ControladorMenuPause {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
             Parent root = myLoader.load();  
             ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn);
-            Scene scene = new Scene(root, 882, 611);
-            primaryStage.setTitle("Menú Principal");
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Menu Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY());
             primaryStage.show();
-            centrarVentana();
     	} catch (IOException e) {
                 e.printStackTrace();
         }
@@ -129,9 +155,8 @@ public class ControladorMenuPause {
     	boolean victoria = partidaEstandar.isVictoria();
     	boolean derrota = partidaEstandar.isDerrota();
     	if (!derrota && !victoria) {
-	    	Stage stage = (Stage) imagePlay.getScene().getWindow();
-	    	stage.close();
-	    	partidaEstandar.reanudarPartida(SoundOn, stage.getX(), stage.getY());
+	    	thisStage.close();
+	    	partidaEstandar.reanudarPartida(SoundOn, thisStage.getX(), thisStage.getY());
     	}
     	
     }
@@ -141,9 +166,8 @@ public class ControladorMenuPause {
     	boolean victoria = partidaCarta.isVictoria();
     	boolean derrota = partidaCarta.isDerrota();
     	if (!derrota && !victoria) {
-	    	Stage stage = (Stage) imagePlay.getScene().getWindow();
-	    	stage.close();
-	    	partidaCarta.reanudarPartida(SoundOn, stage.getX(), stage.getY());
+	    	thisStage.close();
+	    	partidaCarta.reanudarPartida(SoundOn, thisStage.getX(), thisStage.getY());
     	}
     }
 
@@ -176,11 +200,15 @@ public class ControladorMenuPause {
         	imageSound.setImage(Sound0);
         }
     }
-
-    public void centrarVentana() {
-        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((screen.getWidth() - primaryStage.getWidth()) / 2);
-        primaryStage.setY((screen.getHeight() - primaryStage.getHeight()) / 2);
+    
+    public void corregirTamanyoVentana() {
+    	thisStage.setWidth(900);
+    	thisStage.setHeight(620);
     }
     
+    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
+    	thisStage.setX(anteriorX);
+    	thisStage.setY(anteriorY);
+    }
+
 }

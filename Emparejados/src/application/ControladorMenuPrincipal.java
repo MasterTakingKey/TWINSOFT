@@ -44,6 +44,8 @@ public class ControladorMenuPrincipal {
     
     private Stage primaryStage;
     
+    private Stage thisStage;
+    
     private Musica musicaFondo;
     
     private Image Sound0;
@@ -54,19 +56,26 @@ public class ControladorMenuPrincipal {
     
     private long tiempoMusica;
 
-    public void iniciarMenuPrincipal(Stage stage, boolean soundOn){
+    public void iniciarMenuPrincipal(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY){
         primaryStage = stage;
         SoundOn = soundOn;
         inicializarVariables();
 		actualizarSonido();
         actualizarImagenSonido();
         muestraMenuP(true);
+        corregirTamanyoVentana();
+        if(primeraVez) { 
+            centrarVentana();
+        } else {
+            corregirPosicionVentana(anteriorX, anteriorY);
+        }
     }
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
         musicaFondo = new Musica("src/sonidos/Musica2.wav", 0L);
+        thisStage = (Stage) salir.getScene().getWindow();
     }
     
     public void actualizarSonido() {
@@ -117,13 +126,39 @@ public class ControladorMenuPrincipal {
     }
     
     @FXML
-    void ajustesHandler(ActionEvent event) {
-
+    void ajustesHandler(ActionEvent event) throws IOException {
+    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
+        Parent root = myLoader.load();  
+        ControladorMenuAjustes menuPrincipal = myLoader.<ControladorMenuAjustes>getController();
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Menu Ajustes");
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        
+        Image icono = new Image("/imagenes/Icon.png");
+        primaryStage.getIcons().add(icono);
+        
+        menuPrincipal.iniciarMenuAjustes(primaryStage, true, true, 0, 0);
+        primaryStage.show();
     }
     
     @FXML
     void modoLibreHandler(ActionEvent event) {
-
+    	musicaFondo.stopMusic();
+    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/AjustesJuegoLibre.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorAjustesJuegoLibre controladorAjustesJLibre = myLoader.<ControladorAjustesJuegoLibre>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Ajustes del modo libre");
+      		primaryStage.setResizable(false);
+      		controladorAjustesJLibre.iniciarAjustesJLibre(primaryStage, SoundOn, tiempoMusica);
+      		primaryStage.show();
+      	} catch (IOException e) {
+      		e.printStackTrace();
+      	}
     }
 
     @FXML
@@ -133,13 +168,12 @@ public class ControladorMenuPrincipal {
       		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
       		Parent root = (Parent) myLoader.load();
       		ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn);
-      		Scene scene = new Scene(root, 894, 623);
+      		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Partida Estándar");
+      		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn, thisStage.getX(), thisStage.getY());
       		primaryStage.show();
-      		centrarVentana();
       	} catch (IOException e) {}
     }
 
@@ -150,13 +184,12 @@ public class ControladorMenuPrincipal {
       		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaCarta.fxml"));
       		Parent root = (Parent) myLoader.load();
       		ControladorPartidaCarta controladorPartidaCarta = myLoader.<ControladorPartidaCarta>getController();
-      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn);
-      		Scene scene = new Scene(root, 894, 820);
+      		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Por Carta");
       		primaryStage.setResizable(false);
+      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn, thisStage.getX(), thisStage.getY());
       		primaryStage.show();
-      		centrarVentana();
       	} catch (IOException e) {}
     }
 
@@ -169,10 +202,10 @@ public class ControladorMenuPrincipal {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Confirmación de salida");
+        stage.setTitle("Confirmacion de salida");
         stage.setResizable(false);
         ControladorConfirmacionSalirApp controladorConfirmacionSalirApp = myLoader.<ControladorConfirmacionSalirApp>getController();
-        controladorConfirmacionSalirApp.inicializarDatos();
+        controladorConfirmacionSalirApp.inicializarDatos(thisStage.getX(), thisStage.getY(), thisStage.getWidth(), thisStage.getHeight());
         stage.show();
     }
     
@@ -181,11 +214,20 @@ public class ControladorMenuPrincipal {
     	muestraMenuP(true);
     }
 
-
-    public void centrarVentana() {
-        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((screen.getWidth() - primaryStage.getWidth()) / 2);
-        primaryStage.setY((screen.getHeight() - primaryStage.getHeight()) / 2);
+    public void corregirTamanyoVentana() {
+    	thisStage.setWidth(900);
+    	thisStage.setHeight(650);
+    }
+    
+    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
+    	thisStage.setX(anteriorX);
+    	thisStage.setY(anteriorY);
+    }
+    
+    public void centrarVentana() {  
+       Rectangle2D screen = Screen.getPrimary().getVisualBounds();
+       primaryStage.setX((screen.getWidth() - primaryStage.getWidth()) / 2);
+       primaryStage.setY((screen.getHeight() - primaryStage.getHeight()) / 2);
     }
     
 }

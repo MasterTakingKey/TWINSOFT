@@ -214,13 +214,13 @@ public class ControladorPartida {
     	if(esPrimeraCarta) {
     		voltearCarta.play();
     		puntosAnteriores = puntuacion.getPuntos();
-    		puntuacion.restarPuntosTiempoEntreTurnos(1);
+    		puntuacion.iniciarTiempoEntreTurnos();
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
     		clickCartaAnimacion(imagenSeleccionada);
     		esPrimeraCarta = false;
     	} else {
-    		puntuacion.restarPuntosTiempoEntreTurnos(2);
+    		puntuacion.getTimeline().stop();
     		segundaCarta = cartaSeleccionada;
     		segundaImagen = imagenSeleccionada;
     		if(primeraCarta == segundaCarta) {
@@ -335,7 +335,8 @@ public class ControladorPartida {
     
     public void mostrarResultado() {
     	try {
-        	String puntuacionFinal = Integer.toString(puntuacion.getPuntos());
+        	puntuacion.getTimeline().stop();
+    		String puntuacionFinal = Integer.toString(puntuacion.getPuntos());
         	String tiempoSobrante = tiempo.getText();
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ResultadoPartida.fxml"));
     		Parent root = (Parent) myLoader.load();

@@ -86,7 +86,7 @@
       </ToolBar>
       <StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="894.0">
          <children>
-            <GridPane prefHeight="572.0" prefWidth="894.0" styleClass="fondoTablero" stylesheets="@../application/estilo2.css">
+            <GridPane fx:id="tablero" prefHeight="572.0" prefWidth="894.0" styleClass="fondoTablero" stylesheets="@../application/estilo2.css">
               <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

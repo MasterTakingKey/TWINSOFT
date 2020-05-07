@@ -110,6 +110,8 @@ public class ControladorAjustesJuegoLibre {
     @FXML
     void jugarHandler(ActionEvent event) {
     	musicaFondo.stopMusic();
+    	int filas = Integer.parseInt(textFilas.getText());
+    	int columnas = Integer.parseInt(textColumnas.getText());
       	try {
       		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaLibre.fxml"));
       		Parent root = (Parent) myLoader.load();
@@ -118,7 +120,7 @@ public class ControladorAjustesJuegoLibre {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
-      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY());
+      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), filas, columnas);
       		primaryStage.show();
       	} catch (IOException e) {}
     }

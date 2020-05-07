@@ -14,8 +14,6 @@ public class Puntuacion {
 
 	private long tiempoRestante;
 	
-	private boolean finalTurno;
-	
 	private SimpleBooleanProperty puntosCambiados;
 	
 	private Timeline timeline;
@@ -37,6 +35,10 @@ public class Puntuacion {
 		return puntosCambiados;
 	}
 	
+	public Timeline getTimeline() {
+		return timeline;
+	}
+	
 	public void setPuntos(int nuevosPuntos) {
 		puntos = nuevosPuntos;
 	}
@@ -45,20 +47,15 @@ public class Puntuacion {
 		puntosCambiados = nuevosPuntos;
 	}
 	
+	public void setTimeline(Timeline newTimeline) {
+		timeline = newTimeline;
+	}
+	
 	public void sumaPuntos(int puntosASumar, boolean parejaIncorrecta, int numeroVecesGirada) {
 		if (parejaIncorrecta) puntosASumar -= numeroVecesGirada;
 		puntos += puntosASumar;
 		puntosCambiados.setValue(!puntosCambiados.getValue());
 	}  	
-	 
-	 public void restarPuntosTiempoEntreTurnos(int turno) {
-	    if(turno == 1) {
-	    	finalTurno = false;
-	    	iniciarTiempoEntreTurnos();
-	    } else {
-	    	finalTurno = true;
-	    }
-	 } 
 	    
 	public void sumarBonificacionVictoria(int tiempoRestante, int numeroParejas) {
 	    int bonificacion = (int) (tiempoRestante * 0.5) + numeroParejas; 
@@ -72,13 +69,11 @@ public class Puntuacion {
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(1),
                   event -> {
-					 tiempoRestante--;
-				     if (tiempoRestante <= 0) {
+                	 tiempoRestante--;
+				     if (tiempoRestante < 0) {
 				         timeline.stop();
 				         error.play();
 				         sumaPuntos(-2, false, 0);
-				     } else if(finalTurno) {
-				    	 timeline.stop();
 				     }
 				   }));
         timeline.playFromStart();

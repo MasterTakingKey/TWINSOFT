@@ -161,6 +161,8 @@ public class ControladorPartidaCarta {
     public void iniciarPartidaCarta(Stage stage, boolean soundOn, double anteriorX, double anteriorY){
     	primaryStage = stage;
         SoundOn = soundOn;
+        inicializarBarajaTablero();
+        inicializarCartas();
     	inicializarVariables();
     	inicializarAudioClips();
     	inicializarContadorTiempo();
@@ -172,15 +174,39 @@ public class ControladorPartidaCarta {
     	mostrarSiguienteCarta();
     }
     
-    public void inicializarVariables() {
-    	puntuacion = new Puntuacion();
-    	barajaPartida = new Baraja();
-    	barajaPartida.crearBarajaAnimales(2);
-    	barajaAuxiliar = new Baraja();
-    	barajaAuxiliar.crearBarajaAnimales(1);
+    public void inicializarBarajaTablero() {
+    	barajaPartida = new Baraja(4, 4);
+    	barajaPartida.barajaTematica(new CrearBarajaNintendoEstrategia(2), 16);
+    	barajaPartida.barajar();
+    	barajaAuxiliar = new Baraja(4, 4);
+    	barajaAuxiliar.barajaTematica(new CrearBarajaNintendoEstrategia(1), 16);
+    	barajaAuxiliar.barajar();
         indiceBarajaAuxiliar = 0;
-    	tableroPartida = new Tablero(4);
+    	tableroPartida = new Tablero(4, 4);
     	tableroPartida.llenarTablero(barajaPartida);
+    }
+    
+    public void inicializarCartas() {
+    	carta00.setImage(barajaPartida.getImagenDorso());
+    	carta01.setImage(barajaPartida.getImagenDorso());
+    	carta02.setImage(barajaPartida.getImagenDorso());
+    	carta03.setImage(barajaPartida.getImagenDorso());
+    	carta10.setImage(barajaPartida.getImagenDorso());
+    	carta11.setImage(barajaPartida.getImagenDorso());
+    	carta12.setImage(barajaPartida.getImagenDorso());
+    	carta13.setImage(barajaPartida.getImagenDorso());
+    	carta20.setImage(barajaPartida.getImagenDorso());
+    	carta21.setImage(barajaPartida.getImagenDorso());
+    	carta22.setImage(barajaPartida.getImagenDorso());
+    	carta23.setImage(barajaPartida.getImagenDorso());
+    	carta23.setImage(barajaPartida.getImagenDorso());
+    	carta30.setImage(barajaPartida.getImagenDorso());
+    	carta31.setImage(barajaPartida.getImagenDorso());
+    	carta32.setImage(barajaPartida.getImagenDorso());
+    	carta33.setImage(barajaPartida.getImagenDorso());
+    }
+    
+    public void inicializarVariables() {
     	esPrimeraCarta = true;
     	cartasGiradas = 0;
     	esVictoria = false;
@@ -234,12 +260,12 @@ public class ControladorPartidaCarta {
     	if(esPrimeraCarta) {
     		voltearCarta.play();
     		puntosAnteriores = puntuacion.getPuntos();
-    		puntuacion.restarPuntosTiempoEntreTurnos(1);
+    		puntuacion.iniciarTiempoEntreTurnos();
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
     		esPrimeraCarta = false;
     	} else {
-    		puntuacion.restarPuntosTiempoEntreTurnos(2);
+    		puntuacion.getTimeline().stop();
     		segundaCarta = cartaSeleccionada;
     		segundaImagen = imagenSeleccionada;
     		if(primeraCarta == segundaCarta) {
@@ -270,7 +296,6 @@ public class ControladorPartidaCarta {
     public void mostrarSiguienteCarta() {
         siguienteCartaMostrada = barajaAuxiliar.getCarta(indiceBarajaAuxiliar);
         siguienteImagenMostrada.setImage(siguienteCartaMostrada.getImagenFrente());
-        siguienteImagenMostrada.setScaleX(-1);
     }
     
     public Carta deImagenACarta(ImageView imgSeleccionada) {
@@ -363,6 +388,7 @@ public class ControladorPartidaCarta {
     
     public void mostrarResultado() {
     	try {
+    		puntuacion.getTimeline().stop();
     		String puntuacionFinal = Integer.toString(puntuacion.getPuntos());
         	String tiempoSobrante = tiempo.getText();
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ResultadoPartida.fxml"));
@@ -468,8 +494,8 @@ public class ControladorPartidaCarta {
     private RotateTransition createFirstRotator(Node card) {
         RotateTransition firstRotator = new RotateTransition(Duration.millis(400), card);
         firstRotator.setAxis(Rotate.Y_AXIS);
-        firstRotator.setFromAngle(0);
-        firstRotator.setToAngle(89);
+        firstRotator.setFromAngle(180);
+        firstRotator.setToAngle(91);
         firstRotator.setInterpolator(Interpolator.LINEAR);
         firstRotator.setCycleCount(1);
 
@@ -479,7 +505,7 @@ public class ControladorPartidaCarta {
         RotateTransition secondRotator = new RotateTransition(Duration.millis(400), card);
         secondRotator.setAxis(Rotate.Y_AXIS);
         secondRotator.setFromAngle(90);
-        secondRotator.setToAngle(180);
+        secondRotator.setToAngle(0);
         secondRotator.setInterpolator(Interpolator.LINEAR);
         secondRotator.setCycleCount(1);
 

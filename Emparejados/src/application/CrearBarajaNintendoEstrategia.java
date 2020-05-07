@@ -19,7 +19,7 @@ public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
 	}
 	
 	public Image dorso() {
-		return new Image("/imagenes/dorso_nintendo.png");
+		return new Image("/imagenes/baraja_nintendo/dorso_nintendo.png");
 	}
 	
 	public int tamanyoBaraja() {
@@ -28,17 +28,17 @@ public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
 	
     public Carta[] crearBaraja() {
     	Carta[] baraja = new Carta[8*repeticiones];
-    	Image imagenDorso = new Image("/imagenes/dorso_nintendo.png");
+    	Image imagenDorso = new Image("/imagenes/baraja_nintendo/dorso_nintendo.png");
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/mario.png"), 0));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/luigi.png"), 1));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/bowser.png"), 2));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/link.png"), 3));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/kirby.png"), 4));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/pit.png"), 5));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/samus.png"), 6));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/pikachu.png"), 7));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/mario.png"), 0));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/luigi.png"), 1));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/bowser.png"), 2));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/link.png"), 3));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/kirby.png"), 4));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/pit.png"), 5));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/samus.png"), 6));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/pikachu.png"), 7));
     	}
     	return baraja;
     }

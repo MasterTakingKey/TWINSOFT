@@ -167,7 +167,7 @@ public class ControladorPartida {
     
     public void inicializarBarajaTablero() {
     	barajaPartida = new Baraja();
-    	barajaPartida.barajaTematica(new CrearBarajaNintendoEstrategia(2));
+    	barajaPartida.barajaTematica(new CrearBarajaDeportesEstrategia(2));
     	barajaPartida.barajar();
     	tableroPartida = new Tablero(4);
     	tableroPartida.llenarTablero(barajaPartida);

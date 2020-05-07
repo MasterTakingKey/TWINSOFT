@@ -19,7 +19,7 @@ public class CrearBarajaAnimalesEstrategia implements CrearBarajaEstrategia {
 	}
 	
 	public Image dorso() {
-		return new Image("/imagenes/dorso_aldeano.png");
+		return new Image("/imagenes/baraja_animales/dorso_aldeano.png");
 	}
 	
 	public int tamanyoBaraja() {
@@ -28,17 +28,17 @@ public class CrearBarajaAnimalesEstrategia implements CrearBarajaEstrategia {
 	
     public Carta[] crearBaraja() {
     	Carta[] baraja = new Carta[8*repeticiones];
-    	Image imagenDorso = new Image("/imagenes/dorso_aldeano.png");
+    	Image imagenDorso = new Image("/imagenes/baraja_animales/dorso_aldeano.png");
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/elefante.png"), 0));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/hipopotamo.png"), 1));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/jirafa.png"), 2));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/leon.png"), 3));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/mono.png"), 4));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/rinoceronte.png"), 5));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/serpiente.png"), 6));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/zebra.png"), 7));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_animales/elefante.png"), 0));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_animales/hipopotamo.png"), 1));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_animales/jirafa.png"), 2));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_animales/leon.png"), 3));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_animales/mono.png"), 4));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_animales/rinoceronte.png"), 5));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_animales/serpiente.png"), 6));
+    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_animales/zebra.png"), 7));
     	}
     	return baraja;
     }

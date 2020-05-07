@@ -153,6 +153,8 @@ public class ControladorPartidaLibre {
     public void iniciarPartidaLibre(Stage stage, boolean soundOn, double anteriorX, double anteriorY){
     	primaryStage = stage;
         SoundOn = soundOn;
+        inicializarBarajaTablero();
+        inicializarCartas();
     	inicializarVariables();
     	inicializarAudioClips();
     	inicializarContadorTiempo();
@@ -162,17 +164,41 @@ public class ControladorPartidaLibre {
     	corregirTamanyoVentana();
     	corregirPosicionVentana(anteriorX, anteriorY);
     }
-    
-    public void inicializarVariables() {
+     
+    public void inicializarBarajaTablero() {
     	barajaPartida = new Baraja();
-    	barajaPartida.crearBarajaAnimales(2);
+    	barajaPartida.barajaTematica(new CrearBarajaAnimalesEstrategia(2));
+    	barajaPartida.barajar();
     	tableroPartida = new Tablero(4);
     	tableroPartida.llenarTablero(barajaPartida);
-    	parejasFalladas = new ArrayList<Carta>(tableroPartida.getNumParejas());
+    }
+    
+    public void inicializarCartas() {
+    	carta00.setImage(barajaPartida.getImagenDorso());
+    	carta01.setImage(barajaPartida.getImagenDorso());
+    	carta02.setImage(barajaPartida.getImagenDorso());
+    	carta03.setImage(barajaPartida.getImagenDorso());
+    	carta10.setImage(barajaPartida.getImagenDorso());
+    	carta11.setImage(barajaPartida.getImagenDorso());
+    	carta12.setImage(barajaPartida.getImagenDorso());
+    	carta13.setImage(barajaPartida.getImagenDorso());
+    	carta20.setImage(barajaPartida.getImagenDorso());
+    	carta21.setImage(barajaPartida.getImagenDorso());
+    	carta22.setImage(barajaPartida.getImagenDorso());
+    	carta23.setImage(barajaPartida.getImagenDorso());
+    	carta23.setImage(barajaPartida.getImagenDorso());
+    	carta30.setImage(barajaPartida.getImagenDorso());
+    	carta31.setImage(barajaPartida.getImagenDorso());
+    	carta32.setImage(barajaPartida.getImagenDorso());
+    	carta33.setImage(barajaPartida.getImagenDorso());
+    }
+    
+    public void inicializarVariables() {
     	cartasGiradas = 0;
     	esPrimeraCarta = true;
     	esVictoria = false;
     	esDerrota = false;
+    	parejasFalladas = new ArrayList<Carta>(tableroPartida.getNumParejas());
     	musicaFondo = new Musica("src/sonidos/Musica1.wav", 0L);
     	Sound0 = new Image("/imagenes/sonido_off_2.png");
         Sound1 = new Image("/imagenes/sonido_on_2.png");
@@ -180,7 +206,6 @@ public class ControladorPartidaLibre {
         thisStage = (Stage) carta00.getScene().getWindow();
     }
     
-
     public void inicializarAudioClips() {
     	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
         error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());

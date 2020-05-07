@@ -1,5 +1,6 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -9,17 +10,13 @@ public class Baraja {
 	
 	String nombre;
 	Image imagenDorso;
-	Carta[] baraja;
 	int tamanyo;
+	Carta[] baraja;
 	
 	public Baraja() {
-		
-	}
-	
-	public Baraja(String nombre, Image imagenDorso, int tamanyo) {
-		this.nombre = nombre;
-		this.imagenDorso = imagenDorso;
-		this.tamanyo = tamanyo;
+		nombre = "Baraja por Defecto";
+		imagenDorso = new Image("/imagenes/dorso_aldeano.png");
+		tamanyo = 16;
 		baraja = new Carta[tamanyo];
 	}
 	
@@ -39,6 +36,10 @@ public class Baraja {
 		return baraja[posicion];
 	}
 	
+	public Carta[] getBaraja() {
+		return baraja;
+	}
+	
 	public void setNombre(String nuevoNombre) {
 		nombre = nuevoNombre;
 	}
@@ -49,35 +50,25 @@ public class Baraja {
 	
 	public void setTamanyo(int nuevoTamanyo) {
 		tamanyo = nuevoTamanyo;
+		baraja = new Carta[tamanyo];
 
 	}
 	
 	public void setCarta(Carta nuevaCarta, int posisicon) {
 		baraja[posisicon] = nuevaCarta;
 	}
-	
+
 	public void barajar() {
 		List<Carta> listaCartas = Arrays.asList(baraja);
 		Collections.shuffle(listaCartas);
 		listaCartas.toArray(baraja);
 	}
+    
+	public void barajaTematica(CrearBarajaEstrategia estrategia) {
+		this.nombre = estrategia.nombre();
+		this.imagenDorso = estrategia.dorso();
+		this.tamanyo = estrategia.tamanyoBaraja();
+		this.baraja = estrategia.crearBaraja();
+	}
 	
-    public void crearBarajaAnimales(int repeticiones) {
-    	nombre = "Animales";
-    	tamanyo = 8*repeticiones;
-    	imagenDorso = new Image("/imagenes/dorso_aldeano.png");
-    	baraja = new Carta[tamanyo];
-    	int index = 0;
-    	for(int i = 0; i < repeticiones; i++) {
-    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/elefante.png"), 0), index++);
-    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/hipopotamo.png"), 1), index++);
-    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/jirafa.png"), 2), index++);
-    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/leon.png"), 3), index++);
-    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/mono.png"), 4), index++);
-    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/rinoceronte.png"), 5), index++);
-    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/serpiente.png"), 6), index++);
-    		this.setCarta(new Carta(this.getImagenDorso(), new Image("/imagenes/zebra.png"), 7), index++);
-    	}
-    	this.barajar();
-    }
 }

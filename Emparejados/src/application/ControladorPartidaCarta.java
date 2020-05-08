@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
@@ -22,6 +23,9 @@ import javafx.util.Duration;
 
 public class ControladorPartidaCarta {
 	
+    @FXML
+    private AnchorPane anchorPane;
+    
 	@FXML
     private Label tiempo = new Label();
 
@@ -155,8 +159,10 @@ public class ControladorPartidaCarta {
     private Puntuacion puntuacion;
     
     private Animaciones animaciones;
+    
+    private String estilo;
 
-    public void iniciarPartidaCarta(Stage stage, boolean soundOn, double anteriorX, double anteriorY){
+    public void iniciarPartidaCarta(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String estilo){
     	primaryStage = stage;
         SoundOn = soundOn;
         inicializarBarajaTablero();
@@ -169,18 +175,19 @@ public class ControladorPartidaCarta {
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana(anteriorX, anteriorY);
+    	actualizarEstilo(estilo);
     	mostrarSiguienteCarta();
     }
     
     public void inicializarBarajaTablero() {
-    	barajaPartida = new Baraja();
-    	barajaPartida.barajaTematica(new CrearBarajaNintendoEstrategia(2));
+    	barajaPartida = new Baraja(4, 4);
+    	barajaPartida.barajaTematica(new CrearBarajaNintendoEstrategia(2), 8);
     	barajaPartida.barajar();
-    	barajaAuxiliar = new Baraja();
-    	barajaAuxiliar.barajaTematica(new CrearBarajaNintendoEstrategia(1));
+    	barajaAuxiliar = new Baraja(4, 4);
+    	barajaAuxiliar.barajaTematica(new CrearBarajaNintendoEstrategia(1), 8);
     	barajaAuxiliar.barajar();
         indiceBarajaAuxiliar = 0;
-    	tableroPartida = new Tablero(4);
+    	tableroPartida = new Tablero(4, 4);
     	tableroPartida.llenarTablero(barajaPartida);
     }
     
@@ -397,9 +404,9 @@ public class ControladorPartidaCarta {
     		primaryStage.hide();
     		stage.setTitle("Resultado");
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "carta", thisStage.getX(), thisStage.getY());
+            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "carta", thisStage.getX(), thisStage.getY(), 4, 4, estilo);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "carta", thisStage.getX(), thisStage.getY());
+        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "carta", thisStage.getX(), thisStage.getY(), 4, 4, estilo);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -423,7 +430,7 @@ public class ControladorPartidaCarta {
     		stage.setResizable(false);
         	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaCarta();});
         	primaryStage.hide();
-        	controladorMenuPausa.initDataPartidaCarta(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY());
+        	controladorMenuPausa.initDataPartidaCarta(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY(), estilo);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -486,6 +493,26 @@ public class ControladorPartidaCarta {
     public void corregirPosicionVentana(double anteriorX, double anteriorY) {
     	thisStage.setX(anteriorX);
     	thisStage.setY(anteriorY);
+    }
+    
+    public void actualizarEstilo(String nuevoEstilo) {
+    	estilo = nuevoEstilo;
+    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	if(estilo.equals("Azul")) {
+    		anchorPane.getStylesheets().remove(temaRojo);
+    		anchorPane.getStylesheets().remove(temaVerde);
+    		anchorPane.getStylesheets().add(temaAzul);
+    	} else if(estilo.equals("Rojo")) {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaVerde);
+			anchorPane.getStylesheets().add(temaRojo);
+    	} else {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaRojo);
+			anchorPane.getStylesheets().add(temaVerde);
+    	}
     }
 
 }

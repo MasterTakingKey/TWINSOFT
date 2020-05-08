@@ -11,67 +11,82 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorAjustesJuegoLibre">
+<StackPane fx:id="stackPane" style="-fx-background-color: ffffff;" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorAjustesJuegoLibre">
    <children>
       <Pane prefHeight="557.0" prefWidth="882.0">
          <children>
-            <Label layoutX="44.0" layoutY="48.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Seleccionar Baraja:">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <ChoiceBox fx:id="barajaChoice" layoutX="351.0" layoutY="37.0" prefHeight="16.0" prefWidth="150.0" />
-            <Label layoutX="44.0" layoutY="129.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Seleccionar Tablero:">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="316.0" layoutY="131.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Filas:">
+            <Label layoutX="47.0" layoutY="44.0" text="Seleccionar Baraja:">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="316.0" layoutY="194.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Columnas:">
+            <ChoiceBox fx:id="barajaChoice" layoutX="291.0" layoutY="41.0" prefHeight="35.0" prefWidth="171.0" />
+            <Label layoutX="49.0" layoutY="127.0" text="Seleccionar Tablero:">
                <font>
                   <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="315.0" layoutY="129.0" text="Filas:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="313.0" layoutY="193.0" text="Columnas:">
+               <font>
+                  <Font size="16.0" />
                </font>
             </Label>
             <TextField fx:id="textFilas" layoutX="516.0" layoutY="129.0" promptText="Introduce nº filas" />
             <TextField fx:id="textColumnas" layoutX="516.0" layoutY="193.0" promptText="Introduce nº columnas" />
-            <Label layoutX="44.0" layoutY="264.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Límite de tiempo:">
+            <Label layoutX="44.0" layoutY="260.0" text="Límite de tiempo:">
                <font>
-                  <Font size="24.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <ToggleButton fx:id="buttonTiempo" layoutX="361.0" layoutY="252.0" mnemonicParsing="false" styleClass="button" stylesheets="@../application/estilo1.css" text="Desactivado" />
+            <ToggleButton fx:id="buttonTiempo" layoutX="291.0" layoutY="259.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="165.0" styleClass="button" stylesheets="@../application/estilo1.css" text="Desactivado">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></ToggleButton>
             <TextField fx:id="textTiempoPartida" layoutX="516.0" layoutY="264.0" prefHeight="27.0" prefWidth="70.0" />
-            <Label layoutX="599.0" layoutY="266.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="segundos" />
-            <Label layoutX="44.0" layoutY="341.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Efectos sonoros:">
+            <Label layoutX="599.0" layoutY="266.0" text="segundos" />
+            <Label layoutX="44.0" layoutY="341.0" text="Efectos sonoros:">
                <font>
-                  <Font size="24.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="388.0" layoutY="317.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Voltear carta" />
-            <Label layoutX="582.0" layoutY="317.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Descubrir pareja" />
-            <ChoiceBox fx:id="choiceSonoroCarta" layoutX="373.0" layoutY="341.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="choiceSonoroPareja" layoutX="575.0" layoutY="341.0" prefWidth="150.0" />
-            <Label layoutX="44.0" layoutY="402.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Efectos visuales:">
+            <Label layoutX="325.0" layoutY="303.0" text="Voltear carta">
                <font>
-                  <Font size="24.0" />
+                  <Font size="16.0" />
+               </font></Label>
+            <Label layoutX="524.0" layoutY="303.0" text="Descubrir pareja">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <ChoiceBox fx:id="choiceSonoroCarta" layoutX="288.0" layoutY="334.0" prefHeight="35.0" prefWidth="171.0" />
+            <ChoiceBox fx:id="choiceSonoroPareja" layoutX="504.0" layoutY="334.0" prefHeight="27.0" prefWidth="165.0" />
+            <Label layoutX="44.0" layoutY="396.0" text="Efectos visuales:">
+               <font>
+                  <Font size="20.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="choiceVisualCarta" layoutX="373.0" layoutY="402.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="choiceVisualPareja" layoutX="575.0" layoutY="402.0" prefWidth="150.0" />
-            <Label layoutX="44.0" layoutY="462.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="Mostrar cartas al inicio:">
+            <ChoiceBox fx:id="choiceVisualCarta" layoutX="288.0" layoutY="389.0" prefHeight="35.0" prefWidth="171.0" />
+            <ChoiceBox fx:id="choiceVisualPareja" layoutX="504.0" layoutY="389.0" prefHeight="27.0" prefWidth="165.0" />
+            <Label layoutX="44.0" layoutY="462.0" text="Mostrar cartas al inicio:">
                <font>
-                  <Font size="24.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <ToggleButton fx:id="buttonMostrarCartas" layoutX="355.0" layoutY="451.0" mnemonicParsing="false" styleClass="button" stylesheets="@../application/estilo1.css" text="Desactivado" />
-            <TextField fx:id="textTiempoMostrarCartas" layoutX="519.0" layoutY="462.0" prefHeight="27.0" prefWidth="70.0" />
-            <Label layoutX="599.0" layoutY="463.0" styleClass="label2" stylesheets="@../application/estilo1.css" text="segundos" />
-            <Button fx:id="buttonJugar" layoutX="763.0" layoutY="476.0" mnemonicParsing="false" onAction="#jugarHandler" prefHeight="50.0" prefWidth="91.0" stylesheets="@../application/estilo1.css" text="Jugar" />
-            <StackPane layoutX="690.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estilo1.css">
+            <ToggleButton fx:id="buttonMostrarCartas" layoutX="291.0" layoutY="458.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="165.0" styleClass="button" stylesheets="@../application/estilo1.css" text="Desactivado">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></ToggleButton>
+            <TextField fx:id="textTiempoMostrarCartas" layoutX="516.0" layoutY="460.0" prefHeight="27.0" prefWidth="70.0" />
+            <Label layoutX="599.0" layoutY="463.0" text="segundos" />
+            <Button fx:id="buttonJugar" layoutX="740.0" layoutY="476.0" mnemonicParsing="false" onAction="#jugarHandler" prefHeight="54.0" prefWidth="114.0" stylesheets="@../application/estilo1.css" text="Jugar">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Button>
+            <StackPane fx:id="circuloSonido" layoutX="752.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estilo1.css">
                <children>
                   <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
                      <image>

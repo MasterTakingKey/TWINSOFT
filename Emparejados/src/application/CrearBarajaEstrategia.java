@@ -10,6 +10,6 @@ public interface CrearBarajaEstrategia {
 	
 	public int tamanyoBaraja();
 	
-    public Carta[] crearBaraja();
+    public Carta[] crearBaraja(int tamanyoPartida);
     
 }

@@ -5,17 +5,30 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="627.0" prefWidth="895.0" styleClass="fondoMenuPausa" stylesheets="@../application/estilo1.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorResultadoPartida">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="627.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorResultadoPartida">
    <children>
       <ImageView fx:id="resultado" fitHeight="296.0" fitWidth="550.0" layoutX="173.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/resultado_victoria.png" />
          </image>
       </ImageView>
-      <Label fx:id="puntuacionFinal" layoutX="245.0" layoutY="369.0" prefHeight="47.0" prefWidth="472.0" text="Puntuación Final: " />
-      <Label fx:id="tiempoRestante" layoutX="245.0" layoutY="431.0" prefHeight="47.0" prefWidth="472.0" text="Tiempo Restante: " />
-      <Button fx:id="salir" layoutX="173.0" layoutY="515.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" text="Salir al Menú" />
-      <Button fx:id="jugar" layoutX="483.0" layoutY="515.0" mnemonicParsing="false" onAction="#jugarHandler" prefHeight="54.0" prefWidth="240.0" text="Volver a Jugar" />
+      <Label fx:id="puntuacionFinal" layoutX="245.0" layoutY="369.0" prefHeight="47.0" prefWidth="472.0" text="Puntuación Final: ">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="tiempoRestante" layoutX="245.0" layoutY="431.0" prefHeight="47.0" prefWidth="472.0" text="Tiempo Restante: ">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Button fx:id="salir" layoutX="173.0" layoutY="515.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" text="Salir al Menú">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="jugar" layoutX="483.0" layoutY="515.0" mnemonicParsing="false" onAction="#jugarHandler" prefHeight="54.0" prefWidth="240.0" text="Volver a Jugar">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
    </children>
 </Pane>

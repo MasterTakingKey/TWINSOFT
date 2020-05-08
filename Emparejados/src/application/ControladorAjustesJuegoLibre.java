@@ -16,10 +16,17 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class ControladorAjustesJuegoLibre {
 
+    @FXML
+    private StackPane stackPane;
+    
+    @FXML
+    private StackPane circuloSonido;
+    
     @FXML
     private ResourceBundle resources;
 
@@ -78,14 +85,19 @@ public class ControladorAjustesJuegoLibre {
     private Stage primaryStage;
     
     private Stage thisStage;
+    
+    private String estilo;
 
-    public void iniciarAjustesJLibre(Stage stage, boolean Sound, long tiempoM) {
+    public void iniciarAjustesJLibre(Stage stage, boolean Sound, long tiempoM, double anteriorX, double anteriorY, String estilo) {
     	primaryStage = stage;
     	SoundOn = Sound;
     	tiempoMusica = tiempoM;
     	inicializarVariables();
     	actualizarSonido();
     	actualizarImagenSonido();
+    	corregirTamanyoVentana();
+    	corregirPosicionVentana(anteriorX, anteriorY);
+    	actualizarEstilo(estilo);
     }
     
     public void inicializarVariables() {
@@ -110,6 +122,8 @@ public class ControladorAjustesJuegoLibre {
     @FXML
     void jugarHandler(ActionEvent event) {
     	musicaFondo.stopMusic();
+    	int filas = Integer.parseInt(textFilas.getText());
+    	int columnas = Integer.parseInt(textColumnas.getText());
       	try {
       		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaLibre.fxml"));
       		Parent root = (Parent) myLoader.load();
@@ -118,7 +132,7 @@ public class ControladorAjustesJuegoLibre {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
-      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY());
+      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), filas, columnas, estilo);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -139,5 +153,44 @@ public class ControladorAjustesJuegoLibre {
         } else {
         	iconoSonido.setImage(Sound0);
         }
+    }
+    
+    public void corregirTamanyoVentana() {
+    	thisStage.setWidth(900);
+    	thisStage.setHeight(620);
+    }
+    
+    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
+    	thisStage.setX(anteriorX);
+    	thisStage.setY(anteriorY);
+    }
+    
+    public void actualizarEstilo(String nuevoEstilo) {
+    	estilo = nuevoEstilo;
+    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	if(estilo.equals("Azul")) {
+    		stackPane.getStylesheets().remove(temaRojo);
+    		stackPane.getStylesheets().remove(temaVerde);
+    		stackPane.getStylesheets().add(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaAzul);
+    	} else if(estilo.equals("Rojo")) {
+    		stackPane.getStylesheets().remove(temaAzul);
+    		stackPane.getStylesheets().remove(temaVerde);
+    		stackPane.getStylesheets().add(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaRojo);
+    	} else {
+    		stackPane.getStylesheets().remove(temaAzul);
+    		stackPane.getStylesheets().remove(temaRojo);
+    		stackPane.getStylesheets().add(temaVerde);
+    		circuloSonido.getStylesheets().remove(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().add(temaVerde);
+    	}
     }
 }

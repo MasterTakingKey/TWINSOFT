@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-public class ControladorPartida {
+public class ControladorPartidaEstandar {
 	
 	@FXML
     private Label tiempo = new Label();
@@ -146,8 +146,10 @@ public class ControladorPartida {
     private Puntuacion puntuacion;
     
     private Animaciones animaciones;
+    
+    private String estilo;
 
-    public void iniciarPartidaEstandar(Stage stage, boolean soundOn, double anteriorX, double anteriorY){
+    public void iniciarPartidaEstandar(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String estilo){
     	primaryStage = stage;
         SoundOn = soundOn;
         inicializarBarajaTablero();
@@ -160,13 +162,15 @@ public class ControladorPartida {
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana(anteriorX, anteriorY);
+    	actualizarEstilo(estilo);
     }
     
     public void inicializarBarajaTablero() {
-    	barajaPartida = new Baraja();
-    	barajaPartida.barajaTematica(new CrearBarajaAnimalesEstrategia(2));
+    	barajaPartida = new Baraja(4, 4);
+    	barajaPartida.barajaTematica(new CrearBarajaAnimalesEstrategia(2), 8);
     	barajaPartida.barajar();
-    	tableroPartida = new Tablero(4);
+    	System.out.println(barajaPartida.getTamanyo());
+    	tableroPartida = new Tablero(4, 4);
     	tableroPartida.llenarTablero(barajaPartida);
     }
     
@@ -371,9 +375,9 @@ public class ControladorPartida {
     		primaryStage.hide();
     		stage.setTitle("Resultado");
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "estandar", thisStage.getX(), thisStage.getY());
+            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "estandar", thisStage.getX(), thisStage.getY(), 4, 4, estilo);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "estandar", thisStage.getX(), thisStage.getY());
+        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "estandar", thisStage.getX(), thisStage.getY(), 4, 4, estilo);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -398,7 +402,7 @@ public class ControladorPartida {
     		stage.setResizable(false);
         	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaEstandar();});
         	primaryStage.hide();
-        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY());
+        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY(), estilo);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -462,6 +466,10 @@ public class ControladorPartida {
     public void corregirPosicionVentana(double anteriorX, double anteriorY) {
     	thisStage.setX(anteriorX);
     	thisStage.setY(anteriorY);
+    }
+    
+    public void actualizarEstilo(String nuevoEstilo) {
+    	estilo = nuevoEstilo;
     }
 
 }

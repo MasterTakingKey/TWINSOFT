@@ -19,8 +19,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 public class ControladorPartidaLibre {
+	
+	@FXML
+    private GridPane tablero;
 	
 	@FXML
     private Label tiempo = new Label();
@@ -91,6 +99,66 @@ public class ControladorPartidaLibre {
     @FXML
     private ImageView carta33;
     
+    @FXML
+    private ImageView carta40;
+
+    @FXML
+    private ImageView carta41;
+
+    @FXML
+    private ImageView carta34;
+
+    @FXML
+    private ImageView carta24;
+
+    @FXML
+    private ImageView carta14;
+
+    @FXML
+    private ImageView carta04;
+
+    @FXML
+    private ImageView carta43;
+
+    @FXML
+    private ImageView carta42;
+
+    @FXML
+    private ImageView carta25;
+
+    @FXML
+    private ImageView carta44;
+
+    @FXML
+    private ImageView carta05;
+
+    @FXML
+    private ImageView carta15;
+
+    @FXML
+    private ImageView carta45;
+
+    @FXML
+    private ImageView carta35;
+
+    @FXML
+    private ImageView carta51;
+
+    @FXML
+    private ImageView carta50;
+
+    @FXML
+    private ImageView carta55;
+
+    @FXML
+    private ImageView carta54;
+
+    @FXML
+    private ImageView carta53;
+
+    @FXML
+    private ImageView carta52;
+    
     private Stage primaryStage;
     
     private Stage thisStage;
@@ -120,6 +188,12 @@ public class ControladorPartidaLibre {
     private int cartasGiradas;
     
     private int puntosAnteriores;
+    
+    private int cartas;
+    
+    private int filas;
+    
+    private int columnas;
 	
 	private ArrayList<Carta> parejasFalladas;
 	
@@ -146,11 +220,17 @@ public class ControladorPartidaLibre {
     private Puntuacion puntuacion;
     
     private Animaciones animaciones;
+    
+    private String estilo;
 
-    public void iniciarPartidaLibre(Stage stage, boolean soundOn, double anteriorX, double anteriorY){
+    public void iniciarPartidaLibre(Stage stage, boolean soundOn, double anteriorX, double anteriorY, int filas, int columnas, String estilo){
     	primaryStage = stage;
         SoundOn = soundOn;
-        inicializarBarajaTablero();
+        cartas = filas*columnas;
+        this.filas = filas;
+        this.columnas = columnas;
+        inicializarBarajaTablero(filas, columnas);
+        inicializarTablero(filas, columnas);
         inicializarCartas();
     	inicializarVariables();
     	inicializarAudioClips();
@@ -160,14 +240,34 @@ public class ControladorPartidaLibre {
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana(anteriorX, anteriorY);
+    	actualizarEstilo(estilo);
     }
      
-    public void inicializarBarajaTablero() {
-    	barajaPartida = new Baraja();
-    	barajaPartida.barajaTematica(new CrearBarajaAnimalesEstrategia(2));
+    public void inicializarBarajaTablero(int filas, int columnas) {
+    	barajaPartida = new Baraja(filas, columnas);
+    	int tamanyo = filas*columnas;
+    	//barajaPartida.barajaTematica(new CrearBarajaAnimalesEstrategia(2), tamanyo);
     	barajaPartida.barajar();
-    	tableroPartida = new Tablero(4);
+    	tableroPartida = new Tablero(filas, columnas);
     	tableroPartida.llenarTablero(barajaPartida);
+    }
+    
+    private void inicializarTablero(int filas, int columnas) {
+    	tablero.getColumnConstraints().clear();
+    	tablero.getRowConstraints().clear();
+    	tableroPartida.setTamanyo(filas, columnas);
+        for (int i = 0; i < columnas; i++) {
+            ColumnConstraints colConst = new ColumnConstraints();
+            colConst.setHalignment(HPos.CENTER);
+            colConst.setPercentWidth(100.0 / columnas);
+            tablero.getColumnConstraints().add(colConst);
+        }
+        for (int i = 0; i < filas; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setValignment(VPos.CENTER);
+            rowConst.setPercentHeight(100.0 / filas);
+            tablero.getRowConstraints().add(rowConst);         
+        }
     }
     
     public void inicializarCartas() {
@@ -175,19 +275,39 @@ public class ControladorPartidaLibre {
     	carta01.setImage(barajaPartida.getImagenDorso());
     	carta02.setImage(barajaPartida.getImagenDorso());
     	carta03.setImage(barajaPartida.getImagenDorso());
+    	carta04.setImage(barajaPartida.getImagenDorso());
+    	carta05.setImage(barajaPartida.getImagenDorso());
     	carta10.setImage(barajaPartida.getImagenDorso());
     	carta11.setImage(barajaPartida.getImagenDorso());
     	carta12.setImage(barajaPartida.getImagenDorso());
     	carta13.setImage(barajaPartida.getImagenDorso());
+    	carta14.setImage(barajaPartida.getImagenDorso());
+    	carta15.setImage(barajaPartida.getImagenDorso());
     	carta20.setImage(barajaPartida.getImagenDorso());
     	carta21.setImage(barajaPartida.getImagenDorso());
     	carta22.setImage(barajaPartida.getImagenDorso());
     	carta23.setImage(barajaPartida.getImagenDorso());
     	carta23.setImage(barajaPartida.getImagenDorso());
+    	carta24.setImage(barajaPartida.getImagenDorso());
+    	carta25.setImage(barajaPartida.getImagenDorso());
     	carta30.setImage(barajaPartida.getImagenDorso());
     	carta31.setImage(barajaPartida.getImagenDorso());
     	carta32.setImage(barajaPartida.getImagenDorso());
     	carta33.setImage(barajaPartida.getImagenDorso());
+    	carta34.setImage(barajaPartida.getImagenDorso());
+    	carta35.setImage(barajaPartida.getImagenDorso());
+    	carta40.setImage(barajaPartida.getImagenDorso());
+    	carta41.setImage(barajaPartida.getImagenDorso());
+    	carta42.setImage(barajaPartida.getImagenDorso());
+    	carta43.setImage(barajaPartida.getImagenDorso());
+    	carta44.setImage(barajaPartida.getImagenDorso());
+    	carta45.setImage(barajaPartida.getImagenDorso());
+    	carta50.setImage(barajaPartida.getImagenDorso());
+    	carta51.setImage(barajaPartida.getImagenDorso());
+    	carta52.setImage(barajaPartida.getImagenDorso());
+    	carta53.setImage(barajaPartida.getImagenDorso());
+    	carta54.setImage(barajaPartida.getImagenDorso());
+    	carta55.setImage(barajaPartida.getImagenDorso());
     }
     
     public void inicializarVariables() {
@@ -284,7 +404,7 @@ public class ControladorPartidaLibre {
     	animaciones.parejaCorrectaAnimacion(primeraImagen, segundaImagen);
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
-    	if(cartasGiradas == barajaPartida.getTamanyo()) {
+    	if(cartasGiradas == cartas) {
     		victoria();
     	}
     }
@@ -371,9 +491,9 @@ public class ControladorPartidaLibre {
     		primaryStage.hide();
     		stage.setTitle("Resultado");
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "estandar", thisStage.getX(), thisStage.getY());
+            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "estandar", thisStage.getX(), thisStage.getY(), filas, columnas, estilo);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "estandar", thisStage.getX(), thisStage.getY());
+        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "estandar", thisStage.getX(), thisStage.getY(), filas, columnas, estilo);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -398,7 +518,7 @@ public class ControladorPartidaLibre {
     		stage.setResizable(false);
         	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaEstandar();});
         	primaryStage.hide();
-        	controladorMenuPausa.initDataPartidaLibre(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY());
+        	controladorMenuPausa.initDataPartidaLibre(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY(), estilo);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -416,6 +536,18 @@ public class ControladorPartidaLibre {
     	SoundOn = Sound;
     	actualizarSonido();
     	actualizarImagenSonido();  	
+    }
+      
+    @FXML
+    void clickSound(MouseEvent event) {
+    	if(SoundOn) {
+    		SoundOn = false;
+    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	} else {
+    		SoundOn = true;
+    	}
+    	actualizarSonido();
+    	actualizarImagenSonido();
     }
     
     public void actualizarSonido() {
@@ -442,26 +574,23 @@ public class ControladorPartidaLibre {
         }
     }
     
-    @FXML
-    void clickSound(MouseEvent event) {
-    	if(SoundOn) {
-    		SoundOn = false;
-    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-    	} else {
-    		SoundOn = true;
-    	}
-    	actualizarSonido();
-    	actualizarImagenSonido();
-    }
-    
     public void corregirTamanyoVentana() {
-    	thisStage.setWidth(910);
-    	thisStage.setHeight(623);
+    	if(filas <= 4 && columnas <= 4) {
+    		thisStage.setHeight(800);
+    		thisStage.setWidth(910);
+    	}else {
+    		thisStage.setHeight(860);
+    		thisStage.setWidth(1400);
+    	}
     }
 
     public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-    	thisStage.setX(anteriorX);
-    	thisStage.setY(anteriorY);
+    	thisStage.setX(0);
+    	thisStage.setY(0);
+    }
+    
+    public void actualizarEstilo(String nuevoEstilo) {
+    	estilo = nuevoEstilo;
     }
 
 }

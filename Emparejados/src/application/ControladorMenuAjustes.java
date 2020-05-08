@@ -1,7 +1,6 @@
 package application;
 
 import java.io.IOException;
-
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,18 +10,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class ControladorMenuAjustes {
 
-
+    @FXML
+    private AnchorPane anchorPane;
+    
+    @FXML
+    private StackPane circuloSonido;
+    
 	@FXML
 	private Button editorBarajas;
 
@@ -57,30 +61,38 @@ public class ControladorMenuAjustes {
     private boolean SoundOn;
     
     private long tiempoMusica;
+    
+    private String estilo;
 
-    public void iniciarMenuAjustes(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY){
+    public void iniciarMenuAjustes(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY, String estilo){
         primaryStage = stage;
         SoundOn = soundOn;
         inicializarVariables();
-        inicializaChoiceBox();
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        if(primeraVez) { 
-            centrarVentana();
-        } else {
-            corregirPosicionVentana(anteriorX, anteriorY);
-        }
+        corregirPosicionVentana(anteriorX, anteriorY);
+        actualizarEstilo(estilo);
+        inicializarChoiceBox();
     }
-    public void inicializaChoiceBox() {
+    public void inicializarChoiceBox() {
     	System.out.println("Llega hasta inicializaChoiceBox");
-    	tema = new ChoiceBox<String>(FXCollections.observableArrayList(
+    	tema.getItems().add("Azul");
+    	tema.getItems().add("Rojo");
+    	tema.getItems().add("Verde");
+    	if(estilo.equals("Azul")) {
+        	tema.getSelectionModel().select(0);
+    	} else if(estilo.equals("Rojo")) {
+        	tema.getSelectionModel().select(1);
+    	} else {
+        	tema.getSelectionModel().select(2);
+    	}
+    	/**tema = new ChoiceBox<String>(FXCollections.observableArrayList(
     		    "Azul",
                 "Verde",
-                "Rojo",
-                "Amarillo"));
+                "Rojo"));
 		tema.setValue("Azul");
-    	/*tema.getItems().addAll(
+    	tema.getItems().addAll(
                 "Azul",
                 "Verde",
                 "Rojo",
@@ -127,9 +139,6 @@ public class ControladorMenuAjustes {
         	iconoSonido.setImage(Sound0);
         }
     }
-    
-  
-    
 
     @FXML
     void clickSound(MouseEvent event) {
@@ -150,17 +159,21 @@ public class ControladorMenuAjustes {
    
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
-    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ConfirmacionSalirApp.fxml"));
-        Parent root = (Parent) myLoader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Confirmacion de salida");
-        stage.setResizable(false);
-        ControladorConfirmacionSalirApp controladorConfirmacionSalirApp = myLoader.<ControladorConfirmacionSalirApp>getController();
-        controladorConfirmacionSalirApp.inicializarDatos(thisStage.getX(), thisStage.getY(), thisStage.getWidth(), thisStage.getHeight());
-        stage.show();
+    	musicaFondo.stopMusic();
+    	System.out.println(tema.getSelectionModel().getSelectedItem());
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
+            Parent root = myLoader.load();  
+            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Menu Principal");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(), tema.getSelectionModel().getSelectedItem());
+            primaryStage.show();
+    	} catch (IOException e) {
+                e.printStackTrace();
+        }
     }
     
     public void corregirTamanyoVentana() {
@@ -177,6 +190,35 @@ public class ControladorMenuAjustes {
        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
        primaryStage.setX((screen.getWidth() - primaryStage.getWidth()) / 2);
        primaryStage.setY((screen.getHeight() - primaryStage.getHeight()) / 2);
+    }
+    
+    public void actualizarEstilo(String nuevoEstilo) {
+    	estilo = nuevoEstilo;
+    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	if(estilo.equals("Azul")) {
+    		anchorPane.getStylesheets().remove(temaRojo);
+    		anchorPane.getStylesheets().remove(temaVerde);
+    		anchorPane.getStylesheets().add(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaAzul);
+    	} else if(estilo.equals("Rojo")) {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaVerde);
+			anchorPane.getStylesheets().add(temaRojo);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaVerde);
+			circuloSonido.getStylesheets().add(temaRojo);
+    	} else {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaRojo);
+			anchorPane.getStylesheets().add(temaVerde);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaRojo);
+			circuloSonido.getStylesheets().add(temaVerde);
+    	}
     }
     
 }

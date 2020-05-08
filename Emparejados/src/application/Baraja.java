@@ -1,6 +1,5 @@
 package application;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -13,10 +12,10 @@ public class Baraja {
 	int tamanyo;
 	Carta[] baraja;
 	
-	public Baraja() {
+	public Baraja(int filas, int columnas) {
 		nombre = "Baraja por Defecto";
 		imagenDorso = new Image("/imagenes/dorso_aldeano.png");
-		tamanyo = 16;
+		tamanyo = filas*columnas;
 		baraja = new Carta[tamanyo];
 	}
 	
@@ -64,11 +63,11 @@ public class Baraja {
 		listaCartas.toArray(baraja);
 	}
     
-	public void barajaTematica(CrearBarajaEstrategia estrategia) {
+	public void barajaTematica(CrearBarajaEstrategia estrategia, int tamanyo) {
 		this.nombre = estrategia.nombre();
 		this.imagenDorso = estrategia.dorso();
 		this.tamanyo = estrategia.tamanyoBaraja();
-		this.baraja = estrategia.crearBaraja();
+		this.baraja = estrategia.crearBaraja(tamanyo);
 	}
 	
 }

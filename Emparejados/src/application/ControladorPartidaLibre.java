@@ -2,16 +2,12 @@ package application;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,7 +20,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -158,11 +153,19 @@ public class ControladorPartidaLibre {
     
     private Puntuacion puntuacion;
     
+    private Animaciones animaciones;
+    
     private int cartas;
+    
+    private int filas;
+    
+    private int columnas;
 
     public void iniciarPartidaLibre(Stage stage, boolean soundOn, double anteriorX, double anteriorY, int filas, int columnas){
     	primaryStage = stage;
         SoundOn = soundOn;
+        this.filas = filas;
+        this.columnas = columnas;
         cartas = filas*columnas;
         inicializarBarajaTablero(filas, columnas);
         inicializarTablero(filas, columnas);
@@ -184,6 +187,24 @@ public class ControladorPartidaLibre {
     	barajaPartida.barajar();
     	tableroPartida = new Tablero(filas, columnas);
     	tableroPartida.llenarTablero(barajaPartida);
+    }
+    
+    private void inicializarTablero(int filas, int columnas) {
+    	tablero.getColumnConstraints().clear();
+    	tablero.getRowConstraints().clear();
+    	tableroPartida.setTamanyo(filas, columnas);
+        for (int i = 0; i < columnas; i++) {
+            ColumnConstraints colConst = new ColumnConstraints();
+            colConst.setHalignment(HPos.CENTER);
+            colConst.setPercentWidth(100.0 / columnas);
+            tablero.getColumnConstraints().add(colConst);
+        }
+        for (int i = 0; i < filas; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setValignment(VPos.CENTER);
+            rowConst.setPercentHeight(100.0 / filas);
+            tablero.getRowConstraints().add(rowConst);         
+        }
     }
     
     public void inicializarCartas() {
@@ -217,6 +238,7 @@ public class ControladorPartidaLibre {
         Sound1 = new Image("/imagenes/sonido_on_2.png");
         puntosAnyadidos.setVisible(false);
         thisStage = (Stage) carta00.getScene().getWindow();
+        animaciones = new Animaciones(stackPane, barajaPartida);
     }
     
     public void inicializarAudioClips() {
@@ -244,37 +266,18 @@ public class ControladorPartidaLibre {
 		});
     }
     
-    private void inicializarTablero(int filas, int columnas) {
-    	tablero.getColumnConstraints().clear();
-    	tablero.getRowConstraints().clear();
-    	tableroPartida.setTamanyo(filas, columnas);
-        for (int i = 0; i < columnas; i++) {
-            ColumnConstraints colConst = new ColumnConstraints();
-            colConst.setHalignment(HPos.CENTER);
-            colConst.setPercentWidth(100.0 / columnas);
-            tablero.getColumnConstraints().add(colConst);
-        }
-        for (int i = 0; i < filas; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            rowConst.setValignment(VPos.CENTER);
-            rowConst.setPercentHeight(100.0 / filas);
-            tablero.getRowConstraints().add(rowConst);         
-        }
-    }
-    
     @FXML
     void muestraCarta(MouseEvent event) {    	
     	cartasGiradas++;
     	imagenSeleccionada = (ImageView) event.getSource();
     	cartaSeleccionada = deImagenACarta(imagenSeleccionada);
-    	System.out.print(imagenSeleccionada.getId());
     	if(esPrimeraCarta) {
     		voltearCarta.play();
     		puntosAnteriores = puntuacion.getPuntos();
     		puntuacion.iniciarTiempoEntreTurnos();
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
-    		clickCartaAnimacion(imagenSeleccionada);
+    		animaciones.clickCartaAnimacion(imagenSeleccionada, cartaSeleccionada);
     		esPrimeraCarta = false;
     	} else {
     		puntuacion.getTimeline().stop();
@@ -284,7 +287,7 @@ public class ControladorPartidaLibre {
     			mismaCarta.play();
     		} else {
 				voltearCarta.play();
-				clickCartaAnimacion(imagenSeleccionada);
+				animaciones.clickCartaAnimacion(imagenSeleccionada, cartaSeleccionada);
 				PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 				stackPane.setDisable(true);
     			if(primeraCarta.getId() == segundaCarta.getId()) {
@@ -315,10 +318,10 @@ public class ControladorPartidaLibre {
     	puntosAnteriores = puntuacion.getPuntos();
     	puntuacion.sumaPuntos(10, false, 0);
     	acierto.play();
-    	parejaCorrectaAnimacion(primeraImagen, segundaImagen);
+    	animaciones.parejaCorrectaAnimacion(primeraImagen, segundaImagen);
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
-    	if(cartasGiradas == barajaPartida.getTamanyo()) {
+    	if(cartasGiradas == cartas) {
     		victoria();
     	}
     }
@@ -329,7 +332,7 @@ public class ControladorPartidaLibre {
     	parejasFalladas.add(primeraCarta);
     	parejasFalladas.add(segundaCarta);
     	error.play();
-    	parejaIncorrectaAnimacion(primeraImagen, segundaImagen);
+    	animaciones.parejaIncorrectaAnimacion(primeraImagen, segundaImagen);
     	cartasGiradas-= 2;
     }
     
@@ -405,9 +408,9 @@ public class ControladorPartidaLibre {
     		primaryStage.hide();
     		stage.setTitle("Resultado");
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "estandar", thisStage.getX(), thisStage.getY());
+            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "libre", thisStage.getX(), thisStage.getY(), filas, columnas);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "estandar", thisStage.getX(), thisStage.getY());
+        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "libre", thisStage.getX(), thisStage.getY(), filas, columnas);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -487,123 +490,6 @@ public class ControladorPartidaLibre {
     	actualizarSonido();
     	actualizarImagenSonido();
     }
-    
-    private Node FlipAdelanteCard(ImageView card) {
-        return card;
-    }
-    
-    private RotateTransition createFirstRotator(Node card) {
-        RotateTransition firstRotator = new RotateTransition(Duration.millis(200), card);
-        firstRotator.setAxis(Rotate.Y_AXIS);
-        firstRotator.setFromAngle(0);
-        firstRotator.setToAngle(89);
-        firstRotator.setInterpolator(Interpolator.LINEAR);
-        firstRotator.setCycleCount(1);
-
-        return firstRotator;
-    }
-    private RotateTransition createSecondRotator(Node card) {
-        RotateTransition secondRotator = new RotateTransition(Duration.millis(200), card);
-        secondRotator.setAxis(Rotate.Y_AXIS);
-        secondRotator.setFromAngle(90);
-        secondRotator.setToAngle(180);
-        secondRotator.setInterpolator(Interpolator.LINEAR);
-        secondRotator.setCycleCount(1);
-
-        return secondRotator;
-    }
-    
-    private TranslateTransition createIncorrectTranslation(Node card) {
-    	TranslateTransition translation = new TranslateTransition(Duration.millis(300), card);
-
-    	translation.setByY(50);
-    	translation.setByY(-50);
-    	translation.setAutoReverse(true);
-    	translation.setCycleCount(2);
-
-    	return translation;
-    }
-    private TranslateTransition createCorrectTranslation(Node card) {
-    	TranslateTransition translation = new TranslateTransition(Duration.millis(200), card);
-
-    	translation.setByY(50);
-    	translation.setByY(-50);
-    	translation.setAutoReverse(true);
-    	translation.setCycleCount(4);
-
-    	return translation;
-
-    }
-
-    private void clickCartaAnimacion(ImageView carta) {
-    	stackPane.setDisable(true);
-    	Node card = FlipAdelanteCard(carta);
-
-        RotateTransition firstRotator = createFirstRotator(card);
-        RotateTransition secondRotator = createSecondRotator(card);
-
-        firstRotator.play();
-        firstRotator.setOnFinished(e -> {
-            imagenSeleccionada.setImage(cartaSeleccionada.imagenFrente);
-               secondRotator.play();
-        });
-        secondRotator.setOnFinished(e -> {
-            stackPane.setDisable(false);
-     });
-    }
-
-    private void parejaCorrectaAnimacion(ImageView carta1, ImageView carta2) {
-    	stackPane.setDisable(true);
-    	Node card1 = FlipAdelanteCard(carta1);
-	    Node card2 = FlipAdelanteCard(carta2);
-
-	    TranslateTransition firstTranslation1 = createCorrectTranslation(card1);
-	    TranslateTransition firstTranslation2 = createCorrectTranslation(card2);
-
-	    firstTranslation1.play();
-	    firstTranslation2.play();
-
-	    firstTranslation2.setOnFinished(e -> {
-	    	stackPane.setDisable(false);
-	    });
-
-	  }
-
-
-    private void parejaIncorrectaAnimacion(ImageView carta1, ImageView carta2){
-    	stackPane.setDisable(true);
-	    Node card1 = FlipAdelanteCard(carta1);
-	    Node card2 = FlipAdelanteCard(carta2);
-
-	    RotateTransition firstRotator1 = createFirstRotator(card1);
-	    RotateTransition secondRotator1 = createSecondRotator(card1);
-
-	    RotateTransition firstRotator2 = createFirstRotator(card2);
-	    RotateTransition secondRotator2 = createSecondRotator(card2);
-
-	    firstRotator1.play();
-	    firstRotator1.setOnFinished(e -> {
-	        carta1.setImage(barajaPartida.getImagenDorso());
-	           secondRotator1.play();
-	    });	    
-
-	    firstRotator2.play();
-	    firstRotator2.setOnFinished(e -> {
-	        carta2.setImage(barajaPartida.getImagenDorso());
-	           secondRotator2.play();
-	    });
-
-	    TranslateTransition firstTranslation1 = createIncorrectTranslation(card1);
-	    TranslateTransition firstTranslation2 = createIncorrectTranslation(card2);
-
-	    firstTranslation1.play();
-	    firstTranslation2.play();
-
-	    firstTranslation2.setOnFinished(e -> {
-	    	stackPane.setDisable(false);
-	    });
-
-    }	
     
     public void corregirTamanyoVentana() {
     	thisStage.setWidth(910);

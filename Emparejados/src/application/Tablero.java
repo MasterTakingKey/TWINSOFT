@@ -11,7 +11,7 @@ public class Tablero {
 		this.tamanyo = filas*columnas;
 		this.filas = filas;
 		this.columnas = columnas;
-		tablero = new Carta[filas][columnas];
+		tablero = new Carta[columnas][filas];
 	}
 	
 	public int getTamanyo() {
@@ -26,7 +26,7 @@ public class Tablero {
 	}
 	
 	public void setTamanyo(int filas, int columnas) {
-		tamanyo = filas*columnas;
+		tamanyo = filas * columnas;
 	}
 	
 	public void setCarta(Carta nuevaCarta, int posicionX, int posicionY) {
@@ -35,8 +35,8 @@ public class Tablero {
 	
     public void llenarTablero(Baraja nuevaBaraja) {
     	int index = 0;
-    	for(int x = 0; x < filas; x++) {
-    		for(int y = 0; y < columnas; y++)	{
+    	for(int x = 0; x < columnas; x++) {
+    		for(int y = 0; y < filas; y++)	{
         			tablero[x][y] = nuevaBaraja.getCarta(index++);
     		}
     	}

@@ -10,9 +10,20 @@ public class CrearBarajaAnimalesEstrategia implements CrearBarajaEstrategia {
 	
 	int repeticiones;
 	
+	private ArrayList<Image> imagenes = new ArrayList<Image>();
+	
+	
 	public CrearBarajaAnimalesEstrategia(int repeticiones) {
 		nombre = "Estrategia Baraja Animales";
 		this.repeticiones = repeticiones;
+		imagenes.add(new Image("/imagenes/baraja_animales/elefante.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/hipopotamo.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/jirafa.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/leon.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/mono.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/rinoceronte.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/serpiente.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/zebra.png"));
 		
 	}
 	
@@ -21,28 +32,19 @@ public class CrearBarajaAnimalesEstrategia implements CrearBarajaEstrategia {
 	}
 	
 	public Image dorso() {
-		return new Image("/imagenes/dorso_aldeano.png");
+		return new Image("/imagenes/baraja_animales/dorso_aldeano.png");
 	}
 	
-	public int tamanyoBaraja(int tamanyo) {
-		return tamanyo;
+	public int tamanyoBaraja() {
+		return imagenes.size();
 	}
 	
-    public Carta[] crearBaraja(int tamanyo) {
-    	Carta[] baraja = new Carta[tamanyo];
-    	Image imagenDorso = new Image("/imagenes/dorso_aldeano.png");
-    	ArrayList<Image> imagenes = new ArrayList<Image>();
-    	imagenes.add(new Image("/imagenes/elefante.png"));
-    	imagenes.add(new Image("/imagenes/hipopotamo.png"));
-    	imagenes.add(new Image("/imagenes/jirafa.png"));
-    	imagenes.add(new Image("/imagenes/leon.png"));
-    	imagenes.add(new Image("/imagenes/mono.png"));
-    	imagenes.add(new Image("/imagenes/rinoceronte.png"));
-    	imagenes.add(new Image("/imagenes/serpiente.png"));
-    	imagenes.add(new Image("/imagenes/zebra.png"));
+    public Carta[] crearBaraja(int tamanyoPartida) {
+    	Carta[] baraja = new Carta[tamanyoPartida];
+    	Image imagenDorso = new Image("/imagenes/baraja_animales/dorso_aldeano.png");
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {
-    		for(int j = 0; j < tamanyo/2; j++) {
+    		for(int j = 0; j < tamanyoPartida/2; j++) {
     			baraja[index++] = (new Carta(imagenDorso, imagenes.get(j), j));
     		}
     	}

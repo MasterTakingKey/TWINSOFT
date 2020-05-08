@@ -47,11 +47,17 @@ public class ControladorResultadoPartida {
     
     private String tipoPartida;
     
-    public void iniciarResultado(Stage stage, boolean soundOn, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, double anteriorX, double anteriorY){
+    private int filas;
+    
+    private int columnas;
+    
+    public void iniciarResultado(Stage stage, boolean soundOn, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, double anteriorX, double anteriorY, int filas, int columnas){
         primaryStage = stage;
         this.soundOn = soundOn;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
+        this.filas = filas;
+        this.columnas = columnas;
         inicializarVariables(puntuacion, tiempo);
         mostrarResultado();
         anyadirIcono();
@@ -90,6 +96,8 @@ public class ControladorResultadoPartida {
     		jugarPartidaEstandar();
     	} else if(tipoPartida == "carta") {
     		jugarPartidaCarta();
+    	}else if(tipoPartida == "libre") {
+    		jugarPartidaLibre(filas, columnas);
     	}
     }
     
@@ -118,6 +126,21 @@ public class ControladorResultadoPartida {
             primaryStage.setTitle("Partida Por Carta");
             primaryStage.setResizable(false);
             controladorPartidaCarta.iniciarPartidaCarta(primaryStage, soundOn, thisStage.getX(), thisStage.getY());
+            primaryStage.show();
+        	thisStage.close();
+    	} catch (IOException e) {}
+    }
+    
+    public void jugarPartidaLibre(int filas, int columnas) {
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaLibre.fxml"));
+            Parent root = (Parent) myLoader.load();
+            ControladorPartidaLibre controladorPartidaLibre = myLoader.<ControladorPartidaLibre>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Partida Por Carta");
+            primaryStage.setResizable(false);
+            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), filas, columnas);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}

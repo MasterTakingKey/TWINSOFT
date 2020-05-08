@@ -67,7 +67,7 @@ public class Baraja {
 	public void barajaTematica(CrearBarajaEstrategia estrategia, int tamanyo) {
 		this.nombre = estrategia.nombre();
 		this.imagenDorso = estrategia.dorso();
-		this.tamanyo = estrategia.tamanyoBaraja(tamanyo);
+		this.tamanyo = estrategia.tamanyoBaraja();
 		this.baraja = estrategia.crearBaraja(tamanyo);
 	}
 	

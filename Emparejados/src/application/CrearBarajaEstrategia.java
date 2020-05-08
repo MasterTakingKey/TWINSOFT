@@ -8,8 +8,8 @@ public interface CrearBarajaEstrategia {
 	
 	public Image dorso();
 	
-	public int tamanyoBaraja(int tamanyo);
+	public int tamanyoBaraja();
 	
-    public Carta[] crearBaraja(int tamanyo);
+    public Carta[] crearBaraja(int tamanyoPartida);
     
 }

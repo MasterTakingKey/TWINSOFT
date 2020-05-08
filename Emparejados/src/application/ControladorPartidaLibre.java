@@ -99,6 +99,66 @@ public class ControladorPartidaLibre {
     @FXML
     private GridPane tablero;
     
+    @FXML
+    private ImageView carta40;
+
+    @FXML
+    private ImageView carta41;
+
+    @FXML
+    private ImageView carta34;
+
+    @FXML
+    private ImageView carta24;
+
+    @FXML
+    private ImageView carta14;
+
+    @FXML
+    private ImageView carta04;
+
+    @FXML
+    private ImageView carta43;
+
+    @FXML
+    private ImageView carta42;
+
+    @FXML
+    private ImageView carta25;
+
+    @FXML
+    private ImageView carta44;
+
+    @FXML
+    private ImageView carta05;
+
+    @FXML
+    private ImageView carta15;
+
+    @FXML
+    private ImageView carta45;
+
+    @FXML
+    private ImageView carta35;
+
+    @FXML
+    private ImageView carta51;
+
+    @FXML
+    private ImageView carta50;
+
+    @FXML
+    private ImageView carta55;
+
+    @FXML
+    private ImageView carta54;
+
+    @FXML
+    private ImageView carta53;
+
+    @FXML
+    private ImageView carta52;
+    
     private Stage primaryStage;
     
     private Stage thisStage;
@@ -183,7 +243,7 @@ public class ControladorPartidaLibre {
     public void inicializarBarajaTablero(int filas, int columnas) {
     	barajaPartida = new Baraja(filas, columnas);
     	int tamanyo = filas*columnas;
-    	barajaPartida.barajaTematica(new CrearBarajaAnimalesEstrategia(2), tamanyo);
+    	//barajaPartida.barajaTematica(new CrearBarajaAnimalesEstrategia(2), tamanyo);
     	barajaPartida.barajar();
     	tableroPartida = new Tablero(filas, columnas);
     	tableroPartida.llenarTablero(barajaPartida);
@@ -212,19 +272,39 @@ public class ControladorPartidaLibre {
     	carta01.setImage(barajaPartida.getImagenDorso());
     	carta02.setImage(barajaPartida.getImagenDorso());
     	carta03.setImage(barajaPartida.getImagenDorso());
+    	carta04.setImage(barajaPartida.getImagenDorso());
+    	carta05.setImage(barajaPartida.getImagenDorso());
     	carta10.setImage(barajaPartida.getImagenDorso());
     	carta11.setImage(barajaPartida.getImagenDorso());
     	carta12.setImage(barajaPartida.getImagenDorso());
     	carta13.setImage(barajaPartida.getImagenDorso());
+    	carta14.setImage(barajaPartida.getImagenDorso());
+    	carta15.setImage(barajaPartida.getImagenDorso());
     	carta20.setImage(barajaPartida.getImagenDorso());
     	carta21.setImage(barajaPartida.getImagenDorso());
     	carta22.setImage(barajaPartida.getImagenDorso());
     	carta23.setImage(barajaPartida.getImagenDorso());
-    	carta23.setImage(barajaPartida.getImagenDorso());
+    	carta24.setImage(barajaPartida.getImagenDorso());
+    	carta25.setImage(barajaPartida.getImagenDorso());
     	carta30.setImage(barajaPartida.getImagenDorso());
     	carta31.setImage(barajaPartida.getImagenDorso());
     	carta32.setImage(barajaPartida.getImagenDorso());
     	carta33.setImage(barajaPartida.getImagenDorso());
+    	carta34.setImage(barajaPartida.getImagenDorso());
+    	carta35.setImage(barajaPartida.getImagenDorso());
+    	carta40.setImage(barajaPartida.getImagenDorso());
+    	carta41.setImage(barajaPartida.getImagenDorso());
+    	carta42.setImage(barajaPartida.getImagenDorso());
+    	carta43.setImage(barajaPartida.getImagenDorso());
+    	carta44.setImage(barajaPartida.getImagenDorso());
+    	carta45.setImage(barajaPartida.getImagenDorso());
+    	carta50.setImage(barajaPartida.getImagenDorso());
+    	carta51.setImage(barajaPartida.getImagenDorso());
+    	carta52.setImage(barajaPartida.getImagenDorso());
+    	carta53.setImage(barajaPartida.getImagenDorso());
+    	carta54.setImage(barajaPartida.getImagenDorso());
+    	carta55.setImage(barajaPartida.getImagenDorso());
+    	
     }
     
     public void inicializarVariables() {
@@ -492,13 +572,18 @@ public class ControladorPartidaLibre {
     }
     
     public void corregirTamanyoVentana() {
-    	thisStage.setWidth(910);
-    	thisStage.setHeight(623);
+    	if(filas <= 4 && columnas <= 4) {
+    		thisStage.setHeight(800);
+    		thisStage.setWidth(910);
+    	}else {
+    		thisStage.setHeight(860);
+    		thisStage.setWidth(1400);
+    	}
     }
 
     public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-    	thisStage.setX(anteriorX);
-    	thisStage.setY(anteriorY);
+    	thisStage.setX(0);
+    	thisStage.setY(0);
     }
 
 }

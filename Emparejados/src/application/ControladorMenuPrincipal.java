@@ -255,7 +255,7 @@ public class ControladorMenuPrincipal {
     }
 
     public void corregirTamanyoVentana() {
-    	thisStage.setWidth(900);
+    	thisStage.setWidth(910);
     	thisStage.setHeight(650);
     }
     

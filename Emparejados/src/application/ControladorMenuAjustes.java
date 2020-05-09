@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -73,7 +74,7 @@ public class ControladorMenuAjustes {
     
     private Baraja barajaP;
 
-    public void iniciarMenuAjustes(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
+    public void iniciarMenuAjustes(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
         primaryStage = stage;
         SoundOn = soundOn;
         listaBarajas = lista;
@@ -172,13 +173,25 @@ public class ControladorMenuAjustes {
     
     @FXML
     void editorBarajasHandler(ActionEvent event) {
-
+    	musicaFondo.stopMusic();
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
+            Parent root = myLoader.load();  
+            EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController();
+            Scene scene = new Scene(root); 
+            primaryStage.setTitle("Seleccione el dorso");
+            primaryStage.setScene(scene);
+            primaryStage.initModality(Modality.APPLICATION_MODAL);
+            primaryStage.setResizable(false);
+            editorDorso.iniciarEditorDorso(primaryStage, thisStage.getX(), thisStage.getY(), tema.getSelectionModel().getSelectedItem(), listaBarajas);
+            primaryStage.show();
+    	} catch (IOException e) {
+                e.printStackTrace();
+        }
     }
-   
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
     	musicaFondo.stopMusic();
-    	System.out.println(tema.getSelectionModel().getSelectedItem());
     	try {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
             Parent root = myLoader.load();  
@@ -215,11 +228,6 @@ public class ControladorMenuAjustes {
     	thisStage.setY(anteriorY);
     }
     
-    public void centrarVentana() {  
-       Rectangle2D screen = Screen.getPrimary().getVisualBounds();
-       primaryStage.setX((screen.getWidth() - primaryStage.getWidth()) / 2);
-       primaryStage.setY((screen.getHeight() - primaryStage.getHeight()) / 2);
-    }
     
     public void actualizarEstilo(String nuevoEstilo) {
     	estilo = nuevoEstilo;

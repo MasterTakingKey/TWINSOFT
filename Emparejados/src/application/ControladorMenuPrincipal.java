@@ -174,7 +174,7 @@ public class ControladorMenuPrincipal {
     		Image icono = new Image("/imagenes/Icon.png");
     		primaryStage.getIcons().add(icono);
         
-    		menuPrincipal.iniciarMenuAjustes(primaryStage, true, true, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+    		menuPrincipal.iniciarMenuAjustes(primaryStage, true, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
     		primaryStage.show();
     	} catch(IOException e) {}
     }

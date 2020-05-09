@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,13 +58,19 @@ public class ControladorResultadoPartida {
     
     private int columnas;
     
-    public void iniciarResultado(Stage stage, boolean soundOn, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, double anteriorX, double anteriorY, int filas, int columnas, String estilo){
+    private ArrayList<Baraja> listaBarajas;
+    
+    private Baraja barajaPartida;
+    
+    public void iniciarResultado(Stage stage, boolean soundOn, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, double anteriorX, double anteriorY, int filas, int columnas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
         primaryStage = stage;
         this.soundOn = soundOn;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
         this.filas = filas;
         this.columnas = columnas;
+        listaBarajas = lista;
+        barajaPartida = nuevaBaraja;
         inicializarVariables(puntuacion, tiempo);
         mostrarResultado();
         anyadirIcono();
@@ -117,7 +124,7 @@ public class ControladorResultadoPartida {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Estandar");
             primaryStage.setResizable(false);
-            controladorPartida.iniciarPartidaEstandar(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), estilo);
+            controladorPartida.iniciarPartidaEstandar(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -132,7 +139,7 @@ public class ControladorResultadoPartida {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Por Carta");
             primaryStage.setResizable(false);
-            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), estilo);
+            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -147,7 +154,7 @@ public class ControladorResultadoPartida {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Por Carta");
             primaryStage.setResizable(false);
-            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), filas, columnas, estilo);
+            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), filas, columnas, estilo, listaBarajas, barajaPartida);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -163,7 +170,7 @@ public class ControladorResultadoPartida {
         primaryStage.setTitle("Menu Principal");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, soundOn, false, thisStage.getX(), thisStage.getY(), estilo);
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, soundOn, false, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
         primaryStage.show();
         thisStage.close(); 
     }

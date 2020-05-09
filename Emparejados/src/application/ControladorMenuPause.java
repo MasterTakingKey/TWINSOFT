@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,11 +67,17 @@ public class ControladorMenuPause {
     
     private String estilo;
     
-    void initDataPartidaEstandar(Stage partida, ControladorPartidaEstandar partidaEstandar, boolean soundOn, double anteriorX, double anteriorY, String estilo) {
+    private ArrayList<Baraja> listaBarajas;
+    
+    private Baraja barajaPartida;
+    
+    void initDataPartidaEstandar(Stage partida, ControladorPartidaEstandar partidaEstandar, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
         SoundOn = soundOn;
         tipoPartida = "estandar";
+        listaBarajas = lista;
+        barajaPartida = nuevaBaraja;
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
@@ -81,11 +88,13 @@ public class ControladorMenuPause {
         actualizarEstilo(estilo);
     }
     
-    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, boolean soundOn, double anteriorX, double anteriorY, String estilo) {
+    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         SoundOn = soundOn;
         tipoPartida = "carta";
+        listaBarajas = lista;
+        barajaPartida = nuevaBaraja;
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
@@ -96,11 +105,13 @@ public class ControladorMenuPause {
         actualizarEstilo(estilo);
     }
   
-    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, boolean soundOn, double anteriorX, double anteriorY, String estilo) {
+    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
     	primaryStage = partida;
     	this.partidaLibre = partidaLibre;
         SoundOn = soundOn;
         tipoPartida = "libre";
+        listaBarajas = lista;
+        barajaPartida = nuevaBaraja;
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
@@ -152,7 +163,7 @@ public class ControladorMenuPause {
             primaryStage.setTitle("Menu Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(), estilo);
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();

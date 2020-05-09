@@ -12,7 +12,7 @@
 <AnchorPane fx:id="anchorPane" prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuAjustes">
    <children>
       <ImageView fitHeight="535.0" fitWidth="882.0" layoutX="1.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="editorBarajas" layoutX="169.0" layoutY="351.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="54.0" prefWidth="246.0" text="EDITOR DE BARAJAS">
+      <Button fx:id="editorBarajas" layoutX="169.0" layoutY="441.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="54.0" prefWidth="246.0" text="EDITOR DE BARAJAS">
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Button>
@@ -44,14 +44,20 @@
          </font></Label>
       <ChoiceBox fx:id="musicaMenuP" layoutX="354.0" layoutY="274.0" prefHeight="25.0" prefWidth="176.0" />
       <ChoiceBox fx:id="musicaPausa" layoutX="593.0" layoutY="274.0" prefHeight="25.0" prefWidth="188.0" />
-      <Label alignment="CENTER" layoutX="567.0" layoutY="345.0" prefHeight="30.0" prefWidth="165.0" text="TEMA" underline="true">
+      <Label alignment="CENTER" layoutX="238.0" layoutY="338.0" prefHeight="30.0" prefWidth="165.0" text="TEMA" underline="true">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <ChoiceBox fx:id="tema" layoutX="591.0" layoutY="388.0" prefHeight="35.0" prefWidth="118.0" />
-      <Button fx:id="salir" layoutX="322.0" layoutY="441.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" text="APLICAR Y VOLVER">
+      <ChoiceBox fx:id="tema" layoutX="262.0" layoutY="377.0" prefHeight="35.0" prefWidth="118.0" />
+      <Button fx:id="salir" layoutX="469.0" layoutY="441.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" text="APLICAR Y VOLVER">
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Button>
+      <ChoiceBox fx:id="barajaPartida" layoutX="482.0" layoutY="377.0" prefHeight="35.0" prefWidth="188.0" />
+      <Label alignment="CENTER" layoutX="494.0" layoutY="338.0" prefHeight="30.0" prefWidth="165.0" text="BARAJA PARTIDA" underline="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

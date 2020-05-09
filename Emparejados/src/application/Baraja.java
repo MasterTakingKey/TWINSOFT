@@ -12,6 +12,13 @@ public class Baraja {
 	int tamanyo;
 	Carta[] baraja;
 	
+	public Baraja(String n, Image imagenD, int t) {
+		nombre = n;
+		imagenDorso = imagenD;
+		tamanyo = t;
+		baraja = new Carta[tamanyo];
+	}
+	
 	public Baraja(int filas, int columnas) {
 		nombre = "Baraja por Defecto";
 		imagenDorso = new Image("/imagenes/dorso_aldeano.png");

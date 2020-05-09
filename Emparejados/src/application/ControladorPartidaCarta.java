@@ -161,10 +161,14 @@ public class ControladorPartidaCarta {
     private Animaciones animaciones;
     
     private String estilo;
+    
+    private ArrayList<Baraja> listaBarajas;
 
-    public void iniciarPartidaCarta(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String estilo){
+    public void iniciarPartidaCarta(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
     	primaryStage = stage;
         SoundOn = soundOn;
+        listaBarajas = lista;
+        barajaPartida = nuevaBaraja;
         inicializarBarajaTablero();
         inicializarCartas();
     	inicializarVariables();
@@ -180,11 +184,11 @@ public class ControladorPartidaCarta {
     }
     
     public void inicializarBarajaTablero() {
-    	barajaPartida = new Baraja(4, 4);
-    	barajaPartida.barajaTematica(new CrearBarajaNintendoEstrategia(2), 8);
+    	barajaAuxiliar = new Baraja(barajaPartida.getNombre(), barajaPartida.getImagenDorso(), barajaPartida.getTamanyo()/2);
+    	for(int i = 0; i < barajaPartida.getTamanyo()/2; i++) {
+    		barajaAuxiliar.setCarta(barajaPartida.getCarta(i), i);
+    	}
     	barajaPartida.barajar();
-    	barajaAuxiliar = new Baraja(4, 4);
-    	barajaAuxiliar.barajaTematica(new CrearBarajaNintendoEstrategia(1), 8);
     	barajaAuxiliar.barajar();
         indiceBarajaAuxiliar = 0;
     	tableroPartida = new Tablero(4, 4);
@@ -404,9 +408,9 @@ public class ControladorPartidaCarta {
     		primaryStage.hide();
     		stage.setTitle("Resultado");
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "carta", thisStage.getX(), thisStage.getY(), 4, 4, estilo);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "carta", thisStage.getX(), thisStage.getY(), 4, 4, estilo, listaBarajas, barajaPartida);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "carta", thisStage.getX(), thisStage.getY(), 4, 4, estilo);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "carta", thisStage.getX(), thisStage.getY(), 4, 4, estilo, listaBarajas, barajaPartida);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -430,7 +434,7 @@ public class ControladorPartidaCarta {
     		stage.setResizable(false);
         	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaCarta();});
         	primaryStage.hide();
-        	controladorMenuPausa.initDataPartidaCarta(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY(), estilo);
+        	controladorMenuPausa.initDataPartidaCarta(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {

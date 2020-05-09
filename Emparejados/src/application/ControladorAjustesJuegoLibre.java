@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -87,11 +88,17 @@ public class ControladorAjustesJuegoLibre {
     private Stage thisStage;
     
     private String estilo;
+    
+    private ArrayList<Baraja> listaBarajas;
+    
+    private Baraja barajaPartida;
 
-    public void iniciarAjustesJLibre(Stage stage, boolean Sound, long tiempoM, double anteriorX, double anteriorY, String estilo) {
+    public void iniciarAjustesJLibre(Stage stage, boolean Sound, long tiempoM, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
     	primaryStage = stage;
     	SoundOn = Sound;
     	tiempoMusica = tiempoM;
+    	listaBarajas = lista;
+    	barajaPartida = nuevaBaraja;
     	inicializarVariables();
     	actualizarSonido();
     	actualizarImagenSonido();
@@ -132,7 +139,7 @@ public class ControladorAjustesJuegoLibre {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
-      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), filas, columnas, estilo);
+      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), filas, columnas, estilo, listaBarajas, barajaPartida);
       		primaryStage.show();
       	} catch (IOException e) {}
     }

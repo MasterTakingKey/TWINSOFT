@@ -24,7 +24,7 @@ public class Main extends Application {
         Image icono = new Image("/imagenes/Icon.png");
         primaryStage.getIcons().add(icono);
         
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, true, 0, 0, "Azul");
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, true, 0, 0, "Azul", null, null);
         primaryStage.show();
 	}
 

@@ -1,6 +1,8 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,8 +66,12 @@ public class ControladorMenuPrincipal {
     private long tiempoMusica;
     
     private String estilo;
+    
+    private ArrayList<Baraja> listaBarajas;
+    
+    private Baraja barajaPartida;
 
-    public void iniciarMenuPrincipal(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY, String estilo){
+    public void iniciarMenuPrincipal(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
         primaryStage = stage;
         SoundOn = soundOn;
         inicializarVariables();
@@ -76,10 +82,27 @@ public class ControladorMenuPrincipal {
         muestraMenuP(true);
         if(primeraVez) { 
             centrarVentana();
+            crearListaBarajas();
+            barajaPartida = listaBarajas.get(0);
         } else {
             corregirPosicionVentana(anteriorX, anteriorY);
+            listaBarajas = lista;
+            barajaPartida = nuevaBaraja;
         }
     }
+    
+	public void crearListaBarajas() {
+		listaBarajas = new ArrayList<Baraja>();
+		Baraja barajaAnimales = new Baraja(4, 4);
+    	barajaAnimales.barajaTematica(new CrearBarajaAnimalesEstrategia(2), 8);
+    	listaBarajas.add(barajaAnimales);
+    	Baraja barajaDeportes = new Baraja(4, 4);
+    	barajaDeportes.barajaTematica(new CrearBarajaDeportesEstrategia(2), 8);
+    	listaBarajas.add(barajaDeportes);
+    	Baraja barajaNintendo = new Baraja(4, 4);
+    	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2), 8);
+    	listaBarajas.add(barajaNintendo);
+	}
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
@@ -151,28 +174,9 @@ public class ControladorMenuPrincipal {
     		Image icono = new Image("/imagenes/Icon.png");
     		primaryStage.getIcons().add(icono);
         
-    		menuPrincipal.iniciarMenuAjustes(primaryStage, true, true, thisStage.getX(), thisStage.getY(), estilo);
+    		menuPrincipal.iniciarMenuAjustes(primaryStage, true, true, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
     		primaryStage.show();
     	} catch(IOException e) {}
-    }
-    
-    @FXML
-    void modoLibreHandler(ActionEvent event) {
-    	musicaFondo.stopMusic();
-    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-    	try {
-      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/AjustesJuegoLibre.fxml"));
-      		Parent root = (Parent) myLoader.load();
-      		ControladorAjustesJuegoLibre controladorAjustesJLibre = myLoader.<ControladorAjustesJuegoLibre>getController();
-      		Scene scene = new Scene(root);
-      		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Ajustes del modo libre");
-      		primaryStage.setResizable(false);
-      		controladorAjustesJLibre.iniciarAjustesJLibre(primaryStage, SoundOn, tiempoMusica, thisStage.getX(), thisStage.getY(), estilo);
-      		primaryStage.show();
-      	} catch (IOException e) {
-      		e.printStackTrace();
-      	}
     }
 
     @FXML
@@ -186,7 +190,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), estilo);
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -202,11 +206,30 @@ public class ControladorMenuPrincipal {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Por Carta");
       		primaryStage.setResizable(false);
-      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), estilo);
+      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
-
+    
+    
+    @FXML
+    void modoLibreHandler(ActionEvent event) {
+    	musicaFondo.stopMusic();
+    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/AjustesJuegoLibre.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorAjustesJuegoLibre controladorAjustesJLibre = myLoader.<ControladorAjustesJuegoLibre>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Ajustes del modo libre");
+      		primaryStage.setResizable(false);
+      		controladorAjustesJLibre.iniciarAjustesJLibre(primaryStage, SoundOn, tiempoMusica, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+      		primaryStage.show();
+      	} catch (IOException e) {
+      		e.printStackTrace();
+      	}
+    }
     
     @FXML
     void salirHandler(ActionEvent event) throws IOException {

@@ -1,6 +1,8 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,6 +46,9 @@ public class ControladorMenuAjustes {
 
 	@FXML
 	private ChoiceBox<String> tema;
+	
+    @FXML
+    private ChoiceBox<String> barajaPartida;
 
 	@FXML
 	private Button salir;
@@ -63,10 +68,16 @@ public class ControladorMenuAjustes {
     private long tiempoMusica;
     
     private String estilo;
+    
+    private ArrayList<Baraja> listaBarajas;
+    
+    private Baraja barajaP;
 
-    public void iniciarMenuAjustes(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY, String estilo){
+    public void iniciarMenuAjustes(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
         primaryStage = stage;
         SoundOn = soundOn;
+        listaBarajas = lista;
+        barajaP = nuevaBaraja;
         inicializarVariables();
 		actualizarSonido();
         actualizarImagenSonido();
@@ -74,9 +85,21 @@ public class ControladorMenuAjustes {
         corregirPosicionVentana(anteriorX, anteriorY);
         actualizarEstilo(estilo);
         inicializarChoiceBox();
+        inicializarTemas();
+        inicializarBarajaPartida();
     }
+
     public void inicializarChoiceBox() {
     	System.out.println("Llega hasta inicializaChoiceBox");
+    	musicaMenuP= new ChoiceBox<String>();
+    	cargaMusica(musicaMenuP);
+    	musicaPartida= new ChoiceBox<String>();
+    	cargaMusica(musicaPartida);
+    	musicaPausa= new ChoiceBox<String>();
+    	cargaMusica(musicaPausa); 
+    }
+      
+    public void inicializarTemas() {
     	tema.getItems().add("Azul");
     	tema.getItems().add("Rojo");
     	tema.getItems().add("Verde");
@@ -87,24 +110,19 @@ public class ControladorMenuAjustes {
     	} else {
         	tema.getSelectionModel().select(2);
     	}
-    	/**tema = new ChoiceBox<String>(FXCollections.observableArrayList(
-    		    "Azul",
-                "Verde",
-                "Rojo"));
-		tema.setValue("Azul");
-    	tema.getItems().addAll(
-                "Azul",
-                "Verde",
-                "Rojo",
-                "Amarillo"
-            );  */
-    	musicaMenuP= new ChoiceBox<String>();
-    	cargaMusica(musicaMenuP);
-    	musicaPartida= new ChoiceBox<String>();
-    	cargaMusica(musicaPartida);
-    	musicaPausa= new ChoiceBox<String>();
-    	cargaMusica(musicaPausa); 
     }
+    
+    public void inicializarBarajaPartida() {
+    	try {
+        	int i = 0;
+    		while(listaBarajas.get(i) != null) {
+    			barajaPartida.getItems().add(listaBarajas.get(i).getNombre());
+    			if(listaBarajas.get(i).getNombre().equals(barajaP.getNombre())) barajaPartida.getSelectionModel().select(i);
+    			i++;
+    		}	
+    	} catch(Exception e) {}
+    }
+    
     
     public void cargaMusica(ChoiceBox<String> menu) {  
     	System.out.println("Llega hasta cargaMusica");
@@ -169,11 +187,22 @@ public class ControladorMenuAjustes {
             primaryStage.setTitle("Menu Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(), tema.getSelectionModel().getSelectedItem());
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(), tema.getSelectionModel().getSelectedItem(), listaBarajas, deNombreABaraja());
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
         }
+    }
+    
+    public Baraja deNombreABaraja() {
+    	int i = 0;
+    	while(listaBarajas.get(i) != null) {
+    		if(barajaPartida.getSelectionModel().getSelectedItem().equals(listaBarajas.get(i).getNombre())) {
+    			return listaBarajas.get(i);
+    		}
+    		i++;
+    	}
+    	return null;
     }
     
     public void corregirTamanyoVentana() {

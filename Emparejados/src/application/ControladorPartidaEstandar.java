@@ -148,10 +148,15 @@ public class ControladorPartidaEstandar {
     private Animaciones animaciones;
     
     private String estilo;
+    
+    private ArrayList<Baraja> listaBarajas;
 
-    public void iniciarPartidaEstandar(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String estilo){
+
+    public void iniciarPartidaEstandar(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
     	primaryStage = stage;
         SoundOn = soundOn;
+        listaBarajas = lista;
+        barajaPartida = nuevaBaraja;
         inicializarBarajaTablero();
         inicializarCartas();
     	inicializarVariables();
@@ -166,10 +171,7 @@ public class ControladorPartidaEstandar {
     }
     
     public void inicializarBarajaTablero() {
-    	barajaPartida = new Baraja(4, 4);
-    	barajaPartida.barajaTematica(new CrearBarajaAnimalesEstrategia(2), 8);
     	barajaPartida.barajar();
-    	System.out.println(barajaPartida.getTamanyo());
     	tableroPartida = new Tablero(4, 4);
     	tableroPartida.llenarTablero(barajaPartida);
     }
@@ -375,9 +377,9 @@ public class ControladorPartidaEstandar {
     		primaryStage.hide();
     		stage.setTitle("Resultado");
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "estandar", thisStage.getX(), thisStage.getY(), 4, 4, estilo);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "estandar", thisStage.getX(), thisStage.getY(), 4, 4, estilo, listaBarajas, barajaPartida);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "estandar", thisStage.getX(), thisStage.getY(), 4, 4, estilo);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "estandar", thisStage.getX(), thisStage.getY(), 4, 4, estilo, listaBarajas, barajaPartida);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -402,7 +404,7 @@ public class ControladorPartidaEstandar {
     		stage.setResizable(false);
         	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaEstandar();});
         	primaryStage.hide();
-        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY(), estilo);
+        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {

@@ -53,6 +53,9 @@ public class ControladorMenuAjustes {
 
 	@FXML
 	private Button salir;
+	
+    @FXML
+    private Button cancelarySalir;
 
     private Stage primaryStage;
     
@@ -209,6 +212,23 @@ public class ControladorMenuAjustes {
             actualizaMusicas();
             editorDorso.iniciarEditorDorso(primaryStage, thisStage.getX(), thisStage.getY(), musicas, tema.getSelectionModel().getSelectedItem(), listaBarajas);
             stage.show();
+    	} catch (IOException e) {
+                e.printStackTrace();
+        }
+    }
+    @FXML
+    void cancelarYSalirHandler(ActionEvent event) {
+    	musicaFondo.stopMusic();
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
+            Parent root = myLoader.load();  
+            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Menu Principal");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(),musicas, estilo, listaBarajas, barajaP);
+            primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
         }

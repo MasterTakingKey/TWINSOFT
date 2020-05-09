@@ -5,17 +5,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPrincipal">
+<AnchorPane fx:id="anchorPane" prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPrincipal">
    <children>
-      <ImageView fitHeight="711.0" fitWidth="882.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagenes/menu_principal.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="jugar" layoutX="241.0" layoutY="241.0" mnemonicParsing="false" onAction="#jugarHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="JUGAR" />
-      <Button fx:id="salir" layoutX="242.0" layoutY="388.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="SALIR" />
-      <StackPane layoutX="397.0" layoutY="489.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estilo1.css">
+      <StackPane fx:id="circuloSonido" layoutX="397.0" layoutY="489.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton">
          <children>
             <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -24,10 +18,48 @@
             </ImageView>
          </children>
       </StackPane>
-      <Button fx:id="ajustes" layoutX="242.0" layoutY="314.0" mnemonicParsing="false" onAction="#ajustesHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="AJUSTES" />
-      <Button fx:id="partidaEstandar" layoutX="242.0" layoutY="195.0" mnemonicParsing="false" onAction="#partidaEstandarHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="PARTIDA ESTÁNDAR" />
-      <Button fx:id="modoLibre" layoutX="242.0" layoutY="268.0" mnemonicParsing="false" onAction="#modoLibreHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="MODO LIBRE" />
-      <Button fx:id="partidaCarta" layoutX="241.0" layoutY="341.0" mnemonicParsing="false" onAction="#partidaCartaHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="PARTIDA POR CARTA" />
-      <Button fx:id="volverAtras" layoutX="242.0" layoutY="409.0" mnemonicParsing="false" onAction="#volverAtrasHandler" prefHeight="50.0" prefWidth="400.0" stylesheets="@../application/estilo1.css" text="VOLVER ATRÁS" />
+      <Button fx:id="jugar" layoutX="241.0" layoutY="241.0" mnemonicParsing="false" onAction="#jugarHandler" prefHeight="50.0" prefWidth="400.0" text="JUGAR">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="salir" layoutX="242.0" layoutY="388.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="50.0" prefWidth="400.0" text="SALIR">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="ajustes" layoutX="242.0" layoutY="314.0" mnemonicParsing="false" onAction="#ajustesHandler" prefHeight="50.0" prefWidth="400.0" text="AJUSTES">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="partidaEstandar" layoutX="242.0" layoutY="195.0" mnemonicParsing="false" onAction="#partidaEstandarHandler" prefHeight="50.0" prefWidth="400.0" text="PARTIDA ESTÁNDAR">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font></Button>
+      <Button fx:id="modoLibre" layoutX="242.0" layoutY="268.0" mnemonicParsing="false" onAction="#modoLibreHandler" prefHeight="50.0" prefWidth="400.0" text="MODO LIBRE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="partidaCarta" layoutX="241.0" layoutY="341.0" mnemonicParsing="false" onAction="#partidaCartaHandler" prefHeight="50.0" prefWidth="400.0" text="PARTIDA POR CARTA">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="volverAtras" layoutX="242.0" layoutY="409.0" mnemonicParsing="false" onAction="#volverAtrasHandler" prefHeight="50.0" prefWidth="400.0" text="VOLVER ATRÁS">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <ImageView fitHeight="224.0" fitWidth="565.0" layoutX="160.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/twins_logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="71.0" fitWidth="304.0" layoutX="558.0" layoutY="523.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/by_twinsoft.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="127.0" fitWidth="185.0" layoutX="36.0" layoutY="436.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/logo_menu.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

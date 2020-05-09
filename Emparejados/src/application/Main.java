@@ -17,14 +17,14 @@ public class Main extends Application {
         Parent root = myLoader.load();  
         ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Menú Principal");
+        primaryStage.setTitle("Menu Principal");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         
         Image icono = new Image("/imagenes/Icon.png");
         primaryStage.getIcons().add(icono);
         
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, true, 0, 0);
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, true, 0, 0, "Azul", null, null);
         primaryStage.show();
 	}
 

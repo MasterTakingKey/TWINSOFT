@@ -1,6 +1,8 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,12 +13,19 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class ControladorMenuPrincipal {
 
+	@FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private StackPane circuloSonido;
 
     @FXML
     private Button jugar;
@@ -55,21 +64,45 @@ public class ControladorMenuPrincipal {
     private boolean SoundOn;
     
     private long tiempoMusica;
+    
+    private String estilo;
+    
+    private ArrayList<Baraja> listaBarajas;
+    
+    private Baraja barajaPartida;
 
-    public void iniciarMenuPrincipal(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY){
+    public void iniciarMenuPrincipal(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
         primaryStage = stage;
         SoundOn = soundOn;
         inicializarVariables();
 		actualizarSonido();
         actualizarImagenSonido();
+        corregirTamanyoVentana();
+        actualizarEstilo(estilo);
         muestraMenuP(true);
-        corregirTamañoVentana();
         if(primeraVez) { 
             centrarVentana();
+            crearListaBarajas();
+            barajaPartida = listaBarajas.get(0);
         } else {
             corregirPosicionVentana(anteriorX, anteriorY);
+            listaBarajas = lista;
+            barajaPartida = nuevaBaraja;
         }
     }
+    
+	public void crearListaBarajas() {
+		listaBarajas = new ArrayList<Baraja>();
+		Baraja barajaAnimales = new Baraja(4, 4);
+    	barajaAnimales.barajaTematica(new CrearBarajaAnimalesEstrategia(2), 8);
+    	listaBarajas.add(barajaAnimales);
+    	Baraja barajaDeportes = new Baraja(4, 4);
+    	barajaDeportes.barajaTematica(new CrearBarajaDeportesEstrategia(2), 8);
+    	listaBarajas.add(barajaDeportes);
+    	Baraja barajaNintendo = new Baraja(4, 4);
+    	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2), 8);
+    	listaBarajas.add(barajaNintendo);
+	}
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
@@ -126,39 +159,38 @@ public class ControladorMenuPrincipal {
     }
     
     @FXML
-    void ajustesHandler(ActionEvent event) throws IOException {
-    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
-        Parent root = myLoader.load();  
-        ControladorMenuAjustes menuPrincipal = myLoader.<ControladorMenuAjustes>getController();
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Menú Ajustes");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
+    void ajustesHandler(ActionEvent event) {
+    	musicaFondo.stopMusic();
+    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
+    		Parent root = myLoader.load();  
+    		ControladorMenuAjustes menuPrincipal = myLoader.<ControladorMenuAjustes>getController();
+    		Scene scene = new Scene(root);
+    		primaryStage.setTitle("Menu Ajustes");
+    		primaryStage.setScene(scene);
+    		primaryStage.setResizable(false);
         
-        Image icono = new Image("/imagenes/Icon.png");
-        primaryStage.getIcons().add(icono);
+    		Image icono = new Image("/imagenes/Icon.png");
+    		primaryStage.getIcons().add(icono);
         
-        menuPrincipal.iniciarMenuAjustes(primaryStage, true, true, 0, 0);
-        primaryStage.show();
-    }
-    
-    @FXML
-    void modoLibreHandler(ActionEvent event) {
-
+    		menuPrincipal.iniciarMenuAjustes(primaryStage, true, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+    		primaryStage.show();
+    	} catch(IOException e) {}
     }
 
     @FXML
     void partidaEstandarHandler(ActionEvent event) {
       	musicaFondo.stopMusic();
       	try {
-      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/partida.fxml"));
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaEstandar.fxml"));
       		Parent root = (Parent) myLoader.load();
-      		ControladorPartida controladorPartida = myLoader.<ControladorPartida>getController();
+      		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Partida Estándar");
+      		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn, thisStage.getX(), thisStage.getY());
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -174,11 +206,30 @@ public class ControladorMenuPrincipal {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Por Carta");
       		primaryStage.setResizable(false);
-      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn, thisStage.getX(), thisStage.getY());
+      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
-
+    
+    
+    @FXML
+    void modoLibreHandler(ActionEvent event) {
+    	musicaFondo.stopMusic();
+    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/AjustesJuegoLibre.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorAjustesJuegoLibre controladorAjustesJLibre = myLoader.<ControladorAjustesJuegoLibre>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Ajustes del modo libre");
+      		primaryStage.setResizable(false);
+      		controladorAjustesJLibre.iniciarAjustesJLibre(primaryStage, SoundOn, tiempoMusica, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+      		primaryStage.show();
+      	} catch (IOException e) {
+      		e.printStackTrace();
+      	}
+    }
     
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
@@ -188,10 +239,10 @@ public class ControladorMenuPrincipal {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Confirmación de salida");
+        stage.setTitle("Confirmacion de salida");
         stage.setResizable(false);
         ControladorConfirmacionSalirApp controladorConfirmacionSalirApp = myLoader.<ControladorConfirmacionSalirApp>getController();
-        controladorConfirmacionSalirApp.inicializarDatos(thisStage.getX(), thisStage.getY(), thisStage.getWidth(), thisStage.getHeight());
+        controladorConfirmacionSalirApp.inicializarDatos(thisStage.getX(), thisStage.getY(), thisStage.getWidth(), thisStage.getHeight(), estilo);
         stage.show();
     }
     
@@ -200,7 +251,7 @@ public class ControladorMenuPrincipal {
     	muestraMenuP(true);
     }
 
-    public void corregirTamañoVentana() {
+    public void corregirTamanyoVentana() {
     	thisStage.setWidth(900);
     	thisStage.setHeight(650);
     }
@@ -214,6 +265,35 @@ public class ControladorMenuPrincipal {
        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
        primaryStage.setX((screen.getWidth() - primaryStage.getWidth()) / 2);
        primaryStage.setY((screen.getHeight() - primaryStage.getHeight()) / 2);
+    }
+    
+    public void actualizarEstilo(String nuevoEstilo) {
+    	estilo = nuevoEstilo;
+    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	if(estilo.equals("Azul")) {
+    		anchorPane.getStylesheets().remove(temaRojo);
+    		anchorPane.getStylesheets().remove(temaVerde);
+    		anchorPane.getStylesheets().add(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaAzul);
+    	} else if(estilo.equals("Rojo")) {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaVerde);
+			anchorPane.getStylesheets().add(temaRojo);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaVerde);
+			circuloSonido.getStylesheets().add(temaRojo);
+    	} else {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaRojo);
+			anchorPane.getStylesheets().add(temaVerde);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaRojo);
+			circuloSonido.getStylesheets().add(temaVerde);
+    	}
     }
     
 }

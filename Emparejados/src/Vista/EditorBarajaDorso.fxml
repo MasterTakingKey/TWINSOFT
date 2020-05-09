@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorBarajaDorsoController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="TOP" layoutX="1.0" layoutY="8.0" prefHeight="55.0" prefWidth="600.0" text="TWINS">
+         <font>
+            <Font size="41.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="1.0" layoutY="61.0" prefHeight="39.0" prefWidth="600.0" text="EDITOR DE BARAJA">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="119.0" prefHeight="20.0" prefWidth="150.0" text="Selecciona  un dorso:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="buscar" layoutX="486.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="40.0" prefWidth="85.0" text="Buscar">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Button>
+      <ImageView fx:id="imagenCarta" fitHeight="150.0" fitWidth="200.0" layoutX="201.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="siguienteButton" layoutX="417.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#elegirParejas" text="Elegir Parejas">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="cancelarButton" layoutX="280.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#cancelar" text="Cancelar">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Label fx:id="pathImagen" layoutX="221.0" layoutY="124.0" prefHeight="17.0" prefWidth="241.0" />
+   </children>
+</Pane>

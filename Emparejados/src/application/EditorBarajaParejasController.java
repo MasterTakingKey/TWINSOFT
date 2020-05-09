@@ -62,6 +62,8 @@ private Stage primaryStage;
 	
 	private int actual = 1;
 	
+	private String[] musicas;
+	
     private String estilo;
     
     private ArrayList<Baraja> listaBarajas;
@@ -73,8 +75,9 @@ private Stage primaryStage;
 	Baraja barajaCreada;
 	Carta carta;
 
-	public void iniciarEditorParejas(Stage stage, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, ArrayList<File> imagenes){
-        primaryStage = stage;
+	public void iniciarEditorParejas(Stage stage, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, ArrayList<File> imagenes){
+        this.musicas = musicas;
+		primaryStage = stage;
         listaBarajas = lista;
         listaImagenes = imagenes;
         inicializarVariables();
@@ -187,7 +190,7 @@ private Stage primaryStage;
 	            primaryStage.setScene(scene);
 	            primaryStage.setResizable(false);
 	            
-	            menuAjustes.iniciarMenuAjustes(primaryStage, false, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, null);
+	            menuAjustes.iniciarMenuAjustes(primaryStage, false, thisStage.getX(), thisStage.getY(), musicas, estilo, listaBarajas, null);
 	            primaryStage.show();
 	    	} catch (IOException e) {
 	                e.printStackTrace();

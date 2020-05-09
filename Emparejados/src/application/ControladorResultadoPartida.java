@@ -52,6 +52,8 @@ public class ControladorResultadoPartida {
     
     private String tipoPartida;
     
+    private String[] musicas; 
+    
     private String estilo;
     
     private int filas;
@@ -62,8 +64,9 @@ public class ControladorResultadoPartida {
     
     private Baraja barajaPartida;
     
-    public void iniciarResultado(Stage stage, boolean soundOn, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, double anteriorX, double anteriorY, int filas, int columnas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
-        primaryStage = stage;
+    public void iniciarResultado(Stage stage, boolean soundOn, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, double anteriorX, double anteriorY, int filas, int columnas, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
+    	this.musicas = musicas;
+    	primaryStage = stage;
         this.soundOn = soundOn;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
@@ -124,7 +127,7 @@ public class ControladorResultadoPartida {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Estandar");
             primaryStage.setResizable(false);
-            controladorPartida.iniciarPartidaEstandar(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+            controladorPartida.iniciarPartidaEstandar(primaryStage, soundOn, thisStage.getX(), thisStage.getY(),musicas, estilo, listaBarajas, barajaPartida);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -139,7 +142,7 @@ public class ControladorResultadoPartida {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Por Carta");
             primaryStage.setResizable(false);
-            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, soundOn, thisStage.getX(), thisStage.getY(),musicas, estilo, listaBarajas, barajaPartida);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -154,7 +157,7 @@ public class ControladorResultadoPartida {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Por Carta");
             primaryStage.setResizable(false);
-            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), filas, columnas, estilo, listaBarajas, barajaPartida);
+            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), filas, columnas,musicas, estilo, listaBarajas, barajaPartida);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -170,7 +173,7 @@ public class ControladorResultadoPartida {
         primaryStage.setTitle("Menu Principal");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, soundOn, false, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, soundOn, false, thisStage.getX(), thisStage.getY(),musicas, estilo, listaBarajas, barajaPartida);
         primaryStage.show();
         thisStage.close(); 
     }

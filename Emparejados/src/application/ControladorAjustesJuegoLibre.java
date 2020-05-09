@@ -89,11 +89,14 @@ public class ControladorAjustesJuegoLibre {
     
     private String estilo;
     
+    private String[] musicas;
+    
     private ArrayList<Baraja> listaBarajas;
     
     private Baraja barajaPartida;
 
-    public void iniciarAjustesJLibre(Stage stage, boolean Sound, long tiempoM, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
+    public void iniciarAjustesJLibre(Stage stage, boolean Sound, long tiempoM, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
+    	this.musicas = musicas;
     	primaryStage = stage;
     	SoundOn = Sound;
     	tiempoMusica = tiempoM;
@@ -110,7 +113,7 @@ public class ControladorAjustesJuegoLibre {
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/Musica2.wav", 0L);
+    	musicaFondo = new Musica("src/sonidos/"+ musicas[1] +".wav", 0L);
         thisStage = (Stage) buttonJugar.getScene().getWindow();
     }
     
@@ -139,7 +142,7 @@ public class ControladorAjustesJuegoLibre {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
-      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), filas, columnas, estilo, listaBarajas, barajaPartida);
+      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), filas, columnas, musicas, estilo, listaBarajas, barajaPartida);
       		primaryStage.show();
       	} catch (IOException e) {}
     }

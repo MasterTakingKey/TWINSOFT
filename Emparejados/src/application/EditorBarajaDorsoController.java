@@ -47,11 +47,14 @@ public class EditorBarajaDorsoController {
     
     private Stage thisStage;
     
+    private String[] musicas;
+    
     private String estilo;
     
     private ArrayList<Baraja> listaBarajas;
 
-    public void iniciarEditorDorso(Stage stage, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista){
+    public void iniciarEditorDorso(Stage stage, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista){
+    	this.musicas = musicas;
         primaryStage = stage;
         listaBarajas = lista;
         inicializarVariables();
@@ -89,7 +92,7 @@ public class EditorBarajaDorsoController {
             thisStage.setTitle("Elige tus parejas");
             thisStage.setScene(scene);
             thisStage.setResizable(false);
-            editorParejas.iniciarEditorParejas(primaryStage, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, imagenes);
+            editorParejas.iniciarEditorParejas(primaryStage, thisStage.getX(), thisStage.getY(), musicas, estilo, listaBarajas, imagenes);
             thisStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();

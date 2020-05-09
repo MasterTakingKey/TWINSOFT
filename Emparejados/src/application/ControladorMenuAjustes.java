@@ -68,13 +68,16 @@ public class ControladorMenuAjustes {
     
     private long tiempoMusica;
     
+    private String[] musicas; 
+    
     private String estilo;
     
     private ArrayList<Baraja> listaBarajas;
     
     private Baraja barajaP;
 
-    public void iniciarMenuAjustes(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
+    public void iniciarMenuAjustes(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
+    	this.musicas = musicas;
         primaryStage = stage;
         SoundOn = soundOn;
         listaBarajas = lista;
@@ -85,19 +88,15 @@ public class ControladorMenuAjustes {
         corregirTamanyoVentana();
         corregirPosicionVentana(anteriorX, anteriorY);
         actualizarEstilo(estilo);
-        inicializarChoiceBox();
+        inicializarChoiceBoxMusica();
         inicializarTemas();
         inicializarBarajaPartida();
     }
 
-    public void inicializarChoiceBox() {
-    	System.out.println("Llega hasta inicializaChoiceBox");
-    	musicaMenuP= new ChoiceBox<String>();
-    	cargaMusica(musicaMenuP);
-    	musicaPartida= new ChoiceBox<String>();
-    	cargaMusica(musicaPartida);
-    	musicaPausa= new ChoiceBox<String>();
-    	cargaMusica(musicaPausa); 
+    public void inicializarChoiceBoxMusica() {
+    	cargaMusica(musicaPartida, 0);
+    	cargaMusica(musicaMenuP, 1);
+    	cargaMusica(musicaPausa, 2); 
     }
       
     public void inicializarTemas() {
@@ -125,19 +124,26 @@ public class ControladorMenuAjustes {
     }
     
     
-    public void cargaMusica(ChoiceBox<String> menu) {  
-    	System.out.println("Llega hasta cargaMusica");
+    public void cargaMusica(ChoiceBox<String> menu, int musica) {  
     	menu.setItems(FXCollections.observableArrayList(
-    		    "Musica1", "Musica2", "Musica3", "Musica4")
+    		    "Musica1", "Musica2", "Musica3")
     		);
     	menu.setTooltip(new Tooltip("Selecciona la cancion que quieres para este menu"));
+    	int select;
+    	switch (musicas[musica]) {
+    		case "Musica1": select = 0; break;
+    		case "Musica2": select = 1; break;
+    		default: select = 2;
+    		
+    	}
+    	menu.getSelectionModel().select(select);
     }
     
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/Musica2.wav", 0L);
+        musicaFondo = new Musica("src/sonidos/"+ musicas[1] +".wav", 0L);
         thisStage = (Stage) salir.getScene().getWindow();
     }
     
@@ -184,7 +190,8 @@ public class ControladorMenuAjustes {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController(); 
-            editorDorso.iniciarEditorDorso(primaryStage, thisStage.getX(), thisStage.getY(), tema.getSelectionModel().getSelectedItem(), listaBarajas);
+            actualizaMusicas();
+            editorDorso.iniciarEditorDorso(primaryStage, thisStage.getX(), thisStage.getY(), musicas, tema.getSelectionModel().getSelectedItem(), listaBarajas);
             stage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
@@ -202,11 +209,17 @@ public class ControladorMenuAjustes {
             primaryStage.setTitle("Menu Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(), tema.getSelectionModel().getSelectedItem(), listaBarajas, deNombreABaraja());
+            actualizaMusicas();
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(),musicas, tema.getSelectionModel().getSelectedItem(), listaBarajas, deNombreABaraja());
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
         }
+    }
+    public void actualizaMusicas() {
+    	musicas[0] = musicaPartida.getSelectionModel().getSelectedItem();
+    	musicas[1] = musicaMenuP.getSelectionModel().getSelectedItem();
+    	musicas[2] = musicaPausa.getSelectionModel().getSelectedItem();
     }
     
     public Baraja deNombreABaraja() {

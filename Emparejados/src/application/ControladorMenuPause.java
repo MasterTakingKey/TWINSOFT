@@ -65,13 +65,16 @@ public class ControladorMenuPause {
     
     Optional<ButtonType> resultadoSalida;
     
+    private String[] musicas; 
+    
     private String estilo;
     
     private ArrayList<Baraja> listaBarajas;
     
     private Baraja barajaPartida;
     
-    void initDataPartidaEstandar(Stage partida, ControladorPartidaEstandar partidaEstandar, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
+    void initDataPartidaEstandar(Stage partida, ControladorPartidaEstandar partidaEstandar, boolean soundOn, double anteriorX, double anteriorY,String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
+    	this.musicas = musicas;
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
         SoundOn = soundOn;
@@ -88,7 +91,8 @@ public class ControladorMenuPause {
         actualizarEstilo(estilo);
     }
     
-    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
+    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, boolean soundOn, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
+    	this.musicas = musicas;
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         SoundOn = soundOn;
@@ -105,7 +109,8 @@ public class ControladorMenuPause {
         actualizarEstilo(estilo);
     }
   
-    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, boolean soundOn, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
+    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, boolean soundOn, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
+    	this.musicas = musicas;
     	primaryStage = partida;
     	this.partidaLibre = partidaLibre;
         SoundOn = soundOn;
@@ -125,7 +130,7 @@ public class ControladorMenuPause {
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/Musica3.wav", 0L);
+        musicaFondo = new Musica("src/sonidos/"+ musicas[2] +".wav", 0L);
         thisStage = (Stage) imageSound.getScene().getWindow();
         thisStage.setTitle("Menu de Pausa");
     }
@@ -163,7 +168,7 @@ public class ControladorMenuPause {
             primaryStage.setTitle("Menu Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(), musicas, estilo, listaBarajas, barajaPartida);
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();

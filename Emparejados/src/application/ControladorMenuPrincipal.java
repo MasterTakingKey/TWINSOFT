@@ -56,6 +56,8 @@ public class ControladorMenuPrincipal {
     private Stage thisStage;
     
     private Musica musicaFondo;
+   
+    private String[] musicas;
     
     private Image Sound0;
     
@@ -71,9 +73,10 @@ public class ControladorMenuPrincipal {
     
     private Baraja barajaPartida;
 
-    public void iniciarMenuPrincipal(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
+    public void iniciarMenuPrincipal(Stage stage, boolean soundOn, boolean primeraVez, double anteriorX, double anteriorY,String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
         primaryStage = stage;
         SoundOn = soundOn;
+        this.musicas = musicas;
         inicializarVariables();
 		actualizarSonido();
         actualizarImagenSonido();
@@ -107,7 +110,7 @@ public class ControladorMenuPrincipal {
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/Musica2.wav", 0L);
+        musicaFondo = new Musica("src/sonidos/"+ musicas[1] +".wav", 0L);
         thisStage = (Stage) salir.getScene().getWindow();
     }
     
@@ -174,7 +177,7 @@ public class ControladorMenuPrincipal {
     		Image icono = new Image("/imagenes/Icon.png");
     		primaryStage.getIcons().add(icono);
         
-    		menuPrincipal.iniciarMenuAjustes(primaryStage, true, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+    		menuPrincipal.iniciarMenuAjustes(primaryStage, true, thisStage.getX(), thisStage.getY(),musicas, estilo, listaBarajas, barajaPartida);
     		primaryStage.show();
     	} catch(IOException e) {}
     }
@@ -190,7 +193,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), musicas, estilo, listaBarajas, barajaPartida);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -206,7 +209,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Por Carta");
       		primaryStage.setResizable(false);
-      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), musicas, estilo, listaBarajas, barajaPartida);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -224,7 +227,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Ajustes del modo libre");
       		primaryStage.setResizable(false);
-      		controladorAjustesJLibre.iniciarAjustesJLibre(primaryStage, SoundOn, tiempoMusica, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, barajaPartida);
+      		controladorAjustesJLibre.iniciarAjustesJLibre(primaryStage, SoundOn, tiempoMusica, thisStage.getX(), thisStage.getY(), musicas, estilo, listaBarajas, barajaPartida);
       		primaryStage.show();
       	} catch (IOException e) {
       		e.printStackTrace();

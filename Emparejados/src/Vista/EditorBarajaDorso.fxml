@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorBarajaDorsoController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorBarajaDorsoController">
    <children>
       <Label alignment="CENTER" contentDisplay="TOP" layoutX="1.0" layoutY="8.0" prefHeight="55.0" prefWidth="600.0" text="TWINS">
          <font>
@@ -18,15 +18,24 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Label layoutX="51.0" layoutY="122.0" prefHeight="20.0" prefWidth="150.0" text="Selecciona  un dorso:">
+      <Label layoutX="25.0" layoutY="119.0" prefHeight="20.0" prefWidth="150.0" text="Selecciona  un dorso:">
          <font>
-            <Font size="14.0" />
+            <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="buscar" layoutX="439.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="25.0" prefWidth="70.0" text="Buscar" />
+      <Button fx:id="buscar" layoutX="486.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="40.0" prefWidth="85.0" text="Buscar">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Button>
       <ImageView fx:id="imagenCarta" fitHeight="150.0" fitWidth="200.0" layoutX="201.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="siguienteButton" layoutX="431.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#elegirParejas" text="Elegir Parejas" />
-      <Button fx:id="cancelarButton" layoutX="339.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#cancelar" text="Cancelar" />
-      <Label fx:id="pathImagen" layoutX="228.0" layoutY="123.0" prefHeight="17.0" prefWidth="186.0" />
+      <Button fx:id="siguienteButton" layoutX="417.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#elegirParejas" text="Elegir Parejas">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="cancelarButton" layoutX="280.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#cancelar" text="Cancelar">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Label fx:id="pathImagen" layoutX="221.0" layoutY="124.0" prefHeight="17.0" prefWidth="241.0" />
    </children>
 </Pane>

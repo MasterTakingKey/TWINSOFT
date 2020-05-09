@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorBarajaParejasController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorBarajaParejasController">
    <children>
       <Label alignment="CENTER" contentDisplay="TOP" layoutX="1.0" layoutY="8.0" prefHeight="55.0" prefWidth="600.0" text="TWINS">
          <font>
@@ -29,12 +29,27 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="buscar" layoutX="474.0" layoutY="120.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="25.0" prefWidth="70.0" text="Buscar" />
+      <Button fx:id="buscar" layoutX="483.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="25.0" prefWidth="70.0" text="Buscar">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
       <ImageView fx:id="imagenCarta" fitHeight="150.0" fitWidth="200.0" layoutX="201.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="crearBarajaButton" layoutX="228.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#prepararBaraja" prefHeight="25.0" prefWidth="82.0" text="Crear Baraja" />
-      <Button fx:id="siguienteButton" layoutX="495.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#siguiente" text="Siguiente" />
-      <Button fx:id="cancelarButton" layoutX="51.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#cancelar" text="Cancelar" />
-      <Button fx:id="anteriorButton" layoutX="415.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#anterior" text="Anterior" />
+      <Button fx:id="crearBarajaButton" layoutX="171.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#prepararBaraja" prefHeight="44.0" prefWidth="156.0" text="Crear Baraja">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Button fx:id="siguienteButton" layoutX="464.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#siguiente" text="Siguiente">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button fx:id="cancelarButton" layoutX="31.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#cancelar" text="Cancelar">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+      <Button fx:id="anteriorButton" layoutX="351.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#anterior" text="Anterior">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
       <Label fx:id="pathImagen" layoutX="249.0" layoutY="124.0" prefHeight="17.0" prefWidth="186.0" />
       <Pane fx:id="nombrePane" disable="true" layoutX="157.0" layoutY="113.0" prefHeight="240.0" prefWidth="307.0">
          <children>
@@ -44,8 +59,14 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="aceptarNombre" layoutX="242.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#aceptarNombre" text="Aceptar" />
-            <Button fx:id="cancelarNombre" layoutX="158.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#cancelarNombre" text="Cancelar" />
+            <Button fx:id="aceptarNombre" layoutX="184.0" layoutY="178.0" mnemonicParsing="false" onMouseClicked="#aceptarNombre" text="Aceptar">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+            <Button fx:id="cancelarNombre" layoutX="54.0" layoutY="178.0" mnemonicParsing="false" onMouseClicked="#cancelarNombre" text="Cancelar">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
          </children>
       </Pane>
    </children>

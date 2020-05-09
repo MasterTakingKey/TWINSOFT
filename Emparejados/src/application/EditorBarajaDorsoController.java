@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Screen;
@@ -25,6 +26,8 @@ import javafx.stage.Stage;
 
 
 public class EditorBarajaDorsoController {
+    @FXML
+    private Pane pane;
 	@FXML
 	private Button buscar;
 	@FXML
@@ -54,7 +57,7 @@ public class EditorBarajaDorsoController {
         inicializarVariables();
         corregirTamanyoVentana();
         corregirPosicionVentana(anteriorX, anteriorY);
-        //actualizarEstilo(estilo);
+        actualizarEstilo(estilo);
     }
     
     public void inicializarVariables() {
@@ -65,7 +68,7 @@ public class EditorBarajaDorsoController {
 	public void buscarImagen(MouseEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Elige Imagen");
-	    fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG", "*.png"));
+	    fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG", "*.png", "JPG", "*.jpg"));
 		archivoImagen = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
         if (archivoImagen != null) {
         	imagen = new Image(archivoImagen.toURI().toString());
@@ -83,11 +86,11 @@ public class EditorBarajaDorsoController {
             Parent root = myLoader.load();  
             EditorBarajaParejasController editorParejas = myLoader.<EditorBarajaParejasController>getController();
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Elige tus parejas");
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
+            thisStage.setTitle("Elige tus parejas");
+            thisStage.setScene(scene);
+            thisStage.setResizable(false);
             editorParejas.iniciarEditorParejas(primaryStage, thisStage.getX(), thisStage.getY(), estilo, listaBarajas, imagenes);
-            primaryStage.show();
+            thisStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
         }
@@ -100,42 +103,33 @@ public class EditorBarajaDorsoController {
 		thisStage.close();
 	}
 	 public void corregirTamanyoVentana() {
-	    	thisStage.setWidth(900);
-	    	thisStage.setHeight(650);
-	    }
+	    	thisStage.setWidth(620);
+	    	thisStage.setHeight(450);
+	  }
 	    
-	    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-	    	thisStage.setX(anteriorX);
-	    	thisStage.setY(anteriorY);
-	    }
+	  public void corregirPosicionVentana(double anteriorX, double anteriorY) {
+	    	thisStage.setX(anteriorX + 120);
+	    	thisStage.setY(anteriorY + 80);
+	  }
 	    
 	    
-	 /*   public void actualizarEstilo(String nuevoEstilo) {
+	    public void actualizarEstilo(String nuevoEstilo) {
 	    	estilo = nuevoEstilo;
 	    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
 	        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
 	        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
 	    	if(estilo.equals("Azul")) {
-	    		anchorPane.getStylesheets().remove(temaRojo);
-	    		anchorPane.getStylesheets().remove(temaVerde);
-	    		anchorPane.getStylesheets().add(temaAzul);
-	    		circuloSonido.getStylesheets().remove(temaRojo);
-	    		circuloSonido.getStylesheets().remove(temaVerde);
-	    		circuloSonido.getStylesheets().add(temaAzul);
+	    		pane.getStylesheets().remove(temaRojo);
+	    		pane.getStylesheets().remove(temaVerde);
+	    		pane.getStylesheets().add(temaAzul);
 	    	} else if(estilo.equals("Rojo")) {
-	    		anchorPane.getStylesheets().remove(temaAzul);
-				anchorPane.getStylesheets().remove(temaVerde);
-				anchorPane.getStylesheets().add(temaRojo);
-				circuloSonido.getStylesheets().remove(temaAzul);
-				circuloSonido.getStylesheets().remove(temaVerde);
-				circuloSonido.getStylesheets().add(temaRojo);
+	    		pane.getStylesheets().remove(temaAzul);
+	    		pane.getStylesheets().remove(temaVerde);
+				pane.getStylesheets().add(temaRojo);
 	    	} else {
-	    		anchorPane.getStylesheets().remove(temaAzul);
-				anchorPane.getStylesheets().remove(temaRojo);
-				anchorPane.getStylesheets().add(temaVerde);
-				circuloSonido.getStylesheets().remove(temaAzul);
-				circuloSonido.getStylesheets().remove(temaRojo);
-				circuloSonido.getStylesheets().add(temaVerde);
+	    		pane.getStylesheets().remove(temaAzul);
+	    		pane.getStylesheets().remove(temaRojo);
+	    		pane.getStylesheets().add(temaVerde);
 	    	}
-	    } */
+	    } 
 }

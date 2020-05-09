@@ -1,6 +1,6 @@
 package application;
 
-import java.awt.TextField;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -28,6 +29,8 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class EditorBarajaParejasController {
+    @FXML
+    private Pane pane;
 	@FXML
 	private Label numPareja;
 	@FXML
@@ -77,7 +80,7 @@ private Stage primaryStage;
         inicializarVariables();
         corregirTamanyoVentana();
         corregirPosicionVentana(anteriorX, anteriorY);
-        //actualizarEstilo(estilo);
+        actualizarEstilo(estilo);
     }
 	
     public void inicializarVariables() {
@@ -88,7 +91,7 @@ private Stage primaryStage;
 	public void buscarImagen(MouseEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Elige Imagen");
-	    fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG", "*.png"));
+	    fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG", "*.png","JPG", "*.jpg"));
 		archivoImagen = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
         if (archivoImagen != null) {
         	imagen = new Image(archivoImagen.toURI().toString());
@@ -239,8 +242,8 @@ private Stage primaryStage;
 	    return true; 
 	} 
 	public void corregirTamanyoVentana() {
-    	thisStage.setWidth(900);
-    	thisStage.setHeight(650);
+    	thisStage.setWidth(620);
+    	thisStage.setHeight(450);
     }
     
     public void corregirPosicionVentana(double anteriorX, double anteriorY) {
@@ -248,32 +251,23 @@ private Stage primaryStage;
     	thisStage.setY(anteriorY);
     }
     
-    /*   public void actualizarEstilo(String nuevoEstilo) {
-	estilo = nuevoEstilo;
-	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
-    String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
-    String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-	if(estilo.equals("Azul")) {
-		anchorPane.getStylesheets().remove(temaRojo);
-		anchorPane.getStylesheets().remove(temaVerde);
-		anchorPane.getStylesheets().add(temaAzul);
-		circuloSonido.getStylesheets().remove(temaRojo);
-		circuloSonido.getStylesheets().remove(temaVerde);
-		circuloSonido.getStylesheets().add(temaAzul);
-	} else if(estilo.equals("Rojo")) {
-		anchorPane.getStylesheets().remove(temaAzul);
-		anchorPane.getStylesheets().remove(temaVerde);
-		anchorPane.getStylesheets().add(temaRojo);
-		circuloSonido.getStylesheets().remove(temaAzul);
-		circuloSonido.getStylesheets().remove(temaVerde);
-		circuloSonido.getStylesheets().add(temaRojo);
-	} else {
-		anchorPane.getStylesheets().remove(temaAzul);
-		anchorPane.getStylesheets().remove(temaRojo);
-		anchorPane.getStylesheets().add(temaVerde);
-		circuloSonido.getStylesheets().remove(temaAzul);
-		circuloSonido.getStylesheets().remove(temaRojo);
-		circuloSonido.getStylesheets().add(temaVerde);
-	}
-} */
+    public void actualizarEstilo(String nuevoEstilo) {
+    	estilo = nuevoEstilo;
+    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+    	String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
+    	String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	if(estilo.equals("Azul")) {
+    		pane.getStylesheets().remove(temaRojo);
+    		pane.getStylesheets().remove(temaVerde);
+    		pane.getStylesheets().add(temaAzul);
+	    } else if(estilo.equals("Rojo")) {
+			pane.getStylesheets().remove(temaAzul);
+			pane.getStylesheets().remove(temaVerde);
+			pane.getStylesheets().add(temaRojo);
+		} else {
+			pane.getStylesheets().remove(temaAzul);
+			pane.getStylesheets().remove(temaRojo);
+			pane.getStylesheets().add(temaVerde);
+		}
+    }
 }

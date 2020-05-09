@@ -56,7 +56,7 @@
             <Image url="@../imagenes/by_twinsoft.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="133.0" fitWidth="195.0" layoutX="44.0" layoutY="458.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="127.0" fitWidth="185.0" layoutX="36.0" layoutY="436.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/logo_menu.png" />
          </image>

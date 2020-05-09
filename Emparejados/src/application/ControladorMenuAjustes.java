@@ -177,18 +177,20 @@ public class ControladorMenuAjustes {
     	try {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
             Parent root = myLoader.load();  
-            EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController();
             Scene scene = new Scene(root); 
-            primaryStage.setTitle("Seleccione el dorso");
-            primaryStage.setScene(scene);
-            primaryStage.initModality(Modality.APPLICATION_MODAL);
-            primaryStage.setResizable(false);
+            Stage stage = new Stage();                       
+            stage.setTitle("Seleccione el dorso");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController(); 
             editorDorso.iniciarEditorDorso(primaryStage, thisStage.getX(), thisStage.getY(), tema.getSelectionModel().getSelectedItem(), listaBarajas);
-            primaryStage.show();
+            stage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
         }
     }
+
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
     	musicaFondo.stopMusic();

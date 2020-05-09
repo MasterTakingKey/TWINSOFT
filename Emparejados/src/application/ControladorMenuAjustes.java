@@ -70,6 +70,16 @@ public class ControladorMenuAjustes {
     
     private String[] musicas; 
     
+    //Nombres que se visualizaran en el selector
+    String musica1 = "Musica1";
+	String musica2 = "Musica2";
+	String musica3 = "Musica3";
+	String musica4 = "Super Mario Bros Theme";
+	String musica5 = "Summer Remix";
+	String musica6 = "Dubstep song ";
+	String musica7 = "Wii Main Theme";
+	String musica8 = "Wii Sports Theme";
+    
     private String estilo;
     
     private ArrayList<Baraja> listaBarajas;
@@ -124,16 +134,22 @@ public class ControladorMenuAjustes {
     }
     
     
-    public void cargaMusica(ChoiceBox<String> menu, int musica) {  
+    public void cargaMusica(ChoiceBox<String> menu, int musica) { 
+    	
     	menu.setItems(FXCollections.observableArrayList(
-    		    "Musica1", "Musica2", "Musica3")
+    			musica1, musica2, musica3, musica4, musica5, musica6, musica7, musica8)
     		);
     	menu.setTooltip(new Tooltip("Selecciona la cancion que quieres para este menu"));
     	int select;
     	switch (musicas[musica]) {
     		case "Musica1": select = 0; break;
     		case "Musica2": select = 1; break;
-    		default: select = 2;
+    		case "Musica3": select = 2; break;
+    		case "Musica4": select = 3; break;
+    		case "Musica5": select = 4; break;
+    		case "Musica6": select = 5; break;
+    		case "Musica7": select = 6; break;
+    		default: select = 7;
     		
     	}
     	menu.getSelectionModel().select(select);
@@ -217,10 +233,30 @@ public class ControladorMenuAjustes {
         }
     }
     public void actualizaMusicas() {
-    	musicas[0] = musicaPartida.getSelectionModel().getSelectedItem();
-    	musicas[1] = musicaMenuP.getSelectionModel().getSelectedItem();
-    	musicas[2] = musicaPausa.getSelectionModel().getSelectedItem();
+    	musicas[0] = traduceMusica(musicaPartida.getSelectionModel().getSelectedItem());
+    	musicas[1] = traduceMusica(musicaMenuP.getSelectionModel().getSelectedItem());
+    	musicas[2] = traduceMusica(musicaPausa.getSelectionModel().getSelectedItem());
     }
+    
+    public String traduceMusica(String m) {
+    	if (musica1 == m)
+    		return "Musica1";
+    	else if (musica2 == m)
+    		return "Musica2";
+    	else if (musica3 == m)
+    		return "Musica3";
+    	else if (musica4 == m)
+    		return "Musica4";
+    	else if (musica5 == m)
+    		return "Musica5";
+    	else if (musica6 == m)
+    		return "Musica6";
+    	else if (musica7 == m)
+    		return "Musica7";
+    	else
+    		return "Musica8";
+	}
+    
     
     public Baraja deNombreABaraja() {
     	int i = 0;

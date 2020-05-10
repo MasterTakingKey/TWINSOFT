@@ -40,6 +40,12 @@
 	-fx-border-width: 5;
 }
 
+.label{
+	-fx-font-weight: bold;
+	-fx-background-color: white;
+	-fx-background-radius: 30;
+	-fx-text-fill: red;
+}
 
 .label2{
 	-fx-font-weight: bold;

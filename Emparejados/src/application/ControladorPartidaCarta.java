@@ -188,8 +188,17 @@ public class ControladorPartidaCarta {
     
     public void inicializarBarajaTablero() {
     	barajaAuxiliar = new Baraja(barajaPartida.getNombre(), barajaPartida.getImagenDorso(), barajaPartida.getTamanyo()/2);
-    	for(int i = 0; i < barajaPartida.getTamanyo()/2; i++) {
-    		barajaAuxiliar.setCarta(barajaPartida.getCarta(i), i);
+    	int cartasInsertadas = 0;
+    	for(int i = 0; i < barajaPartida.getTamanyo() && cartasInsertadas < barajaPartida.getTamanyo()/2 ; i++) {
+    		boolean noExiste = true;
+    		for(int j = 0; j < cartasInsertadas; j++) {
+        		if(barajaPartida.getCarta(i).getId() == barajaAuxiliar.getCarta(j).getId()) {
+        			noExiste = false;
+        		}
+    		}
+    		if(noExiste) {
+    			barajaAuxiliar.setCarta(barajaPartida.getCarta(i), cartasInsertadas++);
+    		}
     	}
     	barajaPartida.barajar();
     	barajaAuxiliar.barajar();

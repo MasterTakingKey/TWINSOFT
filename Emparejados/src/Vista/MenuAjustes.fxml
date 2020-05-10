@@ -9,9 +9,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuAjustes">
+<AnchorPane fx:id="anchorPane" prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuAjustes">
    <children>
-      <ImageView fitHeight="535.0" fitWidth="882.0" layoutX="1.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="editorBarajas" layoutX="52.0" layoutY="441.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="54.0" prefWidth="246.0" text="EDITOR DE BARAJAS">
          <font>
             <Font name="System Bold" size="20.0" />

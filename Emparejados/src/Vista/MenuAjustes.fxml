@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuAjustes">
+<AnchorPane fx:id="anchorPane" prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuAjustes">
    <children>
-      <Button fx:id="editorBarajas" layoutX="52.0" layoutY="441.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="54.0" prefWidth="246.0" text="EDITOR DE BARAJAS">
+      <Button fx:id="editorBarajas" layoutX="46.0" layoutY="441.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="54.0" prefWidth="246.0" text="EDITOR DE BARAJAS">
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Button>
-      <StackPane fx:id="circuloSonido" layoutX="398.0" layoutY="511.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
+      <StackPane fx:id="circuloSonido" layoutX="705.0" layoutY="73.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
          <children>
             <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -24,49 +24,50 @@
             </ImageView>
          </children>
       </StackPane>
-      <Label alignment="CENTER" layoutX="298.0" layoutY="40.0" prefHeight="136.0" prefWidth="291.0" stylesheets="@../application/estilo1.css" text="AJUSTES">
-         <font>
-            <Font name="System Bold" size="60.0" />
-         </font></Label>
-      <ChoiceBox fx:id="musicaPartida" layoutX="127.0" layoutY="272.0" prefHeight="25.0" prefWidth="165.0" />
-      <Label alignment="CENTER" layoutX="127.0" layoutY="235.0" prefHeight="30.0" prefWidth="165.0" text="PARTIDA" underline="true">
+      <ChoiceBox fx:id="musicaPartida" layoutX="127.0" layoutY="261.0" prefHeight="25.0" prefWidth="165.0" />
+      <Label alignment="CENTER" layoutX="127.0" layoutY="216.0" prefHeight="30.0" prefWidth="165.0" text="PARTIDA" underline="true">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label alignment="CENTER" layoutX="342.0" layoutY="235.0" prefHeight="30.0" prefWidth="200.0" text="MENU PRINCIPAL" underline="true">
+      <Label alignment="CENTER" layoutX="341.0" layoutY="216.0" prefHeight="30.0" prefWidth="200.0" text="MENU PRINCIPAL" underline="true">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label alignment="CENTER" layoutX="576.0" layoutY="235.0" prefHeight="30.0" prefWidth="221.0" text="MENU PAUSA" underline="true">
+      <Label alignment="CENTER" layoutX="578.0" layoutY="216.0" prefHeight="30.0" prefWidth="221.0" text="MENU PAUSA" underline="true">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <ChoiceBox fx:id="musicaMenuP" layoutX="354.0" layoutY="274.0" prefHeight="25.0" prefWidth="176.0" />
-      <ChoiceBox fx:id="musicaPausa" layoutX="593.0" layoutY="274.0" prefHeight="25.0" prefWidth="188.0" />
-      <Label alignment="CENTER" layoutX="238.0" layoutY="338.0" prefHeight="30.0" prefWidth="165.0" text="TEMA" underline="true">
+      <ChoiceBox fx:id="musicaMenuP" layoutX="353.0" layoutY="261.0" prefHeight="25.0" prefWidth="176.0" />
+      <ChoiceBox fx:id="musicaPausa" layoutX="585.0" layoutY="261.0" prefHeight="25.0" prefWidth="188.0" />
+      <Label alignment="CENTER" layoutX="240.0" layoutY="313.0" prefHeight="30.0" prefWidth="165.0" text="TEMA" underline="true">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <ChoiceBox fx:id="tema" layoutX="262.0" layoutY="377.0" prefHeight="35.0" prefWidth="118.0" />
-      <Button fx:id="salir" layoutX="324.0" layoutY="441.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" text="APLICAR Y VOLVER">
+      <ChoiceBox fx:id="tema" layoutX="263.0" layoutY="354.0" prefHeight="35.0" prefWidth="118.0" />
+      <Button fx:id="salir" layoutX="323.0" layoutY="441.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" text="APLICAR Y VOLVER">
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Button>
-      <ChoiceBox fx:id="barajaPartida" layoutX="482.0" layoutY="377.0" prefHeight="35.0" prefWidth="188.0" />
-      <Label alignment="CENTER" layoutX="494.0" layoutY="338.0" prefHeight="30.0" prefWidth="165.0" text="BARAJA PARTIDA" underline="true">
+      <ChoiceBox fx:id="barajaPartida" layoutX="483.0" layoutY="354.0" prefHeight="35.0" prefWidth="188.0" />
+      <Label alignment="CENTER" layoutX="495.0" layoutY="313.0" prefHeight="30.0" prefWidth="165.0" text="BARAJA PARTIDA" underline="true">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="327.0" layoutY="189.0" prefHeight="30.0" prefWidth="229.0" text="SELECCION DE MUSICA" underline="true">
+      <Label alignment="CENTER" layoutX="303.0" layoutY="150.0" prefHeight="35.0" prefWidth="282.0" text="SELECCION DE MUSICA" underline="true">
          <font>
-            <Font size="16.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="cancelarySalir" layoutX="593.0" layoutY="441.0" mnemonicParsing="false" onAction="#cancelarYSalirHandler" prefHeight="54.0" prefWidth="240.0" text="CANCELAR Y VOLVER">
+      <Button fx:id="cancelarySalir" layoutX="585.0" layoutY="441.0" mnemonicParsing="false" onAction="#cancelarYSalirHandler" prefHeight="54.0" prefWidth="240.0" text="CANCELAR Y VOLVER">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
+      <ImageView fitHeight="93.0" fitWidth="426.0" layoutX="231.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/ajustes.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

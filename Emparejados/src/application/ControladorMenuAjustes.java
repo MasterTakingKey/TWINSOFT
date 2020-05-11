@@ -287,7 +287,7 @@ public class ControladorMenuAjustes {
     
     public void corregirTamanyoVentana() {
     	thisStage.setWidth(900);
-    	thisStage.setHeight(650);
+    	thisStage.setHeight(600);
     }
     
     public void corregirPosicionVentana() {

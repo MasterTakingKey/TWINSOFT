@@ -44,42 +44,31 @@ public class ControladorResultadoPartida {
     
     private Stage thisStage;
     
-    private boolean soundOn;
-    
     private Image icon;
     
     private boolean isVictoria;
     
     private String tipoPartida;
     
-    private String[] musicas; 
-    
-    private String estilo;
-    
     private int filas;
     
     private int columnas;
     
-    private ArrayList<Baraja> listaBarajas;
+    private Singleton singleton;
     
-    private Baraja barajaPartida;
-    
-    public void iniciarResultado(Stage stage, boolean soundOn, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, double anteriorX, double anteriorY, int filas, int columnas, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
-    	this.musicas = musicas;
+    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, int filas, int columnas, Singleton nuevoSingleton){
     	primaryStage = stage;
-        this.soundOn = soundOn;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
         this.filas = filas;
         this.columnas = columnas;
-        listaBarajas = lista;
-        barajaPartida = nuevaBaraja;
+        singleton = nuevoSingleton;
         inicializarVariables(puntuacion, tiempo);
         mostrarResultado();
         anyadirIcono();
         corregirTamanyoVentana();
-        corregirPosicionVentana(anteriorX, anteriorY);
-        actualizarEstilo(estilo);
+        corregirPosicionVentana();
+        actualizarEstilo(singleton.estilo);
     }
  
     public void inicializarVariables(String puntuacion, String tiempo) {
@@ -94,10 +83,10 @@ public class ControladorResultadoPartida {
     
     public void mostrarResultado() {
     	if(isVictoria) {
-    		if(soundOn) victoria.play();
+    		if(singleton.soundOn) victoria.play();
             resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
     	} else {
-            if(soundOn) derrota.play();
+            if(singleton.soundOn) derrota.play();
             resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
     	}
     }
@@ -127,7 +116,9 @@ public class ControladorResultadoPartida {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Estandar");
             primaryStage.setResizable(false);
-            controladorPartida.iniciarPartidaEstandar(primaryStage, soundOn, thisStage.getX(), thisStage.getY(),musicas, estilo, listaBarajas, barajaPartida);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            controladorPartida.iniciarPartidaEstandar(primaryStage, singleton);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -142,7 +133,9 @@ public class ControladorResultadoPartida {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Por Carta");
             primaryStage.setResizable(false);
-            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, soundOn, thisStage.getX(), thisStage.getY(),musicas, estilo, listaBarajas, barajaPartida);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -157,7 +150,9 @@ public class ControladorResultadoPartida {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Partida Por Carta");
             primaryStage.setResizable(false);
-            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, soundOn, thisStage.getX(), thisStage.getY(), filas, columnas,musicas, estilo, listaBarajas, barajaPartida);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -173,7 +168,9 @@ public class ControladorResultadoPartida {
         primaryStage.setTitle("Menu Principal");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, soundOn, false, thisStage.getX(), thisStage.getY(),musicas, estilo, listaBarajas, barajaPartida);
+        singleton.posicionX = thisStage.getX();
+  		singleton.posicionY = thisStage.getY();
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
         primaryStage.show();
         thisStage.close(); 
     }
@@ -183,21 +180,21 @@ public class ControladorResultadoPartida {
     	primaryStage.setHeight(627);
     }
 
-    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-    	thisStage.setX(anteriorX);
-    	thisStage.setY(anteriorY);
+    public void corregirPosicionVentana() {
+    	thisStage.setX(singleton.posicionX);
+    	thisStage.setY(singleton.posicionY);
     }
     
     public void actualizarEstilo(String nuevoEstilo) {
-    	estilo = nuevoEstilo;
+    	singleton.estilo = nuevoEstilo;
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
         String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(estilo.equals("Azul")) {
+    	if(singleton.estilo.equals("Azul")) {
     		pane.getStylesheets().remove(temaRojo);
     		pane.getStylesheets().remove(temaVerde);
     		pane.getStylesheets().add(temaAzul);
-    	} else if(estilo.equals("Rojo")) {
+    	} else if(singleton.estilo.equals("Rojo")) {
     		pane.getStylesheets().remove(temaAzul);
 			pane.getStylesheets().remove(temaVerde);
 			pane.getStylesheets().add(temaRojo);

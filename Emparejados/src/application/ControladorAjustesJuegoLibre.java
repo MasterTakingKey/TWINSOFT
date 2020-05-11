@@ -2,9 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,8 +71,6 @@ public class ControladorAjustesJuegoLibre {
     @FXML
     private ImageView iconoSonido;
     
-    private boolean SoundOn;
-    
     private Musica musicaFondo;
     
     private Image Sound0;
@@ -87,43 +83,34 @@ public class ControladorAjustesJuegoLibre {
     
     private Stage thisStage;
     
-    private String estilo;
-    
-    private String[] musicas;
-    
-    private ArrayList<Baraja> listaBarajas;
-    
-    private Baraja barajaPartida;
+    private Singleton singleton;
 
-    public void iniciarAjustesJLibre(Stage stage, boolean Sound, long tiempoM, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
-    	this.musicas = musicas;
+    public void iniciarAjustesJLibre(Stage stage, long tiempoM, Singleton nuevoSingleton) {
     	primaryStage = stage;
-    	SoundOn = Sound;
     	tiempoMusica = tiempoM;
-    	listaBarajas = lista;
-    	barajaPartida = nuevaBaraja;
+    	singleton = nuevoSingleton;
     	inicializarVariables();
     	actualizarSonido();
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
-    	corregirPosicionVentana(anteriorX, anteriorY);
-    	actualizarEstilo(estilo);
+    	corregirPosicionVentana();
+    	actualizarEstilo(singleton.estilo);
     }
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-    	musicaFondo = new Musica("src/sonidos/"+ musicas[1] +".wav", 0L);
+    	musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
         thisStage = (Stage) buttonJugar.getScene().getWindow();
     }
     
     @FXML
     void clickSound(MouseEvent event) {
-    	if(SoundOn) {
-    		SoundOn = false;
+    	if(singleton.soundOn) {
+    		singleton.soundOn = false;
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     	} else {
-    		SoundOn = true;
+    		singleton.soundOn = true;
     	}
     	actualizarSonido();
     	actualizarImagenSonido();
@@ -142,13 +129,15 @@ public class ControladorAjustesJuegoLibre {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
-      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), filas, columnas, musicas, estilo, listaBarajas, barajaPartida);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
     
     public void actualizarSonido() {
-    	if(SoundOn) {
+    	if(singleton.soundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
     		musicaFondo.playMusic();
     	}
@@ -158,7 +147,7 @@ public class ControladorAjustesJuegoLibre {
     }
     
     public void actualizarImagenSonido() {
-        if(SoundOn) {
+        if(singleton.soundOn) {
         	iconoSonido.setImage(Sound1);
         } else {
         	iconoSonido.setImage(Sound0);
@@ -170,24 +159,24 @@ public class ControladorAjustesJuegoLibre {
     	thisStage.setHeight(620);
     }
     
-    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-    	thisStage.setX(anteriorX);
-    	thisStage.setY(anteriorY);
+    public void corregirPosicionVentana() {
+    	thisStage.setX(singleton.posicionX);
+    	thisStage.setY(singleton.posicionY);
     }
     
     public void actualizarEstilo(String nuevoEstilo) {
-    	estilo = nuevoEstilo;
+    	singleton.estilo = nuevoEstilo;
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
         String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(estilo.equals("Azul")) {
+    	if(singleton.estilo.equals("Azul")) {
     		stackPane.getStylesheets().remove(temaRojo);
     		stackPane.getStylesheets().remove(temaVerde);
     		stackPane.getStylesheets().add(temaAzul);
     		circuloSonido.getStylesheets().remove(temaRojo);
     		circuloSonido.getStylesheets().remove(temaVerde);
     		circuloSonido.getStylesheets().add(temaAzul);
-    	} else if(estilo.equals("Rojo")) {
+    	} else if(singleton.estilo.equals("Rojo")) {
     		stackPane.getStylesheets().remove(temaAzul);
     		stackPane.getStylesheets().remove(temaVerde);
     		stackPane.getStylesheets().add(temaRojo);

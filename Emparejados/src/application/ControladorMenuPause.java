@@ -44,8 +44,6 @@ public class ControladorMenuPause {
     private Stage primaryStage;
     
     private Stage thisStage;
-
-    private boolean SoundOn;
     
     private ControladorPartidaEstandar partidaEstandar;
     
@@ -63,74 +61,59 @@ public class ControladorMenuPause {
     
     private String tipoPartida;
     
-    Optional<ButtonType> resultadoSalida;
+    private Optional<ButtonType> resultadoSalida;
     
-    private String[] musicas; 
+    private Singleton singleton;
     
-    private String estilo;
-    
-    private ArrayList<Baraja> listaBarajas;
-    
-    private Baraja barajaPartida;
-    
-    void initDataPartidaEstandar(Stage partida, ControladorPartidaEstandar partidaEstandar, boolean soundOn, double anteriorX, double anteriorY,String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
-    	this.musicas = musicas;
+    void initDataPartidaEstandar(Stage partida, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
-        SoundOn = soundOn;
+    	singleton = nuevoSingleton;
         tipoPartida = "estandar";
-        listaBarajas = lista;
-        barajaPartida = nuevaBaraja;
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana(anteriorX, anteriorY);
-        actualizarEstilo(estilo);
+        corregirPosicionVentana();
+        actualizarEstilo(singleton.estilo);
     }
     
-    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, boolean soundOn, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
-    	this.musicas = musicas;
+    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
-        SoundOn = soundOn;
+        singleton = nuevoSingleton;
         tipoPartida = "carta";
-        listaBarajas = lista;
-        barajaPartida = nuevaBaraja;
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana(anteriorX, anteriorY);
-        actualizarEstilo(estilo);
+        corregirPosicionVentana();
+        actualizarEstilo(singleton.estilo);
     }
   
-    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, boolean soundOn, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja) {
-    	this.musicas = musicas;
+    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, Singleton nuevoSingleton) {
     	primaryStage = partida;
     	this.partidaLibre = partidaLibre;
-        SoundOn = soundOn;
+        singleton = nuevoSingleton;
         tipoPartida = "libre";
-        listaBarajas = lista;
-        barajaPartida = nuevaBaraja;
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana(anteriorX, anteriorY);
-        actualizarEstilo(estilo);
+        corregirPosicionVentana();
+        actualizarEstilo(singleton.estilo);
     }
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/"+ musicas[2] +".wav", 0L);
+        musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[2] +".wav", 0L);
         thisStage = (Stage) imageSound.getScene().getWindow();
         thisStage.setTitle("Menu de Pausa");
     }
@@ -151,7 +134,9 @@ public class ControladorMenuPause {
         stage.setTitle("Confirmacion de salida");
         stage.setResizable(false);
         ControladorConfirmacionSalirMenuP controladorConfirmacionSalirMenuP = myLoader.<ControladorConfirmacionSalirMenuP>getController();
-        controladorConfirmacionSalirMenuP.inicializarDatos(this, thisStage.getX(), thisStage.getY(), thisStage.getWidth(), thisStage.getHeight(), estilo);
+        singleton.posicionX = thisStage.getX();
+  		singleton.posicionY = thisStage.getY();
+        controladorConfirmacionSalirMenuP.inicializarDatos(this, thisStage.getWidth(), thisStage.getHeight(), singleton);
         stage.show();
     }
     	
@@ -168,7 +153,9 @@ public class ControladorMenuPause {
             primaryStage.setTitle("Menu Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(), musicas, estilo, listaBarajas, barajaPartida);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
@@ -189,8 +176,10 @@ public class ControladorMenuPause {
     	boolean victoria = partidaEstandar.isVictoria();
     	boolean derrota = partidaEstandar.isDerrota();
     	if (!derrota && !victoria) {
+    		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaEstandar.reanudarPartida(SoundOn, thisStage.getX(), thisStage.getY());
+	    	partidaEstandar.reanudarPartida(singleton.soundOn);
     	}
     	
     }
@@ -200,8 +189,10 @@ public class ControladorMenuPause {
     	boolean victoria = partidaCarta.isVictoria();
     	boolean derrota = partidaCarta.isDerrota();
     	if (!derrota && !victoria) {
+    		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaCarta.reanudarPartida(SoundOn, thisStage.getX(), thisStage.getY());
+	    	partidaCarta.reanudarPartida(singleton.soundOn);
     	}
     }
     
@@ -210,25 +201,27 @@ public class ControladorMenuPause {
     	boolean victoria = partidaLibre.isVictoria();
     	boolean derrota = partidaLibre.isDerrota();
     	if (!derrota && !victoria) {
+    		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaLibre.reanudarPartida(SoundOn, thisStage.getX(), thisStage.getY());
+	    	partidaLibre.reanudarPartida(singleton.soundOn);
     	}
     }
 
     @FXML
     void clickSound(MouseEvent event) {
-    	if(SoundOn) {
-    		SoundOn = false;
+    	if(singleton.soundOn) {
+    		singleton.soundOn = false;
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     	} else {
-    		SoundOn = true;
+    		singleton.soundOn = true;
     	}
     	actualizarSonido();
     	actualizarImagenSonido();
     }
     
     public void actualizarSonido() {
-    	if(SoundOn) {
+    	if(singleton.soundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
     		musicaFondo.playMusic();
     	}
@@ -238,7 +231,7 @@ public class ControladorMenuPause {
     }
     
     public void actualizarImagenSonido() {
-        if(SoundOn) {
+        if(singleton.soundOn) {
         	imageSound.setImage(Sound1);
         } else {
         	imageSound.setImage(Sound0);
@@ -250,17 +243,17 @@ public class ControladorMenuPause {
     	thisStage.setHeight(620);
     }
     
-    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-    	thisStage.setX(anteriorX);
-    	thisStage.setY(anteriorY);
+    public void corregirPosicionVentana() {
+    	thisStage.setX(singleton.posicionX);
+    	thisStage.setY(singleton.posicionY);
     }
     
     public void actualizarEstilo(String nuevoEstilo) {
-    	estilo = nuevoEstilo;
+    	singleton.estilo = nuevoEstilo;
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
         String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(estilo.equals("Azul")) {
+    	if(singleton.estilo.equals("Azul")) {
     		pane.getStylesheets().remove(temaRojo);
     		pane.getStylesheets().remove(temaVerde);
     		pane.getStylesheets().add(temaAzul);
@@ -273,7 +266,7 @@ public class ControladorMenuPause {
     		circuloSonido.getStylesheets().remove(temaRojo);
     		circuloSonido.getStylesheets().remove(temaVerde);
     		circuloSonido.getStylesheets().add(temaAzul);
-    	} else if(estilo.equals("Rojo")) {
+    	} else if(singleton.estilo.equals("Rojo")) {
     		pane.getStylesheets().remove(temaAzul);
 			pane.getStylesheets().remove(temaVerde);
 			pane.getStylesheets().add(temaRojo);

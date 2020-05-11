@@ -56,34 +56,34 @@ public class EditorBarajaParejasController {
 	@FXML
 	private Button cancelarNombre;
 
-private Stage primaryStage;
+	private Stage primaryStage;
     
     private Stage thisStage;
 	
 	private int actual = 1;
 	
-	private String[] musicas;
-	
-    private String estilo;
-    
-    private ArrayList<Baraja> listaBarajas;
+	private Singleton singleton;
 	
 	List<File> listaImagenes = new ArrayList();
+	
 	File archivoImagen;
+	
 	Image imagen;
+	
 	String nombreBaraja;
+	
 	Baraja barajaCreada;
+	
 	Carta carta;
 
-	public void iniciarEditorParejas(Stage stage, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, ArrayList<File> imagenes){
-        this.musicas = musicas;
+	public void iniciarEditorParejas(Stage stage, Singleton nuevoSingleton, ArrayList<File> imagenes){
 		primaryStage = stage;
-        listaBarajas = lista;
+        singleton = nuevoSingleton;
         listaImagenes = imagenes;
         inicializarVariables();
         corregirTamanyoVentana();
-        corregirPosicionVentana(anteriorX, anteriorY);
-        actualizarEstilo(estilo);
+        corregirPosicionVentana();
+        actualizarEstilo(singleton.estilo);
     }
 	
     public void inicializarVariables() {
@@ -190,7 +190,9 @@ private Stage primaryStage;
 	            primaryStage.setScene(scene);
 	            primaryStage.setResizable(false);
 	            
-	            menuAjustes.iniciarMenuAjustes(primaryStage, false, thisStage.getX(), thisStage.getY(), musicas, estilo, listaBarajas, null);
+	            singleton.posicionX = thisStage.getX();
+	      		singleton.posicionY = thisStage.getY();
+	            menuAjustes.iniciarMenuAjustes(primaryStage, singleton);
 	            primaryStage.show();
 	    	} catch (IOException e) {
 	                e.printStackTrace();
@@ -249,21 +251,21 @@ private Stage primaryStage;
     	thisStage.setHeight(450);
     }
     
-    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-    	thisStage.setX(anteriorX);
-    	thisStage.setY(anteriorY);
+    public void corregirPosicionVentana() {
+    	thisStage.setX(singleton.posicionX);
+    	thisStage.setY(singleton.posicionY);
     }
     
     public void actualizarEstilo(String nuevoEstilo) {
-    	estilo = nuevoEstilo;
+    	singleton.estilo = nuevoEstilo;
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
     	String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
     	String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(estilo.equals("Azul")) {
+    	if(singleton.estilo.equals("Azul")) {
     		pane.getStylesheets().remove(temaRojo);
     		pane.getStylesheets().remove(temaVerde);
     		pane.getStylesheets().add(temaAzul);
-	    } else if(estilo.equals("Rojo")) {
+	    } else if(singleton.estilo.equals("Rojo")) {
 			pane.getStylesheets().remove(temaAzul);
 			pane.getStylesheets().remove(temaVerde);
 			pane.getStylesheets().add(temaRojo);

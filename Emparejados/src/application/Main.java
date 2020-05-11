@@ -21,13 +21,9 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         
-        Image icono = new Image("/imagenes/Icon.png");
-        primaryStage.getIcons().add(icono);
-        String[] musicas = new String[3];
-        musicas[0] = "Musica1";
-        musicas[1] = "Musica2";
-        musicas[2] = "Musica3";
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, true, 0, 0,musicas, "Azul", null, null);
+        primaryStage.getIcons().add(new Image("/imagenes/Icon.png"));
+        
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, null);
         primaryStage.show();
 	}
 

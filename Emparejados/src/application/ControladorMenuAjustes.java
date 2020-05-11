@@ -2,12 +2,10 @@ package application;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,7 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class ControladorMenuAjustes {
@@ -66,14 +63,11 @@ public class ControladorMenuAjustes {
     private Image Sound0;
     
     private Image Sound1;
-    
-    private boolean SoundOn;
-    
+   
     private long tiempoMusica;
     
-    private String[] musicas; 
-    
-    //Nombres que se visualizaran en el selector
+    private Singleton singleton;
+
     String musica1 = "Musica1";
 	String musica2 = "Musica2";
 	String musica3 = "Musica3";
@@ -82,30 +76,29 @@ public class ControladorMenuAjustes {
 	String musica6 = "Dubstep song ";
 	String musica7 = "Wii Main Theme";
 	String musica8 = "Wii Sports Theme";
-    
-    private String estilo;
-    
-    private ArrayList<Baraja> listaBarajas;
-    
-    private Baraja barajaP;
 
-    public void iniciarMenuAjustes(Stage stage, boolean soundOn, double anteriorX, double anteriorY, String[] musicas, String estilo, ArrayList<Baraja> lista, Baraja nuevaBaraja){
-    	this.musicas = musicas;
+
+    public void iniciarMenuAjustes(Stage stage, Singleton nuevoSingleton){
         primaryStage = stage;
-        SoundOn = soundOn;
-        listaBarajas = lista;
-        barajaP = nuevaBaraja;
+        singleton = nuevoSingleton;
         inicializarVariables();
-		actualizarSonido();
-        actualizarImagenSonido();
-        corregirTamanyoVentana();
-        corregirPosicionVentana(anteriorX, anteriorY);
-        actualizarEstilo(estilo);
         inicializarChoiceBoxMusica();
         inicializarTemas();
         inicializarBarajaPartida();
+		actualizarSonido();
+        actualizarImagenSonido();
+        corregirTamanyoVentana();
+        corregirPosicionVentana();
+        actualizarEstilo(singleton.estilo);
     }
 
+    public void inicializarVariables() {
+    	Sound0 = new Image("/imagenes/sonido_off.png");
+        Sound1 = new Image("/imagenes/sonido_on.png");
+        musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
+        thisStage = (Stage) salir.getScene().getWindow();
+    }
+    
     public void inicializarChoiceBoxMusica() {
     	cargaMusica(musicaPartida, 0);
     	cargaMusica(musicaMenuP, 1);
@@ -116,9 +109,9 @@ public class ControladorMenuAjustes {
     	tema.getItems().add("Azul");
     	tema.getItems().add("Rojo");
     	tema.getItems().add("Verde");
-    	if(estilo.equals("Azul")) {
+    	if(singleton.estilo.equals("Azul")) {
         	tema.getSelectionModel().select(0);
-    	} else if(estilo.equals("Rojo")) {
+    	} else if(singleton.estilo.equals("Rojo")) {
         	tema.getSelectionModel().select(1);
     	} else {
         	tema.getSelectionModel().select(2);
@@ -128,9 +121,9 @@ public class ControladorMenuAjustes {
     public void inicializarBarajaPartida() {
     	try {
         	int i = 0;
-    		while(listaBarajas.get(i) != null) {
-    			barajaPartida.getItems().add(listaBarajas.get(i).getNombre());
-    			if(listaBarajas.get(i).getNombre().equals(barajaP.getNombre())) barajaPartida.getSelectionModel().select(i);
+    		while(singleton.listaBarajas.get(i) != null) {
+    			barajaPartida.getItems().add(singleton.listaBarajas.get(i).getNombre());
+    			if(singleton.listaBarajas.get(i).getNombre().equals(singleton.barajaPartida.getNombre())) barajaPartida.getSelectionModel().select(i);
     			i++;
     		}	
     	} catch(Exception e) {}
@@ -144,7 +137,7 @@ public class ControladorMenuAjustes {
     		);
     	menu.setTooltip(new Tooltip("Selecciona la cancion que quieres para este menu"));
     	int select;
-    	switch (musicas[musica]) {
+    	switch (singleton.listaMusica[musica]) {
     		case "Musica1": select = 0; break;
     		case "Musica2": select = 1; break;
     		case "Musica3": select = 2; break;
@@ -158,16 +151,10 @@ public class ControladorMenuAjustes {
     	menu.getSelectionModel().select(select);
     }
     
-    
-    public void inicializarVariables() {
-    	Sound0 = new Image("/imagenes/sonido_off.png");
-        Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/"+ musicas[1] +".wav", 0L);
-        thisStage = (Stage) salir.getScene().getWindow();
-    }
+
     
     public void actualizarSonido() {
-    	if(SoundOn) {
+    	if(singleton.soundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
     		musicaFondo.playMusic();
     	}
@@ -177,7 +164,7 @@ public class ControladorMenuAjustes {
     }
     
     public void actualizarImagenSonido() {
-        if(SoundOn) {
+        if(singleton.soundOn) {
         	iconoSonido.setImage(Sound1);
         } else {
         	iconoSonido.setImage(Sound0);
@@ -186,11 +173,11 @@ public class ControladorMenuAjustes {
 
     @FXML
     void clickSound(MouseEvent event) {
-    	if(SoundOn) {
-    		SoundOn = false;
+    	if(singleton.soundOn) {
+    		singleton.soundOn = false;
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     	} else {
-    		SoundOn = true;
+    		singleton.soundOn = true;
     	}
     	actualizarSonido();
     	actualizarImagenSonido();
@@ -210,7 +197,10 @@ public class ControladorMenuAjustes {
             stage.setResizable(false);
             EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController(); 
             actualizaMusicas();
-            editorDorso.iniciarEditorDorso(primaryStage, thisStage.getX(), thisStage.getY(), musicas, tema.getSelectionModel().getSelectedItem(), listaBarajas);
+            singleton.estilo = tema.getSelectionModel().getSelectedItem();
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            editorDorso.iniciarEditorDorso(primaryStage, singleton);
             stage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
@@ -227,7 +217,9 @@ public class ControladorMenuAjustes {
             primaryStage.setTitle("Menu Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(),musicas, estilo, listaBarajas, barajaP);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
@@ -246,16 +238,20 @@ public class ControladorMenuAjustes {
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             actualizaMusicas();
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY(),musicas, tema.getSelectionModel().getSelectedItem(), listaBarajas, deNombreABaraja());
+            singleton.estilo = tema.getSelectionModel().getSelectedItem();
+            singleton.barajaPartida = deNombreABaraja();
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
         }
     }
     public void actualizaMusicas() {
-    	musicas[0] = traduceMusica(musicaPartida.getSelectionModel().getSelectedItem());
-    	musicas[1] = traduceMusica(musicaMenuP.getSelectionModel().getSelectedItem());
-    	musicas[2] = traduceMusica(musicaPausa.getSelectionModel().getSelectedItem());
+    	singleton.listaMusica[0] = traduceMusica(musicaPartida.getSelectionModel().getSelectedItem());
+    	singleton.listaMusica[1] = traduceMusica(musicaMenuP.getSelectionModel().getSelectedItem());
+    	singleton.listaMusica[2] = traduceMusica(musicaPausa.getSelectionModel().getSelectedItem());
     }
     
     public String traduceMusica(String m) {
@@ -280,9 +276,9 @@ public class ControladorMenuAjustes {
     
     public Baraja deNombreABaraja() {
     	int i = 0;
-    	while(listaBarajas.get(i) != null) {
-    		if(barajaPartida.getSelectionModel().getSelectedItem().equals(listaBarajas.get(i).getNombre())) {
-    			return listaBarajas.get(i);
+    	while(singleton.listaBarajas.get(i) != null) {
+    		if(barajaPartida.getSelectionModel().getSelectedItem().equals(singleton.listaBarajas.get(i).getNombre())) {
+    			return singleton.listaBarajas.get(i);
     		}
     		i++;
     	}
@@ -294,25 +290,25 @@ public class ControladorMenuAjustes {
     	thisStage.setHeight(650);
     }
     
-    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-    	thisStage.setX(anteriorX);
-    	thisStage.setY(anteriorY);
+    public void corregirPosicionVentana() {
+    	thisStage.setX(singleton.posicionX);
+    	thisStage.setY(singleton.posicionY);
     }
     
     
     public void actualizarEstilo(String nuevoEstilo) {
-    	estilo = nuevoEstilo;
+    	singleton.estilo = nuevoEstilo;
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
         String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(estilo.equals("Azul")) {
+    	if(singleton.estilo.equals("Azul")) {
     		anchorPane.getStylesheets().remove(temaRojo);
     		anchorPane.getStylesheets().remove(temaVerde);
     		anchorPane.getStylesheets().add(temaAzul);
     		circuloSonido.getStylesheets().remove(temaRojo);
     		circuloSonido.getStylesheets().remove(temaVerde);
     		circuloSonido.getStylesheets().add(temaAzul);
-    	} else if(estilo.equals("Rojo")) {
+    	} else if(singleton.estilo.equals("Rojo")) {
     		anchorPane.getStylesheets().remove(temaAzul);
 			anchorPane.getStylesheets().remove(temaVerde);
 			anchorPane.getStylesheets().add(temaRojo);

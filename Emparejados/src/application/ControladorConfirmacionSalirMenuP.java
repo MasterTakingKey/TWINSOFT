@@ -24,15 +24,16 @@ public class ControladorConfirmacionSalirMenuP {
     
     private Stage thisStage;
     
-    private String estilo;
+    private Singleton singleton;
     
-    public void inicializarDatos(ControladorMenuPause menuP, double anteriorX, double anteriorY, double anteriorWidth, double anteriorHeight, String estilo) {
+    public void inicializarDatos(ControladorMenuPause menuP, double anteriorWidth, double anteriorHeight, Singleton nuevoSingleton) {
     	menuPausa = menuP;
+    	singleton = nuevoSingleton;
     	thisStage = (Stage) cancelar.getScene().getWindow();
     	anyadirIcono();
     	corregirTamanyoVentana();
-    	corregirPosicionVentana(anteriorX, anteriorY, anteriorWidth, anteriorHeight);
-    	actualizarEstilo(estilo);
+    	corregirPosicionVentana(anteriorWidth, anteriorHeight);
+    	actualizarEstilo(singleton.estilo);
     }
     
     public void anyadirIcono() {
@@ -56,21 +57,21 @@ public class ControladorConfirmacionSalirMenuP {
     	thisStage.setHeight(220);
     }
     
-    public void corregirPosicionVentana(double anteriorX, double anteriorY, double anteriorWidth, double anteriorHeight) {
-    	thisStage.setX(anteriorX + (anteriorWidth/6));
-    	thisStage.setY(anteriorY + (anteriorHeight/3));
+    public void corregirPosicionVentana(double anteriorWidth, double anteriorHeight) {
+    	thisStage.setX(singleton.posicionX + (anteriorWidth/6));
+    	thisStage.setY(singleton.posicionY + (anteriorHeight/3));
     }
     
     public void actualizarEstilo(String nuevoEstilo) {
-    	estilo = nuevoEstilo;
+    	singleton.estilo = nuevoEstilo;
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
         String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(estilo.equals("Azul")) {
+    	if(singleton.estilo.equals("Azul")) {
     		anchorPane.getStylesheets().remove(temaRojo);
     		anchorPane.getStylesheets().remove(temaVerde);
     		anchorPane.getStylesheets().add(temaAzul);
-    	} else if(estilo.equals("Rojo")) {
+    	} else if(singleton.estilo.equals("Rojo")) {
     		anchorPane.getStylesheets().remove(temaAzul);
 			anchorPane.getStylesheets().remove(temaVerde);
 			anchorPane.getStylesheets().add(temaRojo);

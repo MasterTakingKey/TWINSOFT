@@ -31,7 +31,7 @@ public class ControladorConfirmacionSalirApp {
         anyadirIcono();
         corregirTamanyoVentana();
         corregirPosicionVentana(anteriorWidth, anteriorHeight);
-        actualizarEstilo(singleton.estilo);
+        actualizarEstilo();
     }
     
     public void anyadirIcono() {
@@ -60,8 +60,7 @@ public class ControladorConfirmacionSalirApp {
     	thisStage.setY(singleton.posicionY + (anteriorHeight/3));
     }
     
-    public void actualizarEstilo(String nuevoEstilo) {
-    	singleton.estilo = nuevoEstilo;
+    public void actualizarEstilo() {
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
         String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();

@@ -158,7 +158,6 @@ public class ControladorPartidaEstandar {
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana();
-    	actualizarEstilo(singleton.estilo);
     }
     
     public void inicializarBarajaTablero() {
@@ -465,8 +464,5 @@ public class ControladorPartidaEstandar {
     	thisStage.setY(singleton.posicionY);
     }
     
-    public void actualizarEstilo(String nuevoEstilo) {
-    	singleton.estilo = nuevoEstilo;
-    }
 
 }

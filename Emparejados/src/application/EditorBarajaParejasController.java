@@ -85,7 +85,7 @@ public class EditorBarajaParejasController {
         inicializarVariables();
         corregirTamanyoVentana();
         corregirPosicionVentana();
-        actualizarEstilo(singleton.estilo);
+        actualizarEstilo();
         nombrePane.setVisible(false);
         siguienteButton.setDisable(true);
         crearBarajaButton.setDisable(true);
@@ -222,7 +222,8 @@ public class EditorBarajaParejasController {
 	            singleton.posicionX = thisStage.getX();
 	      		singleton.posicionY = thisStage.getY();
 	            menuAjustes.iniciarMenuAjustes(primaryStage, singleton);
-	            primaryStage.show();
+	           // primaryStage.show();
+	            thisStage.close();
 	    	} catch (IOException e) {
 	                e.printStackTrace();
 	        }
@@ -287,8 +288,7 @@ public class EditorBarajaParejasController {
     	thisStage.setY(singleton.posicionY);
     }
     
-    public void actualizarEstilo(String nuevoEstilo) {
-    	singleton.estilo = nuevoEstilo;
+    public void actualizarEstilo() {
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
     	String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
     	String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();

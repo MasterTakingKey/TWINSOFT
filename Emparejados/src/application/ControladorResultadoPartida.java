@@ -68,7 +68,7 @@ public class ControladorResultadoPartida {
         anyadirIcono();
         corregirTamanyoVentana();
         corregirPosicionVentana();
-        actualizarEstilo(singleton.estilo);
+        actualizarEstilo();
     }
  
     public void inicializarVariables(String puntuacion, String tiempo) {
@@ -185,8 +185,7 @@ public class ControladorResultadoPartida {
     	thisStage.setY(singleton.posicionY);
     }
     
-    public void actualizarEstilo(String nuevoEstilo) {
-    	singleton.estilo = nuevoEstilo;
+    public void actualizarEstilo() {
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
         String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();

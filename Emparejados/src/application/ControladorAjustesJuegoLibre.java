@@ -94,7 +94,7 @@ public class ControladorAjustesJuegoLibre {
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana();
-    	actualizarEstilo(singleton.estilo);
+    	actualizarEstilo();
     }
     
     public void inicializarVariables() {
@@ -164,8 +164,7 @@ public class ControladorAjustesJuegoLibre {
     	thisStage.setY(singleton.posicionY);
     }
     
-    public void actualizarEstilo(String nuevoEstilo) {
-    	singleton.estilo = nuevoEstilo;
+    public void actualizarEstilo() {
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
         String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();

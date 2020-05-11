@@ -236,7 +236,6 @@ public class ControladorPartidaLibre {
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana();
-    	actualizarEstilo(singleton.estilo);
     }
      
     public void inicializarBarajaTablero(int filas, int columnas) {
@@ -589,8 +588,4 @@ public class ControladorPartidaLibre {
     	thisStage.setY(0);
     }
     
-    public void actualizarEstilo(String nuevoEstilo) {
-    	singleton.estilo = nuevoEstilo;
-    }
-
 }

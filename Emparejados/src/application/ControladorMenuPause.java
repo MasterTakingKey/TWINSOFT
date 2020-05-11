@@ -1,22 +1,35 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class ControladorMenuPause {
+
+    @FXML
+    private Pane pane;
     
+    @FXML
+    private StackPane circuloHome;
+
+    @FXML
+    private StackPane circuloPlay;
+
+    @FXML
+    private StackPane circuloSonido;
+	
 	@FXML
     private ImageView imagePlay;
 
@@ -31,12 +44,12 @@ public class ControladorMenuPause {
     private Stage primaryStage;
     
     private Stage thisStage;
-
-    private boolean SoundOn;
     
-    private ControladorPartida partidaEstandar;
+    private ControladorPartidaEstandar partidaEstandar;
     
     private ControladorPartidaCarta partidaCarta;
+    
+    private ControladorPartidaLibre partidaLibre;
     
     private Image Sound0;
     
@@ -48,12 +61,14 @@ public class ControladorMenuPause {
     
     private String tipoPartida;
     
-    Optional<ButtonType> resultadoSalida;
+    private Optional<ButtonType> resultadoSalida;
     
-    void initDataPartidaEstandar(Stage partida, ControladorPartida partidaEstandar, boolean soundOn, double anteriorX, double anteriorY) {
+    private Singleton singleton;
+    
+    void initDataPartidaEstandar(Stage partida, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
-        SoundOn = soundOn;
+    	singleton = nuevoSingleton;
         tipoPartida = "estandar";
         inicializarVariables();
         anyadirIcono();
@@ -61,27 +76,14 @@ public class ControladorMenuPause {
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana(anteriorX, anteriorY);
+        corregirPosicionVentana();
+        actualizarEstilo();
     }
     
-    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, boolean soundOn, double anteriorX, double anteriorY) {
-    	primaryStage = partida;
-    	this.partidaEstandar = partidaEstandar;
-        SoundOn = soundOn;
-        tipoPartida = "estandar";
-        inicializarVariables();
-        anyadirIcono();
-        corregirTamanyoVentana();
-		actualizarSonido();
-        actualizarImagenSonido();
-        corregirTamanyoVentana();
-        corregirPosicionVentana(anteriorX, anteriorY);
-    }
-    
-    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, boolean soundOn, double anteriorX, double anteriorY) {
+    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
-        SoundOn = soundOn;
+        singleton = nuevoSingleton;
         tipoPartida = "carta";
         inicializarVariables();
         anyadirIcono();
@@ -89,13 +91,29 @@ public class ControladorMenuPause {
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana(anteriorX, anteriorY);
+        corregirPosicionVentana();
+        actualizarEstilo();
     }
   
+    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, Singleton nuevoSingleton) {
+    	primaryStage = partida;
+    	this.partidaLibre = partidaLibre;
+        singleton = nuevoSingleton;
+        tipoPartida = "libre";
+        inicializarVariables();
+        anyadirIcono();
+        corregirTamanyoVentana();
+		actualizarSonido();
+        actualizarImagenSonido();
+        corregirTamanyoVentana();
+        corregirPosicionVentana();
+        actualizarEstilo();
+    }
+    
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/Musica3.wav", 0L);
+        musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[2] +".wav", 0L);
         thisStage = (Stage) imageSound.getScene().getWindow();
         thisStage.setTitle("Menu de Pausa");
     }
@@ -116,15 +134,16 @@ public class ControladorMenuPause {
         stage.setTitle("Confirmacion de salida");
         stage.setResizable(false);
         ControladorConfirmacionSalirMenuP controladorConfirmacionSalirMenuP = myLoader.<ControladorConfirmacionSalirMenuP>getController();
-        controladorConfirmacionSalirMenuP.inicializarDatos(this, thisStage.getX(), thisStage.getY(), thisStage.getWidth(), thisStage.getHeight());
+        singleton.posicionX = thisStage.getX();
+  		singleton.posicionY = thisStage.getY();
+        controladorConfirmacionSalirMenuP.inicializarDatos(this, thisStage.getWidth(), thisStage.getHeight(), singleton);
         stage.show();
     }
     	
     
     public void volverMenuPrincipal() {
     	musicaFondo.stopMusic();
-    	Stage stage = (Stage) imageHome.getScene().getWindow();
-    	stage.close();
+    	thisStage.close();
     	primaryStage.close();
     	try {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
@@ -134,7 +153,9 @@ public class ControladorMenuPause {
             primaryStage.setTitle("Menu Principal");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, SoundOn, false, thisStage.getX(), thisStage.getY());
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
@@ -155,8 +176,10 @@ public class ControladorMenuPause {
     	boolean victoria = partidaEstandar.isVictoria();
     	boolean derrota = partidaEstandar.isDerrota();
     	if (!derrota && !victoria) {
+    		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaEstandar.reanudarPartida(SoundOn, thisStage.getX(), thisStage.getY());
+	    	partidaEstandar.reanudarPartida(singleton.soundOn);
     	}
     	
     }
@@ -166,25 +189,39 @@ public class ControladorMenuPause {
     	boolean victoria = partidaCarta.isVictoria();
     	boolean derrota = partidaCarta.isDerrota();
     	if (!derrota && !victoria) {
+    		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaCarta.reanudarPartida(SoundOn, thisStage.getX(), thisStage.getY());
+	    	partidaCarta.reanudarPartida(singleton.soundOn);
+    	}
+    }
+    
+    void reanudarPartidaLibre() {
+    	musicaFondo.stopMusic();
+    	boolean victoria = partidaLibre.isVictoria();
+    	boolean derrota = partidaLibre.isDerrota();
+    	if (!derrota && !victoria) {
+    		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+	    	thisStage.close();
+	    	partidaLibre.reanudarPartida(singleton.soundOn);
     	}
     }
 
     @FXML
     void clickSound(MouseEvent event) {
-    	if(SoundOn) {
-    		SoundOn = false;
+    	if(singleton.soundOn) {
+    		singleton.soundOn = false;
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     	} else {
-    		SoundOn = true;
+    		singleton.soundOn = true;
     	}
     	actualizarSonido();
     	actualizarImagenSonido();
     }
     
     public void actualizarSonido() {
-    	if(SoundOn) {
+    	if(singleton.soundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
     		musicaFondo.playMusic();
     	}
@@ -194,7 +231,7 @@ public class ControladorMenuPause {
     }
     
     public void actualizarImagenSonido() {
-        if(SoundOn) {
+        if(singleton.soundOn) {
         	imageSound.setImage(Sound1);
         } else {
         	imageSound.setImage(Sound0);
@@ -206,9 +243,55 @@ public class ControladorMenuPause {
     	thisStage.setHeight(620);
     }
     
-    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-    	thisStage.setX(anteriorX);
-    	thisStage.setY(anteriorY);
+    public void corregirPosicionVentana() {
+    	thisStage.setX(singleton.posicionX);
+    	thisStage.setY(singleton.posicionY);
+    }
+    
+    public void actualizarEstilo() {
+    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	if(singleton.estilo.equals("Azul")) {
+    		pane.getStylesheets().remove(temaRojo);
+    		pane.getStylesheets().remove(temaVerde);
+    		pane.getStylesheets().add(temaAzul);
+    		circuloHome.getStylesheets().remove(temaRojo);
+    		circuloHome.getStylesheets().remove(temaVerde);
+    		circuloHome.getStylesheets().add(temaAzul);
+    		circuloPlay.getStylesheets().remove(temaRojo);
+    		circuloPlay.getStylesheets().remove(temaVerde);
+    		circuloPlay.getStylesheets().add(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaAzul);
+    	} else if(singleton.estilo.equals("Rojo")) {
+    		pane.getStylesheets().remove(temaAzul);
+			pane.getStylesheets().remove(temaVerde);
+			pane.getStylesheets().add(temaRojo);
+			circuloHome.getStylesheets().remove(temaAzul);
+			circuloHome.getStylesheets().remove(temaVerde);
+			circuloHome.getStylesheets().add(temaRojo);
+			circuloPlay.getStylesheets().remove(temaAzul);
+			circuloPlay.getStylesheets().remove(temaVerde);
+			circuloPlay.getStylesheets().add(temaRojo);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaVerde);
+			circuloSonido.getStylesheets().add(temaRojo);
+    	} else {
+    		pane.getStylesheets().remove(temaAzul);
+			pane.getStylesheets().remove(temaRojo);
+			pane.getStylesheets().add(temaVerde);
+			circuloHome.getStylesheets().remove(temaAzul);
+			circuloHome.getStylesheets().remove(temaRojo);
+			circuloHome.getStylesheets().add(temaVerde);
+			circuloPlay.getStylesheets().remove(temaAzul);
+			circuloPlay.getStylesheets().remove(temaRojo);
+			circuloPlay.getStylesheets().add(temaVerde);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaRojo);
+			circuloSonido.getStylesheets().add(temaVerde);
+    	}
     }
 
 }

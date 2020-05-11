@@ -3,7 +3,6 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,10 +15,17 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class ControladorAjustesJuegoLibre {
 
+    @FXML
+    private StackPane stackPane;
+    
+    @FXML
+    private StackPane circuloSonido;
+    
     @FXML
     private ResourceBundle resources;
 
@@ -36,7 +42,7 @@ public class ControladorAjustesJuegoLibre {
     private TextField textColumnas;
 
     @FXML
-    private ToggleButton buttonTiempo;
+    private Button buttonTiempo;
 
     @FXML
     private TextField textTiempoPartida;
@@ -54,7 +60,7 @@ public class ControladorAjustesJuegoLibre {
     private ChoiceBox<?> choiceVisualPareja;
 
     @FXML
-    private ToggleButton buttonMostrarCartas;
+    private Button buttonMostrarCartas;
 
     @FXML
     private TextField textTiempoMostrarCartas;
@@ -64,8 +70,6 @@ public class ControladorAjustesJuegoLibre {
     
     @FXML
     private ImageView iconoSonido;
-    
-    private boolean SoundOn;
     
     private Musica musicaFondo;
     
@@ -78,30 +82,36 @@ public class ControladorAjustesJuegoLibre {
     private Stage primaryStage;
     
     private Stage thisStage;
+    
+    private Singleton singleton;
 
-    public void iniciarAjustesJLibre(Stage stage, boolean Sound, long tiempoM) {
+    public void iniciarAjustesJLibre(Stage stage, long tiempoM, Singleton nuevoSingleton) {
     	primaryStage = stage;
-    	SoundOn = Sound;
     	tiempoMusica = tiempoM;
+    	singleton = nuevoSingleton;
+    	singleton.tiempoOn = false;
     	inicializarVariables();
     	actualizarSonido();
     	actualizarImagenSonido();
+    	corregirTamanyoVentana();
+    	corregirPosicionVentana();
+    	actualizarEstilo();
     }
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/Musica2.wav", 0L);
+    	musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
         thisStage = (Stage) buttonJugar.getScene().getWindow();
     }
     
     @FXML
     void clickSound(MouseEvent event) {
-    	if(SoundOn) {
-    		SoundOn = false;
+    	if(singleton.soundOn) {
+    		singleton.soundOn = false;
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     	} else {
-    		SoundOn = true;
+    		singleton.soundOn = true;
     	}
     	actualizarSonido();
     	actualizarImagenSonido();
@@ -120,13 +130,32 @@ public class ControladorAjustesJuegoLibre {
       		primaryStage.setScene(scene);
       		primaryStage.setTitle("Partida Estandar");
       		primaryStage.setResizable(false);
-      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, SoundOn, thisStage.getX(), thisStage.getY(), filas, columnas);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
     
+    @FXML
+    void handlerButtonMostrarCartas(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handlerButtonTiempo(ActionEvent event) {
+    	if(singleton.tiempoOn) {
+    		buttonTiempo.setText("Desactivado");
+    		singleton.tiempoOn = false;
+    	} else {
+    		buttonTiempo.setText("Activado");
+    		singleton.tiempoOn = true;
+    	}
+    }
+
+    
     public void actualizarSonido() {
-    	if(SoundOn) {
+    	if(singleton.soundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
     		musicaFondo.playMusic();
     	}
@@ -136,10 +165,48 @@ public class ControladorAjustesJuegoLibre {
     }
     
     public void actualizarImagenSonido() {
-        if(SoundOn) {
+        if(singleton.soundOn) {
         	iconoSonido.setImage(Sound1);
         } else {
         	iconoSonido.setImage(Sound0);
         }
+    }
+    
+    public void corregirTamanyoVentana() {
+    	thisStage.setWidth(900);
+    	thisStage.setHeight(620);
+    }
+    
+    public void corregirPosicionVentana() {
+    	thisStage.setX(singleton.posicionX);
+    	thisStage.setY(singleton.posicionY);
+    }
+    
+    public void actualizarEstilo() {
+    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	if(singleton.estilo.equals("Azul")) {
+    		stackPane.getStylesheets().remove(temaRojo);
+    		stackPane.getStylesheets().remove(temaVerde);
+    		stackPane.getStylesheets().add(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaAzul);
+    	} else if(singleton.estilo.equals("Rojo")) {
+    		stackPane.getStylesheets().remove(temaAzul);
+    		stackPane.getStylesheets().remove(temaVerde);
+    		stackPane.getStylesheets().add(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaRojo);
+    	} else {
+    		stackPane.getStylesheets().remove(temaAzul);
+    		stackPane.getStylesheets().remove(temaRojo);
+    		stackPane.getStylesheets().add(temaVerde);
+    		circuloSonido.getStylesheets().remove(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().add(temaVerde);
+    	}
     }
 }

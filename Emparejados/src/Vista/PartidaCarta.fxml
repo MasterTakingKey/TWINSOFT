@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorPartidaCarta">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="894.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorPartidaCarta">
    <children>
       <ToolBar maxHeight="-Infinity" prefHeight="48.0" prefWidth="894.0">
         <items>
@@ -85,23 +85,19 @@
             <Insets bottom="5.0" />
          </VBox.margin>
       </ToolBar>
-      <AnchorPane prefHeight="150.0" prefWidth="894.0" styleClass="fondoPartidaCarta" stylesheets="@../application/estilo1.css">
+      <AnchorPane fx:id="anchorPane" prefHeight="150.0" prefWidth="894.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
          <children>
-            <Label layoutX="171.0" layoutY="50.0" prefHeight="50.0" prefWidth="270.0" stylesheets="@../application/estilo1.css" text="Siguiente Carta:" textFill="#006bff">
+            <Label layoutX="171.0" layoutY="50.0" prefHeight="50.0" prefWidth="270.0" text="Siguiente Carta:">
                <font>
                   <Font name="System Bold" size="34.0" />
                </font>
             </Label>
-            <ImageView fx:id="siguienteImagenMostrada" fitHeight="112.0" fitWidth="121.0" layoutX="478.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/elefante.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="siguienteImagenMostrada" fitHeight="112.0" fitWidth="121.0" layoutX="478.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
-      <StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="610.0" prefWidth="894.0">
+      <StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="610.0" prefWidth="894.0" styleClass="fondoTablero" stylesheets="@../application/estilo1.css">
          <children>
-            <GridPane prefHeight="572.0" prefWidth="894.0" styleClass="fondoTablero" stylesheets="@../application/estilo2.css">
+            <GridPane prefHeight="572.0" prefWidth="894.0" styleClass="fondoTablero" stylesheets="@../application/estiloAzul.css">
               <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

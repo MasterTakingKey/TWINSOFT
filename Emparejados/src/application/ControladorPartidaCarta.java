@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
@@ -22,6 +23,9 @@ import javafx.util.Duration;
 
 public class ControladorPartidaCarta {
 	
+    @FXML
+    private AnchorPane anchorPane;
+    
 	@FXML
     private Label tiempo = new Label();
 
@@ -100,8 +104,6 @@ public class ControladorPartidaCarta {
     
     private Tablero tableroPartida;
     
-    private Baraja barajaPartida;
-    
     private Baraja barajaAuxiliar;
   
     private Carta primeraCarta;
@@ -139,8 +141,6 @@ public class ControladorPartidaCarta {
     private boolean esVictoria;
 
 	private boolean esDerrota;
-	
-    private boolean SoundOn;
     
     private AudioClip voltearCarta;
     
@@ -155,10 +155,12 @@ public class ControladorPartidaCarta {
     private Puntuacion puntuacion;
     
     private Animaciones animaciones;
+    
+    private Singleton singleton;
 
-    public void iniciarPartidaCarta(Stage stage, boolean soundOn, double anteriorX, double anteriorY){
+    public void iniciarPartidaCarta(Stage stage, Singleton nuevoSingleton){
     	primaryStage = stage;
-        SoundOn = soundOn;
+        singleton = nuevoSingleton;
         inicializarBarajaTablero();
         inicializarCartas();
     	inicializarVariables();
@@ -168,40 +170,50 @@ public class ControladorPartidaCarta {
     	actualizarSonido();
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
-    	corregirPosicionVentana(anteriorX, anteriorY);
+    	corregirPosicionVentana();
+    	actualizarEstilo();
     	mostrarSiguienteCarta();
     }
     
     public void inicializarBarajaTablero() {
-    	barajaPartida = new Baraja(4, 4);
-    	barajaPartida.barajaTematica(new CrearBarajaNintendoEstrategia(2), 16);
-    	barajaPartida.barajar();
-    	barajaAuxiliar = new Baraja(4, 4);
-    	barajaAuxiliar.barajaTematica(new CrearBarajaNintendoEstrategia(1), 16);
+    	barajaAuxiliar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), singleton.barajaPartida.getTamanyo()/2);
+    	int cartasInsertadas = 0;
+    	for(int i = 0; i < singleton.barajaPartida.getTamanyo() && cartasInsertadas < singleton.barajaPartida.getTamanyo()/2 ; i++) {
+    		boolean noExiste = true;
+    		for(int j = 0; j < cartasInsertadas; j++) {
+        		if(singleton.barajaPartida.getCarta(i).getId() == barajaAuxiliar.getCarta(j).getId()) {
+        			noExiste = false;
+        		}
+    		}
+    		if(noExiste) {
+    			barajaAuxiliar.setCarta(singleton.barajaPartida.getCarta(i), cartasInsertadas++);
+    		}
+    	}
+    	singleton.barajaPartida.barajar();
     	barajaAuxiliar.barajar();
         indiceBarajaAuxiliar = 0;
     	tableroPartida = new Tablero(4, 4);
-    	tableroPartida.llenarTablero(barajaPartida);
+    	tableroPartida.llenarTablero(singleton.barajaPartida);
     }
     
     public void inicializarCartas() {
-    	carta00.setImage(barajaPartida.getImagenDorso());
-    	carta01.setImage(barajaPartida.getImagenDorso());
-    	carta02.setImage(barajaPartida.getImagenDorso());
-    	carta03.setImage(barajaPartida.getImagenDorso());
-    	carta10.setImage(barajaPartida.getImagenDorso());
-    	carta11.setImage(barajaPartida.getImagenDorso());
-    	carta12.setImage(barajaPartida.getImagenDorso());
-    	carta13.setImage(barajaPartida.getImagenDorso());
-    	carta20.setImage(barajaPartida.getImagenDorso());
-    	carta21.setImage(barajaPartida.getImagenDorso());
-    	carta22.setImage(barajaPartida.getImagenDorso());
-    	carta23.setImage(barajaPartida.getImagenDorso());
-    	carta23.setImage(barajaPartida.getImagenDorso());
-    	carta30.setImage(barajaPartida.getImagenDorso());
-    	carta31.setImage(barajaPartida.getImagenDorso());
-    	carta32.setImage(barajaPartida.getImagenDorso());
-    	carta33.setImage(barajaPartida.getImagenDorso());
+    	carta00.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta01.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta02.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta03.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta10.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta11.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta12.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta13.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta20.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta21.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta22.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta23.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta23.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta30.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta31.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta32.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta33.setImage(singleton.barajaPartida.getImagenDorso());
     }
     
     public void inicializarVariables() {
@@ -210,12 +222,12 @@ public class ControladorPartidaCarta {
     	esVictoria = false;
     	esDerrota = false;
     	parejasFalladas = new ArrayList<Carta>(tableroPartida.getNumParejas());
-    	musicaFondo = new Musica("src/sonidos/Musica1.wav", 0L);
+    	musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[0] +".wav", 0L);
     	Sound0 = new Image("/imagenes/sonido_off_2.png");
         Sound1 = new Image("/imagenes/sonido_on_2.png");
         puntosAnyadidos.setVisible(false);
         thisStage = (Stage) carta00.getScene().getWindow();
-        animaciones = new Animaciones(stackPane, barajaPartida);
+        animaciones = new Animaciones(stackPane, singleton.barajaPartida);
     }
     
     public void inicializarAudioClips() {
@@ -305,7 +317,7 @@ public class ControladorPartidaCarta {
     	animaciones.parejaCorrectaAnimacion(primeraImagen, segundaImagen);
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
-    	if(cartasGiradas == barajaPartida.getTamanyo()) {
+    	if(cartasGiradas == singleton.barajaPartida.getTamanyo()) {
     		victoria();
     	} else {
         	indiceBarajaAuxiliar++;
@@ -319,8 +331,8 @@ public class ControladorPartidaCarta {
     	parejasFalladas.add(segundaCarta);
     	error.play();
     	animaciones.parejaIncorrectaAnimacion(primeraImagen, segundaImagen);
-    	primeraImagen.setImage(barajaPartida.getImagenDorso());
-    	segundaImagen.setImage(barajaPartida.getImagenDorso());
+    	primeraImagen.setImage(singleton.barajaPartida.getImagenDorso());
+    	segundaImagen.setImage(singleton.barajaPartida.getImagenDorso());
     	cartasGiradas-= 2;
     }
     
@@ -396,10 +408,12 @@ public class ControladorPartidaCarta {
     		stage.setResizable(false);
     		primaryStage.hide();
     		stage.setTitle("Resultado");
+    		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, true, "carta", thisStage.getX(), thisStage.getY(), 4, 4);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "carta", 4, 4, singleton);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, SoundOn, puntuacionFinal, tiempoSobrante, false, "carta", thisStage.getX(), thisStage.getY(), 4, 4);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "carta", 4, 4, singleton);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -423,7 +437,9 @@ public class ControladorPartidaCarta {
     		stage.setResizable(false);
         	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaCarta();});
         	primaryStage.hide();
-        	controladorMenuPausa.initDataPartidaCarta(primaryStage, this, SoundOn, thisStage.getX(), thisStage.getY());
+        	singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+        	controladorMenuPausa.initDataPartidaCarta(primaryStage, this, singleton);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -431,19 +447,19 @@ public class ControladorPartidaCarta {
     	}
     }
     
-    public void reanudarPartida(boolean Sound, double anteriorX, double anteriorY) {
+    public void reanudarPartida(boolean Sound) {
     	corregirTamanyoVentana();
-    	corregirPosicionVentana(anteriorX, anteriorY);
+    	corregirPosicionVentana();
     	primaryStage.show();
     	contadorTiempo.setEsPausa(false);
     	contadorTiempo.continuar();
-    	SoundOn = Sound;
+    	singleton.soundOn = Sound;
     	actualizarSonido();
     	actualizarImagenSonido();
     }
     
     public void actualizarSonido() {
-    	if(SoundOn) {
+    	if(singleton.soundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
     		musicaFondo.playMusic();
     		voltearCarta.setVolume(1.0);
@@ -459,7 +475,7 @@ public class ControladorPartidaCarta {
     }
     
     public void actualizarImagenSonido() {
-        if(SoundOn) {
+        if(singleton.soundOn) {
         	iconoSonido.setImage(Sound1);
         } else {
         	iconoSonido.setImage(Sound0);
@@ -468,11 +484,11 @@ public class ControladorPartidaCarta {
     
     @FXML
     void clickSound(MouseEvent event) {
-    	if(SoundOn) {
-    		SoundOn = false;
+    	if(singleton.soundOn) {
+    		singleton.soundOn = false;
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     	} else {
-    		SoundOn = true;
+    		singleton.soundOn = true;
     	}
     	actualizarSonido();
     	actualizarImagenSonido();
@@ -483,9 +499,28 @@ public class ControladorPartidaCarta {
     	thisStage.setHeight(820);
     }
     
-    public void corregirPosicionVentana(double anteriorX, double anteriorY) {
-    	thisStage.setX(anteriorX);
-    	thisStage.setY(anteriorY);
+    public void corregirPosicionVentana() {
+    	thisStage.setX(singleton.posicionX);
+    	thisStage.setY(singleton.posicionY);
+    }
+    
+    public void actualizarEstilo() {
+    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	if(singleton.estilo.equals("Azul")) {
+    		anchorPane.getStylesheets().remove(temaRojo);
+    		anchorPane.getStylesheets().remove(temaVerde);
+    		anchorPane.getStylesheets().add(temaAzul);
+    	} else if(singleton.estilo.equals("Rojo")) {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaVerde);
+			anchorPane.getStylesheets().add(temaRojo);
+    	} else {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaRojo);
+			anchorPane.getStylesheets().add(temaVerde);
+    	}
     }
 
 }

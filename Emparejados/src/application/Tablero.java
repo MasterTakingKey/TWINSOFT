@@ -26,7 +26,7 @@ public class Tablero {
 	}
 	
 	public void setTamanyo(int filas, int columnas) {
-		tamanyo = filas * columnas;
+		tamanyo = filas*columnas;
 	}
 	
 	public void setCarta(Carta nuevaCarta, int posicionX, int posicionY) {

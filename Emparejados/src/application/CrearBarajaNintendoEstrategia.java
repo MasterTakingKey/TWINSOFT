@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 
 public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
@@ -8,10 +10,14 @@ public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
 	
 	int repeticiones;
 	
-	public CrearBarajaNintendoEstrategia(int repeticiones) {
+	int tamanyoPartida;
+	
+	private ArrayList<Image> imagenes = new ArrayList<Image>();
+	
+	public CrearBarajaNintendoEstrategia(int repeticiones, int tamanyoPartida) {
 		nombre = "Estrategia Baraja Nintendo";
 		this.repeticiones = repeticiones;
-		
+		this.tamanyoPartida = tamanyoPartida;
 	}
 	
 	public String nombre() {
@@ -23,22 +29,28 @@ public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
 	}
 	
 	public int tamanyoBaraja() {
-		return 8*repeticiones;
+		return repeticiones*tamanyoPartida;
 	}
 	
-    public Carta[] crearBaraja(int tamanyoPartida) {
-    	Carta[] baraja = new Carta[8*repeticiones];
+    public Carta[] crearBaraja() {
+
+    	Carta[] baraja = new Carta[repeticiones*tamanyoPartida];
     	Image imagenDorso = new Image("/imagenes/baraja_nintendo/dorso_nintendo.png");
+    	
+		imagenes.add(new Image("/imagenes/baraja_nintendo/mario.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/luigi.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/bowser.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/link.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/kirby.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/pit.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/samus.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/pikachu.png"));
+    	
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/mario.png"), 0));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/luigi.png"), 1));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/bowser.png"), 2));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/link.png"), 3));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/kirby.png"), 4));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/pit.png"), 5));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/samus.png"), 6));
-    		baraja[index++] = (new Carta(imagenDorso, new Image("/imagenes/baraja_nintendo/pikachu.png"), 7));
+    		for(int j = 0; j < tamanyoPartida; j++) {
+    			baraja[index++] = (new Carta(imagenDorso, imagenes.get(j), j));
+    		}
     	}
     	return baraja;
     }

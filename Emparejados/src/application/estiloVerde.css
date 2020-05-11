@@ -1,0 +1,78 @@
+
+.button{
+	-fx-background-color: white;
+	-fx-background-radius: 30;
+	-fx-text-fill: green;
+	-fx-border-color: green;
+	-fx-border-radius: 20;
+	-fx-border-width: 5;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.button:hover{
+	-fx-font-weight: bold;
+	-fx-background-color: green;
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+	-fx-border-color: green;
+	-fx-border-radius: 20;
+	-fx-border-width: 5;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.button:pressed{
+	-fx-font-weight: bold;
+	-fx-background-color: green;
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+	-fx-border-color: green;
+	-fx-border-radius: 20;
+	-fx-border-width: 5;
+	-fx-rotate: 2;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.choice-box{
+	-fx-background-color: white;
+	-fx-background-radius: 30;
+	-fx-border-color: green;
+	-fx-border-radius: 20;
+	-fx-border-width: 5;
+}
+
+.label{
+	-fx-font-weight: bold;
+	-fx-background-color: white;
+	-fx-background-radius: 30;
+	-fx-text-fill: green;
+}
+
+.label2{
+	-fx-font-weight: bold;
+	-fx-background-color: white;
+	-fx-background-radius: 30;
+	-fx-text-fill: green;
+}
+
+.fondoTablero{
+    -fx-background-image: url("/imagenes/tablero.png");
+}
+
+.fondoMenu{
+	-fx-background-color: white;
+    -fx-border-color: green;
+	-fx-border-width: 30;
+}
+
+.fondoPartidaCarta {
+	-fx-background-color: white;
+    -fx-border-color: green;
+	-fx-border-width: 10;
+}
+
+.fondoBoton{
+	-fx-background-color: white;
+    -fx-border-color: green;
+	-fx-border-width: 7;
+	-fx-border-radius: 40;
+}

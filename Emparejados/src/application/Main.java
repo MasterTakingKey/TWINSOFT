@@ -21,10 +21,9 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         
-        Image icono = new Image("/imagenes/Icon.png");
-        primaryStage.getIcons().add(icono);
+        primaryStage.getIcons().add(new Image("/imagenes/Icon.png"));
         
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, true, 0, 0);
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, null);
         primaryStage.show();
 	}
 

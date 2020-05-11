@@ -19,7 +19,7 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Label layoutX="51.0" layoutY="122.0" prefHeight="20.0" prefWidth="168.0" text="Selecciona la pareja">
+      <Label layoutX="31.0" layoutY="123.0" prefHeight="20.0" prefWidth="137.0" text="Selecciona la pareja">
          <font>
             <Font size="14.0" />
          </font>
@@ -29,7 +29,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="buscar" layoutX="483.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="25.0" prefWidth="70.0" text="Buscar">
+      <Button fx:id="buscar" layoutX="483.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="37.0" prefWidth="84.0" text="Buscar">
          <font>
             <Font size="16.0" />
          </font></Button>

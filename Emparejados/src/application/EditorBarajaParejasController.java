@@ -193,7 +193,7 @@ public class EditorBarajaParejasController {
 				//Crear la baraja como tal
 				//Completar
 			barajaCreada.setNombre(nombreBaraja);
-			barajaCreada.setTamanyo(2 * actual - 1);
+			barajaCreada.setTamanyo(2 * actual);
 			imagen = new Image(listaImagenes.get(0).toURI().toString());
 			barajaCreada.setImagenDorso(imagen);
 			
@@ -207,7 +207,7 @@ public class EditorBarajaParejasController {
 			
 			singleton.listaBarajas.add(barajaCreada);
 			
-			Alert alert = new Alert(AlertType.CONFIRMATION, "¡Baraja creada correctamente!", ButtonType.OK);
+			Alert alert = new Alert(AlertType.CONFIRMATION, "ï¿½Baraja creada correctamente!", ButtonType.OK);
 			alert.showAndWait();
 			
 			try {
@@ -229,7 +229,7 @@ public class EditorBarajaParejasController {
 	        }
 			
 		} else {
-			Alert alert = new Alert(AlertType.ERROR, "El nombre debe contener al menos un caracter alfanumérico.", ButtonType.OK);
+			Alert alert = new Alert(AlertType.ERROR, "El nombre debe contener al menos un caracter alfanumï¿½rico.", ButtonType.OK);
 			alert.showAndWait();
 		}
 		

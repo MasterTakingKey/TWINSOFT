@@ -10,19 +10,14 @@ public class CrearBarajaDeportesEstrategia implements CrearBarajaEstrategia {
 	
 	int repeticiones;
 	
+	int tamanyoPartida;
+	
 	private ArrayList<Image> imagenes = new ArrayList<Image>();
 	
-	public CrearBarajaDeportesEstrategia(int repeticiones) {
+	public CrearBarajaDeportesEstrategia(int repeticiones, int tamanyoPartida) {
 		nombre = "Estrategia Baraja Deportes";
 		this.repeticiones = repeticiones;
-		imagenes.add(new Image("/imagenes/baraja_deportes/futbol.png"));
-		imagenes.add(new Image("/imagenes/baraja_deportes/basquet.png"));
-		imagenes.add(new Image("/imagenes/baraja_deportes/voleibol.png"));
-		imagenes.add(new Image("/imagenes/baraja_deportes/beisbol.png"));
-		imagenes.add(new Image("/imagenes/baraja_deportes/arco.png"));
-		imagenes.add(new Image("/imagenes/baraja_deportes/karate.png"));
-		imagenes.add(new Image("/imagenes/baraja_deportes/patinaje.png"));
-		imagenes.add(new Image("/imagenes/baraja_deportes/tenis.png"));
+		this.tamanyoPartida = tamanyoPartida;
 	}
 	
 	public String nombre() {
@@ -34,12 +29,23 @@ public class CrearBarajaDeportesEstrategia implements CrearBarajaEstrategia {
 	}
 	
 	public int tamanyoBaraja() {
-		return repeticiones*imagenes.size();
+		return repeticiones*tamanyoPartida;
 	}
 	
-    public Carta[] crearBaraja(int tamanyoPartida) {
+    public Carta[] crearBaraja() {
+
     	Carta[] baraja = new Carta[repeticiones*tamanyoPartida];
     	Image imagenDorso = new Image("/imagenes/baraja_deportes/dorso_deportes.png");
+  
+		imagenes.add(new Image("/imagenes/baraja_deportes/futbol.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/basquet.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/voleibol.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/beisbol.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/arco.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/karate.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/patinaje.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/tenis.png"));
+		
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {
     		for(int j = 0; j < tamanyoPartida; j++) {

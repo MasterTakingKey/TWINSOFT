@@ -215,9 +215,15 @@ public class ControladorPartidaLibre {
     
     private Puntuacion puntuacion;
     
-    private Animaciones animaciones;
-    
     private Singleton singleton;
+    
+    private Baraja barajaPartidaLibre;
+    
+    private Animaciones animacionVoltear;
+    
+    private Animaciones animacionParejaCorrecta;
+    
+    private Animaciones animacionParejaIncorrecta;
 
     public void iniciarPartidaLibre(Stage stage, int filas, int columnas, Singleton nuevoSingleton){
     	primaryStage = stage;
@@ -232,19 +238,47 @@ public class ControladorPartidaLibre {
     	inicializarAudioClips();
     	inicializarContadorTiempo();
     	inicializarPuntuacion();
+    	inicializarAnimaciones();
     	actualizarSonido();
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana();
     }
+    
+    public void inicializarAnimaciones() {
+        FabricaAnimaciones[] fabrica;
+    	
+        fabrica = new FabricaAnimaciones[3];
+        fabrica[0] = new FabricaAnimacionVoltear();
+        fabrica[1] = new FabricaAnimacionParejaCorrecta();
+        fabrica[2] = new FabricaAnimacionParejaIncorrecta();
+        
+        animacionVoltear = fabrica[0].animacionesMetodoFabrica();
+        animacionVoltear.stackPane = stackPane;
+        animacionVoltear.baraja = singleton.barajaPartida;
+        
+        animacionParejaCorrecta = fabrica[1].animacionesMetodoFabrica();
+        animacionParejaCorrecta.stackPane = stackPane;
+        animacionParejaCorrecta.baraja = singleton.barajaPartida;
+        
+        animacionParejaIncorrecta = fabrica[2].animacionesMetodoFabrica();
+        animacionParejaIncorrecta.stackPane = stackPane;
+        animacionParejaIncorrecta.baraja = singleton.barajaPartida;
+    }
      
     public void inicializarBarajaTablero(int filas, int columnas) {
-    	//barajaPartida = new Baraja(filas, columnas);
-    	//int tamanyo = filas*columnas;
-    	//barajaPartida.barajaTematica(new CrearBarajaAnimalesEstrategia(2), tamanyo);
-    	singleton.barajaPartida.barajar();
+    	barajaPartidaLibre = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);
+        int cartasInsertadas = 0;
+        Carta aInsertar;
+        for(int i = 0; i < 2; i++) {
+            for(int j = 0; j < cartas/2; j++) {
+                aInsertar = new Carta(singleton.barajaPartida.getCarta(j).getImagenDorso(), singleton.barajaPartida.getCarta(j).getImagenFrente(), j);
+                barajaPartidaLibre.setCarta(aInsertar, cartasInsertadas++);
+            }
+        }
+    	barajaPartidaLibre.barajar();
     	tableroPartida = new Tablero(filas, columnas);
-    	tableroPartida.llenarTablero(singleton.barajaPartida);
+    	tableroPartida.llenarTablero(barajaPartidaLibre);
     }
     
     private void inicializarTablero(int filas, int columnas) {
@@ -316,7 +350,6 @@ public class ControladorPartidaLibre {
         Sound1 = new Image("/imagenes/sonido_on_2.png");
         puntosAnyadidos.setVisible(false);
         thisStage = (Stage) carta00.getScene().getWindow();
-        animaciones = new Animaciones(stackPane, singleton.barajaPartida);
     }
     
     public void inicializarAudioClips() {
@@ -355,7 +388,9 @@ public class ControladorPartidaLibre {
     		puntuacion.iniciarTiempoEntreTurnos();
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
-    		animaciones.clickCartaAnimacion(imagenSeleccionada, cartaSeleccionada);
+    		animacionVoltear.imagen1 = imagenSeleccionada;
+    		animacionVoltear.carta = cartaSeleccionada;
+    		animacionVoltear.crearAnimacion();
     		esPrimeraCarta = false;
     	} else {
     		puntuacion.getTimeline().stop();
@@ -365,7 +400,9 @@ public class ControladorPartidaLibre {
     			mismaCarta.play();
     		} else {
 				voltearCarta.play();
-				animaciones.clickCartaAnimacion(imagenSeleccionada, cartaSeleccionada);
+				animacionVoltear.imagen1 = imagenSeleccionada;
+	    		animacionVoltear.carta = cartaSeleccionada;
+	    		animacionVoltear.crearAnimacion();
 				PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 				stackPane.setDisable(true);
     			if(primeraCarta.getId() == segundaCarta.getId()) {
@@ -396,7 +433,9 @@ public class ControladorPartidaLibre {
     	puntosAnteriores = puntuacion.getPuntos();
     	puntuacion.sumaPuntos(10, false, 0);
     	acierto.play();
-    	animaciones.parejaCorrectaAnimacion(primeraImagen, segundaImagen);
+    	animacionParejaCorrecta.imagen1 = primeraImagen;
+		animacionParejaCorrecta.imagen2 = segundaImagen;
+		animacionParejaCorrecta.crearAnimacion();
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
     	if(cartasGiradas == cartas) {
@@ -410,7 +449,9 @@ public class ControladorPartidaLibre {
     	parejasFalladas.add(primeraCarta);
     	parejasFalladas.add(segundaCarta);
     	error.play();
-    	animaciones.parejaIncorrectaAnimacion(primeraImagen, segundaImagen);
+    	animacionParejaIncorrecta.imagen1 = primeraImagen;
+		animacionParejaIncorrecta.imagen2 = segundaImagen;
+		animacionParejaIncorrecta.crearAnimacion();
     	cartasGiradas-= 2;
     }
     

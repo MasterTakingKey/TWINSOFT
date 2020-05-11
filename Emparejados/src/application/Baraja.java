@@ -72,11 +72,11 @@ public class Baraja {
 		listaCartas.toArray(baraja);
 	}
     
-	public void barajaTematica(CrearBarajaEstrategia estrategia, int tamanyo) {
+	public void barajaTematica(CrearBarajaEstrategia estrategia) {
 		this.nombre = estrategia.nombre();
 		this.imagenDorso = estrategia.dorso();
 		this.tamanyo = estrategia.tamanyoBaraja();
-		this.baraja = estrategia.crearBaraja(tamanyo);
+		this.baraja = estrategia.crearBaraja();
 	}
 	
 }

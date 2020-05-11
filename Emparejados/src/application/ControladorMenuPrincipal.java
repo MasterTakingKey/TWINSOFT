@@ -88,13 +88,13 @@ public class ControladorMenuPrincipal {
     	
     	singleton.listaBarajas = new ArrayList<Baraja>();
 		Baraja barajaAnimales = new Baraja(4, 4);
-    	barajaAnimales.barajaTematica(new CrearBarajaAnimalesEstrategia(2), 8);
+    	barajaAnimales.barajaTematica(new CrearBarajaAnimalesEstrategia(2, 8));
     	singleton.listaBarajas.add(barajaAnimales);
     	Baraja barajaDeportes = new Baraja(4, 4);
-    	barajaDeportes.barajaTematica(new CrearBarajaDeportesEstrategia(2), 8);
+    	barajaDeportes.barajaTematica(new CrearBarajaDeportesEstrategia(2, 8));
     	singleton.listaBarajas.add(barajaDeportes);
     	Baraja barajaNintendo = new Baraja(4, 4);
-    	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2), 8);
+    	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2, 8));
     	singleton.listaBarajas.add(barajaNintendo);
     	
     	singleton.barajaPartida = singleton.listaBarajas.get(0);

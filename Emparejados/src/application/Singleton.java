@@ -20,6 +20,10 @@ public class Singleton {
 	
 	public double posicionY;
 	
+	public boolean tiempoOn;
+	
+	public int tiempoSegundos;
+	
 	protected Singleton() {
 		
 	}
@@ -32,3 +36,4 @@ public class Singleton {
 	}
 	
 }
+

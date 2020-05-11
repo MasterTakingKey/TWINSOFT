@@ -10,19 +10,14 @@ public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
 	
 	int repeticiones;
 	
+	int tamanyoPartida;
+	
 	private ArrayList<Image> imagenes = new ArrayList<Image>();
 	
-	public CrearBarajaNintendoEstrategia(int repeticiones) {
+	public CrearBarajaNintendoEstrategia(int repeticiones, int tamanyoPartida) {
 		nombre = "Estrategia Baraja Nintendo";
 		this.repeticiones = repeticiones;
-		imagenes.add(new Image("/imagenes/baraja_nintendo/mario.png"));
-		imagenes.add(new Image("/imagenes/baraja_nintendo/luigi.png"));
-		imagenes.add(new Image("/imagenes/baraja_nintendo/bowser.png"));
-		imagenes.add(new Image("/imagenes/baraja_nintendo/link.png"));
-		imagenes.add(new Image("/imagenes/baraja_nintendo/kirby.png"));
-		imagenes.add(new Image("/imagenes/baraja_nintendo/pit.png"));
-		imagenes.add(new Image("/imagenes/baraja_nintendo/samus.png"));
-		imagenes.add(new Image("/imagenes/baraja_nintendo/pikachu.png"));	
+		this.tamanyoPartida = tamanyoPartida;
 	}
 	
 	public String nombre() {
@@ -34,12 +29,23 @@ public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
 	}
 	
 	public int tamanyoBaraja() {
-		return repeticiones*imagenes.size();
+		return repeticiones*tamanyoPartida;
 	}
 	
-    public Carta[] crearBaraja(int tamanyoPartida) {
+    public Carta[] crearBaraja() {
+
     	Carta[] baraja = new Carta[repeticiones*tamanyoPartida];
     	Image imagenDorso = new Image("/imagenes/baraja_nintendo/dorso_nintendo.png");
+    	
+		imagenes.add(new Image("/imagenes/baraja_nintendo/mario.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/luigi.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/bowser.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/link.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/kirby.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/pit.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/samus.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/pikachu.png"));
+    	
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {
     		for(int j = 0; j < tamanyoPartida; j++) {

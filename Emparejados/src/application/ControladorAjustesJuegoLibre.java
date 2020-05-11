@@ -42,7 +42,7 @@ public class ControladorAjustesJuegoLibre {
     private TextField textColumnas;
 
     @FXML
-    private ToggleButton buttonTiempo;
+    private Button buttonTiempo;
 
     @FXML
     private TextField textTiempoPartida;
@@ -60,7 +60,7 @@ public class ControladorAjustesJuegoLibre {
     private ChoiceBox<?> choiceVisualPareja;
 
     @FXML
-    private ToggleButton buttonMostrarCartas;
+    private Button buttonMostrarCartas;
 
     @FXML
     private TextField textTiempoMostrarCartas;
@@ -89,6 +89,7 @@ public class ControladorAjustesJuegoLibre {
     	primaryStage = stage;
     	tiempoMusica = tiempoM;
     	singleton = nuevoSingleton;
+    	singleton.tiempoOn = false;
     	inicializarVariables();
     	actualizarSonido();
     	actualizarImagenSonido();
@@ -135,6 +136,23 @@ public class ControladorAjustesJuegoLibre {
       		primaryStage.show();
       	} catch (IOException e) {}
     }
+    
+    @FXML
+    void handlerButtonMostrarCartas(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handlerButtonTiempo(ActionEvent event) {
+    	if(singleton.tiempoOn) {
+    		buttonTiempo.setText("Desactivado");
+    		singleton.tiempoOn = false;
+    	} else {
+    		buttonTiempo.setText("Activado");
+    		singleton.tiempoOn = true;
+    	}
+    }
+
     
     public void actualizarSonido() {
     	if(singleton.soundOn) {

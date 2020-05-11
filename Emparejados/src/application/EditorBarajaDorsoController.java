@@ -62,12 +62,13 @@ public class EditorBarajaDorsoController {
 	public void buscarImagen(MouseEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Elige Imagen");
-	    fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG", "*.png", "JPG", "*.jpg"));
+	    fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG", "*.png", "JPG", "*.jpg", "GIF", "*.gif"));
 		archivoImagen = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
         if (archivoImagen != null) {
         	imagen = new Image(archivoImagen.toURI().toString());
         	imagenCarta.setImage(imagen);
         	pathImagen.setText(archivoImagen.toURI().toString());
+        	siguienteButton.setDisable(false);
         }
 	}
 

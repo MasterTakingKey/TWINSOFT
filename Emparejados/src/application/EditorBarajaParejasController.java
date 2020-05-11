@@ -62,6 +62,8 @@ public class EditorBarajaParejasController {
 	
 	private int actual = 1;
 	
+	String currentDirectory = System.getProperty("user.dir");
+	
 	private Singleton singleton;
 	
 	List<File> listaImagenes = new ArrayList();
@@ -72,7 +74,7 @@ public class EditorBarajaParejasController {
 	
 	String nombreBaraja;
 	
-	Baraja barajaCreada;
+	Baraja barajaCreada = new Baraja();;
 	
 	Carta carta;
 
@@ -84,6 +86,9 @@ public class EditorBarajaParejasController {
         corregirTamanyoVentana();
         corregirPosicionVentana();
         actualizarEstilo(singleton.estilo);
+        nombrePane.setVisible(false);
+        siguienteButton.setDisable(true);
+        crearBarajaButton.setDisable(true);
     }
 	
     public void inicializarVariables() {
@@ -94,19 +99,29 @@ public class EditorBarajaParejasController {
 	public void buscarImagen(MouseEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Elige Imagen");
-	    fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG", "*.png","JPG", "*.jpg"));
+	    fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG", "*.png","JPG", "*.jpg", "GIF", "*.gif"));
 		archivoImagen = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
         if (archivoImagen != null) {
         	imagen = new Image(archivoImagen.toURI().toString());
         	imagenCarta.setImage(imagen);
         	pathImagen.setText(archivoImagen.toURI().toString());
+        	siguienteButton.setDisable(false);
         }
 	}
 
 	@FXML
 	public void prepararBaraja(MouseEvent event) throws IOException {
 		//Abre prompr para elegir nombre
-		nombrePane.setDisable(false);
+		if(archivoImagen.equals(listaImagenes.get(0))) {   //mensaje de no se puede tener 2 parejas iguales
+			Alert alert = new Alert(AlertType.ERROR, "El dorso no puede ser una pareja.", ButtonType.OK);
+			alert.showAndWait();
+		}else if(listaImagenes.contains(archivoImagen)){			
+			Alert alert = new Alert(AlertType.ERROR, "No puede haber 2 parejas con la misma imagen.", ButtonType.OK);
+			alert.showAndWait();
+		} else {
+			listaImagenes.add(archivoImagen);
+			nombrePane.setVisible(true);
+		}
 				
 	}
 
@@ -114,8 +129,11 @@ public class EditorBarajaParejasController {
 	public void siguiente(MouseEvent event) {		
 		//Checkear que la imagen no es ya una pareja
 		
-		if(listaImagenes.contains(archivoImagen)) {   //mensaje de no se puede tener 2 parejas iguales
-			Alert alert = new Alert(AlertType.ERROR, "No puede haber 2 parejas con la misma imagen", ButtonType.OK);
+		if(archivoImagen.equals(listaImagenes.get(0))) {   //mensaje de no se puede tener 2 parejas iguales
+			Alert alert = new Alert(AlertType.ERROR, "El dorso no puede ser una pareja.", ButtonType.OK);
+			alert.showAndWait();
+		}else if(listaImagenes.contains(archivoImagen)){			
+			Alert alert = new Alert(AlertType.ERROR, "No puede haber 2 parejas con la misma imagen.", ButtonType.OK);
 			alert.showAndWait();
 		} else {        
 		//Si no falla vamos a la siguiente	
@@ -130,7 +148,11 @@ public class EditorBarajaParejasController {
 			pathImagen.setText(null);
 		
 		//Activar boton de crearBaraja si estamos en pareja 5 en adelante
-			if(actual>4) crearBarajaButton.setDisable(false);
+			if(actual < 5) {
+				crearBarajaButton.setDisable(true);
+			} else { 
+				crearBarajaButton.setDisable(false);
+			}
 		
 		//Activar boton de anterior si estamos en pareja 1 en adelante
 		
@@ -149,7 +171,7 @@ public class EditorBarajaParejasController {
 	}
 	
 	public void cancelarNombre(MouseEvent event) {
-		nombrePane.setDisable(true);
+		nombrePane.setVisible(false);
 	}
 	
 	public void aceptarNombre(MouseEvent event) throws IOException {
@@ -158,19 +180,20 @@ public class EditorBarajaParejasController {
 		if(isValid(nombreBaraja)) {
 			//Crear carpeta en imagenes con el nombre de la baraja
 		
-			new File("/imagenes/"+nombreBaraja).mkdirs();
+			new File(currentDirectory + "/src/imagenes/" + nombreBaraja).mkdirs();
 				
 			//Guardar todas las imagenes del arrayList en la carpeta anterior
 				
-			//String path = "C:/destination/";
 			for(File file : listaImagenes) {
 				  Files.copy(file.toPath(),
-				        (new File("/imagenes/"+nombreBaraja + file.getName())).toPath(),
+				        (new File(currentDirectory + "/src//imagenes/"+nombreBaraja +"/"+ file.getName())).toPath(),
 				        StandardCopyOption.REPLACE_EXISTING);
 			}
 				
 				//Crear la baraja como tal
 				//Completar
+			barajaCreada.setNombre(nombreBaraja);
+			barajaCreada.setTamanyo(2 * actual - 1);
 			imagen = new Image(listaImagenes.get(0).toURI().toString());
 			barajaCreada.setImagenDorso(imagen);
 			
@@ -181,6 +204,12 @@ public class EditorBarajaParejasController {
 					barajaCreada.getBaraja()[indice++] = carta;
 					barajaCreada.getBaraja()[indice++] = carta;
 		     }
+			
+			singleton.listaBarajas.add(barajaCreada);
+			
+			Alert alert = new Alert(AlertType.CONFIRMATION, "¡Baraja creada correctamente!", ButtonType.OK);
+			alert.showAndWait();
+			
 			try {
 	    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
 	            Parent root = myLoader.load();  
@@ -199,7 +228,7 @@ public class EditorBarajaParejasController {
 	        }
 			
 		} else {
-			Alert alert = new Alert(AlertType.ERROR, "El nombre solamente puede contener caracteres alfanuméricos.", ButtonType.OK);
+			Alert alert = new Alert(AlertType.ERROR, "El nombre debe contener al menos un caracter alfanumérico.", ButtonType.OK);
 			alert.showAndWait();
 		}
 		
@@ -222,6 +251,7 @@ public class EditorBarajaParejasController {
 	            primaryStage.setTitle("Elige el dorso");
 	            primaryStage.setScene(scene);
 	            primaryStage.setResizable(false);
+	            editorDorso.iniciarEditorDorso(primaryStage, singleton);
 	            primaryStage.show();
 	    	} catch (IOException e) {
 	                e.printStackTrace();
@@ -236,7 +266,8 @@ public class EditorBarajaParejasController {
 	
 	static boolean isValid(String str) 
 	{ 
-	  
+		if(str.length() < 1) return false;
+		  
 	    for (int i = 0; i < str.length(); i++) 
 	    { 
 	        if (!((str.charAt(i) >= 'a' && str.charAt(i) <= 'z') 

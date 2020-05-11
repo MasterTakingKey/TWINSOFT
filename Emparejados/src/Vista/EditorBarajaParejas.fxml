@@ -51,7 +51,7 @@
             <Font size="20.0" />
          </font></Button>
       <Label fx:id="pathImagen" layoutX="249.0" layoutY="124.0" prefHeight="17.0" prefWidth="186.0" />
-      <Pane fx:id="nombrePane" disable="true" layoutX="157.0" layoutY="113.0" prefHeight="240.0" prefWidth="307.0">
+      <Pane fx:id="nombrePane" layoutX="157.0" layoutY="113.0" prefHeight="240.0" prefWidth="307.0">
          <children>
             <TextField fx:id="nombre" layoutX="84.0" layoutY="134.0" />
             <Label layoutX="32.0" layoutY="63.0" text="Seleccione nombre para su nueva baraja:">

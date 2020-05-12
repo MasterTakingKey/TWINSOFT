@@ -124,11 +124,13 @@ public class ControladorAjustesJuegoLibre {
         thisStage = (Stage) buttonJugar.getScene().getWindow();
         ArrayList<String> clipsVoltear = new ArrayList<String>();
         clipsVoltear.add("Voltear");
+        clipsVoltear.add("Voltear2");
         ObservableList<String> audioVoltear = FXCollections.observableArrayList(clipsVoltear); 
         choiceSonoroCarta.setItems(audioVoltear);
         choiceSonoroCarta.setValue("Voltear");
         ArrayList<String> clipsPareja = new ArrayList<String>();
         clipsPareja.add("Acierto");
+        clipsPareja.add("Acierto2");
         ObservableList<String> audioPareja = FXCollections.observableArrayList(clipsPareja); 
         choiceSonoroPareja.setItems(audioPareja);
         choiceSonoroPareja.setValue("Acierto");

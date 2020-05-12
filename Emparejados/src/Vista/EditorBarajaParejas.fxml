@@ -21,51 +21,54 @@
       </Label>
       <Label layoutX="31.0" layoutY="123.0" prefHeight="20.0" prefWidth="137.0" text="Selecciona la pareja">
          <font>
-            <Font size="14.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="numPareja" layoutX="178.0" layoutY="123.0" prefHeight="20.0" prefWidth="47.0" text="1">
          <font>
-            <Font size="14.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Button fx:id="buscar" layoutX="483.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="37.0" prefWidth="84.0" text="Buscar">
          <font>
-            <Font size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font></Button>
-      <ImageView fx:id="imagenCarta" fitHeight="150.0" fitWidth="200.0" layoutX="201.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="crearBarajaButton" layoutX="171.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#prepararBaraja" prefHeight="44.0" prefWidth="156.0" text="Crear Baraja">
+      <ImageView fx:id="imagenCarta" fitHeight="160.0" fitWidth="219.0" layoutX="201.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="crearBarajaButton" layoutX="147.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#prepararBaraja" prefHeight="31.0" prefWidth="149.0" text="Crear Baraja">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="16.0" />
          </font></Button>
       <Button fx:id="siguienteButton" layoutX="464.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#siguiente" text="Siguiente">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="System Bold" size="16.0" />
          </font></Button>
-      <Button fx:id="cancelarButton" layoutX="31.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#cancelar" text="Cancelar">
+      <Button fx:id="cancelarButton" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#cancelar" prefHeight="40.0" prefWidth="108.0" text="Cancelar">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="16.0" />
          </font></Button>
-      <Button fx:id="anteriorButton" layoutX="351.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#anterior" text="Anterior">
+      <Button fx:id="anteriorButton" layoutX="335.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#anterior" text="Anterior">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="16.0" />
          </font></Button>
-      <Label fx:id="pathImagen" layoutX="249.0" layoutY="124.0" prefHeight="17.0" prefWidth="186.0" />
-      <Pane fx:id="nombrePane" layoutX="157.0" layoutY="113.0" prefHeight="240.0" prefWidth="307.0">
+      <Label fx:id="pathImagen" layoutX="249.0" layoutY="124.0" prefHeight="17.0" prefWidth="201.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Pane fx:id="nombrePane" layoutX="157.0" layoutY="114.0" prefHeight="240.0" prefWidth="292.0" style="-fx-background-color: ffffff;">
          <children>
             <TextField fx:id="nombre" layoutX="84.0" layoutY="134.0" />
-            <Label layoutX="32.0" layoutY="63.0" text="Seleccione nombre para su nueva baraja:">
+            <Label layoutX="12.0" layoutY="61.0" text="Seleccione nombre para su nueva baraja:">
                <font>
-                  <Font size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <Button fx:id="aceptarNombre" layoutX="184.0" layoutY="178.0" mnemonicParsing="false" onMouseClicked="#aceptarNombre" text="Aceptar">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="16.0" />
                </font></Button>
             <Button fx:id="cancelarNombre" layoutX="54.0" layoutY="178.0" mnemonicParsing="false" onMouseClicked="#cancelarNombre" text="Cancelar">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="16.0" />
                </font></Button>
          </children>
       </Pane>

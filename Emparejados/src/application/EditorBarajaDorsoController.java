@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
@@ -45,13 +46,15 @@ public class EditorBarajaDorsoController {
     
     private Singleton singleton;
 
-    public void iniciarEditorDorso(Stage stage, Singleton nuevoSingleton){
+    public void iniciarEditorDorso(Stage stage, Singleton nuevoSingleton, boolean transicion){
         primaryStage = stage;
         singleton = nuevoSingleton;
         inicializarVariables();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        if(transicion) {corregirPosicionVentana();}
+        else { corregirPosicionVentana2();}
         actualizarEstilo();
+        siguienteButton.setDisable(true);
     }
     
     public void inicializarVariables() {
@@ -67,7 +70,7 @@ public class EditorBarajaDorsoController {
         if (archivoImagen != null) {
         	imagen = new Image(archivoImagen.toURI().toString());
         	imagenCarta.setImage(imagen);
-        	pathImagen.setText(archivoImagen.toURI().toString());
+        	pathImagen.setText(archivoImagen.getName());
         	siguienteButton.setDisable(false);
         }
 	}
@@ -81,17 +84,19 @@ public class EditorBarajaDorsoController {
             Parent root = myLoader.load();  
             EditorBarajaParejasController editorParejas = myLoader.<EditorBarajaParejasController>getController();
             Scene scene = new Scene(root);
-            thisStage.setTitle("Elige tus parejas");
-            thisStage.setScene(scene);
-            thisStage.setResizable(false);
+            Stage stage = new Stage();
+            stage.setTitle("Elige tus parejas");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
             editorParejas.iniciarEditorParejas(primaryStage, singleton, imagenes);
-            thisStage.show();
+            stage.show();
+            thisStage.hide();
     	} catch (IOException e) {
                 e.printStackTrace();
-        }
-		
+        }		
 	}
 
 	@FXML
@@ -108,6 +113,10 @@ public class EditorBarajaDorsoController {
 	public void corregirPosicionVentana() {
 		thisStage.setX(singleton.posicionX + 120);
 		thisStage.setY(singleton.posicionY + 80);
+	}
+	public void corregirPosicionVentana2() {
+		thisStage.setX(singleton.posicionX);
+		thisStage.setY(singleton.posicionY);
 	}
 	    
 	    

@@ -262,7 +262,7 @@ public class ControladorPartidaLibre {
     	inicializarAudioClips();
     	inicializarContadorTiempo();
     	inicializarPuntuacion();
-    	inicializarAnimaciones();
+    	inicializarAnimaciones(animacionPareja);
     	actualizarSonido();
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
@@ -353,12 +353,16 @@ public class ControladorPartidaLibre {
     	pause.play();
 	}
 
-	public void inicializarAnimaciones() {
+	public void inicializarAnimaciones(String animacionPareja) {
         FabricaAnimaciones[] fabrica;
     	
         fabrica = new FabricaAnimaciones[3];
         fabrica[0] = new FabricaAnimacionVoltear();
-        fabrica[1] = new FabricaAnimacionParejaCorrecta();
+        if(animacionPareja == "Salto") {
+        	fabrica[1] = new FabricaAnimacionParejaCorrecta();
+        } else if(animacionPareja == "Salto doble") {
+        	fabrica[1] = new FabricaAnimacionParejaCorrecta2();       	
+        }
         fabrica[2] = new FabricaAnimacionParejaIncorrecta();
         
         animacionVoltear = fabrica[0].animacionesMetodoFabrica();

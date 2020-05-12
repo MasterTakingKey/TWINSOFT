@@ -141,6 +141,7 @@ public class ControladorAjustesJuegoLibre {
         choiceVisualCarta.setValue("Giro");
         ArrayList<String> animacionPareja = new ArrayList<String>();
         animacionPareja.add("Salto");
+        animacionPareja.add("Salto doble");
         ObservableList<String> animacionCorrecta = FXCollections.observableArrayList(animacionPareja); 
         choiceVisualPareja.setItems(animacionCorrecta);
         choiceVisualPareja.setValue("Salto");

@@ -149,6 +149,8 @@ public class ControladorPartidaEstandar {
     
     private Animaciones animacionParejaIncorrecta;
     
+    private Baraja barajaPartidaEstandar;
+    
     public void iniciarPartidaEstandar(Stage stage, Singleton nuevoSingleton){
     	primaryStage = stage;
     	singleton = nuevoSingleton;
@@ -187,10 +189,20 @@ public class ControladorPartidaEstandar {
     }
     
     public void inicializarBarajaTablero() {
-    	singleton.barajaPartida.barajar();
+    	barajaPartidaEstandar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), 16);
+        int cartasInsertadas = 0;
+        Carta aInsertar;
+        for(int i = 0; i < 2; i++) {
+            for(int j = 0; j < 8; j++) {
+                aInsertar = new Carta(singleton.barajaPartida.getCarta(j).getImagenDorso(), singleton.barajaPartida.getCarta(j).getImagenFrente(), j);
+                barajaPartidaEstandar.setCarta(aInsertar, cartasInsertadas++);
+            }
+        }
+    	barajaPartidaEstandar.barajar();
     	tableroPartida = new Tablero(4, 4);
-    	tableroPartida.llenarTablero(singleton.barajaPartida);
+    	tableroPartida.llenarTablero(barajaPartidaEstandar);
     }
+    
     
     public void inicializarCartas() {
     	carta00.setImage(singleton.barajaPartida.getImagenDorso());
@@ -311,7 +323,7 @@ public class ControladorPartidaEstandar {
 		animacionParejaCorrecta.crearAnimacion();
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
-    	if(cartasGiradas == singleton.barajaPartida.tamanyo) {
+    	if(cartasGiradas == barajaPartidaEstandar.tamanyo) {
     		victoria();
     	}
     }

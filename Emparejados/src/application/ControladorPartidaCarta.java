@@ -161,6 +161,8 @@ public class ControladorPartidaCarta {
     private Animaciones animacionParejaCorrecta;
     
     private Animaciones animacionParejaIncorrecta;
+    
+    private Baraja barajaPartidaCarta;
 
     public void iniciarPartidaCarta(Stage stage, Singleton nuevoSingleton){
     	primaryStage = stage;
@@ -202,24 +204,36 @@ public class ControladorPartidaCarta {
     }
     
     public void inicializarBarajaTablero() {
-    	barajaAuxiliar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), singleton.barajaPartida.getTamanyo()/2);
+    	barajaPartidaCarta = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), 16);
+        int cartasInsertada = 0;
+        Carta aInsertar;
+        for(int i = 0; i < 2; i++) {
+            for(int j = 0; j < 8; j++) {
+                aInsertar = new Carta(singleton.barajaPartida.getCarta(j).getImagenDorso(), singleton.barajaPartida.getCarta(j).getImagenFrente(), j);
+                barajaPartidaCarta.setCarta(aInsertar, cartasInsertada++);
+            }
+        }
+        
+    	barajaAuxiliar = new Baraja(barajaPartidaCarta.getNombre(), barajaPartidaCarta.getImagenDorso(), barajaPartidaCarta.getTamanyo()/2);
     	int cartasInsertadas = 0;
-    	for(int i = 0; i < singleton.barajaPartida.getTamanyo() && cartasInsertadas < singleton.barajaPartida.getTamanyo()/2 ; i++) {
+    	for(int i = 0; i < barajaPartidaCarta.getTamanyo() && cartasInsertadas < barajaPartidaCarta.getTamanyo()/2 ; i++) {
     		boolean noExiste = true;
     		for(int j = 0; j < cartasInsertadas; j++) {
-        		if(singleton.barajaPartida.getCarta(i).getId() == barajaAuxiliar.getCarta(j).getId()) {
+        		if(barajaPartidaCarta.getCarta(i).getId() == barajaAuxiliar.getCarta(j).getId()) {
         			noExiste = false;
         		}
     		}
     		if(noExiste) {
-    			barajaAuxiliar.setCarta(singleton.barajaPartida.getCarta(i), cartasInsertadas++);
+    			barajaAuxiliar.setCarta(barajaPartidaCarta.getCarta(i), cartasInsertadas++);
     		}
     	}
-    	singleton.barajaPartida.barajar();
-    	barajaAuxiliar.barajar();
-        indiceBarajaAuxiliar = 0;
-    	tableroPartida = new Tablero(4, 4);
-    	tableroPartida.llenarTablero(singleton.barajaPartida);
+        	
+        	barajaPartidaCarta.barajar();
+	    	barajaAuxiliar.barajar();
+	        indiceBarajaAuxiliar = 0;
+	    	tableroPartida = new Tablero(4, 4);
+	    	tableroPartida.llenarTablero(barajaPartidaCarta);
+    	
     }
     
     public void inicializarCartas() {
@@ -348,7 +362,7 @@ public class ControladorPartidaCarta {
 		animacionParejaCorrecta.crearAnimacion();
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
-    	if(cartasGiradas == singleton.barajaPartida.getTamanyo()) {
+    	if(cartasGiradas == barajaPartidaCarta.getTamanyo()) {
     		victoria();
     	} else {
         	indiceBarajaAuxiliar++;
@@ -364,8 +378,6 @@ public class ControladorPartidaCarta {
     	animacionParejaIncorrecta.imagen1 = primeraImagen;
 		animacionParejaIncorrecta.imagen2 = segundaImagen;
 		animacionParejaIncorrecta.crearAnimacion();
-    	primeraImagen.setImage(singleton.barajaPartida.getImagenDorso());
-    	segundaImagen.setImage(singleton.barajaPartida.getImagenDorso());
     	cartasGiradas-= 2;
     }
     

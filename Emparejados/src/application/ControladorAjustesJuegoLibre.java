@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -84,12 +86,20 @@ public class ControladorAjustesJuegoLibre {
     private Stage thisStage;
     
     private Singleton singleton;
+    
+    private boolean tiempoOn;
+    
+    private int tiempoPartida;
+    
+    private boolean mostrarCartas;
+    
+    private int tiempoMostrarCartas;
 
     public void iniciarAjustesJLibre(Stage stage, long tiempoM, Singleton nuevoSingleton) {
     	primaryStage = stage;
     	tiempoMusica = tiempoM;
     	singleton = nuevoSingleton;
-    	singleton.tiempoOn = false;
+    	tiempoOn = false;
     	inicializarVariables();
     	actualizarSonido();
     	actualizarImagenSonido();
@@ -119,37 +129,61 @@ public class ControladorAjustesJuegoLibre {
     
     @FXML
     void jugarHandler(ActionEvent event) {
-    	musicaFondo.stopMusic();
-    	int filas = Integer.parseInt(textFilas.getText());
-    	int columnas = Integer.parseInt(textColumnas.getText());
-      	try {
-      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaLibre.fxml"));
-      		Parent root = (Parent) myLoader.load();
-      		ControladorPartidaLibre controladorPartidaLibre = myLoader.<ControladorPartidaLibre>getController();
-      		Scene scene = new Scene(root);
-      		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Partida Estandar");
-      		primaryStage.setResizable(false);
-      		singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton);
-      		primaryStage.show();
+    	try {
+      		int filas = Integer.parseInt(textFilas.getText());
+    	    int columnas = Integer.parseInt(textColumnas.getText());
+    	    int cartas = filas*columnas;
+    	    if(tiempoOn) {
+    	    	tiempoPartida = Integer.parseInt(textTiempoPartida.getText());
+    	    }
+    	    if(mostrarCartas) {
+    	    	tiempoMostrarCartas = Integer.parseInt(textTiempoMostrarCartas.getText());
+    	    }
+    	    if(cartas%2 != 0) {
+    	    	Alert alert = new Alert(AlertType.ERROR, "El número total de cartas (filas x columnas) debe ser par.");
+            	alert.showAndWait();
+    	    } else if(filas > 6 || columnas > 6) {
+    	    	Alert alert = new Alert(AlertType.ERROR, "El número máximo tanto de filas como columnas es de 6.");
+            	alert.showAndWait();
+    	    } else {
+    	    	musicaFondo.stopMusic();
+	      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaLibre.fxml"));
+	      		Parent root = (Parent) myLoader.load();
+	      		ControladorPartidaLibre controladorPartidaLibre = myLoader.<ControladorPartidaLibre>getController();
+	      		Scene scene = new Scene(root);
+	      		primaryStage.setScene(scene);
+	      		primaryStage.setTitle("Partida Estandar");
+	      		primaryStage.setResizable(false);
+	      		singleton.posicionX = thisStage.getX();
+	      		singleton.posicionY = thisStage.getY();
+	      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas);
+	      		primaryStage.show();
+    	    }
+      	} catch (NumberFormatException nfe) {
+      		Alert alert = new Alert(AlertType.ERROR, "Asegúrate de introducir números en los campos correspondientes.");
+        	alert.showAndWait();
       	} catch (IOException e) {}
     }
     
     @FXML
     void handlerButtonMostrarCartas(ActionEvent event) {
-
+    	if(mostrarCartas) {
+    		buttonMostrarCartas.setText("Desactivado");
+    		mostrarCartas = false;
+    	} else {
+    		buttonMostrarCartas.setText("Activado");
+    		mostrarCartas = true;
+    	}
     }
 
     @FXML
     void handlerButtonTiempo(ActionEvent event) {
-    	if(singleton.tiempoOn) {
+    	if(tiempoOn) {
     		buttonTiempo.setText("Desactivado");
-    		singleton.tiempoOn = false;
+    		tiempoOn = false;
     	} else {
     		buttonTiempo.setText("Activado");
-    		singleton.tiempoOn = true;
+    		tiempoOn = true;
     	}
     }
 

@@ -56,7 +56,15 @@ public class ControladorResultadoPartida {
     
     private Singleton singleton;
     
-    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, int filas, int columnas, Singleton nuevoSingleton){
+    private boolean tiempoOn;
+    
+    private int tiempoPartida;
+    
+    private boolean mostrarCartas;
+    
+    private int tiempoMostrarCartas;
+    
+    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, int filas, int columnas, Singleton nuevoSingleton, boolean tiempoOn, int tiempoPartida, boolean mostrarCartas, int tiempoMostrarCarta){
     	primaryStage = stage;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
@@ -103,7 +111,7 @@ public class ControladorResultadoPartida {
     	} else if(tipoPartida == "carta") {
     		jugarPartidaCarta();
     	}else if(tipoPartida == "libre") {
-    		jugarPartidaLibre(filas, columnas);
+    		jugarPartidaLibre(filas, columnas, tiempoOn, mostrarCartas, tiempoPartida, tiempoMostrarCartas);
     	}
     }
     
@@ -141,18 +149,18 @@ public class ControladorResultadoPartida {
     	} catch (IOException e) {}
     }
     
-    public void jugarPartidaLibre(int filas, int columnas) {
+    public void jugarPartidaLibre(int filas, int columnas, boolean tiempoOn, boolean mostrarCartas, int tiempoPartida, int tiempoMostrarCartas) {
     	try {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaLibre.fxml"));
             Parent root = (Parent) myLoader.load();
             ControladorPartidaLibre controladorPartidaLibre = myLoader.<ControladorPartidaLibre>getController();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Partida Por Carta");
+            primaryStage.setTitle("Partida Libre");
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton);
+            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}

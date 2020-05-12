@@ -154,9 +154,13 @@ public class ControladorPartidaCarta {
     
     private Puntuacion puntuacion;
     
-    private Animaciones animaciones;
-    
     private Singleton singleton;
+    
+    private Animaciones animacionVoltear;
+    
+    private Animaciones animacionParejaCorrecta;
+    
+    private Animaciones animacionParejaIncorrecta;
 
     public void iniciarPartidaCarta(Stage stage, Singleton nuevoSingleton){
     	primaryStage = stage;
@@ -167,12 +171,34 @@ public class ControladorPartidaCarta {
     	inicializarAudioClips();
     	inicializarContadorTiempo();
     	inicializarPuntuacion();
+    	inicializarAnimaciones();
     	actualizarSonido();
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana();
     	actualizarEstilo();
     	mostrarSiguienteCarta();
+    }
+    
+    public void inicializarAnimaciones() {
+        FabricaAnimaciones[] fabrica;
+    	
+        fabrica = new FabricaAnimaciones[3];
+        fabrica[0] = new FabricaAnimacionVoltear();
+        fabrica[1] = new FabricaAnimacionParejaCorrecta();
+        fabrica[2] = new FabricaAnimacionParejaIncorrecta();
+        
+        animacionVoltear = fabrica[0].animacionesMetodoFabrica();
+        animacionVoltear.stackPane = stackPane;
+        animacionVoltear.baraja = singleton.barajaPartida;
+        
+        animacionParejaCorrecta = fabrica[1].animacionesMetodoFabrica();
+        animacionParejaCorrecta.stackPane = stackPane;
+        animacionParejaCorrecta.baraja = singleton.barajaPartida;
+        
+        animacionParejaIncorrecta = fabrica[2].animacionesMetodoFabrica();
+        animacionParejaIncorrecta.stackPane = stackPane;
+        animacionParejaIncorrecta.baraja = singleton.barajaPartida;
     }
     
     public void inicializarBarajaTablero() {
@@ -227,7 +253,6 @@ public class ControladorPartidaCarta {
         Sound1 = new Image("/imagenes/sonido_on_2.png");
         puntosAnyadidos.setVisible(false);
         thisStage = (Stage) carta00.getScene().getWindow();
-        animaciones = new Animaciones(stackPane, singleton.barajaPartida);
     }
     
     public void inicializarAudioClips() {
@@ -266,7 +291,9 @@ public class ControladorPartidaCarta {
     		puntuacion.iniciarTiempoEntreTurnos();
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
-    		animaciones.clickCartaAnimacion(imagenSeleccionada, cartaSeleccionada);
+    		animacionVoltear.imagen1 = imagenSeleccionada;
+    		animacionVoltear.carta = cartaSeleccionada;
+    		animacionVoltear.crearAnimacion();
     		esPrimeraCarta = false;
     	} else {
     		puntuacion.getTimeline().stop();
@@ -276,7 +303,9 @@ public class ControladorPartidaCarta {
     			mismaCarta.play();
     		} else {
 				voltearCarta.play();
-				animaciones.clickCartaAnimacion(imagenSeleccionada, cartaSeleccionada);
+				animacionVoltear.imagen1 = imagenSeleccionada;
+	    		animacionVoltear.carta = cartaSeleccionada;
+	    		animacionVoltear.crearAnimacion();
 				PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 				if(primeraCarta.getId() == segundaCarta.getId() && primeraCarta.getId() == siguienteCartaMostrada.getId()) {
     				stackPane.setDisable(true);
@@ -314,7 +343,9 @@ public class ControladorPartidaCarta {
     	puntosAnteriores = puntuacion.getPuntos();
     	puntuacion.sumaPuntos(10, false, 0);
     	acierto.play();
-    	animaciones.parejaCorrectaAnimacion(primeraImagen, segundaImagen);
+    	animacionParejaCorrecta.imagen1 = primeraImagen;
+		animacionParejaCorrecta.imagen2 = segundaImagen;
+		animacionParejaCorrecta.crearAnimacion();
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
     	if(cartasGiradas == singleton.barajaPartida.getTamanyo()) {
@@ -330,7 +361,9 @@ public class ControladorPartidaCarta {
     	parejasFalladas.add(primeraCarta);
     	parejasFalladas.add(segundaCarta);
     	error.play();
-    	animaciones.parejaIncorrectaAnimacion(primeraImagen, segundaImagen);
+    	animacionParejaIncorrecta.imagen1 = primeraImagen;
+		animacionParejaIncorrecta.imagen2 = segundaImagen;
+		animacionParejaIncorrecta.crearAnimacion();
     	primeraImagen.setImage(singleton.barajaPartida.getImagenDorso());
     	segundaImagen.setImage(singleton.barajaPartida.getImagenDorso());
     	cartasGiradas-= 2;
@@ -411,9 +444,9 @@ public class ControladorPartidaCarta {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "carta", 4, 4, singleton);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "carta", 4, 4, singleton, true, 90, false, 0);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "carta", 4, 4, singleton);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "carta", 4, 4, singleton, true, 90, false, 0);
         	}
     		stage.show();
     	} catch (IOException e) {

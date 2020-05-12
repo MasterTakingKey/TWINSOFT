@@ -215,17 +215,34 @@ public class ControladorPartidaLibre {
     
     private Puntuacion puntuacion;
     
-    private Animaciones animaciones;
-    
     private Singleton singleton;
+    
     private Baraja barajaPartidaLibre;
+    
+    private Animaciones animacionVoltear;
+    
+    private Animaciones animacionParejaCorrecta;
+    
+    private Animaciones animacionParejaIncorrecta;
+    
+    private boolean tiempoOn;
+    
+    private int tiempoPartida;
+    
+    private boolean mostrarCartas;
+    
+    private int tiempoMostrarCartas;
 
-    public void iniciarPartidaLibre(Stage stage, int filas, int columnas, Singleton nuevoSingleton){
+    public void iniciarPartidaLibre(Stage stage, int filas, int columnas, Singleton nuevoSingleton, boolean tiempoOn, int tiempoPartida, boolean mostrarCartas, int tiempoMostrarCartas){
     	primaryStage = stage;
         cartas = filas*columnas;
         this.filas = filas;
         this.columnas = columnas;
         singleton = nuevoSingleton;
+        this.tiempoOn = tiempoOn;
+        this.tiempoPartida = tiempoPartida;
+        this.mostrarCartas = mostrarCartas;
+        this.tiempoMostrarCartas = tiempoMostrarCartas;
         inicializarBarajaTablero(filas, columnas);
         inicializarTablero(filas, columnas);
         inicializarCartas();
@@ -233,10 +250,116 @@ public class ControladorPartidaLibre {
     	inicializarAudioClips();
     	inicializarContadorTiempo();
     	inicializarPuntuacion();
+    	inicializarAnimaciones();
     	actualizarSonido();
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana();
+    	if(mostrarCartas) {
+    		mostrarCartas();
+    	}
+    }
+    
+    private void mostrarCartas() {
+    	PauseTransition pause = new PauseTransition(Duration.seconds(tiempoMostrarCartas));
+    	stackPane.setDisable(true);
+    	carta00.setImage(deImagenACarta(carta00).getImagenFrente());
+    	if(columnas >= 1 && filas >= 2) carta01.setImage(deImagenACarta(carta01).getImagenFrente());
+    	if(columnas >= 1 && filas >= 3) carta02.setImage(deImagenACarta(carta02).getImagenFrente());
+    	if(columnas >= 1 && filas >= 4) carta03.setImage(deImagenACarta(carta03).getImagenFrente());
+    	if(columnas >= 1 && filas >= 5) carta04.setImage(deImagenACarta(carta04).getImagenFrente());
+    	if(columnas >= 1 && filas >= 6)	carta05.setImage(deImagenACarta(carta05).getImagenFrente());
+    	if(columnas >= 2 && filas >= 1) carta10.setImage(deImagenACarta(carta10).getImagenFrente());
+    	if(columnas >= 2 && filas >= 2) carta11.setImage(deImagenACarta(carta11).getImagenFrente());
+    	if(columnas >= 2 && filas >= 3) carta12.setImage(deImagenACarta(carta12).getImagenFrente());
+    	if(columnas >= 2 && filas >= 4) carta13.setImage(deImagenACarta(carta13).getImagenFrente());
+    	if(columnas >= 2 && filas >= 5) carta14.setImage(deImagenACarta(carta14).getImagenFrente());
+    	if(columnas >= 2 && filas >= 6) carta15.setImage(deImagenACarta(carta15).getImagenFrente());
+    	if(columnas >= 3 && filas >= 1) carta20.setImage(deImagenACarta(carta20).getImagenFrente());
+    	if(columnas >= 3 && filas >= 2) carta21.setImage(deImagenACarta(carta21).getImagenFrente());
+    	if(columnas >= 3 && filas >= 3) carta22.setImage(deImagenACarta(carta22).getImagenFrente());
+    	if(columnas >= 3 && filas >= 4) carta23.setImage(deImagenACarta(carta23).getImagenFrente());
+    	if(columnas >= 3 && filas >= 5) carta24.setImage(deImagenACarta(carta24).getImagenFrente());
+    	if(columnas >= 3 && filas >= 6) carta25.setImage(deImagenACarta(carta25).getImagenFrente());
+    	if(columnas >= 4 && filas >= 1) carta30.setImage(deImagenACarta(carta30).getImagenFrente());
+    	if(columnas >= 4 && filas >= 2) carta31.setImage(deImagenACarta(carta31).getImagenFrente());
+    	if(columnas >= 4 && filas >= 3) carta32.setImage(deImagenACarta(carta32).getImagenFrente());
+    	if(columnas >= 4 && filas >= 4) carta33.setImage(deImagenACarta(carta33).getImagenFrente());
+    	if(columnas >= 4 && filas >= 5) carta34.setImage(deImagenACarta(carta34).getImagenFrente());
+    	if(columnas >= 4 && filas >= 6) carta35.setImage(deImagenACarta(carta35).getImagenFrente());
+    	if(columnas >= 5 && filas >= 1) carta40.setImage(deImagenACarta(carta40).getImagenFrente());
+    	if(columnas >= 5 && filas >= 2) carta41.setImage(deImagenACarta(carta41).getImagenFrente());
+    	if(columnas >= 5 && filas >= 3) carta42.setImage(deImagenACarta(carta42).getImagenFrente());
+    	if(columnas >= 5 && filas >= 4) carta43.setImage(deImagenACarta(carta43).getImagenFrente());
+    	if(columnas >= 5 && filas >= 5) carta44.setImage(deImagenACarta(carta44).getImagenFrente());
+    	if(columnas >= 5 && filas >= 6) carta45.setImage(deImagenACarta(carta45).getImagenFrente());
+    	if(columnas >= 6 && filas >= 1) carta50.setImage(deImagenACarta(carta50).getImagenFrente());
+    	if(columnas >= 6 && filas >= 2) carta51.setImage(deImagenACarta(carta51).getImagenFrente());
+    	if(columnas >= 6 && filas >= 3) carta52.setImage(deImagenACarta(carta52).getImagenFrente());
+    	if(columnas >= 6 && filas >= 4) carta53.setImage(deImagenACarta(carta53).getImagenFrente());
+    	if(columnas >= 6 && filas >= 5) carta54.setImage(deImagenACarta(carta54).getImagenFrente());
+    	if(columnas >= 6 && filas >= 6) carta55.setImage(deImagenACarta(carta55).getImagenFrente());
+    	pause.setOnFinished(e -> {
+    		if(columnas >= 1 && filas >= 1)carta00.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(columnas >= 1 && filas >= 2)carta01.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(columnas >= 1 && filas >= 3)carta02.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(columnas >= 1 && filas >= 4)carta03.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(columnas >= 1 && filas >= 5)carta04.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(columnas >= 1 && filas >= 6)carta05.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(columnas >= 2 && filas >= 1)carta10.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(columnas >= 2 && filas >= 2)carta11.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(columnas >= 2 && filas >= 3)carta12.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(columnas >= 2 && filas >= 4)carta13.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 2 && filas >= 5)carta14.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 2 && filas >= 6)carta15.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 3 && filas >= 1)carta20.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 3 && filas >= 2)carta21.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 3 && filas >= 3)carta22.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 3 && filas >= 4)carta23.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 3 && filas >= 5)carta24.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 3 && filas >= 6)carta25.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 4 && filas >= 1)carta30.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 4 && filas >= 2)carta31.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 4 && filas >= 3)carta32.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 4 && filas >= 4)carta33.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 4 && filas >= 5)carta34.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 4 && filas >= 6)carta35.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 5 && filas >= 1)carta40.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 5 && filas >= 2)carta41.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 5 && filas >= 3)carta42.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 5 && filas >= 4)carta43.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 5 && filas >= 5)carta44.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 5 && filas >= 6)carta45.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 6 && filas >= 1)carta50.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 6 && filas >= 2)carta51.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 6 && filas >= 3)carta52.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 6 && filas >= 4)carta53.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 6 && filas >= 5)carta54.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(columnas >= 6 && filas >= 6)carta55.setImage(singleton.barajaPartida.getImagenDorso());
+            stackPane.setDisable(false);
+        });
+    	pause.play();
+	}
+
+	public void inicializarAnimaciones() {
+        FabricaAnimaciones[] fabrica;
+    	
+        fabrica = new FabricaAnimaciones[3];
+        fabrica[0] = new FabricaAnimacionVoltear();
+        fabrica[1] = new FabricaAnimacionParejaCorrecta();
+        fabrica[2] = new FabricaAnimacionParejaIncorrecta();
+        
+        animacionVoltear = fabrica[0].animacionesMetodoFabrica();
+        animacionVoltear.stackPane = stackPane;
+        animacionVoltear.baraja = singleton.barajaPartida;
+        
+        animacionParejaCorrecta = fabrica[1].animacionesMetodoFabrica();
+        animacionParejaCorrecta.stackPane = stackPane;
+        animacionParejaCorrecta.baraja = singleton.barajaPartida;
+        
+        animacionParejaIncorrecta = fabrica[2].animacionesMetodoFabrica();
+        animacionParejaIncorrecta.stackPane = stackPane;
+        animacionParejaIncorrecta.baraja = singleton.barajaPartida;
     }
      
     public void inicializarBarajaTablero(int filas, int columnas) {
@@ -323,7 +446,6 @@ public class ControladorPartidaLibre {
         Sound1 = new Image("/imagenes/sonido_on_2.png");
         puntosAnyadidos.setVisible(false);
         thisStage = (Stage) carta00.getScene().getWindow();
-        animaciones = new Animaciones(stackPane, singleton.barajaPartida);
     }
     
     public void inicializarAudioClips() {
@@ -334,13 +456,17 @@ public class ControladorPartidaLibre {
     }
     
     public void inicializarContadorTiempo() {
-        contadorTiempo = new ContadorTiempo();
-    	contadorTiempo.iniciarTiempoPartidaEstandar(tiempo);
-        tiempo.textProperty().addListener((ChangeListener<? super String>) (o, oldVal, newVal) -> {
-        	int minutos = Integer.parseInt(tiempo.getText().substring(0, tiempo.getText().length()-3));
-        	int segundos = Integer.parseInt( tiempo.getText().substring(tiempo.getText().length() - 2));
-        	if(minutos + segundos == 0) derrota();
-		});
+    	if(tiempoOn) {
+	        contadorTiempo = new ContadorTiempo();
+	    	contadorTiempo.iniciarTiempoPartidaLibre(tiempo, tiempoPartida);
+	        tiempo.textProperty().addListener((ChangeListener<? super String>) (o, oldVal, newVal) -> {
+	        	int minutos = Integer.parseInt(tiempo.getText().substring(0, tiempo.getText().length()-3));
+	        	int segundos = Integer.parseInt( tiempo.getText().substring(tiempo.getText().length() - 2));
+	        	if(minutos + segundos == 0) derrota();
+			});
+    	}else {
+    		tiempo.setText("0:00");
+    	}
     }
     
     public void inicializarPuntuacion() {
@@ -362,7 +488,9 @@ public class ControladorPartidaLibre {
     		puntuacion.iniciarTiempoEntreTurnos();
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
-    		animaciones.clickCartaAnimacion(imagenSeleccionada, cartaSeleccionada);
+    		animacionVoltear.imagen1 = imagenSeleccionada;
+    		animacionVoltear.carta = cartaSeleccionada;
+    		animacionVoltear.crearAnimacion();
     		esPrimeraCarta = false;
     	} else {
     		puntuacion.getTimeline().stop();
@@ -372,7 +500,9 @@ public class ControladorPartidaLibre {
     			mismaCarta.play();
     		} else {
 				voltearCarta.play();
-				animaciones.clickCartaAnimacion(imagenSeleccionada, cartaSeleccionada);
+				animacionVoltear.imagen1 = imagenSeleccionada;
+	    		animacionVoltear.carta = cartaSeleccionada;
+	    		animacionVoltear.crearAnimacion();
 				PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 				stackPane.setDisable(true);
     			if(primeraCarta.getId() == segundaCarta.getId()) {
@@ -403,7 +533,9 @@ public class ControladorPartidaLibre {
     	puntosAnteriores = puntuacion.getPuntos();
     	puntuacion.sumaPuntos(10, false, 0);
     	acierto.play();
-    	animaciones.parejaCorrectaAnimacion(primeraImagen, segundaImagen);
+    	animacionParejaCorrecta.imagen1 = primeraImagen;
+		animacionParejaCorrecta.imagen2 = segundaImagen;
+		animacionParejaCorrecta.crearAnimacion();
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
     	if(cartasGiradas == cartas) {
@@ -417,7 +549,9 @@ public class ControladorPartidaLibre {
     	parejasFalladas.add(primeraCarta);
     	parejasFalladas.add(segundaCarta);
     	error.play();
-    	animaciones.parejaIncorrectaAnimacion(primeraImagen, segundaImagen);
+    	animacionParejaIncorrecta.imagen1 = primeraImagen;
+		animacionParejaIncorrecta.imagen2 = segundaImagen;
+		animacionParejaIncorrecta.crearAnimacion();
     	cartasGiradas-= 2;
     }
     
@@ -452,8 +586,10 @@ public class ControladorPartidaLibre {
     }
     
     public void victoria() {
-    	contadorTiempo.parar();
-    	puntuacion.sumarBonificacionVictoria(contadorTiempo.getTiempoRestante(), tableroPartida.getNumParejas());
+    	if(tiempoOn) {
+    		contadorTiempo.parar();
+    		puntuacion.sumarBonificacionVictoria(contadorTiempo.getTiempoRestante(), tableroPartida.getNumParejas());
+    	}
     	PauseTransition pause = new PauseTransition(Duration.millis(750));
     	pause.setOnFinished(e -> {
     		esVictoria = true;
@@ -495,9 +631,9 @@ public class ControladorPartidaLibre {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", filas, columnas, singleton);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "libre", filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", filas, columnas, singleton);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "libre", filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas);
         	}
     		stage.show();
     	} catch (IOException e) {

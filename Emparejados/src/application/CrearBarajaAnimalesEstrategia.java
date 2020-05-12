@@ -17,7 +17,7 @@ public class CrearBarajaAnimalesEstrategia implements CrearBarajaEstrategia {
 	public CrearBarajaAnimalesEstrategia(int repeticiones, int tamanyoPartida) {
 		nombre = "Estrategia Baraja Animales";
 		this.repeticiones = repeticiones;
-		this.tamanyoPartida = tamanyoPartida;
+		this.tamanyoPartida = tamanyoPartida;		
 	}
 	
 	public String nombre() {
@@ -33,7 +33,7 @@ public class CrearBarajaAnimalesEstrategia implements CrearBarajaEstrategia {
 	}
 	
     public Carta[] crearBaraja() {
-
+    	
     	Carta[] baraja = new Carta[repeticiones*tamanyoPartida];
     	Image imagenDorso = new Image("/imagenes/baraja_animales/dorso_aldeano.png");
     	
@@ -45,7 +45,7 @@ public class CrearBarajaAnimalesEstrategia implements CrearBarajaEstrategia {
 		imagenes.add(new Image("/imagenes/baraja_animales/rinoceronte.png"));
 		imagenes.add(new Image("/imagenes/baraja_animales/serpiente.png"));
 		imagenes.add(new Image("/imagenes/baraja_animales/zebra.png"));
-    	
+		
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {
     		for(int j = 0; j < tamanyoPartida; j++) {

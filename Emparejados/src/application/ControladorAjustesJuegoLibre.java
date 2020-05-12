@@ -174,6 +174,10 @@ public class ControladorAjustesJuegoLibre {
     	    } else if(filas > 6 || columnas > 6) {
     	    	Alert alert = new Alert(AlertType.ERROR, "El número máximo tanto de filas como columnas es de 6.");
             	alert.showAndWait();
+            	
+    	    }else if (cartas > singleton.barajaPartida.getTamanyo()) {
+    	    	Alert alert = new Alert(AlertType.ERROR, "La baraja seleccionada no es lo suficientemente grande para este tablero.");
+            	alert.showAndWait();
     	    } else {
     	    	musicaFondo.stopMusic();
 	      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaLibre.fxml"));

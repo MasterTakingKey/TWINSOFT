@@ -2,7 +2,13 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javax.sound.sampled.Clip;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
 public class ControladorAjustesJuegoLibre {
@@ -50,16 +57,16 @@ public class ControladorAjustesJuegoLibre {
     private TextField textTiempoPartida;
 
     @FXML
-    private ChoiceBox<?> choiceSonoroCarta;
+    private ChoiceBox<String> choiceSonoroCarta;
 
     @FXML
-    private ChoiceBox<?> choiceSonoroPareja;
+    private ChoiceBox<String> choiceSonoroPareja;
 
     @FXML
-    private ChoiceBox<?> choiceVisualCarta;
+    private ChoiceBox<String> choiceVisualCarta;
 
     @FXML
-    private ChoiceBox<?> choiceVisualPareja;
+    private ChoiceBox<String> choiceVisualPareja;
 
     @FXML
     private Button buttonMostrarCartas;
@@ -94,6 +101,8 @@ public class ControladorAjustesJuegoLibre {
     private boolean mostrarCartas;
     
     private int tiempoMostrarCartas;
+    
+    private AudioClip voltearCarta;
 
     public void iniciarAjustesJLibre(Stage stage, long tiempoM, Singleton nuevoSingleton) {
     	primaryStage = stage;
@@ -113,6 +122,26 @@ public class ControladorAjustesJuegoLibre {
         Sound1 = new Image("/imagenes/sonido_on.png");
     	musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
         thisStage = (Stage) buttonJugar.getScene().getWindow();
+        ArrayList<String> clipsVoltear = new ArrayList<String>();
+        clipsVoltear.add("Voltear");
+        ObservableList<String> audioVoltear = FXCollections.observableArrayList(clipsVoltear); 
+        choiceSonoroCarta.setItems(audioVoltear);
+        choiceSonoroCarta.setValue("Voltear");
+        ArrayList<String> clipsPareja = new ArrayList<String>();
+        clipsPareja.add("Acierto");
+        ObservableList<String> audioPareja = FXCollections.observableArrayList(clipsPareja); 
+        choiceSonoroPareja.setItems(audioPareja);
+        choiceSonoroPareja.setValue("Acierto");
+        ArrayList<String> animacionVoltear = new ArrayList<String>();
+        animacionVoltear.add("Giro");
+        ObservableList<String> animacionCarta = FXCollections.observableArrayList(animacionVoltear); 
+        choiceVisualCarta.setItems(animacionCarta);
+        choiceVisualCarta.setValue("Giro");
+        ArrayList<String> animacionPareja = new ArrayList<String>();
+        animacionPareja.add("Salto");
+        ObservableList<String> animacionCorrecta = FXCollections.observableArrayList(animacionPareja); 
+        choiceVisualPareja.setItems(animacionCorrecta);
+        choiceVisualPareja.setValue("Salto");
     }
     
     @FXML
@@ -156,7 +185,7 @@ public class ControladorAjustesJuegoLibre {
 	      		primaryStage.setResizable(false);
 	      		singleton.posicionX = thisStage.getX();
 	      		singleton.posicionY = thisStage.getY();
-	      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas);
+	      		controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas, choiceSonoroCarta.getValue(), choiceSonoroPareja.getValue(), choiceVisualCarta.getValue(), choiceVisualPareja.getValue());
 	      		primaryStage.show();
     	    }
       	} catch (NumberFormatException nfe) {

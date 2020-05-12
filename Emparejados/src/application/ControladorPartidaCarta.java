@@ -444,9 +444,9 @@ public class ControladorPartidaCarta {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "carta", 4, 4, singleton, true, 90, false, 0);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "carta", 4, 4, singleton, true, 90, false, 0, "", "", "", "");
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "carta", 4, 4, singleton, true, 90, false, 0);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "carta", 4, 4, singleton, true, 90, false, 0, "", "", "", "");
         	}
     		stage.show();
     	} catch (IOException e) {

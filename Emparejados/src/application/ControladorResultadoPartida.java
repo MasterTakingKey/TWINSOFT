@@ -64,13 +64,25 @@ public class ControladorResultadoPartida {
     
     private int tiempoMostrarCartas;
     
-    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, int filas, int columnas, Singleton nuevoSingleton, boolean tiempoOn, int tiempoPartida, boolean mostrarCartas, int tiempoMostrarCarta){
+    private String efectoCarta;
+    
+    private String efectoPareja;
+    
+    private String animacionCarta;
+    
+    private String animacionPareja;
+    
+    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, int filas, int columnas, Singleton nuevoSingleton, boolean tiempoOn, int tiempoPartida, boolean mostrarCartas, int tiempoMostrarCarta, String efectoCarta, String efectoPareja, String animacionCarta, String animacionPareja){
     	primaryStage = stage;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
         this.filas = filas;
         this.columnas = columnas;
         singleton = nuevoSingleton;
+        this.efectoCarta = efectoCarta;
+        this.efectoPareja = animacionPareja;
+        this.animacionCarta = animacionCarta;
+        this.animacionPareja = animacionPareja;
         inicializarVariables(puntuacion, tiempo);
         mostrarResultado();
         anyadirIcono();
@@ -160,7 +172,7 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas);
+            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas, efectoCarta, efectoPareja, animacionCarta, animacionPareja);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}

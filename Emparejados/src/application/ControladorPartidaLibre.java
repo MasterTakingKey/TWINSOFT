@@ -232,8 +232,16 @@ public class ControladorPartidaLibre {
     private boolean mostrarCartas;
     
     private int tiempoMostrarCartas;
+    
+    private String efectoCarta;
+    
+    private String efectoPareja;
+    
+    private String animacionCarta;
+    
+    private String animacionPareja;
 
-    public void iniciarPartidaLibre(Stage stage, int filas, int columnas, Singleton nuevoSingleton, boolean tiempoOn, int tiempoPartida, boolean mostrarCartas, int tiempoMostrarCartas){
+    public void iniciarPartidaLibre(Stage stage, int filas, int columnas, Singleton nuevoSingleton, boolean tiempoOn, int tiempoPartida, boolean mostrarCartas, int tiempoMostrarCartas, String efectoCarta, String efectoPareja, String animacionCarta, String animacionPareja){
     	primaryStage = stage;
         cartas = filas*columnas;
         this.filas = filas;
@@ -243,6 +251,10 @@ public class ControladorPartidaLibre {
         this.tiempoPartida = tiempoPartida;
         this.mostrarCartas = mostrarCartas;
         this.tiempoMostrarCartas = tiempoMostrarCartas;
+        this.efectoCarta = efectoCarta;
+        this.efectoPareja = efectoPareja;
+        this.animacionCarta = animacionCarta;
+        this.animacionPareja = animacionPareja;
         inicializarBarajaTablero(filas, columnas);
         inicializarTablero(filas, columnas);
         inicializarCartas();
@@ -449,9 +461,9 @@ public class ControladorPartidaLibre {
     }
     
     public void inicializarAudioClips() {
-    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
+    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/" + efectoCarta + ".mp3").toString());
         error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
-        acierto = new AudioClip(getClass().getResource("/sonidos/acierto.mp3").toString());
+        acierto = new AudioClip(getClass().getResource("/sonidos/" + efectoPareja + ".mp3").toString());
         mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
     }
     
@@ -631,9 +643,9 @@ public class ControladorPartidaLibre {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "libre", filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "libre", filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas, efectoCarta, efectoPareja, animacionCarta, animacionPareja);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "libre", filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "libre", filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas, efectoCarta, efectoPareja, animacionCarta, animacionPareja);
         	}
     		stage.show();
     	} catch (IOException e) {

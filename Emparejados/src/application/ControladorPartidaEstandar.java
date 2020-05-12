@@ -402,9 +402,9 @@ public class ControladorPartidaEstandar {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", 4, 4, singleton, true, 60, false, 0);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", 4, 4, singleton, true, 60, false, 0, "", "", "", "");
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", 4, 4, singleton, true, 60, false, 0);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", 4, 4, singleton, true, 60, false, 0, "", "", "", "");
         	}
     		stage.show();
     	} catch (IOException e) {

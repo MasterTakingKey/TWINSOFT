@@ -80,6 +80,8 @@ public class EditorBarajaParejasController {
 	Baraja barajaCreada = new Baraja();;
 	
 	Carta carta;
+	
+	private Image icon;
 
 	public void iniciarEditorParejas(Stage stage, Singleton nuevoSingleton, ArrayList<File> imagenes){
 		primaryStage = stage;
@@ -89,6 +91,7 @@ public class EditorBarajaParejasController {
         corregirTamanyoVentana();
         corregirPosicionVentana();
         actualizarEstilo();
+        anyadirIcono();
         nombrePane.setVisible(false);
         siguienteButton.setDisable(true);
         crearBarajaButton.setDisable(true);
@@ -320,5 +323,10 @@ public class EditorBarajaParejasController {
 			pane.getStylesheets().remove(temaRojo);
 			pane.getStylesheets().add(temaVerde);
 		}
+    }
+    
+    public void anyadirIcono() {
+        icon = new Image("/imagenes/Icon.png");
+        thisStage.getIcons().add(icon);
     }
 }

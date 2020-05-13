@@ -10,20 +10,14 @@ public class CrearBarajaAnimalesEstrategia implements CrearBarajaEstrategia {
 	
 	int repeticiones;
 	
+	int tamanyoPartida;
+	
 	private ArrayList<Image> imagenes = new ArrayList<Image>();
 	
-	public CrearBarajaAnimalesEstrategia(int repeticiones) {
+	public CrearBarajaAnimalesEstrategia(int repeticiones, int tamanyoPartida) {
 		nombre = "Estrategia Baraja Animales";
 		this.repeticiones = repeticiones;
-		imagenes.add(new Image("/imagenes/baraja_animales/elefante.png"));
-		imagenes.add(new Image("/imagenes/baraja_animales/hipopotamo.png"));
-		imagenes.add(new Image("/imagenes/baraja_animales/jirafa.png"));
-		imagenes.add(new Image("/imagenes/baraja_animales/leon.png"));
-		imagenes.add(new Image("/imagenes/baraja_animales/mono.png"));
-		imagenes.add(new Image("/imagenes/baraja_animales/rinoceronte.png"));
-		imagenes.add(new Image("/imagenes/baraja_animales/serpiente.png"));
-		imagenes.add(new Image("/imagenes/baraja_animales/zebra.png"));
-		
+		this.tamanyoPartida = tamanyoPartida;		
 	}
 	
 	public String nombre() {
@@ -35,12 +29,23 @@ public class CrearBarajaAnimalesEstrategia implements CrearBarajaEstrategia {
 	}
 	
 	public int tamanyoBaraja() {
-		return repeticiones*imagenes.size();
+		return repeticiones*tamanyoPartida;
 	}
 	
-    public Carta[] crearBaraja(int tamanyoPartida) {
+    public Carta[] crearBaraja() {
+    	
     	Carta[] baraja = new Carta[repeticiones*tamanyoPartida];
     	Image imagenDorso = new Image("/imagenes/baraja_animales/dorso_aldeano.png");
+    	
+    	imagenes.add(new Image("/imagenes/baraja_animales/elefante.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/hipopotamo.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/jirafa.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/leon.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/mono.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/rinoceronte.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/serpiente.png"));
+		imagenes.add(new Image("/imagenes/baraja_animales/zebra.png"));
+		
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {
     		for(int j = 0; j < tamanyoPartida; j++) {

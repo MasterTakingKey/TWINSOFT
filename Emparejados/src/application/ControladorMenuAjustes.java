@@ -200,7 +200,7 @@ public class ControladorMenuAjustes {
             singleton.estilo = tema.getSelectionModel().getSelectedItem();
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            editorDorso.iniciarEditorDorso(primaryStage, singleton);
+            editorDorso.iniciarEditorDorso(primaryStage, singleton, true);
             stage.show();
     	} catch (IOException e) {
                 e.printStackTrace();

@@ -61,6 +61,11 @@ public class ContadorTiempo {
 		tiempo.textProperty().bind(Time);
     	iniciaTiempo(TIEMPO_PARTIDA_CARTA);
 	}
+	
+	public void iniciarTiempoPartidaLibre(Label tiempo, int tiempoPartida) {
+		tiempo.textProperty().bind(Time);
+    	iniciaTiempo(tiempoPartida);
+	}
 
     public void iniciaTiempo(int tiempoPartida) {
     	 tiempoRestante = tiempoPartida; 

@@ -168,6 +168,8 @@ public class ControladorMenuPause {
         	reanudarPartidaEstandar();
     	} else if(tipoPartida == "carta") {
     		reanudarPartidaCarta();
+    	} else if(tipoPartida == "libre") {
+    		reanudarPartidaLibre();
     	}
     }
     

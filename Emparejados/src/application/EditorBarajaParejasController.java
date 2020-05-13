@@ -8,6 +8,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -25,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
@@ -60,13 +63,15 @@ public class EditorBarajaParejasController {
     
     private Stage thisStage;
 	
-	private int actual = 1;
+	private int actual;
+	
+	private Image icon;
 	
 	String currentDirectory = System.getProperty("user.dir");
 	
 	private Singleton singleton;
 	
-	List<File> listaImagenes = new ArrayList();
+	List<File> listaImagenes = new ArrayList<File>();
 	
 	File archivoImagen;
 	
@@ -89,6 +94,8 @@ public class EditorBarajaParejasController {
         nombrePane.setVisible(false);
         siguienteButton.setDisable(true);
         crearBarajaButton.setDisable(true);
+        anyadirIcono();
+        actual = 1;
     }
 	
     public void inicializarVariables() {
@@ -104,7 +111,7 @@ public class EditorBarajaParejasController {
         if (archivoImagen != null) {
         	imagen = new Image(archivoImagen.toURI().toString());
         	imagenCarta.setImage(imagen);
-        	pathImagen.setText(archivoImagen.toURI().toString());
+        	pathImagen.setText(archivoImagen.getName());
         	siguienteButton.setDisable(false);
         }
 	}
@@ -112,18 +119,21 @@ public class EditorBarajaParejasController {
 	@FXML
 	public void prepararBaraja(MouseEvent event) throws IOException {
 		//Abre prompr para elegir nombre
-		if(archivoImagen.equals(listaImagenes.get(0))) {   //mensaje de no se puede tener 2 parejas iguales
+	/*	if(archivoImagen.equals(listaImagenes.get(0))) {   //mensaje de no se puede tener 2 parejas iguales
 			Alert alert = new Alert(AlertType.ERROR, "El dorso no puede ser una pareja.", ButtonType.OK);
 			alert.showAndWait();
-		}else if(listaImagenes.contains(archivoImagen)){			
+		/*}else if(listaImagenes.contains(archivoImagen)){			
 			Alert alert = new Alert(AlertType.ERROR, "No puede haber 2 parejas con la misma imagen.", ButtonType.OK);
 			alert.showAndWait();
-		} else {
-			listaImagenes.add(archivoImagen);
+		} else {*/
 			nombrePane.setVisible(true);
-		}
-				
+			crearBarajaButton.setDisable(true);
+			siguienteButton.setDisable(true);
+			anteriorButton.setDisable(true);
+			cancelarButton.setDisable(true);
+		//}
 	}
+				
 
 	@FXML
 	public void siguiente(MouseEvent event) {		
@@ -135,7 +145,8 @@ public class EditorBarajaParejasController {
 		}else if(listaImagenes.contains(archivoImagen)){			
 			Alert alert = new Alert(AlertType.ERROR, "No puede haber 2 parejas con la misma imagen.", ButtonType.OK);
 			alert.showAndWait();
-		} else {        
+		} else {     
+			siguienteButton.setDisable(true);
 		//Si no falla vamos a la siguiente	
 			actual++;
 		
@@ -147,8 +158,8 @@ public class EditorBarajaParejasController {
 			imagenCarta.setImage(null);
 			pathImagen.setText(null);
 		
-		//Activar boton de crearBaraja si estamos en pareja 5 en adelante
-			if(actual < 5) {
+		//Activar boton de crearBaraja si estamos en pareja 9 en adelante
+			if(actual < 9) {
 				crearBarajaButton.setDisable(true);
 			} else { 
 				crearBarajaButton.setDisable(false);
@@ -171,7 +182,11 @@ public class EditorBarajaParejasController {
 	}
 	
 	public void cancelarNombre(MouseEvent event) {
-		nombrePane.setVisible(false);
+		nombrePane.setVisible(false);	
+		crearBarajaButton.setDisable(false);
+        siguienteButton.setDisable(false);
+        anteriorButton.setDisable(false);
+        cancelarButton.setDisable(false);
 	}
 	
 	public void aceptarNombre(MouseEvent event) throws IOException {
@@ -186,28 +201,29 @@ public class EditorBarajaParejasController {
 				
 			for(File file : listaImagenes) {
 				  Files.copy(file.toPath(),
-				        (new File(currentDirectory + "/src//imagenes/"+nombreBaraja +"/"+ file.getName())).toPath(),
+				        (new File(currentDirectory + "/src/imagenes/"+nombreBaraja +"/"+ file.getName())).toPath(),
 				        StandardCopyOption.REPLACE_EXISTING);
 			}
 				
 				//Crear la baraja como tal
 				//Completar
 			barajaCreada.setNombre(nombreBaraja);
-			barajaCreada.setTamanyo(2 * actual);
+			barajaCreada.setTamanyo(2 * actual - 2 );
 			imagen = new Image(listaImagenes.get(0).toURI().toString());
 			barajaCreada.setImagenDorso(imagen);
 			
-			for (int i = 1; i < listaImagenes.size(); i++) { 
-					int indice = 0;
-					imagen = new Image(listaImagenes.get(i).toURI().toString());
-					carta = new Carta(barajaCreada.getImagenDorso(), imagen, i-1);
-					barajaCreada.getBaraja()[indice++] = carta;
-					barajaCreada.getBaraja()[indice++] = carta;
-		     }
+			int indice = 0;
+            for (int i = 1; i < listaImagenes.size(); i++) { 
+                        imagen = new Image(listaImagenes.get(i).toURI().toString());
+                        carta = new Carta(barajaCreada.getImagenDorso(), imagen, i-1);
+                        barajaCreada.getBaraja()[indice++] = carta;
+             }
+			
 			
 			singleton.listaBarajas.add(barajaCreada);
 			
-			Alert alert = new Alert(AlertType.CONFIRMATION, "�Baraja creada correctamente!", ButtonType.OK);
+            
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Baraja creada correctamente!", ButtonType.OK);
 			alert.showAndWait();
 			
 			try {
@@ -229,7 +245,7 @@ public class EditorBarajaParejasController {
 	        }
 			
 		} else {
-			Alert alert = new Alert(AlertType.ERROR, "El nombre debe contener al menos un caracter alfanum�rico.", ButtonType.OK);
+			Alert alert = new Alert(AlertType.ERROR, "El nombre debe contener al menos un caracter alfanumerico.", ButtonType.OK);
 			alert.showAndWait();
 		}
 		
@@ -237,23 +253,25 @@ public class EditorBarajaParejasController {
 
 	@FXML
 	public void anterior(MouseEvent event) {
-		//Desactivar boton de siguiente si estamos en pareja  en adelante
-		//if(actual <= 15) siguienteButton.setDisable(false);
-		
 		//Actualizar los labels		
 		actual--;
 
 		if(actual == 0) { //volver a seleccion de dorso
 			try {
-	    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaParejas.fxml"));
+	    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
 	            Parent root = myLoader.load();  
 	            EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController();
 	            Scene scene = new Scene(root);
-	            primaryStage.setTitle("Elige el dorso");
-	            primaryStage.setScene(scene);
-	            primaryStage.setResizable(false);
-	            editorDorso.iniciarEditorDorso(primaryStage, singleton);
-	            primaryStage.show();
+	            Stage stage = new Stage();
+	            stage.setTitle("Seleccione el dorso");
+	            stage.setScene(scene);
+	            stage.initModality(Modality.APPLICATION_MODAL);
+	            stage.setResizable(false);
+	            singleton.posicionX = thisStage.getX();
+	      		singleton.posicionY = thisStage.getY();
+	            editorDorso.iniciarEditorDorso(primaryStage, singleton, false);
+	            stage.show();
+	            thisStage.hide();
 	    	} catch (IOException e) {
 	                e.printStackTrace();
 	        }
@@ -286,6 +304,11 @@ public class EditorBarajaParejasController {
     public void corregirPosicionVentana() {
     	thisStage.setX(singleton.posicionX);
     	thisStage.setY(singleton.posicionY);
+    }
+    
+    public void anyadirIcono() {
+        icon = new Image("/imagenes/Icon.png");
+        thisStage.getIcons().add(icon);
     }
     
     public void actualizarEstilo() {

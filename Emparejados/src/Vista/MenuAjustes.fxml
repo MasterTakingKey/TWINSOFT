@@ -24,12 +24,12 @@
             </ImageView>
          </children>
       </StackPane>
-      <ChoiceBox fx:id="musicaPartida" layoutX="127.0" layoutY="261.0" prefHeight="25.0" prefWidth="165.0" />
+      <ChoiceBox fx:id="musicaPartida" layoutX="100.0" layoutY="261.0" prefHeight="25.0" prefWidth="165.0" />
       <Label alignment="CENTER" layoutX="127.0" layoutY="216.0" prefHeight="30.0" prefWidth="165.0" text="PARTIDA" underline="true">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label alignment="CENTER" layoutX="341.0" layoutY="216.0" prefHeight="30.0" prefWidth="200.0" text="MENU PRINCIPAL" underline="true">
+      <Label alignment="CENTER" layoutX="344.0" layoutY="216.0" prefHeight="30.0" prefWidth="200.0" text="MENU PRINCIPAL" underline="true">
          <font>
             <Font size="16.0" />
          </font></Label>
@@ -37,18 +37,18 @@
          <font>
             <Font size="16.0" />
          </font></Label>
-      <ChoiceBox fx:id="musicaMenuP" layoutX="353.0" layoutY="261.0" prefHeight="25.0" prefWidth="176.0" />
-      <ChoiceBox fx:id="musicaPausa" layoutX="585.0" layoutY="261.0" prefHeight="25.0" prefWidth="188.0" />
+      <ChoiceBox fx:id="musicaMenuP" layoutX="334.0" layoutY="261.0" prefHeight="25.0" prefWidth="176.0" />
+      <ChoiceBox fx:id="musicaPausa" layoutX="579.0" layoutY="261.0" prefHeight="25.0" prefWidth="188.0" />
       <Label alignment="CENTER" layoutX="240.0" layoutY="313.0" prefHeight="30.0" prefWidth="165.0" text="TEMA" underline="true">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <ChoiceBox fx:id="tema" layoutX="263.0" layoutY="354.0" prefHeight="35.0" prefWidth="118.0" />
+      <ChoiceBox fx:id="tema" layoutX="213.0" layoutY="354.0" prefHeight="35.0" prefWidth="118.0" />
       <Button fx:id="salir" layoutX="323.0" layoutY="441.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" text="APLICAR Y VOLVER">
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Button>
-      <ChoiceBox fx:id="barajaPartida" layoutX="483.0" layoutY="354.0" prefHeight="35.0" prefWidth="188.0" />
+      <ChoiceBox fx:id="barajaPartida" layoutX="468.0" layoutY="354.0" prefHeight="35.0" prefWidth="188.0" />
       <Label alignment="CENTER" layoutX="495.0" layoutY="313.0" prefHeight="30.0" prefWidth="165.0" text="BARAJA PARTIDA" underline="true">
          <font>
             <Font size="16.0" />

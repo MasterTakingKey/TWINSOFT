@@ -46,6 +46,8 @@ public class EditorBarajaDorsoController {
     
     private Singleton singleton;
 
+    private Image icon;
+    
     public void iniciarEditorDorso(Stage stage, Singleton nuevoSingleton, boolean transicion){
         primaryStage = stage;
         singleton = nuevoSingleton;
@@ -55,6 +57,7 @@ public class EditorBarajaDorsoController {
         else { corregirPosicionVentana2();}
         actualizarEstilo();
         siguienteButton.setDisable(true);
+        anyadirIcono();
     }
     
     public void inicializarVariables() {
@@ -118,6 +121,11 @@ public class EditorBarajaDorsoController {
 		thisStage.setX(singleton.posicionX);
 		thisStage.setY(singleton.posicionY);
 	}
+	
+	public void anyadirIcono() {
+        icon = new Image("/imagenes/Icon.png");
+        thisStage.getIcons().add(icon);
+    }
 	    
 	    
 	    public void actualizarEstilo() {

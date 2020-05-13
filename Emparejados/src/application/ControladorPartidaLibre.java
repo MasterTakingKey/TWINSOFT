@@ -661,7 +661,9 @@ public class ControladorPartidaLibre {
     void pausarPartida(MouseEvent event) {
     	try {
     		puntuacion.stopTimeLine();
-    		contadorTiempo.setEsPausa(true);
+    		if(tiempoOn) {
+        		contadorTiempo.setEsPausa(true);
+    		}
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     		musicaFondo.stopMusic();
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
@@ -672,7 +674,7 @@ public class ControladorPartidaLibre {
     		stage.setScene(scene);
     		stage.initModality(Modality.APPLICATION_MODAL);
     		stage.setResizable(false);
-        	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaEstandar();});
+        	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaLibre();});
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
@@ -689,8 +691,10 @@ public class ControladorPartidaLibre {
     	corregirTamanyoVentana();
     	corregirPosicionVentana();
     	primaryStage.show();
-    	contadorTiempo.setEsPausa(false);
-    	contadorTiempo.continuar();
+    	if(tiempoOn) {
+        	contadorTiempo.setEsPausa(false);
+        	contadorTiempo.continuar();
+    	}
     	singleton.soundOn = Sound;
     	actualizarSonido();
     	actualizarImagenSonido();  	
@@ -743,8 +747,8 @@ public class ControladorPartidaLibre {
     }
 
     public void corregirPosicionVentana() {
-    	thisStage.setX(0);
-    	thisStage.setY(0);
+    	thisStage.setX(300);
+    	thisStage.setY(100);
     }
     
 }

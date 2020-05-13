@@ -72,7 +72,7 @@ public class ControladorResultadoPartida {
     
     private String animacionPareja;
     
-    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, int filas, int columnas, Singleton nuevoSingleton, boolean tiempoOn, int tiempoPartida, boolean mostrarCartas, int tiempoMostrarCarta, String efectoCarta, String efectoPareja, String animacionCarta, String animacionPareja){
+    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, int filas, int columnas, Singleton nuevoSingleton, boolean tiempoOn, int tiempoPartida, boolean mostrarCartas, int tiempoMostrarCartas, String efectoCarta, String efectoPareja, String animacionCarta, String animacionPareja){
     	primaryStage = stage;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
@@ -80,9 +80,13 @@ public class ControladorResultadoPartida {
         this.columnas = columnas;
         singleton = nuevoSingleton;
         this.efectoCarta = efectoCarta;
-        this.efectoPareja = animacionPareja;
+        this.efectoPareja = efectoPareja;
         this.animacionCarta = animacionCarta;
         this.animacionPareja = animacionPareja;
+        this.tiempoOn = tiempoOn;
+        this.tiempoPartida = tiempoPartida;
+        this.mostrarCartas = mostrarCartas;
+        this.tiempoMostrarCartas = tiempoMostrarCartas;
         inicializarVariables(puntuacion, tiempo);
         mostrarResultado();
         anyadirIcono();
@@ -123,7 +127,7 @@ public class ControladorResultadoPartida {
     	} else if(tipoPartida == "carta") {
     		jugarPartidaCarta();
     	}else if(tipoPartida == "libre") {
-    		jugarPartidaLibre(filas, columnas, tiempoOn, mostrarCartas, tiempoPartida, tiempoMostrarCartas);
+    		jugarPartidaLibre(filas, columnas);
     	}
     }
     
@@ -161,7 +165,7 @@ public class ControladorResultadoPartida {
     	} catch (IOException e) {}
     }
     
-    public void jugarPartidaLibre(int filas, int columnas, boolean tiempoOn, boolean mostrarCartas, int tiempoPartida, int tiempoMostrarCartas) {
+    public void jugarPartidaLibre(int filas, int columnas) {
     	try {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaLibre.fxml"));
             Parent root = (Parent) myLoader.load();

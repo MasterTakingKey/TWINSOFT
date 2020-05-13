@@ -65,6 +65,8 @@ public class EditorBarajaParejasController {
 	
 	private int actual;
 	
+	private Image icon;
+	
 	String currentDirectory = System.getProperty("user.dir");
 	
 	private Singleton singleton;
@@ -92,6 +94,7 @@ public class EditorBarajaParejasController {
         nombrePane.setVisible(false);
         siguienteButton.setDisable(true);
         crearBarajaButton.setDisable(true);
+        anyadirIcono();
         actual = 1;
     }
 	
@@ -301,6 +304,11 @@ public class EditorBarajaParejasController {
     public void corregirPosicionVentana() {
     	thisStage.setX(singleton.posicionX);
     	thisStage.setY(singleton.posicionY);
+    }
+    
+    public void anyadirIcono() {
+        icon = new Image("/imagenes/Icon.png");
+        thisStage.getIcons().add(icon);
     }
     
     public void actualizarEstilo() {

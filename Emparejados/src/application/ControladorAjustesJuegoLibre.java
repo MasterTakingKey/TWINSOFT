@@ -172,10 +172,10 @@ public class ControladorAjustesJuegoLibre {
     	    	tiempoMostrarCartas = Integer.parseInt(textTiempoMostrarCartas.getText());
     	    }
     	    if(cartas%2 != 0) {
-    	    	Alert alert = new Alert(AlertType.ERROR, "El número total de cartas (filas x columnas) debe ser par.");
+    	    	Alert alert = new Alert(AlertType.ERROR, "El numero total de cartas (filas x columnas) debe ser par.");
             	alert.showAndWait();
     	    } else if(filas > 6 || columnas > 6) {
-    	    	Alert alert = new Alert(AlertType.ERROR, "El número máximo tanto de filas como columnas es de 6.");
+    	    	Alert alert = new Alert(AlertType.ERROR, "El numero maximo tanto de filas como columnas es de 6.");
             	alert.showAndWait();
             	
     	    }else if (cartas > singleton.barajaPartida.getTamanyo()) {
@@ -188,7 +188,7 @@ public class ControladorAjustesJuegoLibre {
 	      		ControladorPartidaLibre controladorPartidaLibre = myLoader.<ControladorPartidaLibre>getController();
 	      		Scene scene = new Scene(root);
 	      		primaryStage.setScene(scene);
-	      		primaryStage.setTitle("Partida Estandar");
+	      		primaryStage.setTitle("Partida Libre");
 	      		primaryStage.setResizable(false);
 	      		singleton.posicionX = thisStage.getX();
 	      		singleton.posicionY = thisStage.getY();
@@ -196,7 +196,7 @@ public class ControladorAjustesJuegoLibre {
 	      		primaryStage.show();
     	    }
       	} catch (NumberFormatException nfe) {
-      		Alert alert = new Alert(AlertType.ERROR, "Asegúrate de introducir números en los campos correspondientes.");
+      		Alert alert = new Alert(AlertType.ERROR, "Asegurate de introducir numeros en los campos correspondientes.");
         	alert.showAndWait();
       	} catch (IOException e) {}
     }

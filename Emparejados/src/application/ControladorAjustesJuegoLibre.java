@@ -122,29 +122,7 @@ public class ControladorAjustesJuegoLibre {
         Sound1 = new Image("/imagenes/sonido_on.png");
     	musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
         thisStage = (Stage) buttonJugar.getScene().getWindow();
-        ArrayList<String> clipsVoltear = new ArrayList<String>();
-        clipsVoltear.add("Voltear");
-        clipsVoltear.add("Voltear2");
-        ObservableList<String> audioVoltear = FXCollections.observableArrayList(clipsVoltear); 
-        choiceSonoroCarta.setItems(audioVoltear);
-        choiceSonoroCarta.setValue("Voltear");
-        ArrayList<String> clipsPareja = new ArrayList<String>();
-        clipsPareja.add("Acierto");
-        clipsPareja.add("Acierto2");
-        ObservableList<String> audioPareja = FXCollections.observableArrayList(clipsPareja); 
-        choiceSonoroPareja.setItems(audioPareja);
-        choiceSonoroPareja.setValue("Acierto");
-        ArrayList<String> animacionVoltear = new ArrayList<String>();
-        animacionVoltear.add("Giro");
-        ObservableList<String> animacionCarta = FXCollections.observableArrayList(animacionVoltear); 
-        choiceVisualCarta.setItems(animacionCarta);
-        choiceVisualCarta.setValue("Giro");
-        ArrayList<String> animacionPareja = new ArrayList<String>();
-        animacionPareja.add("Salto");
-        animacionPareja.add("Salto doble");
-        ObservableList<String> animacionCorrecta = FXCollections.observableArrayList(animacionPareja); 
-        choiceVisualPareja.setItems(animacionCorrecta);
-        choiceVisualPareja.setValue("Salto");
+
     }
     
     @FXML

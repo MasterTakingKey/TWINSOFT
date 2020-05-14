@@ -104,8 +104,6 @@ public class ControladorMenuPrincipal {
     	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2, 8));
     	singleton.listaBarajas.add(barajaNintendo);
     	
-    	singleton.barajaPartida = singleton.listaBarajas.get(0);
-    	
     	singleton.estilo = "Azul";
     	
     	String[] musicas = new String[3];
@@ -119,6 +117,8 @@ public class ControladorMenuPrincipal {
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
         singleton.posicionX = (screen.getWidth() - 1050) / 2;
         singleton.posicionY = (screen.getHeight() - 900) / 2;
+        	
+    	singleton.barajaPartida = singleton.listaBarajas.get(0);
         
         singleton.filasPartida = 4;
     	singleton.columnasPartida = 4;
@@ -129,10 +129,10 @@ public class ControladorMenuPrincipal {
     	singleton.mostrarCartasOn = true;
     	singleton.tiempoMostrarCartas = 2;
     	
-    	singleton.efectosSonorosVoltear = "";
-    	singleton.efectosSonorosPareja = "";
-    	singleton.efectosVisualesVoltear = "";
-    	singleton.efectosVisualesPareja = "";
+    	singleton.efectosSonorosVoltear = "Voltear";
+    	singleton.efectosSonorosPareja = "Acierto";
+    	singleton.efectosVisualesVoltear = "Giro";
+    	singleton.efectosVisualesPareja = "Salto";
 	}
     
     public void inicializarVariables() {
@@ -197,7 +197,7 @@ public class ControladorMenuPrincipal {
     
     @FXML
     void editorBarajasHandler(ActionEvent event) {
-    	musicaFondo.stopMusic();
+
     	try {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
             Parent root = myLoader.load();  
@@ -208,8 +208,6 @@ public class ControladorMenuPrincipal {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController(); 
-            //actualizaMusicas();
-            //singleton.estilo = tema.getSelectionModel().getSelectedItem();
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
             editorDorso.iniciarEditorDorso(primaryStage, singleton, true);
@@ -317,6 +315,9 @@ public class ControladorMenuPrincipal {
     		circuloSonido.getStylesheets().remove(temaRojo);
     		circuloSonido.getStylesheets().remove(temaVerde);
     		circuloSonido.getStylesheets().add(temaAzul);
+    		circuloUsuario.getStylesheets().remove(temaRojo);
+    		circuloUsuario.getStylesheets().remove(temaVerde);
+    		circuloUsuario.getStylesheets().add(temaAzul);
     	} else if(singleton.estilo.equals("Rojo")) {
     		anchorPane.getStylesheets().remove(temaAzul);
 			anchorPane.getStylesheets().remove(temaVerde);
@@ -324,6 +325,9 @@ public class ControladorMenuPrincipal {
 			circuloSonido.getStylesheets().remove(temaAzul);
 			circuloSonido.getStylesheets().remove(temaVerde);
 			circuloSonido.getStylesheets().add(temaRojo);
+			circuloUsuario.getStylesheets().remove(temaAzul);
+			circuloUsuario.getStylesheets().remove(temaVerde);
+			circuloUsuario.getStylesheets().add(temaRojo);
     	} else {
     		anchorPane.getStylesheets().remove(temaAzul);
 			anchorPane.getStylesheets().remove(temaRojo);
@@ -331,6 +335,9 @@ public class ControladorMenuPrincipal {
 			circuloSonido.getStylesheets().remove(temaAzul);
 			circuloSonido.getStylesheets().remove(temaRojo);
 			circuloSonido.getStylesheets().add(temaVerde);
+			circuloUsuario.getStylesheets().remove(temaAzul);
+			circuloUsuario.getStylesheets().remove(temaRojo);
+			circuloUsuario.getStylesheets().add(temaVerde);
     	}
     }
     

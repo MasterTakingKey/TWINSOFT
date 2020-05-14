@@ -1,12 +1,10 @@
 package application;
 
 import java.io.IOException;
-import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -55,8 +53,6 @@ public class ControladorMenuPause {
     
     private ControladorPartidaCarta partidaCarta;
     
-    private ControladorPartidaLibre partidaLibre;
-    
     private Image Sound0;
     
     private Image Sound1;
@@ -66,8 +62,6 @@ public class ControladorMenuPause {
     private long tiempoMusica;
     
     private String tipoPartida;
-    
-    private Optional<ButtonType> resultadoSalida;
     
     private Singleton singleton;
     
@@ -102,21 +96,7 @@ public class ControladorMenuPause {
         corregirPosicionVentana();
         actualizarEstilo();
     }
-  
-    void initDataPartidaLibre(Stage partida, String tiempo, String puntos,ControladorPartidaLibre partidaLibre, Singleton nuevoSingleton) {
-    	primaryStage = partida;
-    	this.partidaLibre = partidaLibre;
-        singleton = nuevoSingleton;
-        tipoPartida = "libre";
-        inicializarVariables();
-        anyadirIcono();
-        corregirTamanyoVentana();
-		actualizarSonido();
-        actualizarImagenSonido();
-        corregirTamanyoVentana();
-        corregirPosicionVentana();
-        actualizarEstilo();
-    }
+
     public void actualizarTiempoYPuntos(String tiempo, String puntos) {
     	this.puntos.setText(puntos);
         this.tiempo.setText(tiempo);
@@ -180,8 +160,6 @@ public class ControladorMenuPause {
         	reanudarPartidaEstandar();
     	} else if(tipoPartida == "carta") {
     		reanudarPartidaCarta();
-    	} else if(tipoPartida == "libre") {
-    		reanudarPartidaLibre();
     	}
     }
     
@@ -207,18 +185,6 @@ public class ControladorMenuPause {
       		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
 	    	partidaCarta.reanudarPartida(singleton.soundOn);
-    	}
-    }
-    
-    void reanudarPartidaLibre() {
-    	musicaFondo.stopMusic();
-    	boolean victoria = partidaLibre.isVictoria();
-    	boolean derrota = partidaLibre.isDerrota();
-    	if (!derrota && !victoria) {
-    		singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-	    	thisStage.close();
-	    	partidaLibre.reanudarPartida(singleton.soundOn);
     	}
     }
 

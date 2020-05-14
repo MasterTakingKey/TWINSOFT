@@ -10,10 +10,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -337,29 +339,6 @@ public class ControladorMenuAjustes {
     }
     
     @FXML
-    void editorBarajasHandler(ActionEvent event) {
-    	musicaFondo.stopMusic();
-    	try {
-    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
-            Parent root = myLoader.load();  
-            Scene scene = new Scene(root); 
-            Stage stage = new Stage();                       
-            stage.setTitle("Seleccione el dorso");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController(); 
-            actualizaMusicas();
-            singleton.estilo = tema.getSelectionModel().getSelectedItem();
-            singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-            editorDorso.iniciarEditorDorso(primaryStage, singleton, true);
-            stage.show();
-    	} catch (IOException e) {
-                e.printStackTrace();
-        }
-    }
-    @FXML
     void cancelarYSalirHandler(ActionEvent event) {
     	musicaFondo.stopMusic();
     	try {
@@ -383,44 +362,54 @@ public class ControladorMenuAjustes {
     void aplicarHandler(ActionEvent event) throws IOException {
     	musicaFondo.stopMusic();
     	try {
-    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
-            Parent root = myLoader.load();  
-            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
-            Scene scene = new Scene(root);
-            primaryStage.setTitle("Menu Principal");
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            actualizaMusicas();
-            singleton.estilo = tema.getSelectionModel().getSelectedItem();
-            singleton.barajaPartida = deNombreABaraja();
-            singleton.filasPartida = Integer.parseInt(textFilas.getText());
-            singleton.columnasPartida = Integer.parseInt(textColumnas.getText());
-            singleton.efectosSonorosVoltear = choiceSonoroCarta.getValue();
-            singleton.efectosSonorosPareja = choiceSonoroPareja.getValue();
-            singleton.efectosVisualesVoltear = choiceVisualCarta.getValue();
-            singleton.efectosVisualesPareja = choiceVisualPareja.getValue();
-            if(buttonTiempo.getText().equals("Activado")) {
-            	singleton.limiteTiempoOn = true;
-            	singleton.tiempoPartida = Integer.parseInt(textTiempoPartida.getText());
-            } else {
-            	singleton.limiteTiempoOn = false;
-            }
-            if(buttonMostrarCartas.getText().equals("Activado")) {
-            	singleton.mostrarCartasOn = true;
-            	singleton.tiempoMostrarCartas = Integer.parseInt(textTiempoMostrarCartas.getText());
-            } else {
-            	singleton.mostrarCartasOn = false;
-            }
-            singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
-            primaryStage.show();
+    		 if(Integer.parseInt(textFilas.getText())*Integer.parseInt(textColumnas.getText())%2 != 0) {
+     	    	Alert alert = new Alert(AlertType.ERROR, "El numero total de cartas (filas x columnas) debe ser par.");
+             	alert.showAndWait();
+     	    } else if(Integer.parseInt(textFilas.getText()) > 6 || Integer.parseInt(textColumnas.getText()) > 6) {
+     	    	Alert alert = new Alert(AlertType.ERROR, "El numero maximo tanto de filas como columnas es de 6.");
+             	alert.showAndWait();	
+     	    } else {
+     	    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
+            	Parent root = myLoader.load();  
+            	ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
+            	Scene scene = new Scene(root);
+            	primaryStage.setTitle("Menu Principal");
+            	primaryStage.setScene(scene);
+            	primaryStage.setResizable(false);
+	            actualizaMusicas();
+	            singleton.estilo = tema.getSelectionModel().getSelectedItem();
+	            singleton.barajaPartida = deNombreABaraja();
+	            singleton.filasPartida = Integer.parseInt(textFilas.getText());
+	            singleton.columnasPartida = Integer.parseInt(textColumnas.getText());
+	            singleton.efectosSonorosVoltear = choiceSonoroCarta.getValue();
+	            singleton.efectosSonorosPareja = choiceSonoroPareja.getValue();
+	            singleton.efectosVisualesVoltear = choiceVisualCarta.getValue();
+	            singleton.efectosVisualesPareja = choiceVisualPareja.getValue();
+	            if(buttonTiempo.getText().equals("Activado")) {
+	            	singleton.limiteTiempoOn = true;
+	            	singleton.tiempoPartida = Integer.parseInt(textTiempoPartida.getText());
+	            } else {
+	            	singleton.limiteTiempoOn = false;
+	            }
+	            if(buttonMostrarCartas.getText().equals("Activado")) {
+	            	singleton.mostrarCartasOn = true;
+	            	singleton.tiempoMostrarCartas = Integer.parseInt(textTiempoMostrarCartas.getText());
+	            } else {
+	            	singleton.mostrarCartasOn = false;
+	            }
+	            singleton.posicionX = thisStage.getX();
+	            singleton.posicionY = thisStage.getY();
+	            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
+	            primaryStage.show();
+     	    }
     	} catch (IOException e) {
                 e.printStackTrace();
         }
     }
     
 
+    
+    
     @FXML
     void buttonTiempoHandler(ActionEvent event) {
     	if(buttonTiempo.getText().equals("Activado")) {

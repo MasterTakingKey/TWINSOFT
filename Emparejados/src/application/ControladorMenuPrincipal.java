@@ -197,7 +197,6 @@ public class ControladorMenuPrincipal {
     
     @FXML
     void editorBarajasHandler(ActionEvent event) {
-
     	try {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
             Parent root = myLoader.load();  
@@ -216,6 +215,7 @@ public class ControladorMenuPrincipal {
                 e.printStackTrace();
         }
     } 
+    
     
     @FXML
     void ajustesHandler(ActionEvent event) {

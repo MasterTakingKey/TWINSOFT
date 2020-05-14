@@ -1,7 +1,6 @@
 package application;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -93,6 +92,7 @@ public class ControladorMenuPause {
     	this.partidaCarta = partidaCarta;
         singleton = nuevoSingleton;
         tipoPartida = "carta";
+        actualizarTiempoYPuntos(tiempo, puntos);
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();

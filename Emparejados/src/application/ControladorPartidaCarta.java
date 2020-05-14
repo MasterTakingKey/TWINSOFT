@@ -545,8 +545,8 @@ public class ControladorPartidaCarta {
     }
     
     public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
+    	thisStage.setX(singleton.posicionX + 100);
+    	thisStage.setY(singleton.posicionY + 50);
     }
     
     public void actualizarEstilo() {

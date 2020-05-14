@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="600.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPause">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="600.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPause">
    <children>
       <ImageView fitHeight="118.0" fitWidth="412.0" layoutX="242.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -17,7 +17,7 @@
          <image>
             <Image url="@../imagenes/by_twinsoft.png" />
          </image></ImageView>
-      <StackPane fx:id="circuloHome" layoutX="162.0" layoutY="246.0" prefHeight="162.0" prefWidth="166.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
+      <StackPane fx:id="circuloHome" layoutX="159.0" layoutY="300.0" prefHeight="162.0" prefWidth="166.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
          <children>
             <ImageView fx:id="imageHome" fitHeight="121.0" fitWidth="127.0" onMouseClicked="#clickHome" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -26,7 +26,7 @@
             </ImageView>
          </children>
       </StackPane>
-      <StackPane fx:id="circuloPlay" layoutX="371.0" layoutY="246.0" prefHeight="162.0" prefWidth="166.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
+      <StackPane fx:id="circuloPlay" layoutX="365.0" layoutY="300.0" prefHeight="162.0" prefWidth="166.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
          <children>
             <ImageView fx:id="imagePlay" fitHeight="142.0" fitWidth="138.0" onMouseClicked="#clickPlay" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -35,7 +35,7 @@
             </ImageView>
          </children>
       </StackPane>
-      <StackPane fx:id="circuloSonido" layoutX="572.0" layoutY="246.0" prefHeight="162.0" prefWidth="166.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
+      <StackPane fx:id="circuloSonido" layoutX="571.0" layoutY="300.0" prefHeight="162.0" prefWidth="166.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
          <children>
             <ImageView fx:id="imageSound" fitHeight="133.0" fitWidth="137.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -44,17 +44,17 @@
             </ImageView>
          </children>
       </StackPane>
-      <ImageView fitHeight="55.0" fitWidth="59.0" layoutX="297.0" layoutY="429.0">
+      <ImageView fitHeight="55.0" fitWidth="59.0" layoutX="296.0" layoutY="211.0">
          <image>
             <Image url="@../imagenes/puntuacion.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="55.0" fitWidth="59.0" layoutX="522.0" layoutY="429.0">
+      <ImageView fitHeight="55.0" fitWidth="59.0" layoutX="472.0" layoutY="211.0">
          <image>
             <Image url="@../imagenes/temporizador.png" />
          </image>
       </ImageView>
-      <Label fx:id="puntos" layoutX="369.0" layoutY="437.0" prefHeight="39.0" prefWidth="111.0" styleClass="label2" text="20" />
-      <Label fx:id="tiempo" layoutX="590.0" layoutY="437.0" prefHeight="39.0" prefWidth="128.0" styleClass="label2" text="20" />
+      <Label fx:id="puntos" layoutX="370.0" layoutY="219.0" prefHeight="39.0" prefWidth="102.0" styleClass="label2" text="20" />
+      <Label fx:id="tiempo" layoutX="543.0" layoutY="219.0" prefHeight="39.0" prefWidth="128.0" styleClass="label2" text="20" />
    </children>
 </Pane>

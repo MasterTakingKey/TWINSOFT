@@ -2,7 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +9,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -23,37 +21,43 @@ import javafx.stage.Stage;
 public class ControladorMenuPrincipal {
 
 	@FXML
-    private AnchorPane anchorPane;
+	private AnchorPane anchorPane;
 
-    @FXML
-    private StackPane circuloSonido;
-    
-    @FXML
-    private ScrollPane scrollPane;
+	@FXML
+	private StackPane circuloSonido;
 
-    @FXML
-    private AnchorPane anchorPane2;
-    
-    @FXML
-    private Button ajustes;
+	@FXML
+	private ImageView iconoSonido;
 
-    @FXML
-    private Button partidaEstandar;
+	@FXML
+	private Button salir;
 
-    @FXML
-    private Button modoLibre;
+	@FXML
+	private StackPane circuloUsuario;
 
-    @FXML
-    private Button partidaCarta;
-    
-    @FXML
-    private Button salir;
-    
-    @FXML
-    private Button editorBarajas;
-    
-    @FXML
-    private ImageView iconoSonido;
+	@FXML
+	private ImageView iconoUsuario;
+
+	@FXML
+	private Button partidaEstandar;
+
+	@FXML
+	private Button partidaCarta;
+
+	@FXML
+	private Button partidaCategoria;
+
+	@FXML
+	private Button partidaNiveles;
+
+	@FXML
+	private Button partidaMultijugador;
+
+	@FXML
+	private Button editorBarajas;
+
+	@FXML
+	private Button ajustes;
     
     private Stage primaryStage;
     
@@ -113,8 +117,22 @@ public class ControladorMenuPrincipal {
         singleton.soundOn = true;
     	
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
-        singleton.posicionX = (screen.getWidth() - 910) / 2;
-        singleton.posicionY = (screen.getHeight() - 650) / 2;
+        singleton.posicionX = (screen.getWidth() - 1050) / 2;
+        singleton.posicionY = (screen.getHeight() - 900) / 2;
+        
+        singleton.filasPartida = 4;
+    	singleton.columnasPartida = 4;
+    	
+    	singleton.limiteTiempoOn = true;
+    	singleton.tiempoPartida = 60;
+    	
+    	singleton.mostrarCartasOn = true;
+    	singleton.tiempoMostrarCartas = 2;
+    	
+    	singleton.efectosSonorosVoltear = "";
+    	singleton.efectosSonorosPareja = "";
+    	singleton.efectosVisualesVoltear = "";
+    	singleton.efectosVisualesPareja = "";
 	}
     
     public void inicializarVariables() {
@@ -122,63 +140,6 @@ public class ControladorMenuPrincipal {
         Sound1 = new Image("/imagenes/sonido_on.png");
         musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
         thisStage = (Stage) anchorPane.getScene().getWindow();
-    }
-    
-    public void actualizarSonido() {
-    	if(singleton.soundOn) {
-    		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
-    		musicaFondo.playMusic();
-    	}
-    	else {
-    		musicaFondo.stopMusic();
-    	}
-    }
-    
-    public void actualizarImagenSonido() {
-        if(singleton.soundOn) {
-        	iconoSonido.setImage(Sound1);
-        } else {
-        	iconoSonido.setImage(Sound0);
-        }
-    }
-    
-    
-
-    @FXML
-    void clickSound(MouseEvent event) {
-    	if(singleton.soundOn) {
-    		singleton.soundOn = false;
-    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-    	} else {
-    		singleton.soundOn = true;
-    	}
-    	actualizarSonido();
-    	actualizarImagenSonido();
-    }
-    
-    
-    
-    @FXML
-    void ajustesHandler(ActionEvent event) {
-    	musicaFondo.stopMusic();
-    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-    	try {
-    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
-    		Parent root = myLoader.load();  
-    		ControladorMenuAjustes menuPrincipal = myLoader.<ControladorMenuAjustes>getController();
-    		Scene scene = new Scene(root);
-    		primaryStage.setTitle("Menu Ajustes");
-    		primaryStage.setScene(scene);
-    		primaryStage.setResizable(false);
-        
-    		Image icono = new Image("/imagenes/Icon.png");
-    		primaryStage.getIcons().add(icono);
-        
-    		singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-    		menuPrincipal.iniciarMenuAjustes(primaryStage, singleton);
-    		primaryStage.show();
-    	} catch(IOException e) {}
     }
 
     @FXML
@@ -217,25 +178,22 @@ public class ControladorMenuPrincipal {
       	} catch (IOException e) {}
     }
     
+
+    @FXML
+    void partidaCategoriaHandler(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void partidaNivelesHandler(ActionEvent event) {
+
+    }
     
     @FXML
-    void modoLibreHandler(ActionEvent event) {
-    	musicaFondo.stopMusic();
-    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-    	try {
-      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/AjustesJuegoLibre.fxml"));
-      		Parent root = (Parent) myLoader.load();
-      		ControladorAjustesJuegoLibre controladorAjustesJLibre = myLoader.<ControladorAjustesJuegoLibre>getController();
-      		Scene scene = new Scene(root);
-      		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Ajustes del modo libre");
-      		primaryStage.setResizable(false);
-      		controladorAjustesJLibre.iniciarAjustesJLibre(primaryStage, tiempoMusica, singleton);
-      		primaryStage.show();
-      	} catch (IOException e) {
-      		e.printStackTrace();
-      	}
-    }
+    void partidaMultijugadorHandler(ActionEvent event) {
+
+    }  
     
     @FXML
     void editorBarajasHandler(ActionEvent event) {
@@ -259,7 +217,31 @@ public class ControladorMenuPrincipal {
     	} catch (IOException e) {
                 e.printStackTrace();
         }
+    } 
+    
+    @FXML
+    void ajustesHandler(ActionEvent event) {
+    	musicaFondo.stopMusic();
+    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
+    		Parent root = myLoader.load();  
+    		ControladorMenuAjustes menuAjustes = myLoader.<ControladorMenuAjustes>getController();
+    		Scene scene = new Scene(root);
+    		primaryStage.setTitle("Menu Ajustes");
+    		primaryStage.setScene(scene);
+    		primaryStage.setResizable(false);
+        
+    		Image icono = new Image("/imagenes/Icon.png");
+    		primaryStage.getIcons().add(icono);
+        
+    		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+    		menuAjustes.iniciarMenuAjustes(primaryStage, singleton);
+    		primaryStage.show();
+    	} catch(IOException e) {}
     }
+
     
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
@@ -278,9 +260,45 @@ public class ControladorMenuPrincipal {
         stage.show();
     }
     
+    @FXML
+    void usuarioHandler(MouseEvent event) {
+
+    }
+    
+    @FXML
+    void sonidoHandler(MouseEvent event) {
+    	if(singleton.soundOn) {
+    		singleton.soundOn = false;
+    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	} else {
+    		singleton.soundOn = true;
+    	}
+    	actualizarSonido();
+    	actualizarImagenSonido();
+    }
+    
+    
+    public void actualizarSonido() {
+    	if(singleton.soundOn) {
+    		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
+    		musicaFondo.playMusic();
+    	}
+    	else {
+    		musicaFondo.stopMusic();
+    	}
+    }
+    
+    public void actualizarImagenSonido() {
+        if(singleton.soundOn) {
+        	iconoSonido.setImage(Sound1);
+        } else {
+        	iconoSonido.setImage(Sound0);
+        }
+    }
+
     public void corregirTamanyoVentana() {
-    	thisStage.setWidth(910);
-    	thisStage.setHeight(660);
+    	thisStage.setWidth(1050);
+    	thisStage.setHeight(900);
     }
     
     public void corregirPosicionVentana() {

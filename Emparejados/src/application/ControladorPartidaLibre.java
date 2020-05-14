@@ -678,7 +678,7 @@ public class ControladorPartidaLibre {
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaLibre(primaryStage, this, singleton);
+        	controladorMenuPausa.initDataPartidaLibre(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {

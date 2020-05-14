@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="600.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPause">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="600.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPause">
    <children>
       <ImageView fitHeight="118.0" fitWidth="412.0" layoutX="242.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -43,5 +44,17 @@
             </ImageView>
          </children>
       </StackPane>
+      <ImageView fitHeight="55.0" fitWidth="59.0" layoutX="297.0" layoutY="429.0">
+         <image>
+            <Image url="@../imagenes/puntuacion.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="55.0" fitWidth="59.0" layoutX="522.0" layoutY="429.0">
+         <image>
+            <Image url="@../imagenes/temporizador.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="puntos" layoutX="369.0" layoutY="437.0" prefHeight="39.0" prefWidth="111.0" styleClass="label2" text="20" />
+      <Label fx:id="tiempo" layoutX="590.0" layoutY="437.0" prefHeight="39.0" prefWidth="128.0" styleClass="label2" text="20" />
    </children>
 </Pane>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,7 +10,7 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPrincipal">
    <children>
-      <StackPane fx:id="circuloSonido" layoutX="397.0" layoutY="489.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton">
+      <StackPane fx:id="circuloSonido" layoutX="398.0" layoutY="507.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton">
          <children>
             <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -18,34 +19,6 @@
             </ImageView>
          </children>
       </StackPane>
-      <Button fx:id="jugar" layoutX="241.0" layoutY="241.0" mnemonicParsing="false" onAction="#jugarHandler" prefHeight="50.0" prefWidth="400.0" text="JUGAR">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Button>
-      <Button fx:id="salir" layoutX="242.0" layoutY="388.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="50.0" prefWidth="400.0" text="SALIR">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Button>
-      <Button fx:id="ajustes" layoutX="242.0" layoutY="314.0" mnemonicParsing="false" onAction="#ajustesHandler" prefHeight="50.0" prefWidth="400.0" text="AJUSTES">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Button>
-      <Button fx:id="partidaEstandar" layoutX="242.0" layoutY="195.0" mnemonicParsing="false" onAction="#partidaEstandarHandler" prefHeight="50.0" prefWidth="400.0" text="PARTIDA ESTÁNDAR">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Button>
-      <Button fx:id="modoLibre" layoutX="242.0" layoutY="268.0" mnemonicParsing="false" onAction="#modoLibreHandler" prefHeight="50.0" prefWidth="400.0" text="MODO LIBRE">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Button>
-      <Button fx:id="partidaCarta" layoutX="241.0" layoutY="341.0" mnemonicParsing="false" onAction="#partidaCartaHandler" prefHeight="50.0" prefWidth="400.0" text="PARTIDA POR CARTA">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Button>
-      <Button fx:id="volverAtras" layoutX="242.0" layoutY="409.0" mnemonicParsing="false" onAction="#volverAtrasHandler" prefHeight="50.0" prefWidth="400.0" text="VOLVER ATRÁS">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Button>
       <ImageView fitHeight="224.0" fitWidth="565.0" layoutX="160.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/twins_logo.png" />
@@ -61,5 +34,43 @@
             <Image url="@../imagenes/logo_menu.png" />
          </image>
       </ImageView>
+      <ScrollPane fx:id="scrollPane" layoutX="227.0" layoutY="155.0" prefHeight="344.0" prefWidth="464.0" style="-fx-background-color: transparent; -fx-vbar-policy: NEVER; -fx-hbar-policy: NEVER;">
+        <content>
+          <AnchorPane fx:id="anchorPane2" minHeight="0.0" minWidth="0.0" prefHeight="478.0" prefWidth="466.0" style="-fx-background-color: white;" styleClass="context-menu">
+               <children>
+                  <Button fx:id="salir" layoutX="38.0" layoutY="402.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="50.0" prefWidth="400.0" text="SALIR">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="ajustes" layoutX="34.0" layoutY="248.0" mnemonicParsing="false" onAction="#ajustesHandler" prefHeight="50.0" prefWidth="400.0" text="AJUSTES">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="partidaEstandar" layoutX="33.0" layoutY="14.0" mnemonicParsing="false" onAction="#partidaEstandarHandler" prefHeight="50.0" prefWidth="400.0" text="PARTIDA ESTÁNDAR">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="modoLibre" layoutX="33.0" layoutY="170.0" mnemonicParsing="false" onAction="#modoLibreHandler" prefHeight="50.0" prefWidth="400.0" text="MODO LIBRE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="partidaCarta" layoutX="33.0" layoutY="91.0" mnemonicParsing="false" onAction="#partidaCartaHandler" prefHeight="50.0" prefWidth="400.0" text="PARTIDA POR CARTA">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="editorBarajas" layoutX="38.0" layoutY="328.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="50.0" prefWidth="400.0" text="EDITOR DE BARAJAS">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

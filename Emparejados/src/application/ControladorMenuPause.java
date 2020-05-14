@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -39,6 +40,12 @@ public class ControladorMenuPause {
     @FXML
     private ImageView imageSound;
     
+    @FXML
+    private Label puntos;
+
+    @FXML
+    private Label tiempo;
+    
     private Musica musicaFondo;
     
     private Stage primaryStage;
@@ -65,11 +72,12 @@ public class ControladorMenuPause {
     
     private Singleton singleton;
     
-    void initDataPartidaEstandar(Stage partida, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton) {
+    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
     	singleton = nuevoSingleton;
         tipoPartida = "estandar";
+        actualizarTiempoYPuntos(tiempo, puntos);
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
@@ -80,7 +88,7 @@ public class ControladorMenuPause {
         actualizarEstilo();
     }
     
-    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton) {
+    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         singleton = nuevoSingleton;
@@ -95,7 +103,7 @@ public class ControladorMenuPause {
         actualizarEstilo();
     }
   
-    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, Singleton nuevoSingleton) {
+    void initDataPartidaLibre(Stage partida, String tiempo, String puntos,ControladorPartidaLibre partidaLibre, Singleton nuevoSingleton) {
     	primaryStage = partida;
     	this.partidaLibre = partidaLibre;
         singleton = nuevoSingleton;
@@ -108,6 +116,10 @@ public class ControladorMenuPause {
         corregirTamanyoVentana();
         corregirPosicionVentana();
         actualizarEstilo();
+    }
+    public void actualizarTiempoYPuntos(String tiempo, String puntos) {
+    	this.puntos.setText(puntos);
+        this.tiempo.setText(tiempo);
     }
     
     public void inicializarVariables() {

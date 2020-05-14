@@ -10,6 +10,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,9 +27,12 @@ public class ControladorMenuPrincipal {
 
     @FXML
     private StackPane circuloSonido;
+    
+    @FXML
+    private ScrollPane scrollPane;
 
     @FXML
-    private Button jugar;
+    private AnchorPane anchorPane2;
     
     @FXML
     private Button ajustes;
@@ -46,7 +50,7 @@ public class ControladorMenuPrincipal {
     private Button salir;
     
     @FXML
-    private Button volverAtras;
+    private Button editorBarajas;
     
     @FXML
     private ImageView iconoSonido;
@@ -78,7 +82,6 @@ public class ControladorMenuPrincipal {
         corregirTamanyoVentana();
         corregirPosicionVentana();
         actualizarEstilo();
-        muestraMenuP(true);
     }
     
 	
@@ -118,7 +121,7 @@ public class ControladorMenuPrincipal {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
         musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
-        thisStage = (Stage) salir.getScene().getWindow();
+        thisStage = (Stage) anchorPane.getScene().getWindow();
     }
     
     public void actualizarSonido() {
@@ -139,15 +142,6 @@ public class ControladorMenuPrincipal {
         }
     }
     
-    public void muestraMenuP(boolean b) {
-    	jugar.setVisible(b);
-    	ajustes.setVisible(b);
-    	salir.setVisible(b);
-    	partidaEstandar.setVisible(!b);
-    	modoLibre.setVisible(!b);
-    	partidaCarta.setVisible(!b);
-    	volverAtras.setVisible(!b);
-    }
     
 
     @FXML
@@ -162,11 +156,7 @@ public class ControladorMenuPrincipal {
     	actualizarImagenSonido();
     }
     
-    @FXML
-    void jugarHandler(ActionEvent event) {
-    	muestraMenuP(false);
-    	
-    }
+    
     
     @FXML
     void ajustesHandler(ActionEvent event) {
@@ -248,6 +238,30 @@ public class ControladorMenuPrincipal {
     }
     
     @FXML
+    void editorBarajasHandler(ActionEvent event) {
+    	musicaFondo.stopMusic();
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
+            Parent root = myLoader.load();  
+            Scene scene = new Scene(root); 
+            Stage stage = new Stage();                       
+            stage.setTitle("Seleccione el dorso");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController(); 
+            //actualizaMusicas();
+            //singleton.estilo = tema.getSelectionModel().getSelectedItem();
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            editorDorso.iniciarEditorDorso(primaryStage, singleton, true);
+            stage.show();
+    	} catch (IOException e) {
+                e.printStackTrace();
+        }
+    }
+    
+    @FXML
     void salirHandler(ActionEvent event) throws IOException {
     	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ConfirmacionSalirApp.fxml"));
         Parent root = (Parent) myLoader.load();
@@ -264,14 +278,9 @@ public class ControladorMenuPrincipal {
         stage.show();
     }
     
-    @FXML
-    void volverAtrasHandler(ActionEvent event) {
-    	muestraMenuP(true);
-    }
-
     public void corregirTamanyoVentana() {
     	thisStage.setWidth(910);
-    	thisStage.setHeight(650);
+    	thisStage.setHeight(660);
     }
     
     public void corregirPosicionVentana() {

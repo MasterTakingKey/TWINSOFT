@@ -31,21 +31,12 @@ public class ControladorMenuPrincipal {
 
 	@FXML
 	private Button salir;
-
-	@FXML
-	private StackPane circuloUsuario;
-
-	@FXML
-	private ImageView iconoUsuario;
-
+	
 	@FXML
 	private Button partidaEstandar;
 
 	@FXML
 	private Button partidaCarta;
-
-	@FXML
-	private Button partidaCategoria;
 
 	@FXML
 	private Button partidaNiveles;
@@ -177,13 +168,6 @@ public class ControladorMenuPrincipal {
       		primaryStage.show();
       	} catch (IOException e) {}
     }
-    
-
-    @FXML
-    void partidaCategoriaHandler(ActionEvent event) {
-
-    }
-
 
     @FXML
     void partidaNivelesHandler(ActionEvent event) {
@@ -259,11 +243,6 @@ public class ControladorMenuPrincipal {
     }
     
     @FXML
-    void usuarioHandler(MouseEvent event) {
-
-    }
-    
-    @FXML
     void sonidoHandler(MouseEvent event) {
     	if(singleton.soundOn) {
     		singleton.soundOn = false;
@@ -296,7 +275,7 @@ public class ControladorMenuPrincipal {
 
     public void corregirTamanyoVentana() {
     	thisStage.setWidth(1050);
-    	thisStage.setHeight(900);
+    	thisStage.setHeight(820);
     }
     
     public void corregirPosicionVentana() {
@@ -315,9 +294,6 @@ public class ControladorMenuPrincipal {
     		circuloSonido.getStylesheets().remove(temaRojo);
     		circuloSonido.getStylesheets().remove(temaVerde);
     		circuloSonido.getStylesheets().add(temaAzul);
-    		circuloUsuario.getStylesheets().remove(temaRojo);
-    		circuloUsuario.getStylesheets().remove(temaVerde);
-    		circuloUsuario.getStylesheets().add(temaAzul);
     	} else if(singleton.estilo.equals("Rojo")) {
     		anchorPane.getStylesheets().remove(temaAzul);
 			anchorPane.getStylesheets().remove(temaVerde);
@@ -325,9 +301,6 @@ public class ControladorMenuPrincipal {
 			circuloSonido.getStylesheets().remove(temaAzul);
 			circuloSonido.getStylesheets().remove(temaVerde);
 			circuloSonido.getStylesheets().add(temaRojo);
-			circuloUsuario.getStylesheets().remove(temaAzul);
-			circuloUsuario.getStylesheets().remove(temaVerde);
-			circuloUsuario.getStylesheets().add(temaRojo);
     	} else {
     		anchorPane.getStylesheets().remove(temaAzul);
 			anchorPane.getStylesheets().remove(temaRojo);
@@ -335,9 +308,6 @@ public class ControladorMenuPrincipal {
 			circuloSonido.getStylesheets().remove(temaAzul);
 			circuloSonido.getStylesheets().remove(temaRojo);
 			circuloSonido.getStylesheets().add(temaVerde);
-			circuloUsuario.getStylesheets().remove(temaAzul);
-			circuloUsuario.getStylesheets().remove(temaRojo);
-			circuloUsuario.getStylesheets().add(temaVerde);
     	}
     }
     

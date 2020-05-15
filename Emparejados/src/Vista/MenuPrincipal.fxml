@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="861.0" prefWidth="1050.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPrincipal">
+<AnchorPane fx:id="anchorPane" prefHeight="744.0" prefWidth="1053.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPrincipal">
    <children>
-      <StackPane fx:id="circuloSonido" layoutX="483.0" layoutY="724.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton">
+      <StackPane fx:id="circuloSonido" layoutX="480.0" layoutY="658.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton">
          <children>
             <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#sonidoHandler" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -23,12 +23,12 @@
             <Image url="@../imagenes/twins_logo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="71.0" fitWidth="304.0" layoutX="692.0" layoutY="766.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="71.0" fitWidth="304.0" layoutX="689.0" layoutY="700.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/by_twinsoft.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="165.0" fitWidth="217.0" layoutX="77.0" layoutY="658.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="165.0" fitWidth="217.0" layoutX="69.0" layoutY="583.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/logo_menu.png" />
          </image>
@@ -38,15 +38,6 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <StackPane fx:id="circuloUsuario" layoutX="869.0" layoutY="60.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton">
-         <children>
-            <ImageView fx:id="iconoUsuario" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#usuarioHandler" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/usuario.png" />
-               </image>
-            </ImageView>
-         </children>
-      </StackPane>
       <Button fx:id="partidaEstandar" layoutX="326.0" layoutY="192.0" mnemonicParsing="false" onAction="#partidaEstandarHandler" prefHeight="50.0" prefWidth="400.0" text="PARTIDA ESTÁNDAR">
          <font>
             <Font name="System Bold" size="20.0" />
@@ -57,27 +48,22 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="partidaCategoria" layoutX="326.0" layoutY="345.0" mnemonicParsing="false" onAction="#partidaCategoriaHandler" prefHeight="50.0" prefWidth="400.0" text="PARTIDA POR CATEGORÍA">
+      <Button fx:id="partidaNiveles" layoutX="326.0" layoutY="345.0" mnemonicParsing="false" onAction="#partidaNivelesHandler" prefHeight="50.0" prefWidth="400.0" text="MODO POR NIVELES">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="partidaNiveles" layoutX="326.0" layoutY="422.0" mnemonicParsing="false" onAction="#partidaNivelesHandler" prefHeight="50.0" prefWidth="400.0" text="MODO POR NIVELES">
+      <Button fx:id="partidaMultijugador" layoutX="326.0" layoutY="419.0" mnemonicParsing="false" onAction="#partidaMultijugadorHandler" prefHeight="50.0" prefWidth="400.0" text="MODO MULTIJUGADOR">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="partidaMultijugador" layoutX="326.0" layoutY="494.0" mnemonicParsing="false" onAction="#partidaMultijugadorHandler" prefHeight="50.0" prefWidth="400.0" text="MODO MULTIJUGADOR">
+      <Button fx:id="editorBarajas" layoutX="326.0" layoutY="500.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="50.0" prefWidth="400.0" text="EDITOR DE BARAJAS">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="editorBarajas" layoutX="326.0" layoutY="568.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="50.0" prefWidth="400.0" text="EDITOR DE BARAJAS">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="ajustes" layoutX="326.0" layoutY="641.0" mnemonicParsing="false" onAction="#ajustesHandler" prefHeight="50.0" prefWidth="400.0" text="AJUSTES">
+      <Button fx:id="ajustes" layoutX="326.0" layoutY="574.0" mnemonicParsing="false" onAction="#ajustesHandler" prefHeight="50.0" prefWidth="400.0" text="AJUSTES">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

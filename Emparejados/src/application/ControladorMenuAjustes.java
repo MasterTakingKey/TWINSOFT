@@ -2,7 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ControladorMenuAjustes {
@@ -368,7 +366,10 @@ public class ControladorMenuAjustes {
      	    } else if(Integer.parseInt(textFilas.getText()) > 6 || Integer.parseInt(textColumnas.getText()) > 6) {
      	    	Alert alert = new Alert(AlertType.ERROR, "El numero maximo tanto de filas como columnas es de 6.");
              	alert.showAndWait();	
-     	    } else {
+     	    } else if(deNombreABaraja().getTamanyo() < Integer.parseInt(textFilas.getText())*Integer.parseInt(textColumnas.getText())) {
+    	    	Alert alert = new Alert(AlertType.ERROR, "La baraja seleccionada no tiene suficientes cartas para un tablero de " + textFilas.getText() + "*" + textColumnas.getText() + " .");
+            	alert.showAndWait();
+    		} else {
      	    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
             	Parent root = myLoader.load();  
             	ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();

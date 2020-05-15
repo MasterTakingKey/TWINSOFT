@@ -40,6 +40,12 @@ public class ControladorPartidaEstandar {
     private Label puntosAnyadidos;
     
     @FXML
+    private ImageView iconoTiempo;
+    
+    @FXML
+    private ImageView iconoPuntos;
+    
+    @FXML
     private ImageView iconoSonido;
 
     @FXML
@@ -47,9 +53,6 @@ public class ControladorPartidaEstandar {
     
     @FXML
     private StackPane stackPane;
-
-    @FXML
-    private ImageView usuario;
 
     @FXML
     private ImageView carta00;
@@ -713,6 +716,12 @@ public class ControladorPartidaEstandar {
     	}else {
     		thisStage.setHeight(860);
     		thisStage.setWidth(1400);
+    		iconoTiempo.setTranslateX(250);
+    		tiempo.setTranslateX(270);
+    		iconoPuntos.setTranslateX(350);
+    		puntos.setTranslateX(370);
+    		iconoSonido.setTranslateX(450);
+    		pausa.setTranslateX(470);
     	}
     }
 

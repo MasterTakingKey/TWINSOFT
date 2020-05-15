@@ -31,7 +31,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="45.0" prefWidth="214.0" spacing="8.0">
                <children>
-                  <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="iconoTiempo" fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imagenes/temporizador.png" />
                      </image>
@@ -45,7 +45,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="155.0" spacing="8.0">
                <children>
-                  <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="iconoPuntos" fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imagenes/puntuacion.png" />
                      </image>
@@ -67,11 +67,6 @@
                   <ImageView fx:id="pausa" fitHeight="41.0" fitWidth="44.0" onMouseClicked="#pausarPartida" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imagenes/icono_pausa.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="usuario" fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imagenes/usuario.png" />
                      </image>
                   </ImageView>
                </children>

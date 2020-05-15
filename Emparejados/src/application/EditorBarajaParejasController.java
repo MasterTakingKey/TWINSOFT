@@ -229,7 +229,7 @@ public class EditorBarajaParejasController {
 			try {
 	    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
 	            Parent root = myLoader.load();  
-	            ControladorMenuAjustes menuAjustes = myLoader.<ControladorMenuAjustes>getController();
+	            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
 	            Scene scene = new Scene(root);
 	            primaryStage.setTitle("Menu Ajustes");
 	            primaryStage.setScene(scene);
@@ -237,7 +237,7 @@ public class EditorBarajaParejasController {
 	            
 	            singleton.posicionX = thisStage.getX();
 	      		singleton.posicionY = thisStage.getY();
-	            menuAjustes.iniciarMenuAjustes(primaryStage, singleton);
+	            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
 	           // primaryStage.show();
 	            thisStage.close();
 	    	} catch (IOException e) {

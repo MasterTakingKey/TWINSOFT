@@ -7,9 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.imageio.ImageIO;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -23,7 +21,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -237,8 +234,8 @@ public class EditorBarajaParejasController {
 	            
 	            singleton.posicionX = thisStage.getX();
 	      		singleton.posicionY = thisStage.getY();
-	            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
-	           // primaryStage.show();
+	            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "");
+	            primaryStage.show();
 	            thisStage.close();
 	    	} catch (IOException e) {
 	                e.printStackTrace();

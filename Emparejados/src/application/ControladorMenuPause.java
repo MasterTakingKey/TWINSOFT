@@ -147,7 +147,7 @@ public class ControladorMenuPause {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "menuPausa");
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
@@ -171,7 +171,7 @@ public class ControladorMenuPause {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaEstandar.reanudarPartida(singleton.soundOn);
+	    	partidaEstandar.reanudarPartida(singleton.soundOn, "menuPausa");
     	}
     	
     }
@@ -225,7 +225,7 @@ public class ControladorMenuPause {
     
     public void corregirPosicionVentana() {
     	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
+    	thisStage.setY(singleton.posicionY + 50);
     }
     
     public void actualizarEstilo() {

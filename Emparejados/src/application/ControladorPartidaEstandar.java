@@ -224,7 +224,7 @@ public class ControladorPartidaEstandar {
     
     private Animaciones animacionParejaIncorrecta;
 
-    public void iniciarPartidaEstandar(Stage stage, Singleton nuevoSingleton){
+    public void iniciarPartidaEstandar(Stage stage, Singleton nuevoSingleton, String ventanaAnterior){
     	primaryStage = stage;
         singleton = nuevoSingleton;
         cartas = singleton.filasPartida*singleton.columnasPartida;
@@ -239,7 +239,7 @@ public class ControladorPartidaEstandar {
     	actualizarSonido();
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
-    	corregirPosicionVentana();
+    	corregirPosicionVentana(ventanaAnterior);
     	if(singleton.mostrarCartasOn) {
     		mostrarCartas();
     	}
@@ -659,10 +659,10 @@ public class ControladorPartidaEstandar {
     	}
     }
     
-    public void reanudarPartida(boolean Sound) {
+    public void reanudarPartida(boolean Sound, String ventanaAnterior) {
     	puntuacion.playTimeline();
     	corregirTamanyoVentana();
-    	corregirPosicionVentana();
+    	corregirPosicionVentana(ventanaAnterior);
     	primaryStage.show();
     	if(singleton.limiteTiempoOn) {
         	contadorTiempo.setEsPausa(false);
@@ -725,9 +725,22 @@ public class ControladorPartidaEstandar {
     	}
     }
 
-    public void corregirPosicionVentana() {
-    	thisStage.setX(300);
-    	thisStage.setY(100);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("menuPrincipal")) {
+        	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX + 50);
+            	thisStage.setY(singleton.posicionY + 50);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
+    	} else if(ventanaAnterior.equals("menuPause")) {
+    		thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY - 50);
+    	}  else if(ventanaAnterior.equals("resultadoPartida")) {
+    		thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY - 30);
+    	}
     }
     
 }

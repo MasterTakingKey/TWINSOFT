@@ -23,7 +23,7 @@ public class Main extends Application {
         
         primaryStage.getIcons().add(new Image("/imagenes/Icon.png"));
         
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, null);
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, true, null, "");
         primaryStage.show();
 	}
 

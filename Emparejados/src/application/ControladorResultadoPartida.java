@@ -103,7 +103,7 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartida.iniciarPartidaEstandar(primaryStage, singleton);
+            controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "resultadoPartida");
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -138,7 +138,7 @@ public class ControladorResultadoPartida {
         primaryStage.setResizable(false);
         singleton.posicionX = thisStage.getX();
   		singleton.posicionY = thisStage.getY();
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
+        menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "resultadoPartida");
         primaryStage.show();
         thisStage.close(); 
     }
@@ -156,7 +156,7 @@ public class ControladorResultadoPartida {
 
     public void corregirPosicionVentana() {
     	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
+    	thisStage.setY(singleton.posicionY + 30);
     }
     
     public void actualizarEstilo() {

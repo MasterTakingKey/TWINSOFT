@@ -349,7 +349,7 @@ public class ControladorMenuAjustes {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "ajustes");
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
@@ -400,7 +400,7 @@ public class ControladorMenuAjustes {
 	            }
 	            singleton.posicionX = thisStage.getX();
 	            singleton.posicionY = thisStage.getY();
-	            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
+	            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "ajustes");
 	            primaryStage.show();
      	    }
     	} catch (IOException e) {

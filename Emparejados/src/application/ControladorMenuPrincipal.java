@@ -64,7 +64,7 @@ public class ControladorMenuPrincipal {
     
     private Singleton singleton;
 
-    public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, Singleton nuevoSingleton){
+    public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, Singleton nuevoSingleton, String ventanaAnterior){
         primaryStage = stage;
         if(primeraVez) { 
             inicializarSingleton();
@@ -75,7 +75,7 @@ public class ControladorMenuPrincipal {
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
     }
     
@@ -146,7 +146,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton);
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "menuPrincipal");
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -171,7 +171,20 @@ public class ControladorMenuPrincipal {
 
     @FXML
     void partidaNivelesHandler(ActionEvent event) {
-
+    	musicaFondo.stopMusic();
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/SeleccionNiveles.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorSeleccionNiveles controladorSeleccionNiveles = myLoader.<ControladorSeleccionNiveles>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Seleccion de Niveles");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorSeleccionNiveles.iniciarSeleccionNiveles(primaryStage, singleton);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
     
     @FXML
@@ -195,9 +208,7 @@ public class ControladorMenuPrincipal {
       		singleton.posicionY = thisStage.getY();
             editorDorso.iniciarEditorDorso(primaryStage, singleton, true);
             stage.show();
-    	} catch (IOException e) {
-                e.printStackTrace();
-        }
+    	} catch (IOException e) {}
     } 
     
     
@@ -278,9 +289,23 @@ public class ControladorMenuPrincipal {
     	thisStage.setHeight(820);
     }
     
-    public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("ajustes")) {
+        	thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY);
+    	} else if(ventanaAnterior.equals("menuPausa")) {
+        	thisStage.setX(singleton.posicionX - 80);
+        	thisStage.setY(singleton.posicionY - 80);
+    	} else if(ventanaAnterior.equals("resultadoPartida")) {
+        	thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY);
+    	} else if(ventanaAnterior.equals("seleccionNiveles")) {
+        	thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY - 100);
+    	} else {
+        	thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY);
+    	}
     }
     
     public void actualizarEstilo() {

@@ -246,6 +246,7 @@ public class ControladorPartidaEstandar {
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
     	corregirPosicionVentana(ventanaAnterior);
+    	actualizarEstilo();
     	if(singleton.mostrarCartasOn) {
     		mostrarCartas();
     	}
@@ -772,50 +773,25 @@ public class ControladorPartidaEstandar {
     	String temaBosque = getClass().getResource("estiloBosque.css").toExternalForm();
         String temaCielo = getClass().getResource("estiloCielo.css").toExternalForm();
         String temaAgua = getClass().getResource("estiloAgua.css").toExternalForm();
-        String temaMontaña = getClass().getResource("estiloMontaña.css").toExternalForm();
-        String temaFuego = getClass().getResource("estiloFuego.css").toExternalForm();
     	if(nivel == 1 || nivel == 2) {
     		tablero.getStylesheets().remove(tema1);
     		tablero.getStylesheets().remove(temaCielo);
     		tablero.getStylesheets().remove(temaAgua);
-    		tablero.getStylesheets().remove(temaMontaña);
-    		tablero.getStylesheets().remove(temaFuego);
     		tablero.getStylesheets().add(temaBosque);
-    		tablero.getStyleClass().add(temaBosque);
     	} else if(nivel == 3 || nivel == 4) {
     		tablero.getStylesheets().remove(tema1);
     		tablero.getStylesheets().remove(temaBosque);
     		tablero.getStylesheets().remove(temaAgua);
-    		tablero.getStylesheets().remove(temaMontaña);
-    		tablero.getStylesheets().remove(temaFuego);
     		tablero.getStylesheets().add(temaCielo);
     	} else if(nivel == 5 || nivel == 6) {
     		tablero.getStylesheets().remove(tema1);
     		tablero.getStylesheets().remove(temaBosque);
     		tablero.getStylesheets().remove(temaCielo);
-    		tablero.getStylesheets().remove(temaMontaña);
-    		tablero.getStylesheets().remove(temaFuego);
     		tablero.getStylesheets().add(temaAgua);
-    	} else if(nivel == 7 || nivel == 8) {
-    		tablero.getStylesheets().remove(tema1);
-    		tablero.getStylesheets().remove(temaBosque);
-    		tablero.getStylesheets().remove(temaCielo);
-    		tablero.getStylesheets().remove(temaAgua);
-    		tablero.getStylesheets().remove(temaFuego);
-    		tablero.getStylesheets().add(temaMontaña);
-    	} else if(nivel == 9 || nivel == 10) {
-    		tablero.getStylesheets().remove(tema1);
-    		tablero.getStylesheets().remove(temaBosque);
-    		tablero.getStylesheets().remove(temaCielo);
-    		tablero.getStylesheets().remove(temaAgua);
-    		tablero.getStylesheets().remove(temaMontaña);
-    		tablero.getStylesheets().add(temaFuego);
     	} else {
     		tablero.getStylesheets().remove(temaBosque);
     		tablero.getStylesheets().remove(temaCielo);
     		tablero.getStylesheets().remove(temaAgua);
-    		tablero.getStylesheets().remove(temaMontaña);
-    		tablero.getStylesheets().remove(temaFuego);
     		tablero.getStylesheets().add(tema1);
     	
     	}

@@ -825,6 +825,24 @@ public class ControladorPartidaCarta {
 			anchorPane.getStylesheets().remove(temaRojo);
 			anchorPane.getStylesheets().add(temaVerde);
     	}
-    }
+    	
+    	String tema1 = getClass().getResource("estilo1.css").toExternalForm();
+    	String temaDesierto = getClass().getResource("estiloDesierto.css").toExternalForm();
+        String temaFuego = getClass().getResource("estiloFuego.css").toExternalForm();
+    	if(nivel == 7 || nivel == 8) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaFuego);
+    		tablero.getStylesheets().add(temaDesierto);
+    	} else if(nivel == 9 || nivel == 10) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaDesierto);
+    		tablero.getStylesheets().add(temaFuego);
+    	}  else {
+    		tablero.getStylesheets().remove(temaDesierto);
+    		tablero.getStylesheets().remove(temaFuego);
+    		tablero.getStylesheets().add(tema1);
+    	
+    	}
+    } 
     
 }

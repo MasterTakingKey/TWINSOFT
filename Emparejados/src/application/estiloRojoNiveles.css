@@ -1,0 +1,92 @@
+
+.buttonSalir{
+	-fx-background-color: white;
+	-fx-background-radius: 30;
+	-fx-text-fill: red;
+	-fx-border-color: red;
+	-fx-border-radius: 20;
+	-fx-border-width: 5;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.button:hover{
+	-fx-font-weight: bold;
+	-fx-background-color: red;
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+	-fx-border-color: red;
+	-fx-border-radius: 20;
+	-fx-border-width: 5;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.button:pressed{
+	-fx-font-weight: bold;
+	-fx-background-color: red;
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+	-fx-border-color: red;
+	-fx-border-radius: 20;
+	-fx-border-width: 5;
+	-fx-rotate: 2;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+
+.buttonBosque{
+	-fx-background-image: url('/imagenes/iconoBosque.png');
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+	-fx-border-color: white;
+	-fx-border-width: 5;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.buttonCielo{
+	-fx-background-image: url('/imagenes/iconoCielo.png');
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+	-fx-border-color: white;
+	-fx-border-width: 5;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.buttonAgua{
+	-fx-background-image: url('/imagenes/iconoAgua.png');
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+	-fx-border-color: white;
+	-fx-border-width: 5;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.buttonDesierto{
+	-fx-background-image: url('/imagenes/iconoDesierto.png');
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+	-fx-border-color: white;
+	-fx-border-width: 5;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.buttonFuego{
+	-fx-background-image: url('/imagenes/iconoFuego.png');
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+	-fx-border-color: white;
+	-fx-border-width: 5;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.fondoMenu{
+	-fx-background-color: white;
+    -fx-border-color: red;
+	-fx-border-width: 30;
+}
+
+.fondoBoton{
+	-fx-background-color: white;
+    -fx-border-color: red;
+	-fx-border-width: 7;
+	-fx-border-radius: 40;
+}

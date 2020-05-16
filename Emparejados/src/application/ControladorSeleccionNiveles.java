@@ -1,7 +1,6 @@
 package application;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +11,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ControladorSeleccionNiveles {
@@ -78,6 +81,7 @@ public class ControladorSeleccionNiveles {
         primaryStage = stage;
         singleton = nuevoSingleton;
         inicializarVariables();
+
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
@@ -91,7 +95,8 @@ public class ControladorSeleccionNiveles {
         musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[2] +".wav", 0L);
     	thisStage = (Stage) nivel1.getScene().getWindow();
     }
-    
+
+
     @FXML
     void nivel1Handler(ActionEvent event) {
     	
@@ -364,15 +369,15 @@ public class ControladorSeleccionNiveles {
         	thisStage.setX(singleton.posicionX);
         	thisStage.setY(singleton.posicionY + 100);
     	} else if(ventanaAnterior.equals("resultadoPartida")) {
-        	thisStage.setX(singleton.posicionX - 50);
+    		thisStage.setX(singleton.posicionX - 50);
         	thisStage.setY(singleton.posicionY + 20);
     	}
     }
     
     public void actualizarEstilo() {
-    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
-        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
-        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	String temaAzul = getClass().getResource("estiloAzulNiveles.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojoNiveles.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerdeNiveles.css").toExternalForm();
     	if(singleton.estilo.equals("Azul")) {
     		anchorPane.getStylesheets().remove(temaRojo);
     		anchorPane.getStylesheets().remove(temaVerde);
@@ -396,5 +401,6 @@ public class ControladorSeleccionNiveles {
 			circuloSonido.getStylesheets().add(temaVerde);
     	}
     }
+   
 
 }

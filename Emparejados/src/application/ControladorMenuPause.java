@@ -259,7 +259,7 @@ public class ControladorMenuPause {
     	    	thisStage.setY(singleton.posicionY + 150);
         	} else {
         		thisStage.setX(singleton.posicionX + 250);
-            	thisStage.setY(singleton.posicionY + 100);
+            	thisStage.setY(singleton.posicionY + 200);
         	}
     	}
 

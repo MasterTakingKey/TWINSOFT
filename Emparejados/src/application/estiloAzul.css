@@ -31,7 +31,6 @@
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
 }
 
-
 .choice-box {
     -fx-pref-width: 220;
     -fx-background-color: white;

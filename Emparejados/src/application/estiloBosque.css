@@ -1,4 +1,5 @@
 
 .fondoTablero{
-    -fx-background-image: url("/imagenes/bosque.jpg");
+    -fx-background-image: url("/imagenes/bosque.png");
+    -fx-background-radius: 30;
 }

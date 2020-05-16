@@ -88,12 +88,12 @@ public class ControladorMenuPrincipal {
 		Baraja barajaAnimales = new Baraja(4, 4);
     	barajaAnimales.barajaTematica(new CrearBarajaAnimalesEstrategia(2, 8));
     	singleton.listaBarajas.add(barajaAnimales);
+    	Baraja barajaNintendo = new Baraja(5, 6);
+    	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2, 15));
+    	singleton.listaBarajas.add(barajaNintendo);
     	Baraja barajaDeportes = new Baraja(4, 4);
     	barajaDeportes.barajaTematica(new CrearBarajaDeportesEstrategia(2, 8));
     	singleton.listaBarajas.add(barajaDeportes);
-    	Baraja barajaNintendo = new Baraja(4, 4);
-    	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2, 8));
-    	singleton.listaBarajas.add(barajaNintendo);
     	
     	singleton.estilo = "Azul";
     	
@@ -146,7 +146,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "menuPrincipal", false);
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "menuPrincipal", false, 0);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -164,7 +164,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, false);
+      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, "menuPrincipal", false, 0);
       		primaryStage.show();
       	} catch (IOException e) {}
     }

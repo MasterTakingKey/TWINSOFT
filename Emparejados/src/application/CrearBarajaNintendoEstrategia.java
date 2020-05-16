@@ -45,6 +45,13 @@ public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
 		imagenes.add(new Image("/imagenes/baraja_nintendo/pit.png"));
 		imagenes.add(new Image("/imagenes/baraja_nintendo/samus.png"));
 		imagenes.add(new Image("/imagenes/baraja_nintendo/pikachu.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/wario.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/yoshi.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/jigglypuff.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/lucario.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/chrom.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/donkey.png"));
+		imagenes.add(new Image("/imagenes/baraja_nintendo/toonLink.png"));
     	
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {

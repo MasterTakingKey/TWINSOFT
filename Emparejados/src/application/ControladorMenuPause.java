@@ -67,7 +67,7 @@ public class ControladorMenuPause {
     
     private boolean esNiveles;
     
-    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton, boolean niveles) {
+    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
     	singleton = nuevoSingleton;
@@ -80,11 +80,11 @@ public class ControladorMenuPause {
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
     }
     
-    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton, boolean niveles) {
+    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         singleton = nuevoSingleton;
@@ -97,7 +97,7 @@ public class ControladorMenuPause {
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
     }
 
@@ -189,7 +189,7 @@ public class ControladorMenuPause {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaCarta.reanudarPartida(singleton.soundOn);
+	    	partidaCarta.reanudarPartida(singleton.soundOn, "menuPausa");
     	}
     }
     
@@ -248,9 +248,25 @@ public class ControladorMenuPause {
     	thisStage.setHeight(620);
     }
     
-    public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY + 50);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("partidaEstandar")) {
+        	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+            	thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY + 50);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
+    	} else if(ventanaAnterior.equals("partidaCarta")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+    	    	thisStage.setX(singleton.posicionX);
+    	    	thisStage.setY(singleton.posicionY + 150);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
+    	}
+
     }
     
     public void actualizarEstilo() {

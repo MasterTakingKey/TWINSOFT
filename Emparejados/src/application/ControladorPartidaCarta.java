@@ -206,6 +206,8 @@ public class ControladorPartidaCarta {
     private int indiceBarajaAuxiliar;
     
     private int cartas;
+    
+    private int nivel;
 	
 	private ArrayList<Carta> parejasFalladas;
 	
@@ -239,10 +241,11 @@ public class ControladorPartidaCarta {
     
     private Animaciones animacionParejaIncorrecta;
 
-    public void iniciarPartidaCarta(Stage stage, Singleton nuevoSingleton, boolean niveles){
+    public void iniciarPartidaCarta(Stage stage, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
     	primaryStage = stage;
         singleton = nuevoSingleton;
         esNiveles = niveles;
+        nivel = nuevoNivel;
         cartas = singleton.filasPartida*singleton.columnasPartida;
         inicializarBaraja();
         inicializarTablero();
@@ -255,7 +258,7 @@ public class ControladorPartidaCarta {
     	actualizarSonido();
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
-    	corregirPosicionVentana();
+    	corregirPosicionVentana(ventanaAnterior);
     	actualizarEstilo();
     	mostrarSiguienteCarta();
     	if(singleton.mostrarCartasOn) {
@@ -664,9 +667,9 @@ public class ControladorPartidaCarta {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "carta", singleton, esNiveles);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "carta", singleton, "partidaCarta", esNiveles, nivel);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "carta", singleton, esNiveles);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "carta", singleton, "partidaCarta", esNiveles, nivel);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -695,7 +698,7 @@ public class ControladorPartidaCarta {
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaCarta(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, esNiveles);
+        	controladorMenuPausa.initDataPartidaCarta(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaCarta", esNiveles);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -703,10 +706,10 @@ public class ControladorPartidaCarta {
     	}
     }
     
-    public void reanudarPartida(boolean Sound) {
+    public void reanudarPartida(boolean Sound, String ventanaAnterior) {
     	puntuacion.playTimeline();
     	corregirTamanyoVentana();
-    	corregirPosicionVentana();
+    	corregirPosicionVentana(ventanaAnterior);
     	primaryStage.show();
     	if(singleton.limiteTiempoOn) {
         	contadorTiempo.setEsPausa(false);
@@ -758,7 +761,7 @@ public class ControladorPartidaCarta {
     		thisStage.setHeight(950);
     		thisStage.setWidth(910);
     	}else {
-    		thisStage.setHeight(860);
+    		thisStage.setHeight(1000);
     		thisStage.setWidth(1400);
     		iconoTiempo.setTranslateX(250);
     		tiempo.setTranslateX(270);
@@ -769,9 +772,40 @@ public class ControladorPartidaCarta {
     	}
     }
 
-    public void corregirPosicionVentana() {
-    	thisStage.setX(300);
-    	thisStage.setY(100);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("menuPrincipal")) {
+        	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX + 50);
+            	thisStage.setY(singleton.posicionY - 50);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
+    	} else if(ventanaAnterior.equals("menuPause")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY - 50);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
+    	}  else if(ventanaAnterior.equals("resultadoPartida")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY - 30);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
+    	} else if(ventanaAnterior.equals("seleccionNiveles")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX + 50);
+            	thisStage.setY(singleton.posicionY - 50);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
+    	}
     }
     
     public void actualizarEstilo() {

@@ -193,6 +193,8 @@ public class ControladorPartidaEstandar {
     private int puntosAnteriores;
     
     private int cartas;
+    
+    private int nivel;
 	
 	private ArrayList<Carta> parejasFalladas;
 	
@@ -226,10 +228,11 @@ public class ControladorPartidaEstandar {
     
     private Animaciones animacionParejaIncorrecta;
 
-    public void iniciarPartidaEstandar(Stage stage, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles){
+    public void iniciarPartidaEstandar(Stage stage, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
     	primaryStage = stage;
         singleton = nuevoSingleton;
         esNiveles = niveles;
+        nivel = nuevoNivel;
         cartas = singleton.filasPartida*singleton.columnasPartida;
         inicializarBaraja();
         inicializarTablero();
@@ -623,9 +626,9 @@ public class ControladorPartidaEstandar {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", singleton, esNiveles);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", singleton, "partidaEstandar", esNiveles, nivel);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", singleton, esNiveles);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", singleton, "partidaEstandar", esNiveles, nivel);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -654,7 +657,7 @@ public class ControladorPartidaEstandar {
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, esNiveles);
+        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaCarta", esNiveles);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -738,14 +741,83 @@ public class ControladorPartidaEstandar {
         		thisStage.setY(100);
         	}
     	} else if(ventanaAnterior.equals("menuPause")) {
-    		thisStage.setX(singleton.posicionX);
-        	thisStage.setY(singleton.posicionY - 50);
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY - 50);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
     	}  else if(ventanaAnterior.equals("resultadoPartida")) {
-    		thisStage.setX(singleton.posicionX);
-        	thisStage.setY(singleton.posicionY - 30);
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY - 30);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
     	} else if(ventanaAnterior.equals("seleccionNiveles")) {
-    		thisStage.setX(singleton.posicionX + 50);
-        	thisStage.setY(singleton.posicionY - 50);
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX + 50);
+            	thisStage.setY(singleton.posicionY - 50);
+        	} else {
+        		thisStage.setX(300);
+        		thisStage.setY(100);
+        	}
+    	}
+    }
+    
+    public void actualizarEstilo() {
+    	String tema1 = getClass().getResource("estilo1.css").toExternalForm();
+    	String temaBosque = getClass().getResource("estiloBosque.css").toExternalForm();
+        String temaCielo = getClass().getResource("estiloCielo.css").toExternalForm();
+        String temaAgua = getClass().getResource("estiloAgua.css").toExternalForm();
+        String temaMontaña = getClass().getResource("estiloMontaña.css").toExternalForm();
+        String temaFuego = getClass().getResource("estiloFuego.css").toExternalForm();
+    	if(nivel == 1 || nivel == 2) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaCielo);
+    		tablero.getStylesheets().remove(temaAgua);
+    		tablero.getStylesheets().remove(temaMontaña);
+    		tablero.getStylesheets().remove(temaFuego);
+    		tablero.getStylesheets().add(temaBosque);
+    		tablero.getStyleClass().add(temaBosque);
+    	} else if(nivel == 3 || nivel == 4) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaBosque);
+    		tablero.getStylesheets().remove(temaAgua);
+    		tablero.getStylesheets().remove(temaMontaña);
+    		tablero.getStylesheets().remove(temaFuego);
+    		tablero.getStylesheets().add(temaCielo);
+    	} else if(nivel == 5 || nivel == 6) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaBosque);
+    		tablero.getStylesheets().remove(temaCielo);
+    		tablero.getStylesheets().remove(temaMontaña);
+    		tablero.getStylesheets().remove(temaFuego);
+    		tablero.getStylesheets().add(temaAgua);
+    	} else if(nivel == 7 || nivel == 8) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaBosque);
+    		tablero.getStylesheets().remove(temaCielo);
+    		tablero.getStylesheets().remove(temaAgua);
+    		tablero.getStylesheets().remove(temaFuego);
+    		tablero.getStylesheets().add(temaMontaña);
+    	} else if(nivel == 9 || nivel == 10) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaBosque);
+    		tablero.getStylesheets().remove(temaCielo);
+    		tablero.getStylesheets().remove(temaAgua);
+    		tablero.getStylesheets().remove(temaMontaña);
+    		tablero.getStylesheets().add(temaFuego);
+    	} else {
+    		tablero.getStylesheets().remove(temaBosque);
+    		tablero.getStylesheets().remove(temaCielo);
+    		tablero.getStylesheets().remove(temaAgua);
+    		tablero.getStylesheets().remove(temaMontaña);
+    		tablero.getStylesheets().remove(temaFuego);
+    		tablero.getStylesheets().add(tema1);
+    	
     	}
     }
     

@@ -108,54 +108,189 @@ public class ControladorSeleccionNiveles {
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true);
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 1);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
 
     @FXML
     void nivel2Handler(ActionEvent event) {
-
+    	actualizarSingleton(0, 3, 4, true, 50, true, 2);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaEstandar.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 2);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
 
     @FXML
     void nivel3Handler(ActionEvent event) {
-
+    	actualizarSingleton(0, 4, 4, true, 50, true, 2);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaEstandar.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 3);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
 
     @FXML
     void nivel4Handler(ActionEvent event) {
-
+    	actualizarSingleton(0, 4, 4, true, 40, true, 2);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaEstandar.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 4);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
 
     @FXML
     void nivel5Handler(ActionEvent event) {
-
+    	actualizarSingleton(1, 4, 5, true, 50, false, 0);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaEstandar.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 5);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
 
     @FXML
     void nivel6Handler(ActionEvent event) {
-
+    	actualizarSingleton(1, 4, 6, true, 50, false, 0);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaEstandar.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 6);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
 
     @FXML
     void nivel7Handler(ActionEvent event) {
-
+    	actualizarSingleton(1, 4, 6, true, 90, false, 0);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaCarta.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaCarta controladorPartida = myLoader.<ControladorPartidaCarta>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaCarta(primaryStage, singleton, "seleccionNiveles", true, 7);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
 
     @FXML
     void nivel8Handler(ActionEvent event) {
-
+    	actualizarSingleton(1, 5, 6, true, 90, false, 0);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaCarta.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaCarta controladorPartida = myLoader.<ControladorPartidaCarta>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaCarta(primaryStage, singleton, "seleccionNiveles", true, 8);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
 
     @FXML
     void nivel9Handler(ActionEvent event) {
-
+    	actualizarSingleton(2, 5, 6, true, 80, false, 0);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaCarta.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaCarta controladorPartida = myLoader.<ControladorPartidaCarta>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaCarta(primaryStage, singleton, "seleccionNiveles", true, 9);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
 
     @FXML
     void nivel10Handler(ActionEvent event) {
-
+    	actualizarSingleton(2, 6, 6, true, 80, false, 0);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaCarta.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaCarta controladorPartida = myLoader.<ControladorPartidaCarta>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaCarta(primaryStage, singleton, "seleccionNiveles", true, 10);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
     
     public void actualizarSingleton(int baraja, int filas, int columnas, boolean tiempoOn, int tiempo, boolean mostrarOn, int mostrar) {

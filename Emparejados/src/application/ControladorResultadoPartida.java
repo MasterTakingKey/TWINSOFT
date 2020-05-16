@@ -52,17 +52,20 @@ public class ControladorResultadoPartida {
     
     private boolean esNiveles;
     
-    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, Singleton nuevoSingleton, boolean niveles){
+    private int nivel;
+    
+    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
     	primaryStage = stage;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
         singleton = nuevoSingleton;
         esNiveles = niveles;
+        nivel = nuevoNivel;
         inicializarVariables(puntuacion, tiempo);
         mostrarResultado();
         anyadirIcono();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
     }
  
@@ -109,7 +112,7 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "resultadoPartida", esNiveles);
+            controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "resultadoPartida", esNiveles, nivel);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -126,7 +129,7 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, esNiveles);
+            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, "menuPrincipal", esNiveles, nivel);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -198,9 +201,24 @@ public class ControladorResultadoPartida {
     	primaryStage.setHeight(627);
     }
 
-    public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY + 30);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("partidaEstandar")) {
+        	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+            	thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY + 30);
+        	} else {
+        		thisStage.setX(singleton.posicionX + 150);
+            	thisStage.setY(singleton.posicionY + 50);
+        	}
+    	} else if(ventanaAnterior.equals("partidaCarta")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+    	    	thisStage.setX(singleton.posicionX);
+    	    	thisStage.setY(singleton.posicionY + 30);
+        	} else {
+        		thisStage.setX(singleton.posicionX + 150);
+            	thisStage.setY(singleton.posicionY);
+        	}
+    	}
     }
     
     public void actualizarEstilo() {

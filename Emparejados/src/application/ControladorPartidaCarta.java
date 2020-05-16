@@ -216,6 +216,8 @@ public class ControladorPartidaCarta {
     private boolean esVictoria;
 
 	private boolean esDerrota;
+	
+	private boolean esNiveles;
     
     private AudioClip voltearCarta;
     
@@ -237,9 +239,10 @@ public class ControladorPartidaCarta {
     
     private Animaciones animacionParejaIncorrecta;
 
-    public void iniciarPartidaCarta(Stage stage, Singleton nuevoSingleton){
+    public void iniciarPartidaCarta(Stage stage, Singleton nuevoSingleton, boolean niveles){
     	primaryStage = stage;
         singleton = nuevoSingleton;
+        esNiveles = niveles;
         cartas = singleton.filasPartida*singleton.columnasPartida;
         inicializarBaraja();
         inicializarTablero();
@@ -661,9 +664,9 @@ public class ControladorPartidaCarta {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "carta", singleton);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "carta", singleton, esNiveles);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "carta", singleton);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "carta", singleton, esNiveles);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -692,7 +695,7 @@ public class ControladorPartidaCarta {
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaCarta(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton);
+        	controladorMenuPausa.initDataPartidaCarta(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, esNiveles);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {

@@ -146,7 +146,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "menuPrincipal");
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "menuPrincipal", false);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -164,7 +164,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton);
+      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, false);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -182,7 +182,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-      		controladorSeleccionNiveles.iniciarSeleccionNiveles(primaryStage, singleton);
+      		controladorSeleccionNiveles.iniciarSeleccionNiveles(primaryStage, singleton, "menuPrincipal");
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -292,7 +292,7 @@ public class ControladorMenuPrincipal {
     public void corregirPosicionVentana(String ventanaAnterior) {
     	if(ventanaAnterior.equals("ajustes")) {
         	thisStage.setX(singleton.posicionX);
-        	thisStage.setY(singleton.posicionY);
+        	thisStage.setY(singleton.posicionY + 20);
     	} else if(ventanaAnterior.equals("menuPausa")) {
         	thisStage.setX(singleton.posicionX - 80);
         	thisStage.setY(singleton.posicionY - 80);

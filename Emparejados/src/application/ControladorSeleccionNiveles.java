@@ -74,14 +74,14 @@ public class ControladorSeleccionNiveles {
     
     private Singleton singleton;
     
-    public void iniciarSeleccionNiveles(Stage stage, Singleton nuevoSingleton){
+    public void iniciarSeleccionNiveles(Stage stage, Singleton nuevoSingleton, String ventanaAnterior){
         primaryStage = stage;
         singleton = nuevoSingleton;
         inicializarVariables();
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
     }
     
@@ -94,7 +94,23 @@ public class ControladorSeleccionNiveles {
     
     @FXML
     void nivel1Handler(ActionEvent event) {
-
+    	
+    	actualizarSingleton(0, 2, 4, true, 60, true, 2);
+    	musicaFondo.stopMusic();
+    	
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaEstandar.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true);
+      		primaryStage.show();
+      	} catch (IOException e) {}
     }
 
     @FXML
@@ -140,6 +156,19 @@ public class ControladorSeleccionNiveles {
     @FXML
     void nivel10Handler(ActionEvent event) {
 
+    }
+    
+    public void actualizarSingleton(int baraja, int filas, int columnas, boolean tiempoOn, int tiempo, boolean mostrarOn, int mostrar) {
+    	singleton.barajaPartida = singleton.listaBarajas.get(baraja);
+    	
+    	singleton.filasPartida = filas;
+    	singleton.columnasPartida = columnas;
+    	
+    	singleton.limiteTiempoOn = tiempoOn;
+    	singleton.tiempoPartida = tiempo;
+    	
+    	singleton.mostrarCartasOn = mostrarOn;
+    	singleton.tiempoMostrarCartas = mostrar;
     }
     
     @FXML
@@ -195,9 +224,14 @@ public class ControladorSeleccionNiveles {
     	thisStage.setHeight(700);
     }
     
-    public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY + 100);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("menuPrincipal")) {
+        	thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY + 100);
+    	} else if(ventanaAnterior.equals("resultadoPartida")) {
+        	thisStage.setX(singleton.posicionX - 50);
+        	thisStage.setY(singleton.posicionY + 20);
+    	}
     }
     
     public void actualizarEstilo() {

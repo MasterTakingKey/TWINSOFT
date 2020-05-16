@@ -296,46 +296,6 @@ public class ControladorMenuAjustes {
     	actualizarImagenSonido();
     }
     
-    
-    public void corregirTamanyoVentana() {
-    	thisStage.setWidth(1050);
-    	thisStage.setHeight(900);
-    }
-    
-    public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
-    }
-    
-    
-    public void actualizarEstilo() {
-    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
-        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
-        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(singleton.estilo.equals("Azul")) {
-    		anchorPane.getStylesheets().remove(temaRojo);
-    		anchorPane.getStylesheets().remove(temaVerde);
-    		anchorPane.getStylesheets().add(temaAzul);
-    		circuloSonido.getStylesheets().remove(temaRojo);
-    		circuloSonido.getStylesheets().remove(temaVerde);
-    		circuloSonido.getStylesheets().add(temaAzul);
-    	} else if(singleton.estilo.equals("Rojo")) {
-    		anchorPane.getStylesheets().remove(temaAzul);
-			anchorPane.getStylesheets().remove(temaVerde);
-			anchorPane.getStylesheets().add(temaRojo);
-			circuloSonido.getStylesheets().remove(temaAzul);
-			circuloSonido.getStylesheets().remove(temaVerde);
-			circuloSonido.getStylesheets().add(temaRojo);
-    	} else {
-    		anchorPane.getStylesheets().remove(temaAzul);
-			anchorPane.getStylesheets().remove(temaRojo);
-			anchorPane.getStylesheets().add(temaVerde);
-			circuloSonido.getStylesheets().remove(temaAzul);
-			circuloSonido.getStylesheets().remove(temaRojo);
-			circuloSonido.getStylesheets().add(temaVerde);
-    	}
-    }
-    
     @FXML
     void cancelarYSalirHandler(ActionEvent event) {
     	musicaFondo.stopMusic();
@@ -436,6 +396,11 @@ public class ControladorMenuAjustes {
 
     @FXML
     void restablecerPredeterminadosHandler(ActionEvent event) {
+    	restablecerPredeterminados();
+    	inicializarAjustesPartida();
+    }
+    
+    public void restablecerPredeterminados() {
     	
     	singleton.barajaPartida = singleton.listaBarajas.get(0);
     	
@@ -453,7 +418,6 @@ public class ControladorMenuAjustes {
     	singleton.efectosVisualesVoltear = "Giro";
     	singleton.efectosVisualesPareja = "Salto";
     	
-    	inicializarAjustesPartida();
     }
 
     
@@ -491,6 +455,45 @@ public class ControladorMenuAjustes {
     		i++;
     	}
     	return null;
+    }
+     
+    public void corregirTamanyoVentana() {
+    	thisStage.setWidth(1050);
+    	thisStage.setHeight(900);
+    }
+    
+    public void corregirPosicionVentana() {
+    	thisStage.setX(singleton.posicionX);
+    	thisStage.setY(singleton.posicionY - 20);
+    }
+    
+    
+    public void actualizarEstilo() {
+    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
+    	if(singleton.estilo.equals("Azul")) {
+    		anchorPane.getStylesheets().remove(temaRojo);
+    		anchorPane.getStylesheets().remove(temaVerde);
+    		anchorPane.getStylesheets().add(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaAzul);
+    	} else if(singleton.estilo.equals("Rojo")) {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaVerde);
+			anchorPane.getStylesheets().add(temaRojo);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaVerde);
+			circuloSonido.getStylesheets().add(temaRojo);
+    	} else {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaRojo);
+			anchorPane.getStylesheets().add(temaVerde);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaRojo);
+			circuloSonido.getStylesheets().add(temaVerde);
+    	}
     }
     
 }

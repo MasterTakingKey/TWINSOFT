@@ -65,11 +65,14 @@ public class ControladorMenuPause {
     
     private Singleton singleton;
     
-    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton) {
+    private boolean esNiveles;
+    
+    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton, boolean niveles) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
     	singleton = nuevoSingleton;
         tipoPartida = "estandar";
+        esNiveles = niveles;
         actualizarTiempoYPuntos(tiempo, puntos);
         inicializarVariables();
         anyadirIcono();
@@ -81,11 +84,12 @@ public class ControladorMenuPause {
         actualizarEstilo();
     }
     
-    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton) {
+    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton, boolean niveles) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         singleton = nuevoSingleton;
         tipoPartida = "carta";
+        esNiveles = niveles;
         actualizarTiempoYPuntos(tiempo, puntos);
         inicializarVariables();
         anyadirIcono();
@@ -134,6 +138,7 @@ public class ControladorMenuPause {
     	
     
     public void volverMenuPrincipal() {
+    	restablecerPredeterminados();
     	musicaFondo.stopMusic();
     	thisStage.close();
     	primaryStage.close();
@@ -186,6 +191,26 @@ public class ControladorMenuPause {
 	    	thisStage.close();
 	    	partidaCarta.reanudarPartida(singleton.soundOn);
     	}
+    }
+    
+    public void restablecerPredeterminados() {
+    	
+    	singleton.barajaPartida = singleton.listaBarajas.get(0);
+    	
+    	singleton.filasPartida = 4;
+    	singleton.columnasPartida = 4;
+    	
+    	singleton.limiteTiempoOn = true;
+    	singleton.tiempoPartida = 60;
+    	
+    	singleton.mostrarCartasOn = true;
+    	singleton.tiempoMostrarCartas = 2;
+    	
+    	singleton.efectosSonorosVoltear = "Voltear";
+    	singleton.efectosSonorosPareja = "Acierto";
+    	singleton.efectosVisualesVoltear = "Giro";
+    	singleton.efectosVisualesPareja = "Salto";
+    	
     }
 
     @FXML

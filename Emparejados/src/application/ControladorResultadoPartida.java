@@ -50,11 +50,14 @@ public class ControladorResultadoPartida {
     
     private Singleton singleton;
     
-    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, Singleton nuevoSingleton){
+    private boolean esNiveles;
+    
+    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, Singleton nuevoSingleton, boolean niveles){
     	primaryStage = stage;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
         singleton = nuevoSingleton;
+        esNiveles = niveles;
         inicializarVariables(puntuacion, tiempo);
         mostrarResultado();
         anyadirIcono();
@@ -71,6 +74,9 @@ public class ControladorResultadoPartida {
         String minutos = tiempo.substring(0, tiempo.length() - 3);
         String segundos = tiempo.substring(tiempo.length() - 2);
         tiempoRestante.setText(tiempoRestante.getText() + minutos + " min y " + segundos + "s");
+        if(esNiveles) {
+        	salir.setText("Salir a Niveles");
+        }
     }
     
     public void mostrarResultado() {
@@ -103,7 +109,7 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "resultadoPartida");
+            controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "resultadoPartida", esNiveles);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -120,7 +126,7 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton);
+            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, esNiveles);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -128,19 +134,57 @@ public class ControladorResultadoPartida {
 
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
-    	primaryStage.close();
-    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
-        Parent root = myLoader.load();  
-        ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Menu Principal");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        singleton.posicionX = thisStage.getX();
-  		singleton.posicionY = thisStage.getY();
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "resultadoPartida");
-        primaryStage.show();
-        thisStage.close(); 
+    	if(esNiveles) {
+    		restablecerPredeterminados();
+    		primaryStage.close();
+        	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/SeleccionNiveles.fxml"));
+            Parent root = myLoader.load();  
+            ControladorSeleccionNiveles seleccionNiveles = myLoader.<ControladorSeleccionNiveles>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Seleccion de Niveles");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            seleccionNiveles.iniciarSeleccionNiveles(primaryStage, singleton, "resultadoPartida");
+            primaryStage.show();
+            thisStage.close(); 
+    	} else {
+    		primaryStage.close();
+        	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
+            Parent root = myLoader.load();  
+            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Menu Principal");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "resultadoPartida");
+            primaryStage.show();
+            thisStage.close(); 
+    	}
+    	
+    }
+    
+    public void restablecerPredeterminados() {
+    	
+    	singleton.barajaPartida = singleton.listaBarajas.get(0);
+    	
+    	singleton.filasPartida = 4;
+    	singleton.columnasPartida = 4;
+    	
+    	singleton.limiteTiempoOn = true;
+    	singleton.tiempoPartida = 60;
+    	
+    	singleton.mostrarCartasOn = true;
+    	singleton.tiempoMostrarCartas = 2;
+    	
+    	singleton.efectosSonorosVoltear = "Voltear";
+    	singleton.efectosSonorosPareja = "Acierto";
+    	singleton.efectosVisualesVoltear = "Giro";
+    	singleton.efectosVisualesPareja = "Salto";
+    	
     }
     
     public void anyadirIcono() {

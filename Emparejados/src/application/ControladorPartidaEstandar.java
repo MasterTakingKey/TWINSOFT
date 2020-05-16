@@ -203,6 +203,8 @@ public class ControladorPartidaEstandar {
     private boolean esVictoria;
 
 	private boolean esDerrota;
+	
+	private boolean esNiveles;
     
     private AudioClip voltearCarta;
     
@@ -224,9 +226,10 @@ public class ControladorPartidaEstandar {
     
     private Animaciones animacionParejaIncorrecta;
 
-    public void iniciarPartidaEstandar(Stage stage, Singleton nuevoSingleton, String ventanaAnterior){
+    public void iniciarPartidaEstandar(Stage stage, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles){
     	primaryStage = stage;
         singleton = nuevoSingleton;
+        esNiveles = niveles;
         cartas = singleton.filasPartida*singleton.columnasPartida;
         inicializarBaraja();
         inicializarTablero();
@@ -620,9 +623,9 @@ public class ControladorPartidaEstandar {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", singleton);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", singleton, esNiveles);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", singleton);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", singleton, esNiveles);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -651,7 +654,7 @@ public class ControladorPartidaEstandar {
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton);
+        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, esNiveles);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -740,6 +743,9 @@ public class ControladorPartidaEstandar {
     	}  else if(ventanaAnterior.equals("resultadoPartida")) {
     		thisStage.setX(singleton.posicionX);
         	thisStage.setY(singleton.posicionY - 30);
+    	} else if(ventanaAnterior.equals("seleccionNiveles")) {
+    		thisStage.setX(singleton.posicionX + 50);
+        	thisStage.setY(singleton.posicionY - 50);
     	}
     }
     

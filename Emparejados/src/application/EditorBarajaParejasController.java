@@ -7,7 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.imageio.ImageIO;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -55,6 +58,124 @@ public class EditorBarajaParejasController {
 	private Button aceptarNombre;
 	@FXML
 	private Button cancelarNombre;
+	@FXML
+	private Label dorsoLabel;
+	@FXML
+	private ImageView iconoSonido;
+
+	@FXML
+	private Label Pareja1Label;
+
+	@FXML
+	private Label Pareja2Label;
+
+	@FXML
+	private Label Pareja3Label;
+
+	@FXML
+	private Label Pareja4Label;
+	 
+	@FXML
+	private Label Pareja5Label;
+	 			
+	@FXML
+	private Label Pareja6Label;
+	
+	@FXML
+    private ImageView Pareja1Image;
+
+    @FXML
+    private ImageView Pareja2Image;
+
+    @FXML
+    private ImageView Pareja3Image;
+
+    @FXML
+    private ImageView Pareja4Image;
+
+    @FXML
+    private ImageView dorsoImage;
+
+    @FXML
+    private ImageView Pareja5Image;
+
+    @FXML
+    private ImageView Pareja6Image;
+
+    @FXML
+    private Label Pareja7Label;
+
+    @FXML
+    private Label Pareja8Label;
+
+    @FXML
+    private Label Pareja9Label;
+
+    @FXML
+    private Label Pareja10Label;
+
+    @FXML
+    private Label Pareja11Label;
+
+    @FXML
+    private Label Pareja12label;
+
+    @FXML
+    private ImageView Pareja7Image;
+
+    @FXML
+    private ImageView Pareja12Image;
+
+    @FXML
+    private ImageView Pareja10Image;
+
+    @FXML
+    private ImageView Pareja9Image;
+
+    @FXML
+    private ImageView Pareja8Image;
+
+    @FXML
+    private ImageView Pareja11Image;
+
+    @FXML
+    private Label Pareja13Label;
+
+    @FXML
+    private Label Pareja14Label;
+
+    @FXML
+    private Label Pareja15Label;
+
+    @FXML
+    private Label Pareja16Label;
+
+    @FXML
+    private Label Pareja17Label;
+
+    @FXML
+    private Label Pareja18Label;
+
+    @FXML
+    private ImageView Pareja13Image;
+
+    @FXML
+    private ImageView Pareja14Image;
+
+    @FXML
+    private ImageView Pareja15Image;
+
+    @FXML
+    private ImageView Pareja16Image;
+
+    @FXML
+    private ImageView Pareja17Image;
+
+    @FXML
+    private ImageView Pareja18Image;
+    
+    @FXML
+    private Button addImageButton;
 
 	private Stage primaryStage;
     
@@ -68,7 +189,7 @@ public class EditorBarajaParejasController {
 	
 	private Singleton singleton;
 	
-	List<File> listaImagenes = new ArrayList<File>();
+	private ArrayList<File> listaImagenes = new ArrayList<File>();
 	
 	File archivoImagen;
 	
@@ -76,23 +197,39 @@ public class EditorBarajaParejasController {
 	
 	String nombreBaraja;
 	
-	Baraja barajaCreada = new Baraja();;
+	Baraja barajaCreada = new Baraja();
 	
 	Carta carta;
+	
+	String prueba = "";
 
 	public void iniciarEditorParejas(Stage stage, Singleton nuevoSingleton, ArrayList<File> imagenes){
 		primaryStage = stage;
         singleton = nuevoSingleton;
         listaImagenes = imagenes;
+        actual = 1;
         inicializarVariables();
         corregirTamanyoVentana();
         corregirPosicionVentana();
         actualizarEstilo();
         nombrePane.setVisible(false);
-        siguienteButton.setDisable(true);
-        crearBarajaButton.setDisable(true);
+        if(listaImagenes.size() > actual) {
+        	siguienteButton.setDisable(false);
+        } else { 
+			siguienteButton.setDisable(true);
+		}
+        if(listaImagenes.size() > 8) {
+			crearBarajaButton.setDisable(false);
+		} else { 
+			crearBarajaButton.setDisable(true);
+		}
+        addImageButton.setDisable(true);
         anyadirIcono();
-        actual = 1;
+        actualizarBaraja();
+        if(Pareja1Image.getImage() != null) imagenCarta.setImage(Pareja1Image.getImage());
+        imagen = new Image(listaImagenes.get(0).toURI().toString());
+        dorsoImage.setImage(imagen);
+        
     }
 	
     public void inicializarVariables() {
@@ -109,7 +246,7 @@ public class EditorBarajaParejasController {
         	imagen = new Image(archivoImagen.toURI().toString());
         	imagenCarta.setImage(imagen);
         	pathImagen.setText(archivoImagen.getName());
-        	siguienteButton.setDisable(false);
+        	addImageButton.setDisable(false);
         }
 	}
 
@@ -128,48 +265,78 @@ public class EditorBarajaParejasController {
 			siguienteButton.setDisable(true);
 			anteriorButton.setDisable(true);
 			cancelarButton.setDisable(true);
+			addImageButton.setDisable(true);
 		//}
 	}
-				
-
+	
 	@FXML
-	public void siguiente(MouseEvent event) {		
-		//Checkear que la imagen no es ya una pareja
-		
-		if(archivoImagen.equals(listaImagenes.get(0))) {   //mensaje de no se puede tener 2 parejas iguales
+	public void anyadirImagen(MouseEvent event) {	
+		if(archivoImagen.equals(listaImagenes.get(0))) {   
 			Alert alert = new Alert(AlertType.ERROR, "El dorso no puede ser una pareja.", ButtonType.OK);
 			alert.showAndWait();
+			return;
 		}else if(listaImagenes.contains(archivoImagen)){			
 			Alert alert = new Alert(AlertType.ERROR, "No puede haber 2 parejas con la misma imagen.", ButtonType.OK);
 			alert.showAndWait();
-		} else {     
-			siguienteButton.setDisable(true);
-		//Si no falla vamos a la siguiente	
-			actual++;
-		
-		//Guardar lo insertado en ventana anterior
+			return;	
+		} else if(listaImagenes.size() > actual){
+			listaImagenes.set(actual, archivoImagen);
+		} else {
 			listaImagenes.add(archivoImagen);
-		
+		}		
+		actualizarBaraja();
+		siguienteButton.setDisable(false);
+		if(listaImagenes.size() > 8) {
+			crearBarajaButton.setDisable(false);
+		} else { 
+			crearBarajaButton.setDisable(true);
+		}
+			 
+	}
+
+	@FXML
+	public void siguiente(MouseEvent event) {		    
+		   		
+			actual++;
+			
+			if(listaImagenes.size() > actual) {
+		    	siguienteButton.setDisable(false);
+		    }else {
+		    	siguienteButton.setDisable(true);
+		    }
+				
 		//Actualizar los labels
 			numPareja.setText(String.valueOf(actual));
-			imagenCarta.setImage(null);
-			pathImagen.setText(null);
-		
+			addImageButton.setDisable(true);
+			if(listaImagenes.size() > actual) {
+				imagen = new Image(listaImagenes.get(actual).toURI().toString());
+				imagenCarta.setImage(imagen);
+				pathImagen.setText(listaImagenes.get(actual).getName());
+			} else {
+				imagenCarta.setImage(null);
+				pathImagen.setText(null);
+			}
+			
+		//Actualizar ImageViews de la baraja
+			//actualizarBaraja();				//Creo que es inncesario ya
+			
 		//Activar boton de crearBaraja si estamos en pareja 9 en adelante
-			if(actual < 9) {
-				crearBarajaButton.setDisable(true);
-			} else { 
+			if(listaImagenes.size() > 8) {
 				crearBarajaButton.setDisable(false);
+			} else { 
+				crearBarajaButton.setDisable(true);
 			}
 		
 		//Activar boton de anterior si estamos en pareja 1 en adelante
 		
 			numPareja.setText(String.valueOf(actual));
-			imagenCarta.setImage(null);
 		
 		//Desactivar boton de seguimiento si estamos en pareja 16
-			if(actual > 15) siguienteButton.setDisable(true);
-		}
+			if(actual > 18) {
+				siguienteButton.setDisable(true);
+				buscar.setDisable(true);
+			}
+		
 	}
 
 	@FXML
@@ -205,7 +372,7 @@ public class EditorBarajaParejasController {
 				//Crear la baraja como tal
 				//Completar
 			barajaCreada.setNombre(nombreBaraja);
-			barajaCreada.setTamanyo(2 * actual - 2 );
+			barajaCreada.setTamanyo(2 * listaImagenes.size() - 2 );
 			imagen = new Image(listaImagenes.get(0).toURI().toString());
 			barajaCreada.setImagenDorso(imagen);
 			
@@ -219,23 +386,20 @@ public class EditorBarajaParejasController {
 			
 			singleton.listaBarajas.add(barajaCreada);
 			
-            
-			Alert alert = new Alert(AlertType.CONFIRMATION, "Baraja creada correctamente!", ButtonType.OK);
-			alert.showAndWait();
 			
 			try {
-	    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
+	    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
 	            Parent root = myLoader.load();  
 	            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
 	            Scene scene = new Scene(root);
-	            primaryStage.setTitle("Menu Ajustes");
+	            primaryStage.setTitle("Menu Principal");
 	            primaryStage.setScene(scene);
 	            primaryStage.setResizable(false);
 	            
 	            singleton.posicionX = thisStage.getX();
 	      		singleton.posicionY = thisStage.getY();
-	            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "");
-	            primaryStage.show();
+	            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, prueba);
+	           // primaryStage.show();
 	            thisStage.close();
 	    	} catch (IOException e) {
 	                e.printStackTrace();
@@ -266,7 +430,7 @@ public class EditorBarajaParejasController {
 	            stage.setResizable(false);
 	            singleton.posicionX = thisStage.getX();
 	      		singleton.posicionY = thisStage.getY();
-	            editorDorso.iniciarEditorDorso(primaryStage, singleton, false);
+	            editorDorso.iniciarEditorDorso(primaryStage, singleton, false, listaImagenes);
 	            stage.show();
 	            thisStage.hide();
 	    	} catch (IOException e) {
@@ -275,8 +439,11 @@ public class EditorBarajaParejasController {
 		}
 		else {
 			numPareja.setText(String.valueOf(actual));
-			if(actual<5) crearBarajaButton.setDisable(true);
-			listaImagenes.remove(archivoImagen);
+			//listaImagenes.remove(archivoImagen);
+			imagen = new Image(listaImagenes.get(actual).toURI().toString());
+        	imagenCarta.setImage(imagen);
+        	if(imagenCarta != null) siguienteButton.setDisable(false);
+			
 		}
 	}
 	
@@ -293,9 +460,77 @@ public class EditorBarajaParejasController {
 	    } 
 	    return true; 
 	} 
+	
+	public void actualizarBaraja() {
+		for (int i = 1; i < listaImagenes.size(); i++) { 
+            imagen = new Image(listaImagenes.get(i).toURI().toString());
+            switch(i) {
+            case 1: 
+           	 Pareja1Image.setImage(imagen);
+           	 break;
+            case 2: 
+           	 Pareja2Image.setImage(imagen);
+           	 break;
+            case 3: 
+           	 Pareja3Image.setImage(imagen);
+           	 break;
+            case 4: 
+           	 Pareja4Image.setImage(imagen);
+           	 break;
+            case 5: 
+           	 Pareja5Image.setImage(imagen);
+           	 break;
+            case 6: 
+           	 Pareja6Image.setImage(imagen);
+           	 break;
+            case 7: 
+           	 Pareja7Image.setImage(imagen);
+           	 break;
+            case 8: 
+           	 Pareja8Image.setImage(imagen);
+           	 break;
+            case 9: 
+           	 Pareja9Image.setImage(imagen);
+           	 break;
+            case 10: 
+           	 Pareja10Image.setImage(imagen);
+           	 break;
+            case 11: 
+           	 Pareja11Image.setImage(imagen);
+           	 break;
+            case 12: 
+           	 Pareja12Image.setImage(imagen);
+           	 break;
+            case 13: 
+           	 Pareja13Image.setImage(imagen);
+           	 break;
+            case 14: 
+           	 Pareja14Image.setImage(imagen);
+           	 break;
+            case 15: 
+           	 Pareja15Image.setImage(imagen);
+           	 break;
+            case 16: 
+           	 Pareja16Image.setImage(imagen);
+           	 break;
+            case 17: 
+           	 Pareja17Image.setImage(imagen);
+           	 break;
+            case 18: 
+           	 Pareja18Image.setImage(imagen);
+           	 break; 
+            }
+       }
+	}
+	
+	@FXML
+	public void sonidoHandler(MouseEvent event) {
+    }
+    
+	
 	public void corregirTamanyoVentana() {
     	thisStage.setWidth(620);
-    	thisStage.setHeight(450);
+    	thisStage.setHeight(720);
     }
     
     public void corregirPosicionVentana() {

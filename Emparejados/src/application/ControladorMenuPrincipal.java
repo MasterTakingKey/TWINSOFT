@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
@@ -63,6 +64,8 @@ public class ControladorMenuPrincipal {
     private long tiempoMusica;
     
     private Singleton singleton;
+    
+    private ArrayList<File> listaImagenes = new ArrayList<File>();
 
     public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, Singleton nuevoSingleton, String ventanaAnterior){
         primaryStage = stage;
@@ -206,7 +209,7 @@ public class ControladorMenuPrincipal {
             EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController(); 
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            editorDorso.iniciarEditorDorso(primaryStage, singleton, true);
+            editorDorso.iniciarEditorDorso(primaryStage, singleton, true, listaImagenes);
             stage.show();
     	} catch (IOException e) {}
     } 

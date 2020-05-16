@@ -3,11 +3,16 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorBarajaParejasController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorBarajaParejasController">
    <children>
       <Label alignment="CENTER" contentDisplay="TOP" layoutX="1.0" layoutY="8.0" prefHeight="55.0" prefWidth="600.0" text="TWINS">
          <font>
@@ -19,7 +24,7 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Label layoutX="31.0" layoutY="123.0" prefHeight="20.0" prefWidth="137.0" text="Selecciona la pareja">
+      <Label layoutX="31.0" layoutY="123.0" prefHeight="20.0" prefWidth="137.0" text="Selecciona un dorso:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -33,7 +38,7 @@
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
-      <ImageView fx:id="imagenCarta" fitHeight="160.0" fitWidth="219.0" layoutX="201.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imagenCarta" fitHeight="160.0" fitWidth="219.0" layoutX="178.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="crearBarajaButton" layoutX="147.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#prepararBaraja" prefHeight="31.0" prefWidth="149.0" text="Crear Baraja">
          <font>
             <Font name="System Bold" size="16.0" />
@@ -54,7 +59,7 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-      <Pane fx:id="nombrePane" layoutX="157.0" layoutY="114.0" prefHeight="240.0" prefWidth="292.0" style="-fx-background-color: ffffff;">
+      <Pane fx:id="nombrePane" layoutX="155.0" layoutY="133.0" prefHeight="240.0" prefWidth="292.0" style="-fx-background-color: ffffff;">
          <children>
             <TextField fx:id="nombre" layoutX="84.0" layoutY="134.0" />
             <Label layoutX="12.0" layoutY="61.0" text="Seleccione nombre para su nueva baraja:">
@@ -72,5 +77,229 @@
                </font></Button>
          </children>
       </Pane>
+      <GridPane layoutX="-1.0" layoutY="417.0" prefHeight="20.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="dorsoLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="83.0" text="Dorso">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja1Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="87.0" text="Pareja 1" textAlignment="CENTER" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja2Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="85.0" text="Pareja 2" textAlignment="CENTER" GridPane.columnIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja3Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="86.0" text="Pareja 3" textAlignment="CENTER" GridPane.columnIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja4Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="85.0" text="Pareja 4" textAlignment="CENTER" GridPane.columnIndex="4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja5Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="87.0" text="Pareja 5" textAlignment="CENTER" GridPane.columnIndex="5">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja6Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="86.0" text="Pareja 6" textAlignment="CENTER" GridPane.columnIndex="6">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane alignment="CENTER_RIGHT" layoutX="-2.0" layoutY="437.0" prefHeight="65.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fx:id="Pareja1Image" fitHeight="63.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+            <ImageView fx:id="Pareja2Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+            <ImageView fx:id="Pareja3Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+            <ImageView fx:id="Pareja4Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
+            <ImageView fx:id="dorsoImage" fitHeight="68.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Pareja5Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
+            <ImageView fx:id="Pareja6Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
+         </children>
+      </GridPane>
+      <GridPane layoutY="502.0" prefHeight="20.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="Pareja7Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="86.0" text="Pareja 7" textAlignment="CENTER" GridPane.columnIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja8Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="87.0" text="Pareja 8" textAlignment="CENTER" GridPane.columnIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja9Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="85.0" text="Pareja 9" textAlignment="CENTER" GridPane.columnIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja10Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="87.0" text="Pareja 10" textAlignment="CENTER" GridPane.columnIndex="4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja11Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="84.0" text="Pareja 11" textAlignment="CENTER" GridPane.columnIndex="5">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja12label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="86.0" text="Pareja 12" textAlignment="CENTER" GridPane.columnIndex="6">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane layoutY="522.0" prefHeight="65.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fx:id="Pareja7Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+            <ImageView fx:id="Pareja12Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
+            <ImageView fx:id="Pareja10Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
+            <ImageView fx:id="Pareja9Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+            <ImageView fx:id="Pareja8Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+            <ImageView fx:id="Pareja11Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
+         </children>
+      </GridPane>
+      <GridPane layoutY="587.0" prefHeight="20.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="Pareja13Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="88.0" text="Pareja 13" textAlignment="CENTER" GridPane.columnIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja14Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="87.0" text="Pareja 14" textAlignment="CENTER" GridPane.columnIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja15Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="86.0" text="Pareja 15" textAlignment="CENTER" GridPane.columnIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja16Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="86.0" text="Pareja 16" textAlignment="CENTER" GridPane.columnIndex="4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja17Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="86.0" text="Pareja 17" textAlignment="CENTER" GridPane.columnIndex="5">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="Pareja18Label" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="89.0" text="Pareja 18" textAlignment="CENTER" GridPane.columnIndex="6">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane layoutX="1.0" layoutY="617.0" prefHeight="65.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fx:id="Pareja13Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+            <ImageView fx:id="Pareja14Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+            <ImageView fx:id="Pareja15Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+            <ImageView fx:id="Pareja16Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
+            <ImageView fx:id="Pareja17Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
+            <ImageView fx:id="Pareja18Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
+         </children>
+      </GridPane>
+      <Button fx:id="addImageButton" layoutX="418.0" layoutY="219.0" mnemonicParsing="false" onMouseClicked="#anyadirImagen" prefHeight="40.0" prefWidth="149.0" text="Añadir Imagen">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <StackPane fx:id="circuloSonido" layoutX="493.0" layoutY="14.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton">
+         <children>
+            <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#sonidoHandler" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/sonido_on.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
    </children>
 </Pane>

@@ -45,6 +45,16 @@ public class CrearBarajaDeportesEstrategia implements CrearBarajaEstrategia {
 		imagenes.add(new Image("/imagenes/baraja_deportes/karate.png"));
 		imagenes.add(new Image("/imagenes/baraja_deportes/patinaje.png"));
 		imagenes.add(new Image("/imagenes/baraja_deportes/tenis.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/ciclismo.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/correr.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/gimnasia.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/hockey.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/moto.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/natacion.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/patinaje2.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/skate.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/submarinismo.png"));
+		imagenes.add(new Image("/imagenes/baraja_deportes/waterpolo.png"));
 		
     	int index = 0;
     	for(int i = 0; i < repeticiones; i++) {

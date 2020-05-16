@@ -657,7 +657,7 @@ public class ControladorPartidaEstandar {
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaCarta", esNiveles);
+        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaEstandar");
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -737,7 +737,7 @@ public class ControladorPartidaEstandar {
         		thisStage.setX(singleton.posicionX + 50);
             	thisStage.setY(singleton.posicionY + 50);
         	} else {
-        		thisStage.setX(300);
+        		thisStage.setX(250);
         		thisStage.setY(100);
         	}
     	} else if(ventanaAnterior.equals("menuPause")) {
@@ -745,7 +745,7 @@ public class ControladorPartidaEstandar {
         		thisStage.setX(singleton.posicionX);
             	thisStage.setY(singleton.posicionY - 50);
         	} else {
-        		thisStage.setX(300);
+        		thisStage.setX(250);
         		thisStage.setY(100);
         	}
     	}  else if(ventanaAnterior.equals("resultadoPartida")) {
@@ -753,15 +753,15 @@ public class ControladorPartidaEstandar {
         		thisStage.setX(singleton.posicionX);
             	thisStage.setY(singleton.posicionY - 30);
         	} else {
-        		thisStage.setX(300);
+        		thisStage.setX(250);
         		thisStage.setY(100);
         	}
     	} else if(ventanaAnterior.equals("seleccionNiveles")) {
     		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
         		thisStage.setX(singleton.posicionX + 50);
-            	thisStage.setY(singleton.posicionY - 50);
+            	thisStage.setY(singleton.posicionY - 75);
         	} else {
-        		thisStage.setX(300);
+        		thisStage.setX(250);
         		thisStage.setY(100);
         	}
     	}

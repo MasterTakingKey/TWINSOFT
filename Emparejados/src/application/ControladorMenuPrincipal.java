@@ -91,8 +91,8 @@ public class ControladorMenuPrincipal {
     	Baraja barajaNintendo = new Baraja(5, 6);
     	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2, 15));
     	singleton.listaBarajas.add(barajaNintendo);
-    	Baraja barajaDeportes = new Baraja(4, 4);
-    	barajaDeportes.barajaTematica(new CrearBarajaDeportesEstrategia(2, 8));
+    	Baraja barajaDeportes = new Baraja(6, 6);
+    	barajaDeportes.barajaTematica(new CrearBarajaDeportesEstrategia(2, 18));
     	singleton.listaBarajas.add(barajaDeportes);
     	
     	singleton.estilo = "Azul";

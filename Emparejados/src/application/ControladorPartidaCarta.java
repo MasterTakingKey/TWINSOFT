@@ -694,11 +694,11 @@ public class ControladorPartidaCarta {
     		stage.setScene(scene);
     		stage.initModality(Modality.APPLICATION_MODAL);
     		stage.setResizable(false);
-        	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaEstandar();});
+        	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaCarta();});
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaCarta(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaCarta", esNiveles);
+        	controladorMenuPausa.initDataPartidaCarta(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaCarta");
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -778,32 +778,32 @@ public class ControladorPartidaCarta {
         		thisStage.setX(singleton.posicionX + 50);
             	thisStage.setY(singleton.posicionY - 50);
         	} else {
-        		thisStage.setX(300);
-        		thisStage.setY(100);
+        		thisStage.setX(250);
+        		thisStage.setY(10);
         	}
     	} else if(ventanaAnterior.equals("menuPause")) {
     		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
         		thisStage.setX(singleton.posicionX);
             	thisStage.setY(singleton.posicionY - 50);
         	} else {
-        		thisStage.setX(300);
-        		thisStage.setY(100);
+        		thisStage.setX(250);
+        		thisStage.setY(10);
         	}
     	}  else if(ventanaAnterior.equals("resultadoPartida")) {
     		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
         		thisStage.setX(singleton.posicionX);
             	thisStage.setY(singleton.posicionY - 30);
         	} else {
-        		thisStage.setX(300);
-        		thisStage.setY(100);
+        		thisStage.setX(250);
+        		thisStage.setY(10);
         	}
     	} else if(ventanaAnterior.equals("seleccionNiveles")) {
     		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
         		thisStage.setX(singleton.posicionX + 50);
             	thisStage.setY(singleton.posicionY - 50);
-        	} else {
-        		thisStage.setX(300);
-        		thisStage.setY(100);
+            } else {
+        		thisStage.setX(250);
+        		thisStage.setY(10);
         	}
     	}
     }

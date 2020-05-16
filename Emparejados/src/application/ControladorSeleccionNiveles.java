@@ -124,7 +124,7 @@ public class ControladorSeleccionNiveles {
       		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setTitle("Nivel 2");
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
@@ -144,7 +144,7 @@ public class ControladorSeleccionNiveles {
       		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setTitle("Nivel 3");
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
@@ -164,7 +164,7 @@ public class ControladorSeleccionNiveles {
       		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setTitle("Nivel 4");
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
@@ -184,7 +184,7 @@ public class ControladorSeleccionNiveles {
       		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setTitle("Nivel 5");
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
@@ -204,7 +204,7 @@ public class ControladorSeleccionNiveles {
       		ControladorPartidaEstandar controladorPartida = myLoader.<ControladorPartidaEstandar>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setTitle("Nivel 6");
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
@@ -215,7 +215,7 @@ public class ControladorSeleccionNiveles {
 
     @FXML
     void nivel7Handler(ActionEvent event) {
-    	actualizarSingleton(1, 4, 6, true, 90, false, 0);
+    	actualizarSingleton(1, 4, 5, true, 90, false, 0);
     	musicaFondo.stopMusic();
     	
       	try {
@@ -224,7 +224,7 @@ public class ControladorSeleccionNiveles {
       		ControladorPartidaCarta controladorPartida = myLoader.<ControladorPartidaCarta>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setTitle("Nivel 7");
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
@@ -235,7 +235,7 @@ public class ControladorSeleccionNiveles {
 
     @FXML
     void nivel8Handler(ActionEvent event) {
-    	actualizarSingleton(1, 5, 6, true, 90, false, 0);
+    	actualizarSingleton(1, 4, 6, true, 90, false, 0);
     	musicaFondo.stopMusic();
     	
       	try {
@@ -244,7 +244,7 @@ public class ControladorSeleccionNiveles {
       		ControladorPartidaCarta controladorPartida = myLoader.<ControladorPartidaCarta>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setTitle("Nivel 8");
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
@@ -255,7 +255,7 @@ public class ControladorSeleccionNiveles {
 
     @FXML
     void nivel9Handler(ActionEvent event) {
-    	actualizarSingleton(2, 5, 6, true, 80, false, 0);
+    	actualizarSingleton(2, 5, 6, true, 90, false, 0);
     	musicaFondo.stopMusic();
     	
       	try {
@@ -264,7 +264,7 @@ public class ControladorSeleccionNiveles {
       		ControladorPartidaCarta controladorPartida = myLoader.<ControladorPartidaCarta>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setTitle("Nivel 9");
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
@@ -275,7 +275,7 @@ public class ControladorSeleccionNiveles {
 
     @FXML
     void nivel10Handler(ActionEvent event) {
-    	actualizarSingleton(2, 6, 6, true, 80, false, 0);
+    	actualizarSingleton(2, 6, 6, true, 90, false, 0);
     	musicaFondo.stopMusic();
     	
       	try {
@@ -284,7 +284,7 @@ public class ControladorSeleccionNiveles {
       		ControladorPartidaCarta controladorPartida = myLoader.<ControladorPartidaCarta>getController();
       		Scene scene = new Scene(root);
       		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Nivel 1");
+      		primaryStage.setTitle("Nivel 10");
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();

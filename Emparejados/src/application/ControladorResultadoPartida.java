@@ -207,7 +207,7 @@ public class ControladorResultadoPartida {
             	thisStage.setX(singleton.posicionX);
             	thisStage.setY(singleton.posicionY + 30);
         	} else {
-        		thisStage.setX(singleton.posicionX + 150);
+        		thisStage.setX(singleton.posicionX + 200);
             	thisStage.setY(singleton.posicionY + 50);
         	}
     	} else if(ventanaAnterior.equals("partidaCarta")) {
@@ -215,8 +215,8 @@ public class ControladorResultadoPartida {
     	    	thisStage.setX(singleton.posicionX);
     	    	thisStage.setY(singleton.posicionY + 30);
         	} else {
-        		thisStage.setX(singleton.posicionX + 150);
-            	thisStage.setY(singleton.posicionY);
+        		thisStage.setX(singleton.posicionX + 250);
+            	thisStage.setY(singleton.posicionY + 200);
         	}
     	}
     }

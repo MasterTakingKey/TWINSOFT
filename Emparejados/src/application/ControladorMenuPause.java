@@ -64,15 +64,12 @@ public class ControladorMenuPause {
     private String tipoPartida;
     
     private Singleton singleton;
-    
-    private boolean esNiveles;
-    
-    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles) {
+ 
+    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton, String ventanaAnterior) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
     	singleton = nuevoSingleton;
         tipoPartida = "estandar";
-        esNiveles = niveles;
         actualizarTiempoYPuntos(tiempo, puntos);
         inicializarVariables();
         anyadirIcono();
@@ -84,12 +81,11 @@ public class ControladorMenuPause {
         actualizarEstilo();
     }
     
-    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles) {
+    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton, String ventanaAnterior) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         singleton = nuevoSingleton;
         tipoPartida = "carta";
-        esNiveles = niveles;
         actualizarTiempoYPuntos(tiempo, puntos);
         inicializarVariables();
         anyadirIcono();
@@ -161,9 +157,9 @@ public class ControladorMenuPause {
 
     @FXML
     void clickPlay(MouseEvent event) throws IOException {
-    	if(tipoPartida == "estandar") {
+    	if(tipoPartida.equals("estandar")) {
         	reanudarPartidaEstandar();
-    	} else if(tipoPartida == "carta") {
+    	} else if(tipoPartida.equals("carta")) {
     		reanudarPartidaCarta();
     	}
     }
@@ -254,16 +250,16 @@ public class ControladorMenuPause {
             	thisStage.setX(singleton.posicionX);
             	thisStage.setY(singleton.posicionY + 50);
         	} else {
-        		thisStage.setX(300);
-        		thisStage.setY(100);
+        		thisStage.setX(singleton.posicionX + 250);
+            	thisStage.setY(singleton.posicionY + 100);
         	}
     	} else if(ventanaAnterior.equals("partidaCarta")) {
     		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
     	    	thisStage.setX(singleton.posicionX);
     	    	thisStage.setY(singleton.posicionY + 150);
         	} else {
-        		thisStage.setX(300);
-        		thisStage.setY(100);
+        		thisStage.setX(singleton.posicionX + 250);
+            	thisStage.setY(singleton.posicionY + 100);
         	}
     	}
 

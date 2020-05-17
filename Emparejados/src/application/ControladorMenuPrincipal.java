@@ -82,6 +82,22 @@ public class ControladorMenuPrincipal {
         actualizarEstilo();
     }
     
+    public void iniciarMenuPrincipalDesdeEditor(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, long tiempoCancion){
+        primaryStage = stage;
+        if(primeraVez) { 
+            inicializarSingleton();
+        } else {
+            singleton = nuevoSingleton;
+        }
+        tiempoMusica = tiempoCancion;
+        inicializarVariables();
+		actualizarSonido();
+        actualizarImagenSonido();
+        corregirTamanyoVentana();
+        corregirPosicionVentana(ventanaAnterior);
+        actualizarEstilo();
+    }
+    
 	
 	public void inicializarSingleton() {
 		
@@ -215,10 +231,11 @@ public class ControladorMenuPrincipal {
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
-            EditorBarajaDorsoController editorDorso = myLoader.<EditorBarajaDorsoController>getController(); 
+            ControladorEditorBarajaDorso editorDorso = myLoader.<ControladorEditorBarajaDorso>getController(); 
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            editorDorso.iniciarEditorDorso(primaryStage, singleton, true, listaImagenes);
+      		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+            editorDorso.iniciarEditorDorso(primaryStage, singleton, true, listaImagenes, musicaFondo, tiempoMusica);
             stage.show();
     	} catch (IOException e) {}
     } 
@@ -314,6 +331,9 @@ public class ControladorMenuPrincipal {
     	} else if(ventanaAnterior.equals("seleccionNiveles")) {
         	thisStage.setX(singleton.posicionX);
         	thisStage.setY(singleton.posicionY - 100);
+    	}else if(ventanaAnterior.equals("editorBaraja")) {
+        	thisStage.setX(singleton.posicionX - 200);
+        	thisStage.setY(singleton.posicionY - 40);
     	} else {
         	thisStage.setX(singleton.posicionX);
         	thisStage.setY(singleton.posicionY);

@@ -348,7 +348,7 @@ public class ControladorPartidaEstandar {
    public void inicializarContadorTiempo() {
    	if(singleton.limiteTiempoOn) {
 	        contadorTiempo = new ContadorTiempo();
-	    	contadorTiempo.iniciarTiempoPartidaLibre(tiempo, singleton.tiempoPartida);
+	    	contadorTiempo.iniciarTiempoPartida(tiempo, singleton.tiempoPartida);
 	        tiempo.textProperty().addListener((ChangeListener<? super String>) (o, oldVal, newVal) -> {
 	        	int minutos = Integer.parseInt(tiempo.getText().substring(0, tiempo.getText().length()-3));
 	        	int segundos = Integer.parseInt( tiempo.getText().substring(tiempo.getText().length() - 2));

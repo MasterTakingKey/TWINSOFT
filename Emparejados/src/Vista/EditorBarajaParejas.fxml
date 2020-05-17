@@ -12,54 +12,54 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.EditorBarajaParejasController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="650.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorEditorBarajaParejas">
    <children>
-      <Label alignment="CENTER" contentDisplay="TOP" layoutX="1.0" layoutY="8.0" prefHeight="55.0" prefWidth="600.0" text="TWINS">
+      <Label alignment="CENTER" contentDisplay="TOP" layoutX="61.0" layoutY="31.0" prefHeight="59.0" prefWidth="540.0" text="TWINS">
          <font>
             <Font size="41.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="1.0" layoutY="61.0" prefHeight="39.0" prefWidth="600.0" text="EDITOR DE BARAJA">
+      <Label alignment="CENTER" layoutX="61.0" layoutY="83.0" prefHeight="40.0" prefWidth="540.0" text="EDITOR DE BARAJA">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label layoutX="31.0" layoutY="123.0" prefHeight="20.0" prefWidth="137.0" text="Selecciona un dorso:">
+      <Label layoutX="45.0" layoutY="133.0" prefHeight="20.0" prefWidth="137.0" text="Selecciona la pareja">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="numPareja" layoutX="178.0" layoutY="123.0" prefHeight="20.0" prefWidth="47.0" text="1">
+      <Label fx:id="numPareja" layoutX="188.0" layoutY="133.0" prefHeight="20.0" prefWidth="39.0" text="1">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="buscar" layoutX="483.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="37.0" prefWidth="84.0" text="Buscar">
+      <Button fx:id="buscar" layoutX="501.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#buscarImagen" prefHeight="37.0" prefWidth="84.0" text="Buscar">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
       <ImageView fx:id="imagenCarta" fitHeight="160.0" fitWidth="219.0" layoutX="178.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="crearBarajaButton" layoutX="147.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#prepararBaraja" prefHeight="31.0" prefWidth="149.0" text="Crear Baraja">
+      <Button fx:id="crearBarajaButton" layoutX="178.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#prepararBaraja" prefHeight="31.0" prefWidth="149.0" text="Crear Baraja">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
-      <Button fx:id="siguienteButton" layoutX="464.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#siguiente" text="Siguiente">
+      <Button fx:id="siguienteButton" layoutX="492.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#siguiente" text="Siguiente">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
-      <Button fx:id="cancelarButton" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#cancelar" prefHeight="40.0" prefWidth="108.0" text="Cancelar">
+      <Button fx:id="cancelarButton" layoutX="45.0" layoutY="341.0" mnemonicParsing="false" onMouseClicked="#cancelar" prefHeight="40.0" prefWidth="108.0" text="Cancelar">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
-      <Button fx:id="anteriorButton" layoutX="335.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#anterior" text="Anterior">
+      <Button fx:id="anteriorButton" layoutX="373.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#anterior" text="Anterior">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
-      <Label fx:id="pathImagen" layoutX="249.0" layoutY="124.0" prefHeight="17.0" prefWidth="201.0">
+      <Label fx:id="pathImagen" layoutX="244.0" layoutY="133.0" prefHeight="17.0" prefWidth="201.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-      <Pane fx:id="nombrePane" layoutX="155.0" layoutY="133.0" prefHeight="240.0" prefWidth="292.0" style="-fx-background-color: ffffff;">
+      <Pane fx:id="nombrePane" layoutX="166.0" layoutY="133.0" prefHeight="240.0" prefWidth="292.0" style="-fx-background-color: ffffff;">
          <children>
             <TextField fx:id="nombre" layoutX="84.0" layoutY="134.0" />
             <Label layoutX="12.0" layoutY="61.0" text="Seleccione nombre para su nueva baraja:">
@@ -77,7 +77,7 @@
                </font></Button>
          </children>
       </Pane>
-      <GridPane layoutX="-1.0" layoutY="417.0" prefHeight="20.0" prefWidth="600.0">
+      <GridPane layoutX="35.0" layoutY="417.0" prefHeight="20.0" prefWidth="564.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -128,7 +128,7 @@
             </Label>
          </children>
       </GridPane>
-      <GridPane alignment="CENTER_RIGHT" layoutX="-2.0" layoutY="437.0" prefHeight="65.0" prefWidth="600.0">
+      <GridPane alignment="CENTER_RIGHT" layoutX="58.0" layoutY="437.0" prefHeight="65.0" prefWidth="540.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -142,16 +142,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="Pareja1Image" fitHeight="63.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-            <ImageView fx:id="Pareja2Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-            <ImageView fx:id="Pareja3Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-            <ImageView fx:id="Pareja4Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-            <ImageView fx:id="dorsoImage" fitHeight="68.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="Pareja5Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
-            <ImageView fx:id="Pareja6Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
+            <ImageView fx:id="Pareja1Image" fitHeight="63.0" fitWidth="77.0" onMouseClicked="#editarPareja1" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+            <ImageView fx:id="Pareja2Image" fitHeight="69.0" fitWidth="76.0" onMouseClicked="#editarPareja2" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+            <ImageView fx:id="Pareja3Image" fitHeight="69.0" fitWidth="76.0" onMouseClicked="#editarPareja3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+            <ImageView fx:id="Pareja4Image" fitHeight="69.0" fitWidth="76.0" onMouseClicked="#editarPareja4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
+            <ImageView fx:id="dorsoImage" fitHeight="68.0" fitWidth="77.0" onMouseClicked="#editarDorso" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Pareja5Image" fitHeight="69.0" fitWidth="75.0" onMouseClicked="#editarPareja5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
+            <ImageView fx:id="Pareja6Image" fitHeight="69.0" fitWidth="77.0" onMouseClicked="#editarPareja6" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
          </children>
       </GridPane>
-      <GridPane layoutY="502.0" prefHeight="20.0" prefWidth="600.0">
+      <GridPane layoutX="36.0" layoutY="502.0" prefHeight="20.0" prefWidth="564.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -197,7 +197,7 @@
             </Label>
          </children>
       </GridPane>
-      <GridPane layoutY="522.0" prefHeight="65.0" prefWidth="600.0">
+      <GridPane layoutX="36.0" layoutY="522.0" prefHeight="65.0" prefWidth="564.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -211,15 +211,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="Pareja7Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-            <ImageView fx:id="Pareja12Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
-            <ImageView fx:id="Pareja10Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-            <ImageView fx:id="Pareja9Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-            <ImageView fx:id="Pareja8Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-            <ImageView fx:id="Pareja11Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
+            <ImageView fx:id="Pareja7Image" fitHeight="69.0" fitWidth="79.0" onMouseClicked="#editarPareja7" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+            <ImageView fx:id="Pareja12Image" fitHeight="69.0" fitWidth="80.0" onMouseClicked="#editarPareja12" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
+            <ImageView fx:id="Pareja10Image" fitHeight="69.0" fitWidth="81.0" onMouseClicked="#editarPareja10" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
+            <ImageView fx:id="Pareja9Image" fitHeight="69.0" fitWidth="80.0" onMouseClicked="#editarPareja9" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+            <ImageView fx:id="Pareja8Image" fitHeight="69.0" fitWidth="78.0" onMouseClicked="#editarPareja8" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+            <ImageView fx:id="Pareja11Image" fitHeight="69.0" fitWidth="80.0" onMouseClicked="#editarPareja11" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
          </children>
       </GridPane>
-      <GridPane layoutY="587.0" prefHeight="20.0" prefWidth="600.0">
+      <GridPane layoutX="36.0" layoutY="587.0" prefHeight="20.0" prefWidth="564.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -265,7 +265,7 @@
             </Label>
          </children>
       </GridPane>
-      <GridPane layoutX="1.0" layoutY="617.0" prefHeight="65.0" prefWidth="600.0">
+      <GridPane layoutX="37.0" layoutY="617.0" prefHeight="65.0" prefWidth="564.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -279,20 +279,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="Pareja13Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-            <ImageView fx:id="Pareja14Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-            <ImageView fx:id="Pareja15Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-            <ImageView fx:id="Pareja16Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-            <ImageView fx:id="Pareja17Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
-            <ImageView fx:id="Pareja18Image" fitHeight="69.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
+            <ImageView fx:id="Pareja13Image" fitHeight="69.0" fitWidth="80.0" onMouseClicked="#editarPareja13" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+            <ImageView fx:id="Pareja14Image" fitHeight="69.0" fitWidth="79.0" onMouseClicked="#editarPareja14" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+            <ImageView fx:id="Pareja15Image" fitHeight="69.0" fitWidth="80.0" onMouseClicked="#editarPareja15" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+            <ImageView fx:id="Pareja16Image" fitHeight="69.0" fitWidth="82.0" onMouseClicked="#editarPareja16" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
+            <ImageView fx:id="Pareja17Image" fitHeight="69.0" fitWidth="81.0" onMouseClicked="#editarPareja17" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
+            <ImageView fx:id="Pareja18Image" fitHeight="69.0" fitWidth="80.0" onMouseClicked="#editarPareja18" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
          </children>
       </GridPane>
-      <Button fx:id="addImageButton" layoutX="418.0" layoutY="219.0" mnemonicParsing="false" onMouseClicked="#anyadirImagen" prefHeight="40.0" prefWidth="149.0" text="Añadir Imagen">
+      <Button fx:id="addImageButton" layoutX="436.0" layoutY="219.0" mnemonicParsing="false" onMouseClicked="#anyadirImagen" prefHeight="40.0" prefWidth="149.0" text="Añadir Imagen">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <StackPane fx:id="circuloSonido" layoutX="493.0" layoutY="14.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton">
+      <StackPane fx:id="circuloSonido" layoutX="488.0" layoutY="31.0" prefHeight="86.0" prefWidth="101.0" styleClass="fondoBoton">
          <children>
             <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#sonidoHandler" pickOnBounds="true" preserveRatio="true">
                <image>

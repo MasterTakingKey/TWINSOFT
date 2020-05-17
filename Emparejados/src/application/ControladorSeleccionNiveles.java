@@ -75,9 +75,9 @@ public class ControladorSeleccionNiveles {
     
     private long tiempoMusica;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
     
-    public void iniciarSeleccionNiveles(Stage stage, Singleton nuevoSingleton, String ventanaAnterior){
+    public void iniciarSeleccionNiveles(Stage stage, ConfiguracionPartida nuevoSingleton, String ventanaAnterior){
         primaryStage = stage;
         singleton = nuevoSingleton;
         inicializarVariables();

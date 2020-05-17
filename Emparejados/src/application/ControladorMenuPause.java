@@ -63,9 +63,9 @@ public class ControladorMenuPause {
     
     private String tipoPartida;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
  
-    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton, String ventanaAnterior) {
+    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, ConfiguracionPartida nuevoSingleton, String ventanaAnterior) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
     	singleton = nuevoSingleton;
@@ -81,7 +81,7 @@ public class ControladorMenuPause {
         actualizarEstilo();
     }
     
-    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton, String ventanaAnterior) {
+    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, ConfiguracionPartida nuevoSingleton, String ventanaAnterior) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         singleton = nuevoSingleton;

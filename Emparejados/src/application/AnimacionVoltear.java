@@ -2,7 +2,6 @@ package application;
 
 import javafx.animation.RotateTransition;
 import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
 
 public class AnimacionVoltear extends Animaciones {
 

@@ -4,39 +4,17 @@ import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 
-public class CrearBarajaDeportesEstrategia implements CrearBarajaEstrategia {
-	
-	String nombre;
-	
-	int repeticiones;
-	
-	int tamanyoPartida;
-	
-	private ArrayList<Image> imagenes = new ArrayList<Image>();
-	
-	public CrearBarajaDeportesEstrategia(int repeticiones, int tamanyoPartida) {
-		nombre = "Estrategia Baraja Deportes";
-		this.repeticiones = repeticiones;
-		this.tamanyoPartida = tamanyoPartida;
-	}
-	
-	public String nombre() {
-		return "Deportes";
-	}
-	
-	public Image dorso() {
-		return new Image("/imagenes/baraja_deportes/dorso_deportes.png");
-	}
-	
-	public int tamanyoBaraja() {
-		return repeticiones*tamanyoPartida;
-	}
-	
-    public Carta[] crearBaraja() {
+public class BarajaDeportes extends BarajaTematica {
 
-    	Carta[] baraja = new Carta[repeticiones*tamanyoPartida];
-    	Image imagenDorso = new Image("/imagenes/baraja_deportes/dorso_deportes.png");
-  
+	public BarajaDeportes() {
+		nombre = "Deportes";
+		imagenDorso = new Image("/imagenes/baraja_deportes/dorso_deportes.png");
+		tamanyo = 36;
+		baraja = new Carta[tamanyo];
+	}
+	
+	public void crearBaraja() {
+		ArrayList<Image> imagenes = new ArrayList<Image>();
 		imagenes.add(new Image("/imagenes/baraja_deportes/futbol.png"));
 		imagenes.add(new Image("/imagenes/baraja_deportes/basquet.png"));
 		imagenes.add(new Image("/imagenes/baraja_deportes/voleibol.png"));
@@ -57,11 +35,11 @@ public class CrearBarajaDeportesEstrategia implements CrearBarajaEstrategia {
 		imagenes.add(new Image("/imagenes/baraja_deportes/waterpolo.png"));
 		
     	int index = 0;
-    	for(int i = 0; i < repeticiones; i++) {
-    		for(int j = 0; j < tamanyoPartida; j++) {
+    	for(int i = 0; i < 2; i++) {
+    		for(int j = 0; j < 18; j++) {
     			baraja[index++] = (new Carta(imagenDorso, imagenes.get(j), j));
     		}
     	}
-    	return baraja;
-    }
+	}
+	
 }

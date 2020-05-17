@@ -99,7 +99,7 @@ public class ControladorMenuAjustes {
    
     private long tiempoMusica;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
 
     private String musica1;
     
@@ -118,7 +118,7 @@ public class ControladorMenuAjustes {
 	private String musica8;
 
 
-    public void iniciarMenuAjustes(Stage stage, Singleton nuevoSingleton){
+    public void iniciarMenuAjustes(Stage stage, ConfiguracionPartida nuevoSingleton){
         primaryStage = stage;
         singleton = nuevoSingleton;
         inicializarVariables();
@@ -318,7 +318,6 @@ public class ControladorMenuAjustes {
 
     @FXML
     void aplicarHandler(ActionEvent event) throws IOException {
-    	musicaFondo.stopMusic();
     	try {
     		 if(Integer.parseInt(textFilas.getText())*Integer.parseInt(textColumnas.getText())%2 != 0) {
      	    	Alert alert = new Alert(AlertType.ERROR, "El numero total de cartas (filas x columnas) debe ser par.");
@@ -330,6 +329,7 @@ public class ControladorMenuAjustes {
     	    	Alert alert = new Alert(AlertType.ERROR, "La baraja seleccionada no tiene suficientes cartas para un tablero de " + textFilas.getText() + "*" + textColumnas.getText() + " .");
             	alert.showAndWait();
     		} else {
+    	    	musicaFondo.stopMusic();
      	    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
             	Parent root = myLoader.load();  
             	ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();

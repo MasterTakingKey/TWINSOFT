@@ -187,7 +187,7 @@ public class EditorBarajaParejasController {
 	
 	String currentDirectory = System.getProperty("user.dir");
 	
-	private Singleton singleton;
+	private ConfiguracionPartida singleton;
 	
 	private ArrayList<File> listaImagenes = new ArrayList<File>();
 	
@@ -203,7 +203,7 @@ public class EditorBarajaParejasController {
 	
 	String prueba = "";
 
-	public void iniciarEditorParejas(Stage stage, Singleton nuevoSingleton, ArrayList<File> imagenes){
+	public void iniciarEditorParejas(Stage stage, ConfiguracionPartida nuevoSingleton, ArrayList<File> imagenes){
 		primaryStage = stage;
         singleton = nuevoSingleton;
         listaImagenes = imagenes;

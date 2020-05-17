@@ -23,9 +23,9 @@ public class ControladorConfirmacionSalirApp {
     
     private Stage thisStage;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
     
-    public void inicializarDatos(double anteriorWidth, double anteriorHeight, Singleton nuevoSingleton){
+    public void inicializarDatos(double anteriorWidth, double anteriorHeight, ConfiguracionPartida nuevoSingleton){
         thisStage = (Stage) cancelar.getScene().getWindow();
         singleton = nuevoSingleton;
         anyadirIcono();
@@ -56,7 +56,7 @@ public class ControladorConfirmacionSalirApp {
     }
     
     public void corregirPosicionVentana(double anteriorWidth, double anteriorHeight) {
-    	thisStage.setX(singleton.posicionX + (anteriorWidth/6));
+    	thisStage.setX(singleton.posicionX + (anteriorWidth/6) + 50);
     	thisStage.setY(singleton.posicionY + (anteriorHeight/3));
     }
     

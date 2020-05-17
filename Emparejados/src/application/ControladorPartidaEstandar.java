@@ -168,7 +168,7 @@ public class ControladorPartidaEstandar {
     
     private Tablero tableroPartida;
     
-    private Baraja barajaPartidaLibre;
+    private Baraja barajaPartidaEstandar;
   
     private Carta primeraCarta;
     
@@ -220,7 +220,7 @@ public class ControladorPartidaEstandar {
     
     private Puntuacion puntuacion;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
     
     private Animaciones animacionVoltear;
     
@@ -228,7 +228,7 @@ public class ControladorPartidaEstandar {
     
     private Animaciones animacionParejaIncorrecta;
 
-    public void iniciarPartidaEstandar(Stage stage, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
+    public void iniciarPartidaEstandar(Stage stage, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
     	primaryStage = stage;
         singleton = nuevoSingleton;
         esNiveles = niveles;
@@ -253,21 +253,21 @@ public class ControladorPartidaEstandar {
     }
     
     public void inicializarBaraja() {
-    	barajaPartidaLibre = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);
+    	barajaPartidaEstandar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);
         int cartasInsertadas = 0;
         Carta aInsertar;
         for(int i = 0; i < 2; i++) {
             for(int j = 0; j < cartas/2; j++) {
                 aInsertar = new Carta(singleton.barajaPartida.getCarta(j).getImagenDorso(), singleton.barajaPartida.getCarta(j).getImagenFrente(), j);
-                barajaPartidaLibre.setCarta(aInsertar, cartasInsertadas++);
+                barajaPartidaEstandar.setCarta(aInsertar, cartasInsertadas++);
             }
         }
-    	barajaPartidaLibre.barajar();
+    	barajaPartidaEstandar.barajar();
     }
     
     private void inicializarTablero() {
     	tableroPartida = new Tablero(singleton.filasPartida, singleton.columnasPartida);
-    	tableroPartida.llenarTablero(barajaPartidaLibre);
+    	tableroPartida.llenarTablero(barajaPartidaEstandar);
     	tablero.getColumnConstraints().clear();
     	tablero.getRowConstraints().clear();
     	tableroPartida.setTamanyo(singleton.filasPartida, singleton.columnasPartida);

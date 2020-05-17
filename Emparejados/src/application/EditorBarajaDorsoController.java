@@ -3,8 +3,6 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -165,11 +163,11 @@ public class EditorBarajaDorsoController {
     
     private Stage thisStage;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
 
     private Image icon;
     
-    public void iniciarEditorDorso(Stage stage, Singleton nuevoSingleton, boolean transicion, ArrayList<File> imagenes){
+    public void iniciarEditorDorso(Stage stage, ConfiguracionPartida nuevoSingleton, boolean transicion, ArrayList<File> imagenes){
         primaryStage = stage;
         singleton = nuevoSingleton;
         listaImagenes = imagenes;

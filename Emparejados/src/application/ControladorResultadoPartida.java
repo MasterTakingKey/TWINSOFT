@@ -48,13 +48,13 @@ public class ControladorResultadoPartida {
     
     private String tipoPartida;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
     
     private boolean esNiveles;
     
     private int nivel;
     
-    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
+    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
     	primaryStage = stage;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;

@@ -3,7 +3,6 @@ package application;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
 
 public class AnimacionParejaIncorrecta extends Animaciones {
 

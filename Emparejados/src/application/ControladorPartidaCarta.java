@@ -233,7 +233,7 @@ public class ControladorPartidaCarta {
     
     private Puntuacion puntuacion;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
     
     private Animaciones animacionVoltear;
     
@@ -241,7 +241,7 @@ public class ControladorPartidaCarta {
     
     private Animaciones animacionParejaIncorrecta;
 
-    public void iniciarPartidaCarta(Stage stage, Singleton nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
+    public void iniciarPartidaCarta(Stage stage, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
     	primaryStage = stage;
         singleton = nuevoSingleton;
         esNiveles = niveles;

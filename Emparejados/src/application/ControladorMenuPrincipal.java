@@ -63,11 +63,11 @@ public class ControladorMenuPrincipal {
     
     private long tiempoMusica;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
     
     private ArrayList<File> listaImagenes = new ArrayList<File>();
 
-    public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, Singleton nuevoSingleton, String ventanaAnterior){
+    public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior){
         primaryStage = stage;
         if(primeraVez) { 
             inicializarSingleton();
@@ -85,17 +85,26 @@ public class ControladorMenuPrincipal {
 	
 	public void inicializarSingleton() {
 		
-    	singleton = Singleton.Instance();
+    	singleton = ConfiguracionPartida.Instance();
     	
     	singleton.listaBarajas = new ArrayList<Baraja>();
-		Baraja barajaAnimales = new Baraja(4, 4);
-    	barajaAnimales.barajaTematica(new CrearBarajaAnimalesEstrategia(2, 8));
+    	
+    	FabricaBarajas[] fabrica;
+       	
+        fabrica = new FabricaBarajas[3];
+        fabrica[0] = new FabricaBarajaAnimales();
+        fabrica[1] = new FabricaBarajaNintendo();     	
+        fabrica[2] = new FabricaBarajaDeportes();
+        
+        BarajaTematica barajaAnimales = fabrica[0].barajaMetodoFabrica();
+        barajaAnimales.crearBaraja();
+        BarajaTematica barajaNintendo = fabrica[1].barajaMetodoFabrica();
+        barajaNintendo.crearBaraja();
+        BarajaTematica barajaDeportes = fabrica[2].barajaMetodoFabrica();
+        barajaDeportes.crearBaraja();
+        
     	singleton.listaBarajas.add(barajaAnimales);
-    	Baraja barajaNintendo = new Baraja(5, 6);
-    	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2, 15));
     	singleton.listaBarajas.add(barajaNintendo);
-    	Baraja barajaDeportes = new Baraja(6, 6);
-    	barajaDeportes.barajaTematica(new CrearBarajaDeportesEstrategia(2, 18));
     	singleton.listaBarajas.add(barajaDeportes);
     	
     	singleton.estilo = "Azul";

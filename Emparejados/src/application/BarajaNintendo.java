@@ -4,39 +4,17 @@ import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 
-public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
-	
-	String nombre;
-	
-	int repeticiones;
-	
-	int tamanyoPartida;
-	
-	private ArrayList<Image> imagenes = new ArrayList<Image>();
-	
-	public CrearBarajaNintendoEstrategia(int repeticiones, int tamanyoPartida) {
-		nombre = "Estrategia Baraja Nintendo";
-		this.repeticiones = repeticiones;
-		this.tamanyoPartida = tamanyoPartida;
-	}
-	
-	public String nombre() {
-		return "Nintendo";
-	}
-	
-	public Image dorso() {
-		return new Image("/imagenes/baraja_nintendo/dorso_nintendo.png");
-	}
-	
-	public int tamanyoBaraja() {
-		return repeticiones*tamanyoPartida;
-	}
-	
-    public Carta[] crearBaraja() {
+public class BarajaNintendo extends BarajaTematica {
 
-    	Carta[] baraja = new Carta[repeticiones*tamanyoPartida];
-    	Image imagenDorso = new Image("/imagenes/baraja_nintendo/dorso_nintendo.png");
-    	
+	public BarajaNintendo() {
+		nombre = "Nintendo";
+		imagenDorso = new Image("/imagenes/baraja_nintendo/dorso_nintendo.png");
+		tamanyo = 30;
+		baraja = new Carta[tamanyo];
+	}
+	
+	public void crearBaraja() {
+		ArrayList<Image> imagenes = new ArrayList<Image>();
 		imagenes.add(new Image("/imagenes/baraja_nintendo/mario.png"));
 		imagenes.add(new Image("/imagenes/baraja_nintendo/luigi.png"));
 		imagenes.add(new Image("/imagenes/baraja_nintendo/bowser.png"));
@@ -52,13 +30,13 @@ public class CrearBarajaNintendoEstrategia implements CrearBarajaEstrategia {
 		imagenes.add(new Image("/imagenes/baraja_nintendo/chrom.png"));
 		imagenes.add(new Image("/imagenes/baraja_nintendo/donkey.png"));
 		imagenes.add(new Image("/imagenes/baraja_nintendo/toonLink.png"));
-    	
+		
     	int index = 0;
-    	for(int i = 0; i < repeticiones; i++) {
-    		for(int j = 0; j < tamanyoPartida; j++) {
+    	for(int i = 0; i < 2; i++) {
+    		for(int j = 0; j < 15; j++) {
     			baraja[index++] = (new Carta(imagenDorso, imagenes.get(j), j));
     		}
     	}
-    	return baraja;
-    }
+	}
+	
 }

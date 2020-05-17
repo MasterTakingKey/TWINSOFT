@@ -71,12 +71,5 @@ public class Baraja {
 		Collections.shuffle(listaCartas);
 		listaCartas.toArray(baraja);
 	}
-    
-	public void barajaTematica(CrearBarajaEstrategia estrategia) {
-		this.nombre = estrategia.nombre();
-		this.imagenDorso = estrategia.dorso();
-		this.tamanyo = estrategia.tamanyoBaraja();
-		this.baraja = estrategia.crearBaraja();
-	}
 	
 }

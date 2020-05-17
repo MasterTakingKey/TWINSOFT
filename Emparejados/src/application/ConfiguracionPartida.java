@@ -2,9 +2,9 @@ package application;
 
 import java.util.ArrayList;
 
-public class Singleton {
+public class ConfiguracionPartida {
 
-	private static Singleton instance;
+	private static ConfiguracionPartida instance;
 	
 	public ArrayList<Baraja> listaBarajas;
 	
@@ -40,13 +40,13 @@ public class Singleton {
 	
 	public String efectosVisualesPareja;
 	
-	protected Singleton() {
+	protected ConfiguracionPartida() {
 		
 	}
 	
-	public static Singleton Instance() {
+	public static ConfiguracionPartida Instance() {
 		if(instance == null) {
-			instance = new Singleton();
+			instance = new ConfiguracionPartida();
 		}
 		return instance;
 	}

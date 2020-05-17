@@ -1,5 +1,7 @@
 package application;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,6 +36,9 @@ public class ControladorResultadoPartida {
     @FXML
     private Button salir;
     
+    @FXML
+    private ImageView confetiVictoria;
+    
     private AudioClip victoria;
     
     private AudioClip derrota;
@@ -50,6 +55,8 @@ public class ControladorResultadoPartida {
     
     private ConfiguracionPartida singleton;
     
+    private Animaciones animacionVictoria;
+    
     private boolean esNiveles;
     
     private int nivel;
@@ -62,6 +69,7 @@ public class ControladorResultadoPartida {
         esNiveles = niveles;
         nivel = nuevoNivel;
         inicializarVariables(puntuacion, tiempo);
+        inicializarAnimaciones();
         mostrarResultado();
         anyadirIcono();
         corregirTamanyoVentana();
@@ -69,7 +77,19 @@ public class ControladorResultadoPartida {
         actualizarEstilo();
     }
  
-    public void inicializarVariables(String puntuacion, String tiempo) {
+    private void inicializarAnimaciones() {
+    	Image GifVictoria = new Image (getClass().getResource("/imagenes/confetti.gif").toExternalForm());
+		confetiVictoria.setImage(GifVictoria);
+    	confetiVictoria.setVisible(isVictoria);
+    	FabricaAnimaciones[] fabrica;
+       	fabrica = new FabricaAnimaciones[2];
+       	fabrica[0] = new FabricaAnimacionVictoria();
+       	animacionVictoria = fabrica[0].animacionesMetodoFabrica();
+       	animacionVictoria.pane = pane;
+    	animacionVictoria.imagen1 = confetiVictoria;
+	}
+
+	public void inicializarVariables(String puntuacion, String tiempo) {
     	thisStage = (Stage) jugar.getScene().getWindow();
         victoria = new AudioClip(getClass().getResource("/sonidos/victoria.mp3").toString());
         derrota = new AudioClip(getClass().getResource("/sonidos/derrota1.mp3").toString());
@@ -84,12 +104,14 @@ public class ControladorResultadoPartida {
     
     public void mostrarResultado() {
     	if(isVictoria) {
+    		animacionVictoria.crearAnimacion();
     		if(singleton.soundOn) victoria.play();
             resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
     	} else {
             if(singleton.soundOn) derrota.play();
             resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
     	}
+    	
     }
 
     @FXML

@@ -2,7 +2,6 @@ package application;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
 
 public class AnimacionParejaCorrecta extends Animaciones {
 

@@ -1,8 +1,8 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,34 +22,34 @@ import javafx.stage.Stage;
 public class ControladorMenuPrincipal {
 
 	@FXML
-    private AnchorPane anchorPane;
+	private AnchorPane anchorPane;
 
-    @FXML
-    private StackPane circuloSonido;
+	@FXML
+	private StackPane circuloSonido;
 
-    @FXML
-    private Button jugar;
-    
-    @FXML
-    private Button ajustes;
+	@FXML
+	private ImageView iconoSonido;
 
-    @FXML
-    private Button partidaEstandar;
+	@FXML
+	private Button salir;
+	
+	@FXML
+	private Button partidaEstandar;
 
-    @FXML
-    private Button modoLibre;
+	@FXML
+	private Button partidaCarta;
 
-    @FXML
-    private Button partidaCarta;
-    
-    @FXML
-    private Button salir;
-    
-    @FXML
-    private Button volverAtras;
-    
-    @FXML
-    private ImageView iconoSonido;
+	@FXML
+	private Button partidaNiveles;
+
+	@FXML
+	private Button partidaMultijugador;
+
+	@FXML
+	private Button editorBarajas;
+
+	@FXML
+	private Button ajustes;
     
     private Stage primaryStage;
     
@@ -63,9 +63,11 @@ public class ControladorMenuPrincipal {
     
     private long tiempoMusica;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
+    
+    private ArrayList<File> listaImagenes = new ArrayList<File>();
 
-    public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, Singleton nuevoSingleton){
+    public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior){
         primaryStage = stage;
         if(primeraVez) { 
             inicializarSingleton();
@@ -76,28 +78,50 @@ public class ControladorMenuPrincipal {
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
-        muestraMenuP(true);
+    }
+    
+    public void iniciarMenuPrincipalDesdeEditor(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, long tiempoCancion){
+        primaryStage = stage;
+        if(primeraVez) { 
+            inicializarSingleton();
+        } else {
+            singleton = nuevoSingleton;
+        }
+        tiempoMusica = tiempoCancion;
+        inicializarVariables();
+		actualizarSonido();
+        actualizarImagenSonido();
+        corregirTamanyoVentana();
+        corregirPosicionVentana(ventanaAnterior);
+        actualizarEstilo();
     }
     
 	
 	public void inicializarSingleton() {
 		
-    	singleton = Singleton.Instance();
+    	singleton = ConfiguracionPartida.Instance();
     	
     	singleton.listaBarajas = new ArrayList<Baraja>();
-		Baraja barajaAnimales = new Baraja(4, 4);
-    	barajaAnimales.barajaTematica(new CrearBarajaAnimalesEstrategia(2, 8));
-    	singleton.listaBarajas.add(barajaAnimales);
-    	Baraja barajaDeportes = new Baraja(4, 4);
-    	barajaDeportes.barajaTematica(new CrearBarajaDeportesEstrategia(2, 8));
-    	singleton.listaBarajas.add(barajaDeportes);
-    	Baraja barajaNintendo = new Baraja(4, 4);
-    	barajaNintendo.barajaTematica(new CrearBarajaNintendoEstrategia(2, 8));
-    	singleton.listaBarajas.add(barajaNintendo);
     	
-    	singleton.barajaPartida = singleton.listaBarajas.get(0);
+    	FabricaBarajas[] fabrica;
+       	
+        fabrica = new FabricaBarajas[3];
+        fabrica[0] = new FabricaBarajaAnimales();
+        fabrica[1] = new FabricaBarajaNintendo();     	
+        fabrica[2] = new FabricaBarajaDeportes();
+        
+        BarajaTematica barajaAnimales = fabrica[0].barajaMetodoFabrica();
+        barajaAnimales.crearBaraja();
+        BarajaTematica barajaNintendo = fabrica[1].barajaMetodoFabrica();
+        barajaNintendo.crearBaraja();
+        BarajaTematica barajaDeportes = fabrica[2].barajaMetodoFabrica();
+        barajaDeportes.crearBaraja();
+        
+    	singleton.listaBarajas.add(barajaAnimales);
+    	singleton.listaBarajas.add(barajaNintendo);
+    	singleton.listaBarajas.add(barajaDeportes);
     	
     	singleton.estilo = "Azul";
     	
@@ -110,85 +134,31 @@ public class ControladorMenuPrincipal {
         singleton.soundOn = true;
     	
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
-        singleton.posicionX = (screen.getWidth() - 910) / 2;
-        singleton.posicionY = (screen.getHeight() - 650) / 2;
+        singleton.posicionX = (screen.getWidth() - 1050) / 2;
+        singleton.posicionY = (screen.getHeight() - 900) / 2;
+        	
+    	singleton.barajaPartida = singleton.listaBarajas.get(0);
+        
+        singleton.filasPartida = 4;
+    	singleton.columnasPartida = 4;
+    	
+    	singleton.limiteTiempoOn = true;
+    	singleton.tiempoPartida = 60;
+    	
+    	singleton.mostrarCartasOn = true;
+    	singleton.tiempoMostrarCartas = 2;
+    	
+    	singleton.efectosSonorosVoltear = "Voltear";
+    	singleton.efectosSonorosPareja = "Acierto";
+    	singleton.efectosVisualesVoltear = "Giro";
+    	singleton.efectosVisualesPareja = "Salto";
 	}
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
         musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
-        thisStage = (Stage) salir.getScene().getWindow();
-    }
-    
-    public void actualizarSonido() {
-    	if(singleton.soundOn) {
-    		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
-    		musicaFondo.playMusic();
-    	}
-    	else {
-    		musicaFondo.stopMusic();
-    	}
-    }
-    
-    public void actualizarImagenSonido() {
-        if(singleton.soundOn) {
-        	iconoSonido.setImage(Sound1);
-        } else {
-        	iconoSonido.setImage(Sound0);
-        }
-    }
-    
-    public void muestraMenuP(boolean b) {
-    	jugar.setVisible(b);
-    	ajustes.setVisible(b);
-    	salir.setVisible(b);
-    	partidaEstandar.setVisible(!b);
-    	modoLibre.setVisible(!b);
-    	partidaCarta.setVisible(!b);
-    	volverAtras.setVisible(!b);
-    }
-    
-
-    @FXML
-    void clickSound(MouseEvent event) {
-    	if(singleton.soundOn) {
-    		singleton.soundOn = false;
-    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-    	} else {
-    		singleton.soundOn = true;
-    	}
-    	actualizarSonido();
-    	actualizarImagenSonido();
-    }
-    
-    @FXML
-    void jugarHandler(ActionEvent event) {
-    	muestraMenuP(false);
-    	
-    }
-    
-    @FXML
-    void ajustesHandler(ActionEvent event) {
-    	musicaFondo.stopMusic();
-    	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-    	try {
-    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
-    		Parent root = myLoader.load();  
-    		ControladorMenuAjustes menuPrincipal = myLoader.<ControladorMenuAjustes>getController();
-    		Scene scene = new Scene(root);
-    		primaryStage.setTitle("Menu Ajustes");
-    		primaryStage.setScene(scene);
-    		primaryStage.setResizable(false);
-        
-    		Image icono = new Image("/imagenes/Icon.png");
-    		primaryStage.getIcons().add(icono);
-        
-    		singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-    		menuPrincipal.iniciarMenuAjustes(primaryStage, singleton);
-    		primaryStage.show();
-    	} catch(IOException e) {}
+        thisStage = (Stage) anchorPane.getScene().getWindow();
     }
 
     @FXML
@@ -204,7 +174,7 @@ public class ControladorMenuPrincipal {
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton);
+      		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "menuPrincipal", false, 0);
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -222,30 +192,78 @@ public class ControladorMenuPrincipal {
       		primaryStage.setResizable(false);
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton);
+      		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, "menuPrincipal", false, 0);
+      		primaryStage.show();
+      	} catch (IOException e) {}
+    }
+
+    @FXML
+    void partidaNivelesHandler(ActionEvent event) {
+    	musicaFondo.stopMusic();
+      	try {
+      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/SeleccionNiveles.fxml"));
+      		Parent root = (Parent) myLoader.load();
+      		ControladorSeleccionNiveles controladorSeleccionNiveles = myLoader.<ControladorSeleccionNiveles>getController();
+      		Scene scene = new Scene(root);
+      		primaryStage.setScene(scene);
+      		primaryStage.setTitle("Seleccion de Niveles");
+      		primaryStage.setResizable(false);
+      		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		controladorSeleccionNiveles.iniciarSeleccionNiveles(primaryStage, singleton, "menuPrincipal");
       		primaryStage.show();
       	} catch (IOException e) {}
     }
     
+    @FXML
+    void partidaMultijugadorHandler(ActionEvent event) {
+
+    }  
     
     @FXML
-    void modoLibreHandler(ActionEvent event) {
+    void editorBarajasHandler(ActionEvent event) {
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
+            Parent root = myLoader.load();  
+            Scene scene = new Scene(root); 
+            Stage stage = new Stage();                       
+            stage.setTitle("Seleccione el dorso");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            ControladorEditorBarajaDorso editorDorso = myLoader.<ControladorEditorBarajaDorso>getController(); 
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+            editorDorso.iniciarEditorDorso(primaryStage, singleton, true, listaImagenes, musicaFondo, tiempoMusica);
+            stage.show();
+    	} catch (IOException e) {}
+    } 
+    
+    
+    @FXML
+    void ajustesHandler(ActionEvent event) {
     	musicaFondo.stopMusic();
     	tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     	try {
-      		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/AjustesJuegoLibre.fxml"));
-      		Parent root = (Parent) myLoader.load();
-      		ControladorAjustesJuegoLibre controladorAjustesJLibre = myLoader.<ControladorAjustesJuegoLibre>getController();
-      		Scene scene = new Scene(root);
-      		primaryStage.setScene(scene);
-      		primaryStage.setTitle("Ajustes del modo libre");
-      		primaryStage.setResizable(false);
-      		controladorAjustesJLibre.iniciarAjustesJLibre(primaryStage, tiempoMusica, singleton);
-      		primaryStage.show();
-      	} catch (IOException e) {
-      		e.printStackTrace();
-      	}
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuAjustes.fxml"));
+    		Parent root = myLoader.load();  
+    		ControladorMenuAjustes menuAjustes = myLoader.<ControladorMenuAjustes>getController();
+    		Scene scene = new Scene(root);
+    		primaryStage.setTitle("Menu Ajustes");
+    		primaryStage.setScene(scene);
+    		primaryStage.setResizable(false);
+        
+    		Image icono = new Image("/imagenes/Icon.png");
+    		primaryStage.getIcons().add(icono);
+        
+    		singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+    		menuAjustes.iniciarMenuAjustes(primaryStage, singleton);
+    		primaryStage.show();
+    	} catch(IOException e) {}
     }
+
     
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
@@ -265,18 +283,61 @@ public class ControladorMenuPrincipal {
     }
     
     @FXML
-    void volverAtrasHandler(ActionEvent event) {
-    	muestraMenuP(true);
+    void sonidoHandler(MouseEvent event) {
+    	if(singleton.soundOn) {
+    		singleton.soundOn = false;
+    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	} else {
+    		singleton.soundOn = true;
+    	}
+    	actualizarSonido();
+    	actualizarImagenSonido();
+    }
+    
+    
+    public void actualizarSonido() {
+    	if(singleton.soundOn) {
+    		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
+    		musicaFondo.playMusic();
+    	}
+    	else {
+    		musicaFondo.stopMusic();
+    	}
+    }
+    
+    public void actualizarImagenSonido() {
+        if(singleton.soundOn) {
+        	iconoSonido.setImage(Sound1);
+        } else {
+        	iconoSonido.setImage(Sound0);
+        }
     }
 
     public void corregirTamanyoVentana() {
-    	thisStage.setWidth(910);
-    	thisStage.setHeight(650);
+    	thisStage.setWidth(1050);
+    	thisStage.setHeight(820);
     }
     
-    public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("ajustes")) {
+        	thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY + 20);
+    	} else if(ventanaAnterior.equals("menuPausa")) {
+        	thisStage.setX(singleton.posicionX - 80);
+        	thisStage.setY(singleton.posicionY - 80);
+    	} else if(ventanaAnterior.equals("resultadoPartida")) {
+        	thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY);
+    	} else if(ventanaAnterior.equals("seleccionNiveles")) {
+        	thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY - 100);
+    	}else if(ventanaAnterior.equals("editorBaraja")) {
+        	thisStage.setX(singleton.posicionX - 200);
+        	thisStage.setY(singleton.posicionY - 40);
+    	} else {
+        	thisStage.setX(singleton.posicionX);
+        	thisStage.setY(singleton.posicionY);
+    	}
     }
     
     public void actualizarEstilo() {

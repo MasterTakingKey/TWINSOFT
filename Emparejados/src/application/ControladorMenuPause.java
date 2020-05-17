@@ -1,13 +1,11 @@
 package application;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -39,6 +37,12 @@ public class ControladorMenuPause {
     @FXML
     private ImageView imageSound;
     
+    @FXML
+    private Label puntos;
+
+    @FXML
+    private Label tiempo;
+    
     private Musica musicaFondo;
     
     private Stage primaryStage;
@@ -48,8 +52,6 @@ public class ControladorMenuPause {
     private ControladorPartidaEstandar partidaEstandar;
     
     private ControladorPartidaCarta partidaCarta;
-    
-    private ControladorPartidaLibre partidaLibre;
     
     private Image Sound0;
     
@@ -61,53 +63,43 @@ public class ControladorMenuPause {
     
     private String tipoPartida;
     
-    private Optional<ButtonType> resultadoSalida;
-    
-    private Singleton singleton;
-    
-    void initDataPartidaEstandar(Stage partida, ControladorPartidaEstandar partidaEstandar, Singleton nuevoSingleton) {
+    private ConfiguracionPartida singleton;
+ 
+    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, ConfiguracionPartida nuevoSingleton, String ventanaAnterior) {
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
     	singleton = nuevoSingleton;
         tipoPartida = "estandar";
+        actualizarTiempoYPuntos(tiempo, puntos);
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
     }
     
-    void initDataPartidaCarta(Stage partida, ControladorPartidaCarta partidaCarta, Singleton nuevoSingleton) {
+    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, ConfiguracionPartida nuevoSingleton, String ventanaAnterior) {
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         singleton = nuevoSingleton;
         tipoPartida = "carta";
+        actualizarTiempoYPuntos(tiempo, puntos);
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
     }
-  
-    void initDataPartidaLibre(Stage partida, ControladorPartidaLibre partidaLibre, Singleton nuevoSingleton) {
-    	primaryStage = partida;
-    	this.partidaLibre = partidaLibre;
-        singleton = nuevoSingleton;
-        tipoPartida = "libre";
-        inicializarVariables();
-        anyadirIcono();
-        corregirTamanyoVentana();
-		actualizarSonido();
-        actualizarImagenSonido();
-        corregirTamanyoVentana();
-        corregirPosicionVentana();
-        actualizarEstilo();
+
+    public void actualizarTiempoYPuntos(String tiempo, String puntos) {
+    	this.puntos.setText(puntos);
+        this.tiempo.setText(tiempo);
     }
     
     public void inicializarVariables() {
@@ -142,6 +134,7 @@ public class ControladorMenuPause {
     	
     
     public void volverMenuPrincipal() {
+    	restablecerPredeterminados();
     	musicaFondo.stopMusic();
     	thisStage.close();
     	primaryStage.close();
@@ -155,7 +148,7 @@ public class ControladorMenuPause {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "menuPausa");
             primaryStage.show();
     	} catch (IOException e) {
                 e.printStackTrace();
@@ -164,9 +157,9 @@ public class ControladorMenuPause {
 
     @FXML
     void clickPlay(MouseEvent event) throws IOException {
-    	if(tipoPartida == "estandar") {
+    	if(tipoPartida.equals("estandar")) {
         	reanudarPartidaEstandar();
-    	} else if(tipoPartida == "carta") {
+    	} else if(tipoPartida.equals("carta")) {
     		reanudarPartidaCarta();
     	}
     }
@@ -179,7 +172,7 @@ public class ControladorMenuPause {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaEstandar.reanudarPartida(singleton.soundOn);
+	    	partidaEstandar.reanudarPartida(singleton.soundOn, "menuPausa");
     	}
     	
     }
@@ -192,20 +185,28 @@ public class ControladorMenuPause {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaCarta.reanudarPartida(singleton.soundOn);
+	    	partidaCarta.reanudarPartida(singleton.soundOn, "menuPausa");
     	}
     }
     
-    void reanudarPartidaLibre() {
-    	musicaFondo.stopMusic();
-    	boolean victoria = partidaLibre.isVictoria();
-    	boolean derrota = partidaLibre.isDerrota();
-    	if (!derrota && !victoria) {
-    		singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-	    	thisStage.close();
-	    	partidaLibre.reanudarPartida(singleton.soundOn);
-    	}
+    public void restablecerPredeterminados() {
+    	
+    	singleton.barajaPartida = singleton.listaBarajas.get(0);
+    	
+    	singleton.filasPartida = 4;
+    	singleton.columnasPartida = 4;
+    	
+    	singleton.limiteTiempoOn = true;
+    	singleton.tiempoPartida = 60;
+    	
+    	singleton.mostrarCartasOn = true;
+    	singleton.tiempoMostrarCartas = 2;
+    	
+    	singleton.efectosSonorosVoltear = "Voltear";
+    	singleton.efectosSonorosPareja = "Acierto";
+    	singleton.efectosVisualesVoltear = "Giro";
+    	singleton.efectosVisualesPareja = "Salto";
+    	
     }
 
     @FXML
@@ -243,9 +244,25 @@ public class ControladorMenuPause {
     	thisStage.setHeight(620);
     }
     
-    public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("partidaEstandar")) {
+        	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+            	thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY + 50);
+        	} else {
+        		thisStage.setX(singleton.posicionX + 250);
+            	thisStage.setY(singleton.posicionY + 100);
+        	}
+    	} else if(ventanaAnterior.equals("partidaCarta")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+    	    	thisStage.setX(singleton.posicionX);
+    	    	thisStage.setY(singleton.posicionY + 150);
+        	} else {
+        		thisStage.setX(singleton.posicionX + 250);
+            	thisStage.setY(singleton.posicionY + 200);
+        	}
+    	}
+
     }
     
     public void actualizarEstilo() {

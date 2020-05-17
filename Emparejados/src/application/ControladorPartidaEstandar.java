@@ -19,8 +19,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 public class ControladorPartidaEstandar {
+	
+	@FXML
+    private GridPane tablero;
 	
 	@FXML
     private Label tiempo = new Label();
@@ -32,6 +40,12 @@ public class ControladorPartidaEstandar {
     private Label puntosAnyadidos;
     
     @FXML
+    private ImageView iconoTiempo;
+    
+    @FXML
+    private ImageView iconoPuntos;
+    
+    @FXML
     private ImageView iconoSonido;
 
     @FXML
@@ -39,9 +53,6 @@ public class ControladorPartidaEstandar {
     
     @FXML
     private StackPane stackPane;
-
-    @FXML
-    private ImageView usuario;
 
     @FXML
     private ImageView carta00;
@@ -91,11 +102,73 @@ public class ControladorPartidaEstandar {
     @FXML
     private ImageView carta33;
     
+    @FXML
+    private ImageView carta40;
+
+    @FXML
+    private ImageView carta41;
+
+    @FXML
+    private ImageView carta34;
+
+    @FXML
+    private ImageView carta24;
+
+    @FXML
+    private ImageView carta14;
+
+    @FXML
+    private ImageView carta04;
+
+    @FXML
+    private ImageView carta43;
+
+    @FXML
+    private ImageView carta42;
+
+    @FXML
+    private ImageView carta25;
+
+    @FXML
+    private ImageView carta44;
+
+    @FXML
+    private ImageView carta05;
+
+    @FXML
+    private ImageView carta15;
+
+    @FXML
+    private ImageView carta45;
+
+    @FXML
+    private ImageView carta35;
+
+    @FXML
+    private ImageView carta51;
+
+    @FXML
+    private ImageView carta50;
+
+    @FXML
+    private ImageView carta55;
+
+    @FXML
+    private ImageView carta54;
+
+    @FXML
+    private ImageView carta53;
+
+    @FXML
+    private ImageView carta52;
+    
     private Stage primaryStage;
     
     private Stage thisStage;
     
     private Tablero tableroPartida;
+    
+    private Baraja barajaPartidaEstandar;
   
     private Carta primeraCarta;
     
@@ -118,6 +191,10 @@ public class ControladorPartidaEstandar {
     private int cartasGiradas;
     
     private int puntosAnteriores;
+    
+    private int cartas;
+    
+    private int nivel;
 	
 	private ArrayList<Carta> parejasFalladas;
 	
@@ -128,6 +205,8 @@ public class ControladorPartidaEstandar {
     private boolean esVictoria;
 
 	private boolean esDerrota;
+	
+	private boolean esNiveles;
     
     private AudioClip voltearCarta;
     
@@ -139,22 +218,24 @@ public class ControladorPartidaEstandar {
 	
     private ContadorTiempo contadorTiempo;
     
-    private Puntuacion puntuacion;    
-
-    private Singleton singleton;
+    private Puntuacion puntuacion;
+    
+    private ConfiguracionPartida singleton;
     
     private Animaciones animacionVoltear;
     
     private Animaciones animacionParejaCorrecta;
     
     private Animaciones animacionParejaIncorrecta;
-    
-    private Baraja barajaPartidaEstandar;
-    
-    public void iniciarPartidaEstandar(Stage stage, Singleton nuevoSingleton){
+
+    public void iniciarPartidaEstandar(Stage stage, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
     	primaryStage = stage;
-    	singleton = nuevoSingleton;
-        inicializarBarajaTablero();
+        singleton = nuevoSingleton;
+        esNiveles = niveles;
+        nivel = nuevoNivel;
+        cartas = singleton.filasPartida*singleton.columnasPartida;
+        inicializarBaraja();
+        inicializarTablero();
         inicializarCartas();
     	inicializarVariables();
     	inicializarAudioClips();
@@ -164,103 +245,233 @@ public class ControladorPartidaEstandar {
     	actualizarSonido();
     	actualizarImagenSonido();
     	corregirTamanyoVentana();
-    	corregirPosicionVentana();
+    	corregirPosicionVentana(ventanaAnterior);
+    	actualizarEstilo();
+    	if(singleton.mostrarCartasOn) {
+    		mostrarCartas();
+    	}
     }
     
-    public void inicializarAnimaciones() {
-        FabricaAnimaciones[] fabrica;
-    	
-        fabrica = new FabricaAnimaciones[3];
-        fabrica[0] = new FabricaAnimacionVoltear();
-        fabrica[1] = new FabricaAnimacionParejaCorrecta();
-        fabrica[2] = new FabricaAnimacionParejaIncorrecta();
-        
-        animacionVoltear = fabrica[0].animacionesMetodoFabrica();
-        animacionVoltear.stackPane = stackPane;
-        animacionVoltear.baraja = singleton.barajaPartida;
-        
-        animacionParejaCorrecta = fabrica[1].animacionesMetodoFabrica();
-        animacionParejaCorrecta.stackPane = stackPane;
-        animacionParejaCorrecta.baraja = singleton.barajaPartida;
-        
-        animacionParejaIncorrecta = fabrica[2].animacionesMetodoFabrica();
-        animacionParejaIncorrecta.stackPane = stackPane;
-        animacionParejaIncorrecta.baraja = singleton.barajaPartida;
-    }
-    
-    public void inicializarBarajaTablero() {
-    	barajaPartidaEstandar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), 16);
+    public void inicializarBaraja() {
+    	barajaPartidaEstandar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);
         int cartasInsertadas = 0;
         Carta aInsertar;
         for(int i = 0; i < 2; i++) {
-            for(int j = 0; j < 8; j++) {
+            for(int j = 0; j < cartas/2; j++) {
                 aInsertar = new Carta(singleton.barajaPartida.getCarta(j).getImagenDorso(), singleton.barajaPartida.getCarta(j).getImagenFrente(), j);
                 barajaPartidaEstandar.setCarta(aInsertar, cartasInsertadas++);
             }
         }
     	barajaPartidaEstandar.barajar();
-    	tableroPartida = new Tablero(4, 4);
-    	tableroPartida.llenarTablero(barajaPartidaEstandar);
     }
     
+    private void inicializarTablero() {
+    	tableroPartida = new Tablero(singleton.filasPartida, singleton.columnasPartida);
+    	tableroPartida.llenarTablero(barajaPartidaEstandar);
+    	tablero.getColumnConstraints().clear();
+    	tablero.getRowConstraints().clear();
+    	tableroPartida.setTamanyo(singleton.filasPartida, singleton.columnasPartida);
+        for (int i = 0; i < singleton.columnasPartida; i++) {
+            ColumnConstraints colConst = new ColumnConstraints();
+            colConst.setHalignment(HPos.CENTER);
+            colConst.setPercentWidth(100.0 / singleton.columnasPartida);
+            tablero.getColumnConstraints().add(colConst);
+        }
+        for (int i = 0; i < singleton.filasPartida; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setValignment(VPos.CENTER);
+            rowConst.setPercentHeight(100.0 / singleton.filasPartida);
+            tablero.getRowConstraints().add(rowConst);         
+        }
+    }
     
     public void inicializarCartas() {
     	carta00.setImage(singleton.barajaPartida.getImagenDorso());
     	carta01.setImage(singleton.barajaPartida.getImagenDorso());
     	carta02.setImage(singleton.barajaPartida.getImagenDorso());
     	carta03.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta04.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta05.setImage(singleton.barajaPartida.getImagenDorso());
     	carta10.setImage(singleton.barajaPartida.getImagenDorso());
     	carta11.setImage(singleton.barajaPartida.getImagenDorso());
     	carta12.setImage(singleton.barajaPartida.getImagenDorso());
     	carta13.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta14.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta15.setImage(singleton.barajaPartida.getImagenDorso());
     	carta20.setImage(singleton.barajaPartida.getImagenDorso());
     	carta21.setImage(singleton.barajaPartida.getImagenDorso());
     	carta22.setImage(singleton.barajaPartida.getImagenDorso());
     	carta23.setImage(singleton.barajaPartida.getImagenDorso());
     	carta23.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta24.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta25.setImage(singleton.barajaPartida.getImagenDorso());
     	carta30.setImage(singleton.barajaPartida.getImagenDorso());
     	carta31.setImage(singleton.barajaPartida.getImagenDorso());
     	carta32.setImage(singleton.barajaPartida.getImagenDorso());
     	carta33.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta34.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta35.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta40.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta41.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta42.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta43.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta44.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta45.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta50.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta51.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta52.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta53.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta54.setImage(singleton.barajaPartida.getImagenDorso());
+    	carta55.setImage(singleton.barajaPartida.getImagenDorso());
     }
-    
-    public void inicializarVariables() {
-    	cartasGiradas = 0;
-    	esPrimeraCarta = true;
-    	esVictoria = false;
-    	esDerrota = false;
-    	parejasFalladas = new ArrayList<Carta>(tableroPartida.getNumParejas());
-    	musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[0] +".wav", 0L);
-    	Sound0 = new Image("/imagenes/sonido_off_2.png");
-        Sound1 = new Image("/imagenes/sonido_on_2.png");
-        puntosAnyadidos.setVisible(false);
-        thisStage = (Stage) carta00.getScene().getWindow(); 
-    }
-
-    public void inicializarAudioClips() {
-    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/Voltear.mp3").toString());
-        error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
-        acierto = new AudioClip(getClass().getResource("/sonidos/acierto.mp3").toString());
-        mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
-    }
-    
-    public void inicializarContadorTiempo() {
-        contadorTiempo = new ContadorTiempo();
-    	contadorTiempo.iniciarTiempoPartidaEstandar(tiempo);
-        tiempo.textProperty().addListener((ChangeListener<? super String>) (o, oldVal, newVal) -> {
-        	int minutos = Integer.parseInt(tiempo.getText().substring(0, tiempo.getText().length()-3));
-        	int segundos = Integer.parseInt( tiempo.getText().substring(tiempo.getText().length() - 2));
-        	if(minutos + segundos == 0) derrota();
+ 
+   public void inicializarVariables() {
+   	cartasGiradas = 0;
+   	esPrimeraCarta = true;
+   	esVictoria = false;
+   	esDerrota = false;
+   	parejasFalladas = new ArrayList<Carta>(tableroPartida.getNumParejas());
+   	musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[0] +".wav", 0L);
+   	Sound0 = new Image("/imagenes/sonido_off_2.png");
+       Sound1 = new Image("/imagenes/sonido_on_2.png");
+       puntosAnyadidos.setVisible(false);
+       thisStage = (Stage) carta00.getScene().getWindow();
+   }
+   
+   public void inicializarAudioClips() {
+   	voltearCarta = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosVoltear + ".mp3").toString());
+       error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
+       acierto = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosPareja + ".mp3").toString());
+       mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
+   }
+   
+   public void inicializarContadorTiempo() {
+   	if(singleton.limiteTiempoOn) {
+	        contadorTiempo = new ContadorTiempo();
+	    	contadorTiempo.iniciarTiempoPartida(tiempo, singleton.tiempoPartida);
+	        tiempo.textProperty().addListener((ChangeListener<? super String>) (o, oldVal, newVal) -> {
+	        	int minutos = Integer.parseInt(tiempo.getText().substring(0, tiempo.getText().length()-3));
+	        	int segundos = Integer.parseInt( tiempo.getText().substring(tiempo.getText().length() - 2));
+	        	if(minutos + segundos == 0) derrota();
+			});
+   	}else {
+   		tiempo.setText("0:00");
+   	}
+   }
+   
+   public void inicializarPuntuacion() {
+   	puntuacion = new Puntuacion();
+   	puntuacion.getPuntosCambiados().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
+   		puntos.setText(Integer.toString(puntuacion.getPuntos()));
+       	mostrarPuntos(puntuacion.getPuntos() - puntosAnteriores);
 		});
-    }
-    
-    public void inicializarPuntuacion() {
-    	puntuacion = new Puntuacion();
-    	puntuacion.getPuntosCambiados().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
-    		puntos.setText(Integer.toString(puntuacion.getPuntos()));
-        	mostrarPuntos(puntuacion.getPuntos() - puntosAnteriores);
-		});
-    }
+   }
+   
+	public void inicializarAnimaciones() {
+       FabricaAnimaciones[] fabrica;
+   	
+       fabrica = new FabricaAnimaciones[3];
+       fabrica[0] = new FabricaAnimacionVoltear();
+       if(singleton.efectosVisualesPareja == "Salto") {
+       	fabrica[1] = new FabricaAnimacionParejaCorrecta();
+       } else if(singleton.efectosVisualesPareja == "Salto doble") {
+       	fabrica[1] = new FabricaAnimacionParejaCorrecta2();       	
+       }
+       fabrica[2] = new FabricaAnimacionParejaIncorrecta();
+       
+       animacionVoltear = fabrica[0].animacionesMetodoFabrica();
+       animacionVoltear.stackPane = stackPane;
+       animacionVoltear.baraja = singleton.barajaPartida;
+       
+       animacionParejaCorrecta = fabrica[1].animacionesMetodoFabrica();
+       animacionParejaCorrecta.stackPane = stackPane;
+       animacionParejaCorrecta.baraja = singleton.barajaPartida;
+       
+       animacionParejaIncorrecta = fabrica[2].animacionesMetodoFabrica();
+       animacionParejaIncorrecta.stackPane = stackPane;
+       animacionParejaIncorrecta.baraja = singleton.barajaPartida;
+   }
+   
+    private void mostrarCartas() {
+    	PauseTransition pause = new PauseTransition(Duration.seconds(singleton.tiempoMostrarCartas));
+    	stackPane.setDisable(true);
+    	carta00.setImage(deImagenACarta(carta00).getImagenFrente());
+    	if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 2) carta01.setImage(deImagenACarta(carta01).getImagenFrente());
+    	if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 3) carta02.setImage(deImagenACarta(carta02).getImagenFrente());
+    	if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 4) carta03.setImage(deImagenACarta(carta03).getImagenFrente());
+    	if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 5) carta04.setImage(deImagenACarta(carta04).getImagenFrente());
+    	if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 6)	carta05.setImage(deImagenACarta(carta05).getImagenFrente());
+    	if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 1) carta10.setImage(deImagenACarta(carta10).getImagenFrente());
+    	if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 2) carta11.setImage(deImagenACarta(carta11).getImagenFrente());
+    	if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 3) carta12.setImage(deImagenACarta(carta12).getImagenFrente());
+    	if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 4) carta13.setImage(deImagenACarta(carta13).getImagenFrente());
+    	if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 5) carta14.setImage(deImagenACarta(carta14).getImagenFrente());
+    	if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 6) carta15.setImage(deImagenACarta(carta15).getImagenFrente());
+    	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 1) carta20.setImage(deImagenACarta(carta20).getImagenFrente());
+    	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 2) carta21.setImage(deImagenACarta(carta21).getImagenFrente());
+    	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 3) carta22.setImage(deImagenACarta(carta22).getImagenFrente());
+    	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 4) carta23.setImage(deImagenACarta(carta23).getImagenFrente());
+    	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 5) carta24.setImage(deImagenACarta(carta24).getImagenFrente());
+    	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 6) carta25.setImage(deImagenACarta(carta25).getImagenFrente());
+    	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 1) carta30.setImage(deImagenACarta(carta30).getImagenFrente());
+    	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 2) carta31.setImage(deImagenACarta(carta31).getImagenFrente());
+    	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 3) carta32.setImage(deImagenACarta(carta32).getImagenFrente());
+    	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 4) carta33.setImage(deImagenACarta(carta33).getImagenFrente());
+    	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 5) carta34.setImage(deImagenACarta(carta34).getImagenFrente());
+    	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 6) carta35.setImage(deImagenACarta(carta35).getImagenFrente());
+    	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 1) carta40.setImage(deImagenACarta(carta40).getImagenFrente());
+    	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 2) carta41.setImage(deImagenACarta(carta41).getImagenFrente());
+    	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 3) carta42.setImage(deImagenACarta(carta42).getImagenFrente());
+    	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 4) carta43.setImage(deImagenACarta(carta43).getImagenFrente());
+    	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 5) carta44.setImage(deImagenACarta(carta44).getImagenFrente());
+    	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 6) carta45.setImage(deImagenACarta(carta45).getImagenFrente());
+    	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 1) carta50.setImage(deImagenACarta(carta50).getImagenFrente());
+    	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 2) carta51.setImage(deImagenACarta(carta51).getImagenFrente());
+    	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 3) carta52.setImage(deImagenACarta(carta52).getImagenFrente());
+    	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 4) carta53.setImage(deImagenACarta(carta53).getImagenFrente());
+    	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 5) carta54.setImage(deImagenACarta(carta54).getImagenFrente());
+    	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 6) carta55.setImage(deImagenACarta(carta55).getImagenFrente());
+    	pause.setOnFinished(e -> {
+    		if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 1)carta00.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 2)carta01.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 3)carta02.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 4)carta03.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 5)carta04.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(singleton.columnasPartida >= 1 && singleton.filasPartida >= 6)carta05.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 1)carta10.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 2)carta11.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 3)carta12.setImage(singleton.barajaPartida.getImagenDorso());
+    		if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 4)carta13.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 5)carta14.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 2 && singleton.filasPartida >= 6)carta15.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 1)carta20.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 2)carta21.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 3)carta22.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 4)carta23.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 5)carta24.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 3 && singleton.filasPartida >= 6)carta25.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 1)carta30.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 2)carta31.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 3)carta32.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 4)carta33.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 5)carta34.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 4 && singleton.filasPartida >= 6)carta35.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 1)carta40.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 2)carta41.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 3)carta42.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 4)carta43.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 5)carta44.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 5 && singleton.filasPartida >= 6)carta45.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 1)carta50.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 2)carta51.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 3)carta52.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 4)carta53.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 5)carta54.setImage(singleton.barajaPartida.getImagenDorso());
+        	if(singleton.columnasPartida >= 6 && singleton.filasPartida >= 6)carta55.setImage(singleton.barajaPartida.getImagenDorso());
+            stackPane.setDisable(false);
+        });
+    	pause.play();
+	}
     
     @FXML
     void muestraCarta(MouseEvent event) {    	
@@ -323,7 +534,7 @@ public class ControladorPartidaEstandar {
 		animacionParejaCorrecta.crearAnimacion();
     	primeraImagen.setDisable(true);
     	segundaImagen.setDisable(true);
-    	if(cartasGiradas == barajaPartidaEstandar.tamanyo) {
+    	if(cartasGiradas == cartas) {
     		victoria();
     	}
     }
@@ -371,8 +582,10 @@ public class ControladorPartidaEstandar {
     }
     
     public void victoria() {
-    	contadorTiempo.parar();
-    	puntuacion.sumarBonificacionVictoria(contadorTiempo.getTiempoRestante(), tableroPartida.getNumParejas());
+    	if(singleton.limiteTiempoOn) {
+    		contadorTiempo.parar();
+    		puntuacion.sumarBonificacionVictoria(contadorTiempo.getTiempoRestante(), tableroPartida.getNumParejas());
+    	}
     	PauseTransition pause = new PauseTransition(Duration.millis(750));
     	pause.setOnFinished(e -> {
     		esVictoria = true;
@@ -399,8 +612,8 @@ public class ControladorPartidaEstandar {
     
     public void mostrarResultado() {
     	try {
-        	puntuacion.getTimeline().stop();
-    		String puntuacionFinal = Integer.toString(puntuacion.getPuntos());
+    		puntuacion.getTimeline().stop();
+        	String puntuacionFinal = Integer.toString(puntuacion.getPuntos());
         	String tiempoSobrante = tiempo.getText();
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ResultadoPartida.fxml"));
     		Parent root = (Parent) myLoader.load();
@@ -414,9 +627,9 @@ public class ControladorPartidaEstandar {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", 4, 4, singleton, true, 60, false, 0, "", "", "", "");
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", singleton, "partidaEstandar", esNiveles, nivel);
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", 4, 4, singleton, true, 60, false, 0, "", "", "", "");
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", singleton, "partidaEstandar", esNiveles, nivel);
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -428,7 +641,9 @@ public class ControladorPartidaEstandar {
     void pausarPartida(MouseEvent event) {
     	try {
     		puntuacion.stopTimeLine();
-    		contadorTiempo.setEsPausa(true);
+    		if(singleton.limiteTiempoOn) {
+        		contadorTiempo.setEsPausa(true);
+    		}
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     		musicaFondo.stopMusic();
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
@@ -443,7 +658,7 @@ public class ControladorPartidaEstandar {
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, this, singleton);
+        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaEstandar");
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -451,16 +666,30 @@ public class ControladorPartidaEstandar {
     	}
     }
     
-    public void reanudarPartida(boolean Sound) {
+    public void reanudarPartida(boolean Sound, String ventanaAnterior) {
     	puntuacion.playTimeline();
     	corregirTamanyoVentana();
-    	corregirPosicionVentana();
+    	corregirPosicionVentana(ventanaAnterior);
     	primaryStage.show();
-    	contadorTiempo.setEsPausa(false);
-    	contadorTiempo.continuar();
+    	if(singleton.limiteTiempoOn) {
+        	contadorTiempo.setEsPausa(false);
+        	contadorTiempo.continuar();
+    	}
     	singleton.soundOn = Sound;
     	actualizarSonido();
     	actualizarImagenSonido();  	
+    }
+      
+    @FXML
+    void clickSound(MouseEvent event) {
+    	if(singleton.soundOn) {
+    		singleton.soundOn = false;
+    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+    	} else {
+    		singleton.soundOn = true;
+    	}
+    	actualizarSonido();
+    	actualizarImagenSonido();
     }
     
     public void actualizarSonido() {
@@ -487,27 +716,85 @@ public class ControladorPartidaEstandar {
         }
     }
     
-    @FXML
-    void clickSound(MouseEvent event) {
-    	if(singleton.soundOn) {
-    		singleton.soundOn = false;
-    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-    	} else {
-    		singleton.soundOn = true;
-    	}
-    	actualizarSonido();
-    	actualizarImagenSonido();
-    }	
-    
     public void corregirTamanyoVentana() {
-    	thisStage.setWidth(910);
-    	thisStage.setHeight(623);
+    	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+    		thisStage.setHeight(800);
+    		thisStage.setWidth(910);
+    	}else {
+    		thisStage.setHeight(860);
+    		thisStage.setWidth(1400);
+    		iconoTiempo.setTranslateX(250);
+    		tiempo.setTranslateX(270);
+    		iconoPuntos.setTranslateX(350);
+    		puntos.setTranslateX(370);
+    		iconoSonido.setTranslateX(450);
+    		pausa.setTranslateX(470);
+    	}
     }
 
-    public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("menuPrincipal")) {
+        	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX + 50);
+            	thisStage.setY(singleton.posicionY + 50);
+        	} else {
+        		thisStage.setX(250);
+        		thisStage.setY(100);
+        	}
+    	} else if(ventanaAnterior.equals("menuPause")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY - 50);
+        	} else {
+        		thisStage.setX(250);
+        		thisStage.setY(100);
+        	}
+    	}  else if(ventanaAnterior.equals("resultadoPartida")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY - 30);
+        	} else {
+        		thisStage.setX(250);
+        		thisStage.setY(100);
+        	}
+    	} else if(ventanaAnterior.equals("seleccionNiveles")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX + 50);
+            	thisStage.setY(singleton.posicionY - 75);
+        	} else {
+        		thisStage.setX(250);
+        		thisStage.setY(100);
+        	}
+    	}
     }
     
-
+    public void actualizarEstilo() {
+    	String tema1 = getClass().getResource("estilo1.css").toExternalForm();
+    	String temaBosque = getClass().getResource("estiloBosque.css").toExternalForm();
+        String temaCielo = getClass().getResource("estiloCielo.css").toExternalForm();
+        String temaAgua = getClass().getResource("estiloAgua.css").toExternalForm();
+    	if(nivel == 1 || nivel == 2) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaCielo);
+    		tablero.getStylesheets().remove(temaAgua);
+    		tablero.getStylesheets().add(temaBosque);
+    	} else if(nivel == 3 || nivel == 4) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaBosque);
+    		tablero.getStylesheets().remove(temaAgua);
+    		tablero.getStylesheets().add(temaCielo);
+    	} else if(nivel == 5 || nivel == 6) {
+    		tablero.getStylesheets().remove(tema1);
+    		tablero.getStylesheets().remove(temaBosque);
+    		tablero.getStylesheets().remove(temaCielo);
+    		tablero.getStylesheets().add(temaAgua);
+    	} else {
+    		tablero.getStylesheets().remove(temaBosque);
+    		tablero.getStylesheets().remove(temaCielo);
+    		tablero.getStylesheets().remove(temaAgua);
+    		tablero.getStylesheets().add(tema1);
+    	
+    	}
+    }
+    
 }

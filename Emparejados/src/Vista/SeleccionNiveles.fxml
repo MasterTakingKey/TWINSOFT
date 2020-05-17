@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="656.0" prefWidth="1053.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorSeleccionNiveles">
+   <children>
+      <StackPane fx:id="circuloSonido" layoutX="481.0" layoutY="530.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton">
+         <children>
+            <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#sonidoHandler" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/sonido_on.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <ImageView fitHeight="99.0" fitWidth="929.0" layoutX="62.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/seleccion_niveles.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="volver" layoutX="184.0" layoutY="545.0" mnemonicParsing="false" onAction="#volverHandler" prefHeight="54.0" prefWidth="119.0" styleClass="buttonSalir" text="VOLVER">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel1" layoutX="99.0" layoutY="196.0" mnemonicParsing="false" onAction="#nivel1Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBosque" text="1">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel2" layoutX="279.0" layoutY="196.0" mnemonicParsing="false" onAction="#nivel2Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonBosque" text="2">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel3" layoutX="466.0" layoutY="196.0" mnemonicParsing="false" onAction="#nivel3Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonCielo" text="3">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel4" layoutX="648.0" layoutY="196.0" mnemonicParsing="false" onAction="#nivel4Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonCielo" text="4">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel5" layoutX="827.0" layoutY="196.0" mnemonicParsing="false" onAction="#nivel5Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonAgua" text="5">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel6" layoutX="99.0" layoutY="369.0" mnemonicParsing="false" onAction="#nivel6Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonAgua" text="6">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel7" layoutX="279.0" layoutY="369.0" mnemonicParsing="false" onAction="#nivel7Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonDesierto" text="7">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel8" layoutX="466.0" layoutY="369.0" mnemonicParsing="false" onAction="#nivel8Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonDesierto" text="8">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel9" layoutX="648.0" layoutY="369.0" mnemonicParsing="false" onAction="#nivel9Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonFuego" text="9">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Button>
+      <Button fx:id="nivel10" layoutX="827.0" layoutY="369.0" mnemonicParsing="false" onAction="#nivel10Handler" prefHeight="120.0" prefWidth="120.0" styleClass="buttonFuego" text="10">
+         <font>
+            <Font name="System Bold" size="43.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

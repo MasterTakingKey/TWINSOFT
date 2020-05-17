@@ -1,8 +1,6 @@
 package application;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,44 +48,24 @@ public class ControladorResultadoPartida {
     
     private String tipoPartida;
     
-    private int filas;
+    private ConfiguracionPartida singleton;
     
-    private int columnas;
+    private boolean esNiveles;
     
-    private Singleton singleton;
+    private int nivel;
     
-    private boolean tiempoOn;
-    
-    private int tiempoPartida;
-    
-    private boolean mostrarCartas;
-    
-    private int tiempoMostrarCartas;
-    
-    private String efectoCarta;
-    
-    private String efectoPareja;
-    
-    private String animacionCarta;
-    
-    private String animacionPareja;
-    
-    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, int filas, int columnas, Singleton nuevoSingleton, boolean tiempoOn, int tiempoPartida, boolean mostrarCartas, int tiempoMostrarCarta, String efectoCarta, String efectoPareja, String animacionCarta, String animacionPareja){
+    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
     	primaryStage = stage;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
-        this.filas = filas;
-        this.columnas = columnas;
         singleton = nuevoSingleton;
-        this.efectoCarta = efectoCarta;
-        this.efectoPareja = animacionPareja;
-        this.animacionCarta = animacionCarta;
-        this.animacionPareja = animacionPareja;
+        esNiveles = niveles;
+        nivel = nuevoNivel;
         inicializarVariables(puntuacion, tiempo);
         mostrarResultado();
         anyadirIcono();
         corregirTamanyoVentana();
-        corregirPosicionVentana();
+        corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
     }
  
@@ -99,6 +77,9 @@ public class ControladorResultadoPartida {
         String minutos = tiempo.substring(0, tiempo.length() - 3);
         String segundos = tiempo.substring(tiempo.length() - 2);
         tiempoRestante.setText(tiempoRestante.getText() + minutos + " min y " + segundos + "s");
+        if(esNiveles) {
+        	salir.setText("Salir a Niveles");
+        }
     }
     
     public void mostrarResultado() {
@@ -110,11 +91,6 @@ public class ControladorResultadoPartida {
             resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
     	}
     }
-    
-    public void anyadirIcono() {
-        icon = new Image("/imagenes/Icon.png");
-        thisStage.getIcons().add(icon);
-    }
 
     @FXML
     void jugarHandler(ActionEvent event) {
@@ -122,8 +98,6 @@ public class ControladorResultadoPartida {
     		jugarPartidaEstandar();
     	} else if(tipoPartida == "carta") {
     		jugarPartidaCarta();
-    	}else if(tipoPartida == "libre") {
-    		jugarPartidaLibre(filas, columnas, tiempoOn, mostrarCartas, tiempoPartida, tiempoMostrarCartas);
     	}
     }
     
@@ -138,7 +112,7 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartida.iniciarPartidaEstandar(primaryStage, singleton);
+            controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "resultadoPartida", esNiveles, nivel);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -155,24 +129,7 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton);
-            primaryStage.show();
-        	thisStage.close();
-    	} catch (IOException e) {}
-    }
-    
-    public void jugarPartidaLibre(int filas, int columnas, boolean tiempoOn, boolean mostrarCartas, int tiempoPartida, int tiempoMostrarCartas) {
-    	try {
-    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/PartidaLibre.fxml"));
-            Parent root = (Parent) myLoader.load();
-            ControladorPartidaLibre controladorPartidaLibre = myLoader.<ControladorPartidaLibre>getController();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Partida Libre");
-            primaryStage.setResizable(false);
-            singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-            controladorPartidaLibre.iniciarPartidaLibre(primaryStage, filas, columnas, singleton, tiempoOn, tiempoPartida, mostrarCartas, tiempoMostrarCartas, efectoCarta, efectoPareja, animacionCarta, animacionPareja);
+            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, "menuPrincipal", esNiveles, nivel);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -180,29 +137,88 @@ public class ControladorResultadoPartida {
 
     @FXML
     void salirHandler(ActionEvent event) throws IOException {
-    	primaryStage.close();
-    	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
-        Parent root = myLoader.load();  
-        ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Menu Principal");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        singleton.posicionX = thisStage.getX();
-  		singleton.posicionY = thisStage.getY();
-        menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton);
-        primaryStage.show();
-        thisStage.close(); 
+    	if(esNiveles) {
+    		restablecerPredeterminados();
+    		primaryStage.close();
+        	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/SeleccionNiveles.fxml"));
+            Parent root = myLoader.load();  
+            ControladorSeleccionNiveles seleccionNiveles = myLoader.<ControladorSeleccionNiveles>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Seleccion de Niveles");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            seleccionNiveles.iniciarSeleccionNiveles(primaryStage, singleton, "resultadoPartida");
+            primaryStage.show();
+            thisStage.close(); 
+    	} else {
+    		primaryStage.close();
+        	FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
+            Parent root = myLoader.load();  
+            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Menu Principal");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            menuPrincipal.iniciarMenuPrincipal(primaryStage, false, singleton, "resultadoPartida");
+            primaryStage.show();
+            thisStage.close(); 
+    	}
+    	
     }
+    
+    public void restablecerPredeterminados() {
+    	
+    	singleton.barajaPartida = singleton.listaBarajas.get(0);
+    	
+    	singleton.filasPartida = 4;
+    	singleton.columnasPartida = 4;
+    	
+    	singleton.limiteTiempoOn = true;
+    	singleton.tiempoPartida = 60;
+    	
+    	singleton.mostrarCartasOn = true;
+    	singleton.tiempoMostrarCartas = 2;
+    	
+    	singleton.efectosSonorosVoltear = "Voltear";
+    	singleton.efectosSonorosPareja = "Acierto";
+    	singleton.efectosVisualesVoltear = "Giro";
+    	singleton.efectosVisualesPareja = "Salto";
+    	
+    }
+    
+    public void anyadirIcono() {
+        icon = new Image("/imagenes/Icon.png");
+        thisStage.getIcons().add(icon);
+    }
+
     
     public void corregirTamanyoVentana() {
     	primaryStage.setWidth(895);
     	primaryStage.setHeight(627);
     }
 
-    public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
+    public void corregirPosicionVentana(String ventanaAnterior) {
+    	if(ventanaAnterior.equals("partidaEstandar")) {
+        	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+            	thisStage.setX(singleton.posicionX);
+            	thisStage.setY(singleton.posicionY + 30);
+        	} else {
+        		thisStage.setX(singleton.posicionX + 200);
+            	thisStage.setY(singleton.posicionY + 50);
+        	}
+    	} else if(ventanaAnterior.equals("partidaCarta")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+    	    	thisStage.setX(singleton.posicionX);
+    	    	thisStage.setY(singleton.posicionY + 30);
+        	} else {
+        		thisStage.setX(singleton.posicionX + 250);
+            	thisStage.setY(singleton.posicionY + 200);
+        	}
+    	}
     }
     
     public void actualizarEstilo() {

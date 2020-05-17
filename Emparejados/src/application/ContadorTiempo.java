@@ -9,10 +9,6 @@ import javafx.util.Duration;
 
 public class ContadorTiempo {
 	
-	private static final int TIEMPO_PARTIDA_ESTANDAR = 60;
-	
-	private static final int TIEMPO_PARTIDA_CARTA = 90;
-	
 	private Timeline timeline;
 	
 	private StringProperty Time;
@@ -51,18 +47,8 @@ public class ContadorTiempo {
 	public void continuar() {
 		timeline.play();
     }
-
-	public void iniciarTiempoPartidaEstandar(Label tiempo) {
-		tiempo.textProperty().bind(Time);
-    	iniciaTiempo(TIEMPO_PARTIDA_ESTANDAR);
-	}
 	
-	public void iniciarTiempoPartidaCarta(Label tiempo) {
-		tiempo.textProperty().bind(Time);
-    	iniciaTiempo(TIEMPO_PARTIDA_CARTA);
-	}
-	
-	public void iniciarTiempoPartidaLibre(Label tiempo, int tiempoPartida) {
+	public void iniciarTiempoPartida(Label tiempo, int tiempoPartida) {
 		tiempo.textProperty().bind(Time);
     	iniciaTiempo(tiempoPartida);
 	}

@@ -24,9 +24,9 @@ public class ControladorConfirmacionSalirMenuP {
     
     private Stage thisStage;
     
-    private Singleton singleton;
+    private ConfiguracionPartida singleton;
     
-    public void inicializarDatos(ControladorMenuPause menuP, double anteriorWidth, double anteriorHeight, Singleton nuevoSingleton) {
+    public void inicializarDatos(ControladorMenuPause menuP, double anteriorWidth, double anteriorHeight, ConfiguracionPartida nuevoSingleton) {
     	menuPausa = menuP;
     	singleton = nuevoSingleton;
     	thisStage = (Stage) cancelar.getScene().getWindow();

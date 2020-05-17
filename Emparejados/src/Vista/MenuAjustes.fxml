@@ -3,19 +3,20 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="557.0" prefWidth="882.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuAjustes">
+<AnchorPane fx:id="anchorPane" prefHeight="870.0" prefWidth="988.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuAjustes">
    <children>
-      <Button fx:id="editorBarajas" layoutX="46.0" layoutY="441.0" mnemonicParsing="false" onAction="#editorBarajasHandler" prefHeight="54.0" prefWidth="246.0" text="EDITOR DE BARAJAS">
+      <Button fx:id="restablecerPredeterminados" layoutX="350.0" layoutY="756.0" mnemonicParsing="false" onAction="#restablecerPredeterminadosHandler" prefHeight="54.0" prefWidth="334.0" text="RESTABLECER PREDETERMINADOS">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="System Bold" size="18.0" />
          </font></Button>
-      <StackPane fx:id="circuloSonido" layoutX="705.0" layoutY="73.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
+      <StackPane fx:id="circuloSonido" layoutX="859.0" layoutY="61.0" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
          <children>
             <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -24,50 +25,115 @@
             </ImageView>
          </children>
       </StackPane>
-      <ChoiceBox fx:id="musicaPartida" layoutX="100.0" layoutY="261.0" prefHeight="25.0" prefWidth="165.0" />
-      <Label alignment="CENTER" layoutX="127.0" layoutY="216.0" prefHeight="30.0" prefWidth="165.0" text="PARTIDA" underline="true">
+      <ChoiceBox fx:id="musicaPartida" layoutX="87.0" layoutY="229.0" prefHeight="25.0" prefWidth="165.0" />
+      <Label alignment="CENTER" layoutX="115.0" layoutY="186.0" prefHeight="30.0" prefWidth="165.0" text="MUSICA PARTIDA">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label alignment="CENTER" layoutX="344.0" layoutY="216.0" prefHeight="30.0" prefWidth="200.0" text="MENU PRINCIPAL" underline="true">
+      <Label alignment="CENTER" layoutX="413.0" layoutY="186.0" prefHeight="30.0" prefWidth="208.0" text="MUSICA MENU PRINCIPAL">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Label alignment="CENTER" layoutX="578.0" layoutY="216.0" prefHeight="30.0" prefWidth="221.0" text="MENU PAUSA" underline="true">
+      <Label alignment="CENTER" layoutX="704.0" layoutY="186.0" prefHeight="30.0" prefWidth="253.0" text="MUSICA MENU AJUSTES/PAUSA">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <ChoiceBox fx:id="musicaMenuP" layoutX="334.0" layoutY="261.0" prefHeight="25.0" prefWidth="176.0" />
-      <ChoiceBox fx:id="musicaPausa" layoutX="579.0" layoutY="261.0" prefHeight="25.0" prefWidth="188.0" />
-      <Label alignment="CENTER" layoutX="240.0" layoutY="313.0" prefHeight="30.0" prefWidth="165.0" text="TEMA" underline="true">
+      <ChoiceBox fx:id="musicaMenuP" layoutX="407.0" layoutY="229.0" prefHeight="25.0" prefWidth="176.0" />
+      <ChoiceBox fx:id="musicaPausa" layoutX="720.0" layoutY="229.0" prefHeight="25.0" prefWidth="188.0" />
+      <Label alignment="CENTER" layoutX="435.0" layoutY="277.0" prefHeight="30.0" prefWidth="165.0" text="TEMA">
          <font>
             <Font size="16.0" />
          </font></Label>
-      <ChoiceBox fx:id="tema" layoutX="213.0" layoutY="354.0" prefHeight="35.0" prefWidth="118.0" />
-      <Button fx:id="salir" layoutX="323.0" layoutY="441.0" mnemonicParsing="false" onAction="#salirHandler" prefHeight="54.0" prefWidth="240.0" text="APLICAR Y VOLVER">
+      <ChoiceBox fx:id="tema" layoutX="407.0" layoutY="307.0" prefHeight="35.0" prefWidth="118.0" />
+      <Button fx:id="aplicar" layoutX="732.0" layoutY="756.0" mnemonicParsing="false" onAction="#aplicarHandler" prefHeight="54.0" prefWidth="240.0" text="APLICAR Y VOLVER">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="System Bold" size="18.0" />
          </font></Button>
-      <ChoiceBox fx:id="barajaPartida" layoutX="468.0" layoutY="354.0" prefHeight="35.0" prefWidth="188.0" />
-      <Label alignment="CENTER" layoutX="495.0" layoutY="313.0" prefHeight="30.0" prefWidth="165.0" text="BARAJA PARTIDA" underline="true">
+      <ChoiceBox fx:id="barajaPartida" layoutX="88.0" layoutY="486.0" prefHeight="35.0" prefWidth="188.0" />
+      <Label alignment="CENTER" layoutX="115.0" layoutY="444.0" prefHeight="30.0" prefWidth="165.0" text="BARAJA PARTIDA">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="303.0" layoutY="150.0" prefHeight="35.0" prefWidth="282.0" text="SELECCION DE MUSICA" underline="true">
+      <Label alignment="CENTER" layoutX="57.0" layoutY="134.0" prefHeight="35.0" prefWidth="282.0" text="AJUSTES GENERALES" underline="true">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="cancelarySalir" layoutX="585.0" layoutY="441.0" mnemonicParsing="false" onAction="#cancelarYSalirHandler" prefHeight="54.0" prefWidth="240.0" text="CANCELAR Y VOLVER">
+      <Button fx:id="cancelarySalir" layoutX="57.0" layoutY="756.0" mnemonicParsing="false" onAction="#cancelarYSalirHandler" prefHeight="54.0" prefWidth="240.0" text="CANCELAR Y VOLVER">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <ImageView fitHeight="93.0" fitWidth="426.0" layoutX="231.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="93.0" fitWidth="426.0" layoutX="295.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/ajustes.png" />
          </image>
       </ImageView>
+      <Label alignment="CENTER" layoutX="57.0" layoutY="392.0" prefHeight="35.0" prefWidth="282.0" text="AJUSTES DE PARTIDA" underline="true">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="406.0" layoutY="444.0" prefHeight="30.0" prefWidth="165.0" text="FILAS TABLERO">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="747.0" layoutY="444.0" prefHeight="30.0" prefWidth="165.0" text="COLUMNAS TABLERO">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textFilas" layoutX="451.0" layoutY="491.0" prefHeight="25.0" prefWidth="77.0" />
+      <TextField fx:id="textColumnas" layoutX="792.0" layoutY="491.0" prefHeight="25.0" prefWidth="77.0" />
+      <Label alignment="CENTER" layoutX="94.0" layoutY="533.0" prefHeight="30.0" prefWidth="208.0" text="SONIDO VOLTEAR CARTA">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="choiceSonoroCarta" layoutX="87.0" layoutY="571.0" prefHeight="35.0" prefWidth="188.0" />
+      <Label alignment="CENTER" layoutX="384.0" layoutY="533.0" prefHeight="30.0" prefWidth="208.0" text="SONIDO PAREJA">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="82.0" layoutY="630.0" prefHeight="30.0" prefWidth="232.0" text="ANIMACIÓN VOLTEAR CARTA">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="373.0" layoutY="630.0" prefHeight="30.0" prefWidth="232.0" text="ANIMACIÓN PAREJA">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="choiceSonoroPareja" layoutX="378.0" layoutY="571.0" prefHeight="35.0" prefWidth="188.0" />
+      <ChoiceBox fx:id="choiceVisualCarta" layoutX="88.0" layoutY="669.0" prefHeight="35.0" prefWidth="188.0" />
+      <ChoiceBox fx:id="choiceVisualPareja" layoutX="378.0" layoutY="669.0" prefHeight="35.0" prefWidth="188.0" />
+      <Label alignment="CENTER" layoutX="725.0" layoutY="533.0" prefHeight="30.0" prefWidth="208.0" text="TIEMPO PARTIDA">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="713.0" layoutY="630.0" prefHeight="30.0" prefWidth="232.0" text="MOSTRAR CARTAS AL INICIO">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonTiempo" layoutX="668.0" layoutY="571.0" mnemonicParsing="false" onAction="#buttonTiempoHandler" prefHeight="35.0" prefWidth="130.0" text="DESACTIVADO">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <TextField fx:id="textTiempoPartida" layoutX="813.0" layoutY="576.0" prefHeight="25.0" prefWidth="77.0" />
+      <Label alignment="CENTER" layoutX="904.0" layoutY="574.0" prefHeight="30.0" prefWidth="69.0" text="segundos" />
+      <Button fx:id="buttonMostrarCartas" layoutX="668.0" layoutY="669.0" mnemonicParsing="false" onAction="#buttonMostrarCartasHandler" prefHeight="35.0" prefWidth="130.0" text="DESACTIVADO">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <TextField fx:id="textTiempoMostrarCartas" layoutX="813.0" layoutY="674.0" prefHeight="25.0" prefWidth="77.0" />
+      <Label alignment="CENTER" layoutX="904.0" layoutY="672.0" prefHeight="30.0" prefWidth="69.0" text="segundos" />
    </children>
 </AnchorPane>

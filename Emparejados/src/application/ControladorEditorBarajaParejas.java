@@ -380,14 +380,26 @@ public class ControladorEditorBarajaParejas {
 		if(isValid(nombreBaraja)) {
 			//Crear carpeta en imagenes con el nombre de la baraja
 		
-			new File(currentDirectory + "/src/imagenes/" + nombreBaraja).mkdirs();
+			new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/" + nombreBaraja).mkdirs();
 				
 			//Guardar todas las imagenes del arrayList en la carpeta anterior
-				
+			boolean nombreDorso = true;
+			String extension = "";
+			int j = listaImagenes.get(0).getName().lastIndexOf('.');
+			if (j > 0) {
+			    extension = listaImagenes.get(0).getName().substring(j+1);
+			}
 			for(File file : listaImagenes) {
+				if(nombreDorso) {
+					Files.copy(file.toPath(),
+					        (new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+nombreBaraja +"/"+ "dorso." + extension)).toPath(),
+					        StandardCopyOption.REPLACE_EXISTING);
+					nombreDorso = false;
+				}else {
 				  Files.copy(file.toPath(),
-				        (new File(currentDirectory + "/src/imagenes/"+nombreBaraja +"/"+ file.getName())).toPath(),
+				        (new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+nombreBaraja +"/"+ file.getName())).toPath(),
 				        StandardCopyOption.REPLACE_EXISTING);
+				}
 			}
 				
 				//Crear la baraja como tal

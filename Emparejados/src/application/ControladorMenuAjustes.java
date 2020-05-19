@@ -365,6 +365,9 @@ public class ControladorMenuAjustes {
      	    }
     	} catch (IOException e) {
                 e.printStackTrace();
+        } catch (NumberFormatException n) {
+        	Alert alert = new Alert(AlertType.ERROR, "Se deben escribir valores numericos en los campos correspondientes");
+        	alert.showAndWait();
         }
     }
     

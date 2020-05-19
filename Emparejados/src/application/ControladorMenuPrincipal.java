@@ -65,6 +65,14 @@ public class ControladorMenuPrincipal {
     
     private ConfiguracionPartida singleton;
     
+    String currentDirectory = System.getProperty("user.dir");
+    Baraja nuevaBaraja = new Baraja();
+    Image imagen;
+    Carta carta;
+    
+    boolean primeraVezEnMenu = true;
+    
+    
     private ArrayList<File> listaImagenes = new ArrayList<File>();
 
     public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior){
@@ -80,6 +88,60 @@ public class ControladorMenuPrincipal {
         corregirTamanyoVentana();
         corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
+        
+        if(primeraVezEnMenu) {
+        	File[] files = new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/").listFiles();
+        	showFiles(files);
+        	primeraVezEnMenu = false;
+        }
+    }
+    
+    public void showFiles(File[] files) {
+    	
+        for (File file : files) {
+            if (file.isDirectory()) {           	
+            	for(File archivo : file.listFiles()) {
+            		
+            		listaImagenes.add(archivo);
+            	}
+            	int i = 1;
+            	for(File archivo : file.listFiles()) {
+            		
+            		String fileName = archivo.getName();
+            		
+            		int pos = fileName.lastIndexOf(".");
+            		if (pos > 0 && pos < (fileName.length() - 1)) { 
+            		    fileName = fileName.substring(0, pos);
+            		}
+            		
+            		if(fileName.equals("dorso")){
+            			listaImagenes.set(0, archivo);
+            		} else {
+            			listaImagenes.set(i, archivo); 
+            			i++;
+            		}
+            	}
+                montarBarajas(file.getName(), listaImagenes);
+                listaImagenes.clear();
+            }
+        }
+    }
+    
+    public void montarBarajas(String nombre, ArrayList<File> listaImagenes) {
+    	nuevaBaraja.setNombre(nombre);
+		nuevaBaraja.setTamanyo(2 * listaImagenes.size() - 2 );
+		imagen = new Image(listaImagenes.get(0).toURI().toString());
+		nuevaBaraja.setImagenDorso(imagen);
+		
+		int indice = 0;
+        for (int i = 1; i < listaImagenes.size(); i++) { 
+                    imagen = new Image(listaImagenes.get(i).toURI().toString());
+                    carta = new Carta(nuevaBaraja.getImagenDorso(), imagen, i-1);
+                    nuevaBaraja.getBaraja()[indice++] = carta;
+         }
+		
+		
+		singleton.listaBarajas.add(nuevaBaraja);
     }
     
     public void iniciarMenuPrincipalDesdeEditor(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, long tiempoCancion){
@@ -122,6 +184,8 @@ public class ControladorMenuPrincipal {
     	singleton.listaBarajas.add(barajaAnimales);
     	singleton.listaBarajas.add(barajaNintendo);
     	singleton.listaBarajas.add(barajaDeportes);
+    	
+    	
     	
     	singleton.estilo = "Azul";
     	

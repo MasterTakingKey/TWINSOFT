@@ -698,7 +698,7 @@ public class ControladorPartidaCarta {
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaCarta(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaCarta");
+        	controladorMenuPausa.initDataPartidaCarta(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaCarta", esNiveles);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {

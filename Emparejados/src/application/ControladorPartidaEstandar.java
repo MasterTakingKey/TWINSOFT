@@ -658,7 +658,7 @@ public class ControladorPartidaEstandar {
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaEstandar");
+        	controladorMenuPausa.initDataPartidaEstandar(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaEstandar", esNiveles);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {

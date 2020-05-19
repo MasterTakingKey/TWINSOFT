@@ -66,11 +66,9 @@ public class ControladorMenuPrincipal {
     private ConfiguracionPartida singleton;
     
     String currentDirectory = System.getProperty("user.dir");
-    Baraja nuevaBaraja = new Baraja();
+    
     Image imagen;
     Carta carta;
-    
-    boolean primeraVezEnMenu = true;
     
     
     private ArrayList<File> listaImagenes = new ArrayList<File>();
@@ -79,6 +77,8 @@ public class ControladorMenuPrincipal {
         primaryStage = stage;
         if(primeraVez) { 
             inicializarSingleton();
+            File[] files = new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/").listFiles();
+        	showFiles(files);
         } else {
             singleton = nuevoSingleton;
         }
@@ -89,19 +89,13 @@ public class ControladorMenuPrincipal {
         corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
         
-        if(primeraVezEnMenu) {
-        	File[] files = new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/").listFiles();
-        	showFiles(files);
-        	primeraVezEnMenu = false;
-        }
     }
     
     public void showFiles(File[] files) {
     	
         for (File file : files) {
             if (file.isDirectory()) {           	
-            	for(File archivo : file.listFiles()) {
-            		
+            	for(File archivo : file.listFiles()) {            		
             		listaImagenes.add(archivo);
             	}
             	int i = 1;
@@ -128,6 +122,7 @@ public class ControladorMenuPrincipal {
     }
     
     public void montarBarajas(String nombre, ArrayList<File> listaImagenes) {
+    	Baraja nuevaBaraja = new Baraja();
     	nuevaBaraja.setNombre(nombre);
 		nuevaBaraja.setTamanyo(2 * listaImagenes.size() - 2 );
 		imagen = new Image(listaImagenes.get(0).toURI().toString());
@@ -142,6 +137,8 @@ public class ControladorMenuPrincipal {
 		
 		
 		singleton.listaBarajas.add(nuevaBaraja);
+		System.out.println(singleton.listaBarajas.get(singleton.listaBarajas.size()-1));
+		System.out.println(singleton.listaBarajas.size());
     }
     
     public void iniciarMenuPrincipalDesdeEditor(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, long tiempoCancion){

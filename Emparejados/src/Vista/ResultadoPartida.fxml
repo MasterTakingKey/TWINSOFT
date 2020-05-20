@@ -35,5 +35,15 @@
             <Image url="@../imagenes/confetti.gif" />
          </image>
       </ImageView>
+      <ImageView fx:id="imagenDerrota" fitHeight="627.0" fitWidth="895.0" layoutX="-3.0" layoutY="-2.0" pickOnBounds="true">
+         <image>
+            <Image url="@../imagenes/explosion.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="applauseVictoria" fitHeight="570.0" fitWidth="838.0" layoutX="28.0" layoutY="30.0" pickOnBounds="true">
+         <image>
+            <Image url="@../imagenes/applause.gif" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

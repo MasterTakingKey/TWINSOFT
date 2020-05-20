@@ -77,7 +77,7 @@ public abstract class Animaciones {
     }
     public TranslateTransition victoryAnimation(Node card) {
     	
-    	TranslateTransition translation = new TranslateTransition(Duration.millis(1500), card);
+    	TranslateTransition translation = new TranslateTransition(Duration.millis(2200), card);
 
     	translation.setByY(-800);
     	translation.setByY(800);

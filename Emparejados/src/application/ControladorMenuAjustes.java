@@ -340,6 +340,10 @@ public class ControladorMenuAjustes {
             	primaryStage.setResizable(false);
 	            actualizaMusicas();
 	            singleton.estilo = tema.getSelectionModel().getSelectedItem();
+	            try {
+		            GuardarDatosPartida.save(singleton.estilo, "estilo.save");
+		        }
+	            catch (Exception e) {}
 	            singleton.barajaPartida = deNombreABaraja();
 	            singleton.filasPartida = Integer.parseInt(textFilas.getText());
 	            singleton.columnasPartida = Integer.parseInt(textColumnas.getText());

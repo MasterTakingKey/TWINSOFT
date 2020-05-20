@@ -11,11 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -63,6 +58,36 @@ public class ControladorSeleccionNiveles {
     @FXML
     private Button nivel10;
     
+    @FXML
+    private ImageView tick1;
+
+    @FXML
+    private ImageView tick2;
+
+    @FXML
+    private ImageView tick3;
+
+    @FXML
+    private ImageView tick4;
+
+    @FXML
+    private ImageView tick5;
+
+    @FXML
+    private ImageView tick6;
+
+    @FXML
+    private ImageView tick7;
+
+    @FXML
+    private ImageView tick8;
+
+    @FXML
+    private ImageView tick9;
+
+    @FXML
+    private ImageView tick10;
+    
     private Stage primaryStage;
     
     private Stage thisStage;
@@ -81,12 +106,12 @@ public class ControladorSeleccionNiveles {
         primaryStage = stage;
         singleton = nuevoSingleton;
         inicializarVariables();
-
 		actualizarSonido();
         actualizarImagenSonido();
         corregirTamanyoVentana();
         corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
+        actualizarNiveles();
     }
     
     public void inicializarVariables() {
@@ -96,6 +121,70 @@ public class ControladorSeleccionNiveles {
     	thisStage = (Stage) nivel1.getScene().getWindow();
     }
 
+    public void actualizarNiveles() {
+    	nivel1.setDisable(true);
+    	nivel2.setDisable(true);
+    	nivel3.setDisable(true);
+    	nivel4.setDisable(true);
+    	nivel5.setDisable(true);
+    	nivel6.setDisable(true);
+    	nivel7.setDisable(true);
+    	nivel8.setDisable(true);
+    	nivel9.setDisable(true);
+    	nivel10.setDisable(true);
+    	tick1.setVisible(false);
+    	tick2.setVisible(false);
+    	tick3.setVisible(false);
+    	tick4.setVisible(false);
+    	tick5.setVisible(false);
+    	tick6.setVisible(false);
+    	tick7.setVisible(false);
+    	tick8.setVisible(false);
+    	tick9.setVisible(false);
+    	tick10.setVisible(false);
+    	if(singleton.nivelesDesbloqueados > 0) {
+    		nivel1.setDisable(false);
+    		if(singleton.nivelesDesbloqueados > 1) {
+        		nivel2.setDisable(false);
+        		tick1.setVisible(true);
+        		if(singleton.nivelesDesbloqueados > 2) {
+            		nivel3.setDisable(false);
+            		tick2.setVisible(true);
+            		if(singleton.nivelesDesbloqueados > 3) {
+                		nivel4.setDisable(false);
+                		tick3.setVisible(true);
+                		if(singleton.nivelesDesbloqueados > 4) {
+                    		nivel5.setDisable(false);
+                    		tick4.setVisible(true);
+                    		if(singleton.nivelesDesbloqueados > 5) {
+                        		nivel6.setDisable(false);
+                        		tick5.setVisible(true);
+                        		if(singleton.nivelesDesbloqueados > 6) {
+                            		nivel7.setDisable(false);
+                            		tick6.setVisible(true);
+                            		if(singleton.nivelesDesbloqueados > 7) {
+                                		nivel8.setDisable(false);
+                                		tick7.setVisible(true);
+                                		if(singleton.nivelesDesbloqueados > 8) {
+                                    		nivel9.setDisable(false);
+                                    		tick8.setVisible(true);
+                                    		if(singleton.nivelesDesbloqueados > 9) {
+                                        		nivel10.setDisable(false);
+                                        		tick9.setVisible(true);
+                                        		if(singleton.nivelesDesbloqueados > 10) {
+                                            		tick10.setVisible(true);
+                                            	}
+                                        	}
+                                    	}
+                                	}
+                            	}
+                        	}
+                    	}
+                	}
+            	}
+        	}
+    	}
+    }
 
     @FXML
     void nivel1Handler(ActionEvent event) {

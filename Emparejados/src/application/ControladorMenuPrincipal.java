@@ -182,10 +182,6 @@ public class ControladorMenuPrincipal {
     	singleton.listaBarajas.add(barajaNintendo);
     	singleton.listaBarajas.add(barajaDeportes);
     	
-    	
-    	
-    	singleton.estilo = "Azul";
-    	
     	String[] musicas = new String[3];
         musicas[0] = "Musica1";
         musicas[1] = "Musica2";
@@ -213,6 +209,21 @@ public class ControladorMenuPrincipal {
     	singleton.efectosSonorosPareja = "Acierto";
     	singleton.efectosVisualesVoltear = "Giro";
     	singleton.efectosVisualesPareja = "Salto";
+    	
+    	 try {
+             this.singleton.nivelesDesbloqueados = (int) GuardarDatosPartida.load("niveles.save");
+         }
+         catch (Exception e) {
+             singleton.nivelesDesbloqueados = 1;
+         }
+    	 
+    	 try {
+             this.singleton.estilo = (String) GuardarDatosPartida.load("estilo.save");
+         }
+         catch (Exception e) {
+             singleton.estilo = "Azul";
+         }
+
 	}
     
     public void inicializarVariables() {

@@ -1,9 +1,6 @@
 package application;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -83,6 +80,7 @@ public class ControladorResultadoPartida {
         nivel = nuevoNivel;
         inicializarVariables(puntuacion, tiempo);
         inicializarAnimaciones();
+        actualizarNiveles();
         mostrarResultado();
         anyadirIcono();
         corregirTamanyoVentana();
@@ -239,6 +237,18 @@ public class ControladorResultadoPartida {
     	singleton.efectosVisualesVoltear = "Giro";
     	singleton.efectosVisualesPareja = "Salto";
     	
+    }
+    
+    public void actualizarNiveles() {
+    	if(isVictoria) {
+    		if(nivel == singleton.nivelesDesbloqueados) {
+    			singleton.nivelesDesbloqueados++;
+    			 try {
+    		            GuardarDatosPartida.save(singleton.nivelesDesbloqueados, "niveles.save");
+    		        }
+    		     catch (Exception e) {}
+    		}
+    	}
     }
     
     public void anyadirIcono() {

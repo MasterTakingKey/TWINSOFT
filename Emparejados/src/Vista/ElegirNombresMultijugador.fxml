@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorElegirNombresMultijugador">
+   <children>
+      <Pane fx:id="pane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: ffffff;" stylesheets="@../application/estiloAzul.css">
+         <children>
+            <Label layoutX="63.0" layoutY="92.0" text="Elige un nombre de 3 letras para el Jugador 1" />
+            <TextField fx:id="nombreJ1" layoutX="328.0" layoutY="87.0" />
+            <Label layoutX="63.0" layoutY="158.0" text="Elige un nombre de 3 letras para el Jugador 2" />
+            <TextField fx:id="nombreJ2" layoutX="328.0" layoutY="153.0" />
+            <Button layoutX="488.0" layoutY="330.0" mnemonicParsing="false" onAction="#jugarHandler" text="Jugar" />
+            <StackPane fx:id="circuloSonido" layoutX="63.0" layoutY="283.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="84.0" prefWidth="91.0" styleClass="fondoBoton" stylesheets="@../application/estiloAzul.css">
+               <children>
+                  <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/sonido_on.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+         </children>
+      </Pane>
+   </children>
+</StackPane>

@@ -190,15 +190,16 @@ public class ControladorMenuAjustes {
 
     
     public void inicializarAjustesPartida() {
-    	
+    	int aux = 0;
     	try {
         	int i = 0;
     		while(singleton.listaBarajas.get(i) != null) {
     			barajaPartida.getItems().add(singleton.listaBarajas.get(i).getNombre());
-    			if(singleton.listaBarajas.get(i).getNombre().equals(singleton.barajaPartida.getNombre())) barajaPartida.getSelectionModel().select(i);
+    			if(singleton.listaBarajas.get(i).getNombre().equals(singleton.barajaPartida.getNombre())) aux = i;
     			i++;
     		}	
     	} catch(Exception e) {}
+    	barajaPartida.getSelectionModel().select(aux);
     	
         ArrayList<String> clipsVoltear = new ArrayList<String>();
         clipsVoltear.add("Voltear");
@@ -339,6 +340,10 @@ public class ControladorMenuAjustes {
             	primaryStage.setResizable(false);
 	            actualizaMusicas();
 	            singleton.estilo = tema.getSelectionModel().getSelectedItem();
+	            try {
+		            GuardarDatosPartida.save(singleton.estilo, "estilo.save");
+		        }
+	            catch (Exception e) {}
 	            singleton.barajaPartida = deNombreABaraja();
 	            singleton.filasPartida = Integer.parseInt(textFilas.getText());
 	            singleton.columnasPartida = Integer.parseInt(textColumnas.getText());
@@ -365,6 +370,9 @@ public class ControladorMenuAjustes {
      	    }
     	} catch (IOException e) {
                 e.printStackTrace();
+        } catch (NumberFormatException n) {
+        	Alert alert = new Alert(AlertType.ERROR, "Se deben escribir valores numericos en los campos correspondientes");
+        	alert.showAndWait();
         }
     }
     

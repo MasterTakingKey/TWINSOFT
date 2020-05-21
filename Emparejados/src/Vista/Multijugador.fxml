@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="828.0" prefWidth="1159.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMultijugador">
+   <children>
+      <ToolBar maxHeight="-Infinity" prefHeight="48.0" prefWidth="894.0">
+         <items>
+            <HBox maxHeight="-Infinity" prefHeight="40.0" prefWidth="270.0">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/twins_logo2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="45.0" prefWidth="214.0" spacing="8.0">
+               <children>
+                  <ImageView fx:id="iconoTiempo" fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/temporizador.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="tiempo" lineSpacing="20.0" prefHeight="45.0" prefWidth="94.0" text="1:00">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label fx:id="nombreJ1" text="J1">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Label fx:id="puntosJ1" prefHeight="45.0" prefWidth="104.0" text="0">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="131.0" spacing="8.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="131.0" spacing="8.0">
+                     <children>
+                        <Label fx:id="nombreJ2" text="J2">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="puntosJ2" prefHeight="35.0" prefWidth="69.0" text="0">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="179.0" spacing="20.0">
+               <children>
+                  <ImageView fx:id="iconoSonido" fitHeight="43.0" fitWidth="65.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/sonido_on_2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="pausa" fitHeight="41.0" fitWidth="44.0" onMouseClicked="#pausarPartida" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/icono_pausa.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </HBox>
+         </items>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </ToolBar>
+      <StackPane fx:id="stackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="772.0" prefWidth="1159.0">
+         <children>
+            <GridPane fx:id="tablero" prefHeight="694.0" prefWidth="1159.0" styleClass="fondoTablero">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <children>
+                  <ImageView fx:id="carta00" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta10" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta20" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta01" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta30" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta11" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta21" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta31" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta02" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta12" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta22" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta32" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta03" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta13" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta23" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta33" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta40" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta41" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta34" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta24" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta14" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta04" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta43" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta42" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta25" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta44" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta05" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta15" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta45" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta35" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta51" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta50" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta55" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta54" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta53" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="carta52" fitHeight="121.0" fitWidth="139.0" onMouseClicked="#muestraCarta" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@../imagenes/dorso_aldeano.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <Label fx:id="puntosAnyadidos" alignment="CENTER" prefHeight="141.0" prefWidth="176.0" text="+5" textFill="#a40808">
+               <font>
+                  <Font name="System Bold" size="80.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+   </children>
+</VBox>

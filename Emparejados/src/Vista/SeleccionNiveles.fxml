@@ -78,5 +78,55 @@
             <Font name="System Bold" size="43.0" />
          </font>
       </Button>
+      <ImageView fx:id="tick1" fitHeight="71.0" fitWidth="75.0" layoutX="175.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tick2" fitHeight="71.0" fitWidth="75.0" layoutX="353.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tick3" fitHeight="71.0" fitWidth="75.0" layoutX="538.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tick4" fitHeight="71.0" fitWidth="75.0" layoutX="722.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tick5" fitHeight="71.0" fitWidth="75.0" layoutX="902.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tick6" fitHeight="71.0" fitWidth="75.0" layoutX="175.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tick7" fitHeight="71.0" fitWidth="75.0" layoutX="353.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tick8" fitHeight="71.0" fitWidth="75.0" layoutX="538.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tick9" fitHeight="71.0" fitWidth="75.0" layoutX="722.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tick10" fitHeight="71.0" fitWidth="75.0" layoutX="902.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/tick.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

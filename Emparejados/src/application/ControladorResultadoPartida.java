@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ControladorResultadoPartida {
 
@@ -34,9 +36,22 @@ public class ControladorResultadoPartida {
     @FXML
     private Button salir;
     
+    @FXML
+    private ImageView confetiVictoria;
+    
+    @FXML
+    private ImageView imagenDerrota;
+    
+    @FXML
+    private ImageView applauseVictoria;
+    
     private AudioClip victoria;
     
+    private AudioClip applauseSound;
+    
     private AudioClip derrota;
+    
+    private AudioClip explosion;
     
     private Stage primaryStage;
     
@@ -50,6 +65,8 @@ public class ControladorResultadoPartida {
     
     private ConfiguracionPartida singleton;
     
+    private Animaciones animacionVictoria;
+    
     private boolean esNiveles;
     
     private int nivel;
@@ -62,6 +79,8 @@ public class ControladorResultadoPartida {
         esNiveles = niveles;
         nivel = nuevoNivel;
         inicializarVariables(puntuacion, tiempo);
+        inicializarAnimaciones();
+        actualizarNiveles();
         mostrarResultado();
         anyadirIcono();
         corregirTamanyoVentana();
@@ -69,10 +88,30 @@ public class ControladorResultadoPartida {
         actualizarEstilo();
     }
  
-    public void inicializarVariables(String puntuacion, String tiempo) {
+    private void inicializarAnimaciones() {
+    	Image GifVictoria = new Image (getClass().getResource("/imagenes/confetti.gif").toExternalForm());
+		confetiVictoria.setImage(GifVictoria);
+    	confetiVictoria.setVisible(isVictoria);
+    	Image ApplauseVictoria = new Image (getClass().getResource("/imagenes/applause.gif").toExternalForm());
+    	applauseVictoria.setImage(ApplauseVictoria);
+    	applauseVictoria.setVisible(isVictoria);
+    	Image GifDerrota = new Image (getClass().getResource("/imagenes/explosion.gif").toExternalForm());
+    	imagenDerrota.setImage(GifDerrota);
+    	imagenDerrota.setVisible(!isVictoria);
+    	FabricaAnimaciones[] fabrica;
+       	fabrica = new FabricaAnimaciones[2];
+       	fabrica[0] = new FabricaAnimacionVictoria();
+       	animacionVictoria = fabrica[0].animacionesMetodoFabrica();
+       	animacionVictoria.pane = pane;
+    	animacionVictoria.imagen1 = confetiVictoria;
+	}
+
+	public void inicializarVariables(String puntuacion, String tiempo) {
     	thisStage = (Stage) jugar.getScene().getWindow();
         victoria = new AudioClip(getClass().getResource("/sonidos/victoria.mp3").toString());
+        applauseSound = new AudioClip(getClass().getResource("/sonidos/applause.wav").toString());
         derrota = new AudioClip(getClass().getResource("/sonidos/derrota1.mp3").toString());
+        explosion = new AudioClip(getClass().getResource("/sonidos/Explosion.wav").toString());
         puntuacionFinal.setText(puntuacionFinal.getText() + puntuacion);
         String minutos = tiempo.substring(0, tiempo.length() - 3);
         String segundos = tiempo.substring(tiempo.length() - 2);
@@ -84,12 +123,22 @@ public class ControladorResultadoPartida {
     
     public void mostrarResultado() {
     	if(isVictoria) {
-    		if(singleton.soundOn) victoria.play();
+    		animacionVictoria.crearAnimacion();
+    		if(singleton.soundOn) {victoria.play(); applauseSound.play();}
             resultado.setImage(new Image("/imagenes/resultado_victoria.png"));
+            
     	} else {
-            if(singleton.soundOn) derrota.play();
+            if(singleton.soundOn) {derrota.play(); explosion.play();}
             resultado.setImage(new Image("/imagenes/resultado_derrota.png"));
+          
     	}
+    	  PauseTransition pause = new PauseTransition(Duration.seconds(2));
+          pause.setOnFinished(e -> {
+              imagenDerrota.setVisible(false);
+              applauseVictoria.setVisible(false);
+              applauseSound.stop();
+          });  
+          pause.play();
     }
 
     @FXML
@@ -188,6 +237,18 @@ public class ControladorResultadoPartida {
     	singleton.efectosVisualesVoltear = "Giro";
     	singleton.efectosVisualesPareja = "Salto";
     	
+    }
+    
+    public void actualizarNiveles() {
+    	if(isVictoria) {
+    		if(nivel == singleton.nivelesDesbloqueados) {
+    			singleton.nivelesDesbloqueados++;
+    			 try {
+    		            GuardarDatosPartida.save(singleton.nivelesDesbloqueados, "niveles.save");
+    		        }
+    		     catch (Exception e) {}
+    		}
+    	}
     }
     
     public void anyadirIcono() {

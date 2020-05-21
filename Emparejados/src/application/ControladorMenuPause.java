@@ -64,8 +64,11 @@ public class ControladorMenuPause {
     private String tipoPartida;
     
     private ConfiguracionPartida singleton;
+    
+    private Boolean esNiveles;
  
-    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, ConfiguracionPartida nuevoSingleton, String ventanaAnterior) {
+    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, Boolean niveles) {
+    	esNiveles = niveles;
     	primaryStage = partida;
     	this.partidaEstandar = partidaEstandar;
     	singleton = nuevoSingleton;
@@ -81,7 +84,8 @@ public class ControladorMenuPause {
         actualizarEstilo();
     }
     
-    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, ConfiguracionPartida nuevoSingleton, String ventanaAnterior) {
+    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, Boolean niveles) {
+    	esNiveles = niveles;
     	primaryStage = partida;
     	this.partidaCarta = partidaCarta;
         singleton = nuevoSingleton;
@@ -134,7 +138,7 @@ public class ControladorMenuPause {
     	
     
     public void volverMenuPrincipal() {
-    	restablecerPredeterminados();
+    	if(esNiveles) restablecerPredeterminados();    	
     	musicaFondo.stopMusic();
     	thisStage.close();
     	primaryStage.close();

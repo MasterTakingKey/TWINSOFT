@@ -5,6 +5,7 @@ import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
@@ -12,7 +13,7 @@ import javafx.util.Duration;
 public abstract class Animaciones {
 
 	public StackPane stackPane;
-	
+	public Pane pane;
 	public Baraja baraja;
 	public ImageView imagen1;
 	public ImageView imagen2;
@@ -70,6 +71,18 @@ public abstract class Animaciones {
     	translation.setByY(-50);
     	translation.setAutoReverse(true);
     	translation.setCycleCount(4);
+
+    	return translation;
+
+    }
+    public TranslateTransition victoryAnimation(Node card) {
+    	
+    	TranslateTransition translation = new TranslateTransition(Duration.millis(2200), card);
+
+    	translation.setByY(-800);
+    	translation.setByY(800);
+    	//translation.setAutoReverse(true);
+    	//translation.setCycleCount(4);
 
     	return translation;
 

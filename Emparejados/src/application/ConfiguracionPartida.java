@@ -2,7 +2,7 @@ package application;
 
 import java.util.ArrayList;
 
-public class ConfiguracionPartida {
+public class ConfiguracionPartida implements java.io.Serializable {
 
 	private static ConfiguracionPartida instance;
 	
@@ -39,6 +39,8 @@ public class ConfiguracionPartida {
 	public String efectosVisualesVoltear;
 	
 	public String efectosVisualesPareja;
+	
+	public int nivelesDesbloqueados;
 	
 	protected ConfiguracionPartida() {
 		

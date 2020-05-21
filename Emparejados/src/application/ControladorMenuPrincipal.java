@@ -65,12 +65,20 @@ public class ControladorMenuPrincipal {
     
     private ConfiguracionPartida singleton;
     
+    String currentDirectory = System.getProperty("user.dir");
+    
+    Image imagen;
+    Carta carta;
+    
+    
     private ArrayList<File> listaImagenes = new ArrayList<File>();
 
     public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior){
         primaryStage = stage;
         if(primeraVez) { 
             inicializarSingleton();
+            File[] files = new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/").listFiles();
+        	showFiles(files);
         } else {
             singleton = nuevoSingleton;
         }
@@ -80,6 +88,57 @@ public class ControladorMenuPrincipal {
         corregirTamanyoVentana();
         corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
+        
+    }
+    
+    public void showFiles(File[] files) {
+    	
+        for (File file : files) {
+            if (file.isDirectory()) {           	
+            	for(File archivo : file.listFiles()) {            		
+            		listaImagenes.add(archivo);
+            	}
+            	int i = 1;
+            	for(File archivo : file.listFiles()) {
+            		
+            		String fileName = archivo.getName();
+            		
+            		int pos = fileName.lastIndexOf(".");
+            		if (pos > 0 && pos < (fileName.length() - 1)) { 
+            		    fileName = fileName.substring(0, pos);
+            		}
+            		
+            		if(fileName.equals("dorso")){
+            			listaImagenes.set(0, archivo);
+            		} else {
+            			listaImagenes.set(i, archivo); 
+            			i++;
+            		}
+            	}
+                montarBarajas(file.getName(), listaImagenes);
+                listaImagenes.clear();
+            }
+        }
+    }
+    
+    public void montarBarajas(String nombre, ArrayList<File> listaImagenes) {
+    	Baraja nuevaBaraja = new Baraja();
+    	nuevaBaraja.setNombre(nombre);
+		nuevaBaraja.setTamanyo(2 * listaImagenes.size() - 2 );
+		imagen = new Image(listaImagenes.get(0).toURI().toString());
+		nuevaBaraja.setImagenDorso(imagen);
+		
+		int indice = 0;
+        for (int i = 1; i < listaImagenes.size(); i++) { 
+                    imagen = new Image(listaImagenes.get(i).toURI().toString());
+                    carta = new Carta(nuevaBaraja.getImagenDorso(), imagen, i-1);
+                    nuevaBaraja.getBaraja()[indice++] = carta;
+         }
+		
+		
+		singleton.listaBarajas.add(nuevaBaraja);
+		System.out.println(singleton.listaBarajas.get(singleton.listaBarajas.size()-1));
+		System.out.println(singleton.listaBarajas.size());
     }
     
     public void iniciarMenuPrincipalDesdeEditor(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, long tiempoCancion){
@@ -123,8 +182,6 @@ public class ControladorMenuPrincipal {
     	singleton.listaBarajas.add(barajaNintendo);
     	singleton.listaBarajas.add(barajaDeportes);
     	
-    	singleton.estilo = "Azul";
-    	
     	String[] musicas = new String[3];
         musicas[0] = "Musica1";
         musicas[1] = "Musica2";
@@ -152,6 +209,21 @@ public class ControladorMenuPrincipal {
     	singleton.efectosSonorosPareja = "Acierto";
     	singleton.efectosVisualesVoltear = "Giro";
     	singleton.efectosVisualesPareja = "Salto";
+    	
+    	 try {
+             this.singleton.nivelesDesbloqueados = (int) GuardarDatosPartida.load("niveles.save");
+         }
+         catch (Exception e) {
+             singleton.nivelesDesbloqueados = 1;
+         }
+    	 
+    	 try {
+             this.singleton.estilo = (String) GuardarDatosPartida.load("estilo.save");
+         }
+         catch (Exception e) {
+             singleton.estilo = "Azul";
+         }
+
 	}
     
     public void inicializarVariables() {
@@ -217,7 +289,22 @@ public class ControladorMenuPrincipal {
     
     @FXML
     void partidaMultijugadorHandler(ActionEvent event) {
-
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ElegirNombresMultijugador.fxml"));
+            Parent root = myLoader.load();  
+            Scene scene = new Scene(root); 
+            Stage stage = new Stage();                       
+            stage.setTitle("Seleccione los nombres");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            ControladorElegirNombresMultijugador nombresMulti = myLoader.<ControladorElegirNombresMultijugador>getController(); 
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+            nombresMulti.iniciarElegirNombresMultijugador(primaryStage, singleton, musicaFondo, tiempoMusica);
+            stage.show();
+    	} catch (IOException e) {}
     }  
     
     @FXML

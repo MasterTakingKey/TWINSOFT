@@ -45,6 +45,12 @@ public class ControladorResultadoPartida {
     @FXML
     private ImageView applauseVictoria;
     
+    @FXML
+    private Label puntuacionFinalJ2;
+
+    @FXML
+    private Label Ganador;
+    
     private AudioClip victoria;
     
     private AudioClip applauseSound;
@@ -71,13 +77,19 @@ public class ControladorResultadoPartida {
     
     private int nivel;
     
-    public void iniciarResultado(Stage stage, String puntuacion, String tiempo, boolean isVictoria, String tipoPartida, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel){
+    private String nombreJ1;
+    
+    private String nombreJ2;
+    
+    public void iniciarResultado(Stage stage, String puntuacion, String puntuacionJ2,String tiempo, boolean isVictoria, String tipoPartida, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel, String nombreJ1, String nombreJ2){
     	primaryStage = stage;
         this.isVictoria = isVictoria;
         this.tipoPartida = tipoPartida;
         singleton = nuevoSingleton;
         esNiveles = niveles;
         nivel = nuevoNivel;
+        this.nombreJ1 = nombreJ1;
+        this.nombreJ2 = nombreJ2;
         inicializarVariables(puntuacion, tiempo);
         inicializarAnimaciones();
         actualizarNiveles();
@@ -86,6 +98,9 @@ public class ControladorResultadoPartida {
         corregirTamanyoVentana();
         corregirPosicionVentana(ventanaAnterior);
         actualizarEstilo();
+        if(tipoPartida == "multi") {
+        	actualizarMulti(puntuacion, puntuacionJ2);
+        }
     }
  
     private void inicializarAnimaciones() {
@@ -120,6 +135,20 @@ public class ControladorResultadoPartida {
         	salir.setText("Salir a Niveles");
         }
     }
+	
+	public void actualizarMulti(String puntuacion, String puntuacionJ2) {
+		puntuacionFinal.setText("Puntuación " + nombreJ1 + ": " + puntuacion);
+		puntuacionFinalJ2.setText("Puntuación " + nombreJ2 + ": " + puntuacionJ2);
+		if(isVictoria) {
+			if(Integer.parseInt(puntuacion) > Integer.parseInt(puntuacionJ2)) {
+				Ganador.setText(nombreJ1 + "GANA!");
+			} else if(Integer.parseInt(puntuacion) > Integer.parseInt(puntuacionJ2)) {
+				Ganador.setText(nombreJ2 + "GANA!");
+			} else {
+				Ganador.setText("EMPATE!");
+			}
+		}
+	}
     
     public void mostrarResultado() {
     	if(isVictoria) {
@@ -147,6 +176,8 @@ public class ControladorResultadoPartida {
     		jugarPartidaEstandar();
     	} else if(tipoPartida == "carta") {
     		jugarPartidaCarta();
+    	} else if(tipoPartida == "multi") {
+    		jugarMultijugador();
     	}
     }
     
@@ -179,6 +210,23 @@ public class ControladorResultadoPartida {
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
             controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, "menuPrincipal", esNiveles, nivel);
+            primaryStage.show();
+        	thisStage.close();
+    	} catch (IOException e) {}
+    }
+    
+    public void jugarMultijugador() {
+    	try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/Multijugador.fxml"));
+            Parent root = (Parent) myLoader.load();
+            ControladorMultijugador controladorMultijugador = myLoader.<ControladorMultijugador>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Partida Por Carta");
+            primaryStage.setResizable(false);
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+            controladorMultijugador.iniciarMultijugador(primaryStage, singleton, "menuPrincipal", esNiveles, nivel, nombreJ1, nombreJ2);
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}

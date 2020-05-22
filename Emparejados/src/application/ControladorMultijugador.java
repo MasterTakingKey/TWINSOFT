@@ -672,8 +672,10 @@ public class ControladorMultijugador {
     
     public void mostrarResultado() {
     	try {
-    		puntuacion.getTimeline().stop();
-        	String puntuacionFinal = Integer.toString(puntuacion.getPuntos());
+    		puntuacionJ1.getTimeline().stop();
+    		puntuacionJ2.getTimeline().stop();
+        	String puntuacionFinalJ1 = Integer.toString(puntuacionJ1.getPuntos());
+        	String puntuacionFinalJ2 = Integer.toString(puntuacionJ2.getPuntos());
         	String tiempoSobrante = tiempo.getText();
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ResultadoPartida.fxml"));
     		Parent root = (Parent) myLoader.load();
@@ -687,9 +689,9 @@ public class ControladorMultijugador {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
     		if(isVictoria()) {
-            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, true, "estandar", singleton, "partidaEstandar", esNiveles, nivel);
+            	controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinalJ1, puntuacionFinalJ2, tiempoSobrante, true, "multi", singleton, "partidaEstandar", esNiveles, nivel, nombreJ1.getText(), nombreJ2.getText());
         	} else {
-        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinal, tiempoSobrante, false, "estandar", singleton, "partidaEstandar", esNiveles, nivel);
+        		controladorResultadoPartida.iniciarResultado(primaryStage, puntuacionFinalJ1, puntuacionFinalJ2, tiempoSobrante, false, "multi", singleton, "partidaEstandar", esNiveles, nivel, nombreJ1.getText(), nombreJ2.getText());
         	}
     		stage.show();
     	} catch (IOException e) {
@@ -700,25 +702,26 @@ public class ControladorMultijugador {
     @FXML
     void pausarPartida(MouseEvent event) {
     	try {
-    		puntuacion.stopTimeLine();
+    		puntuacionJ1.stopTimeLine();
+    		puntuacionJ2.stopTimeLine();
     		if(singleton.limiteTiempoOn) {
         		contadorTiempo.setEsPausa(true);
     		}
     		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
     		musicaFondo.stopMusic();
-    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPause.fxml"));
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPausaMultijugador.fxml"));
     		Parent root = (Parent) myLoader.load();
-    		ControladorMenuPause controladorMenuPausa = myLoader.<ControladorMenuPause>getController();
+    		ControladorMenuPausaMultijugador controladorMenuPausaMultijugador = myLoader.<ControladorMenuPausaMultijugador>getController();
     		Scene scene = new Scene(root);
     		Stage stage = new Stage();
     		stage.setScene(scene);
     		stage.initModality(Modality.APPLICATION_MODAL);
     		stage.setResizable(false);
-        	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausa.reanudarPartidaEstandar();});
+        	stage.setOnCloseRequest((WindowEvent event1) -> {controladorMenuPausaMultijugador.reanudarMulti();});
         	primaryStage.hide();
         	singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-        	controladorMenuPausa.initDataMultijugador(primaryStage, tiempo.getText(), Integer.toString(puntuacion.getPuntos()), this, singleton, "partidaEstandar", esNiveles);
+        	controladorMenuPausaMultijugador.initDataMultijugador(primaryStage, tiempo.getText(), Integer.toString(puntuacionJ1.getPuntos()), Integer.toString(puntuacionJ2.getPuntos()), this, singleton, "partidaEstandar", esNiveles, turnoActual);
         	stage.show();
         	stage.toFront();
     	} catch (IOException e) {
@@ -726,8 +729,10 @@ public class ControladorMultijugador {
     	}
     }
     
-    public void reanudarPartida(boolean Sound, String ventanaAnterior) {
-    	puntuacion.playTimeline();
+    public void reanudarPartida(boolean Sound, String ventanaAnterior, int turno) {
+    	turnoActual = turno;
+    	puntuacionJ1.playTimeline();
+    	puntuacionJ2.playTimeline();
     	corregirTamanyoVentana();
     	corregirPosicionVentana(ventanaAnterior);
     	primaryStage.show();
@@ -786,7 +791,8 @@ public class ControladorMultijugador {
     		iconoTiempo.setTranslateX(250);
     		tiempo.setTranslateX(270);
     		iconoPuntos.setTranslateX(350);
-    		puntos.setTranslateX(370);
+    		puntosJ1.setTranslateX(370);
+    		puntosJ2.setTranslateX(400);
     		iconoSonido.setTranslateX(450);
     		pausa.setTranslateX(470);
     	}

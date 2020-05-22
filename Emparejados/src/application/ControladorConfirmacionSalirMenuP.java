@@ -20,6 +20,8 @@ public class ControladorConfirmacionSalirMenuP {
     
     private ControladorMenuPause menuPausa;
     
+    private ControladorMenuPausaMultijugador menuPausaMulti;
+    
     private Image icon;
     
     private Stage thisStage;
@@ -28,6 +30,16 @@ public class ControladorConfirmacionSalirMenuP {
     
     public void inicializarDatos(ControladorMenuPause menuP, double anteriorWidth, double anteriorHeight, ConfiguracionPartida nuevoSingleton) {
     	menuPausa = menuP;
+    	singleton = nuevoSingleton;
+    	thisStage = (Stage) cancelar.getScene().getWindow();
+    	anyadirIcono();
+    	corregirTamanyoVentana();
+    	corregirPosicionVentana(anteriorWidth, anteriorHeight);
+    	actualizarEstilo();
+    }
+    
+    public void inicializarDatosMulti(ControladorMenuPausaMultijugador menuP, double anteriorWidth, double anteriorHeight, ConfiguracionPartida nuevoSingleton) {
+    	menuPausaMulti = menuP;
     	singleton = nuevoSingleton;
     	thisStage = (Stage) cancelar.getScene().getWindow();
     	anyadirIcono();

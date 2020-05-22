@@ -9,24 +9,14 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="600.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorEditorBarajaDorso">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="600.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorEditorBarajaBorrar">
    <children>
-      <Label alignment="CENTER" contentDisplay="TOP" layoutX="103.0" layoutY="34.0" prefHeight="59.0" prefWidth="410.0" text="TWINS">
-         <font>
-            <Font size="41.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="121.0" layoutY="80.0" prefHeight="40.0" prefWidth="375.0" text="EDITOR DE BARAJA">
-         <font>
-            <Font size="28.0" />
-         </font>
-      </Label>
-      <Button fx:id="cancelarButton" layoutX="49.0" layoutY="259.0" mnemonicParsing="false" onMouseClicked="#cancelar" text="Volver">
+      <Button fx:id="cancelarButton" layoutX="357.0" layoutY="301.0" mnemonicParsing="false" onMouseClicked="#cancelar" text="Volver">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <StackPane fx:id="circuloSonido" layoutX="452.0" layoutY="50.0" prefHeight="86.0" prefWidth="101.0" styleClass="fondoBoton">
+      <StackPane fx:id="circuloSonido" layoutX="59.0" layoutY="245.0" prefHeight="86.0" prefWidth="101.0" styleClass="fondoBoton">
          <children>
             <ImageView fx:id="iconoSonido" fitHeight="54.0" fitWidth="58.0" onMouseClicked="#sonidoHandler" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -35,16 +25,21 @@
             </ImageView>
          </children>
       </StackPane>
-      <Button fx:id="borrarBaraja" layoutX="408.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#BorrarBaraja" text="Borrar">
+      <Button fx:id="borrarBaraja" layoutX="477.0" layoutY="301.0" mnemonicParsing="false" onMouseClicked="#BorrarBaraja" text="Borrar">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <ChoiceBox layoutX="309.0" layoutY="176.0" prefHeight="25.0" prefWidth="185.0" />
-      <Label layoutX="41.0" layoutY="178.0" prefHeight="20.0" prefWidth="251.0" text="Seleccione la baraja que desea borrar:">
+      <ChoiceBox fx:id="listadoBarajas" layoutX="357.0" layoutY="173.0" prefHeight="25.0" prefWidth="185.0" />
+      <Label layoutX="41.0" layoutY="178.0" prefHeight="25.0" prefWidth="297.0" text="Seleccione la baraja que desea borrar:">
          <font>
-            <Font size="14.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
+      <ImageView fitHeight="129.0" fitWidth="545.0" layoutX="47.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/editor_baraja.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

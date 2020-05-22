@@ -209,7 +209,7 @@ public class ControladorEditorBarajaParejas {
 	
 	private Carta carta;
 	
-	private String ventanaActual = "editorBaraja";
+	private String ventanaActual = "editorBarajaDorso";
 
 	public void iniciarEditorParejas(Stage stage, ConfiguracionPartida nuevoSingleton, ArrayList<File> imagenes, Musica cancion, long tiempoCancion){
 		primaryStage = stage;
@@ -362,8 +362,25 @@ public class ControladorEditorBarajaParejas {
 
 	@FXML
 	public void cancelar(MouseEvent event) {
-		listaImagenes.clear();
-		thisStage.close();
+		listaImagenes.clear();		
+		try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
+            Parent root = myLoader.load();  
+            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Menu Principal");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+      		musicaFondo.stopMusic();
+            menuPrincipal.iniciarMenuPrincipalDesdeEditor(primaryStage, false, singleton, ventanaActual, tiempoMusica);
+            primaryStage.show();
+    	} catch (IOException e) {
+                e.printStackTrace();
+        }
 	}
 	
 	public void cancelarNombre(MouseEvent event) {
@@ -434,8 +451,7 @@ public class ControladorEditorBarajaParejas {
 	      		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
 	      		musicaFondo.stopMusic();
 	            menuPrincipal.iniciarMenuPrincipalDesdeEditor(primaryStage, false, singleton, ventanaActual, tiempoMusica);
-	           // primaryStage.show();
-	            thisStage.close();
+	            primaryStage.show();
 	    	} catch (IOException e) {
 	                e.printStackTrace();
 	        }
@@ -458,17 +474,14 @@ public class ControladorEditorBarajaParejas {
 	            Parent root = myLoader.load();  
 	            ControladorEditorBarajaDorso editorDorso = myLoader.<ControladorEditorBarajaDorso>getController();
 	            Scene scene = new Scene(root);
-	            Stage stage = new Stage();
-	            stage.setTitle("Seleccione el dorso");
-	            stage.setScene(scene);
-	            stage.initModality(Modality.APPLICATION_MODAL);
-	            stage.setResizable(false);
+	            primaryStage.setTitle("Seleccione el dorso");
+	            primaryStage.setScene(scene);
+	            primaryStage.setResizable(false);
 	            singleton.posicionX = thisStage.getX();
 	      		singleton.posicionY = thisStage.getY();
 	      		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
 	            editorDorso.iniciarEditorDorso(primaryStage, singleton, false, listaImagenes, musicaFondo, tiempoMusica);
-	            stage.show();
-	            thisStage.hide();
+	            primaryStage.show();
 	    	} catch (IOException e) {
 	                e.printStackTrace();
 	        }
@@ -625,123 +638,4 @@ public class ControladorEditorBarajaParejas {
 		}
     }
     
-    @FXML
-    void editarDorso(MouseEvent event) {
-    	try {
-    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
-            Parent root = myLoader.load();  
-            ControladorEditorBarajaDorso editorDorso = myLoader.<ControladorEditorBarajaDorso>getController();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setTitle("Seleccione el dorso");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-      		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-            editorDorso.iniciarEditorDorso(primaryStage, singleton, false, listaImagenes, musicaFondo, tiempoMusica);
-            stage.show();
-            thisStage.hide();
-    	} catch (IOException e) {
-                e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void editarPareja1(MouseEvent event) {
-    /*	if(Pareja1Image.getImage().equals(null)) {
-    		actual = 1;
-    		imagen = new Image(listaImagenes.get(actual).toURI().toString());
-        	imagenCarta.setImage(imagen);
-        	pathImagen.setText(listaImagenes.get(actual).getName());
-        	if(imagenCarta != null) siguienteButton.setDisable(false);
-    	}   */
-
-    }
-
-    @FXML
-    void editarPareja10(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja11(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja12(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja13(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja14(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja15(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja16(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja17(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja18(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja2(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja3(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja4(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja5(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja6(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja7(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja8(MouseEvent event) {
-
-    }
-
-    @FXML
-    void editarPareja9(MouseEvent event) {
-
-    }
 }

@@ -28,10 +28,13 @@ public class ControladorConfirmacionSalirMenuP {
     
     private ConfiguracionPartida singleton;
     
+    private String tipoPartida;
+    
     public void inicializarDatos(ControladorMenuPause menuP, double anteriorWidth, double anteriorHeight, ConfiguracionPartida nuevoSingleton) {
     	menuPausa = menuP;
     	singleton = nuevoSingleton;
     	thisStage = (Stage) cancelar.getScene().getWindow();
+    	tipoPartida = "UnJugador";
     	anyadirIcono();
     	corregirTamanyoVentana();
     	corregirPosicionVentana(anteriorWidth, anteriorHeight);
@@ -41,6 +44,7 @@ public class ControladorConfirmacionSalirMenuP {
     public void inicializarDatosMulti(ControladorMenuPausaMultijugador menuP, double anteriorWidth, double anteriorHeight, ConfiguracionPartida nuevoSingleton) {
     	menuPausaMulti = menuP;
     	singleton = nuevoSingleton;
+    	tipoPartida = "Multijugador";
     	thisStage = (Stage) cancelar.getScene().getWindow();
     	anyadirIcono();
     	corregirTamanyoVentana();
@@ -55,8 +59,13 @@ public class ControladorConfirmacionSalirMenuP {
     
     @FXML
     void aceptarHandler(ActionEvent event) {
-    	menuPausa.volverMenuPrincipal();
-    	thisStage.close();
+    	if(tipoPartida.equals("UnJugador")) {
+            menuPausa.volverMenuPrincipal();
+            thisStage.close();
+        } else if(tipoPartida.equals("Multijugador")) {
+            menuPausaMulti.volverMenuPrincipal();
+            thisStage.close();
+        }
     }
 
     @FXML

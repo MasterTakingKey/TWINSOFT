@@ -141,9 +141,9 @@ public class ControladorResultadoPartida {
 		puntuacionFinalJ2.setText("Puntuación " + nombreJ2 + ": " + puntuacionJ2);
 		if(isVictoria) {
 			if(Integer.parseInt(puntuacion) > Integer.parseInt(puntuacionJ2)) {
-				Ganador.setText(nombreJ1 + "GANA!");
-			} else if(Integer.parseInt(puntuacion) > Integer.parseInt(puntuacionJ2)) {
-				Ganador.setText(nombreJ2 + "GANA!");
+				Ganador.setText(nombreJ1 + " GANA!");
+			} else if(Integer.parseInt(puntuacion) < Integer.parseInt(puntuacionJ2)) {
+				Ganador.setText(nombreJ2 + " GANA!");
 			} else {
 				Ganador.setText("EMPATE!");
 			}

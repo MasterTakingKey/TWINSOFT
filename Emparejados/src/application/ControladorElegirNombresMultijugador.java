@@ -1,7 +1,12 @@
 package application;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -14,9 +19,9 @@ import javafx.stage.Stage;
 
 public class ControladorElegirNombresMultijugador {
 
-	@FXML
-	private Pane pane;
-	 
+    @FXML
+    private StackPane fondo;
+    
     @FXML
     private TextField nombreJ1;
 
@@ -72,7 +77,20 @@ public class ControladorElegirNombresMultijugador {
     		Alert alert = new Alert(AlertType.ERROR, "Los nombres tiene que ser de tres letras.");
          	alert.showAndWait();
     	} else {
-    		
+    		musicaFondo.stopMusic();
+          	try {
+          		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/Multijugador.fxml"));
+          		Parent root = (Parent) myLoader.load();
+          		ControladorMultijugador controladorMulti = myLoader.<ControladorMultijugador>getController();
+          		Scene scene = new Scene(root);
+          		primaryStage.setScene(scene);
+          		primaryStage.setTitle("Partida Multijugador");
+          		primaryStage.setResizable(false);
+          		singleton.posicionX = thisStage.getX();
+          		singleton.posicionY = thisStage.getY();
+          		controladorMulti.iniciarMultijugador(primaryStage, singleton, "seleccionNombres", false, 0, nombreJ1.getText().toUpperCase(), nombreJ2.getText().toUpperCase());
+          		primaryStage.show();
+          	} catch (IOException e) {}
     	}
     }
 
@@ -105,35 +123,55 @@ public class ControladorElegirNombresMultijugador {
 	        	iconoSonido.setImage(Sound0);
 	        }
 	    }
-    
+	    
+	    @FXML
+	    void clickSound(MouseEvent event) {
+	    	if(singleton.soundOn) {
+	    		singleton.soundOn = false;
+	    		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+	    	} else {
+	    		singleton.soundOn = true;
+	    	}
+	    	actualizarSonido();
+	    	actualizarImagenSonido();
+	    }
     
     public void actualizarEstilo() {
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
     	String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
     	String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
     	if(singleton.estilo.equals("Azul")) {
-    		pane.getStylesheets().remove(temaRojo);
-    		pane.getStylesheets().remove(temaVerde);
-    		pane.getStylesheets().add(temaAzul);
+    		fondo.getStylesheets().remove(temaRojo);
+    		fondo.getStylesheets().remove(temaVerde);
+    		fondo.getStylesheets().add(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaAzul);
 	    } else if(singleton.estilo.equals("Rojo")) {
-			pane.getStylesheets().remove(temaAzul);
-			pane.getStylesheets().remove(temaVerde);
-			pane.getStylesheets().add(temaRojo);
+			fondo.getStylesheets().remove(temaAzul);
+			fondo.getStylesheets().remove(temaVerde);
+			fondo.getStylesheets().add(temaRojo);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaVerde);
+			circuloSonido.getStylesheets().add(temaRojo);
 		} else {
-			pane.getStylesheets().remove(temaAzul);
-			pane.getStylesheets().remove(temaRojo);
-			pane.getStylesheets().add(temaVerde);
+			fondo.getStylesheets().remove(temaAzul);
+			fondo.getStylesheets().remove(temaRojo);
+			fondo.getStylesheets().add(temaVerde);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaRojo);
+			circuloSonido.getStylesheets().add(temaVerde);
 		}
     }
     
     public void corregirTamanyoVentana() {
-    	thisStage.setWidth(650);
-    	thisStage.setHeight(750);
+    	thisStage.setWidth(600);
+    	thisStage.setHeight(425);
     }
     
     public void corregirPosicionVentana() {
-    	thisStage.setX(singleton.posicionX);
-    	thisStage.setY(singleton.posicionY);
+    	thisStage.setX(singleton.posicionX + 250);
+    	thisStage.setY(singleton.posicionY + 200);
     }
     
     public void anyadirIcono() {

@@ -292,19 +292,17 @@ public class ControladorMenuPrincipal {
     	try {
     		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/ElegirNombresMultijugador.fxml"));
             Parent root = myLoader.load();  
-            Scene scene = new Scene(root); 
-            Stage stage = new Stage();                       
-            stage.setTitle("Seleccione los nombres");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
+            Scene scene = new Scene(root);                   
+            primaryStage.setTitle("Seleccione los nombres");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             ControladorElegirNombresMultijugador nombresMulti = myLoader.<ControladorElegirNombresMultijugador>getController(); 
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
             nombresMulti.iniciarElegirNombresMultijugador(primaryStage, singleton, musicaFondo, tiempoMusica);
-            stage.show();
-    	} catch (IOException e) {}
+            primaryStage.show();
+    	} catch (IOException e) {e.printStackTrace();}
     }  
     
     @FXML

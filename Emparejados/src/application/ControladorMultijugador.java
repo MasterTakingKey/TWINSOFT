@@ -807,6 +807,14 @@ public class ControladorMultijugador {
         		thisStage.setX(250);
         		thisStage.setY(100);
         	}
+    	}else if(ventanaAnterior.equals("seleccionNombres")) {
+    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+        		thisStage.setX(singleton.posicionX - 200);
+            	thisStage.setY(singleton.posicionY - 150);
+        	} else {
+        		thisStage.setX(250);
+        		thisStage.setY(100);
+        	}
     	} else if(ventanaAnterior.equals("menuPause")) {
     		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
         		thisStage.setX(singleton.posicionX);

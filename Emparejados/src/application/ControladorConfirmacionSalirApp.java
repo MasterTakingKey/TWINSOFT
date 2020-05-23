@@ -61,22 +61,15 @@ public class ControladorConfirmacionSalirApp {
     }
     
     public void actualizarEstilo() {
-    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
-        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
-        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(singleton.estilo.equals("Azul")) {
-    		anchorPane.getStylesheets().remove(temaRojo);
-    		anchorPane.getStylesheets().remove(temaVerde);
-    		anchorPane.getStylesheets().add(temaAzul);
-    	} else if(singleton.estilo.equals("Rojo")) {
-    		anchorPane.getStylesheets().remove(temaAzul);
-			anchorPane.getStylesheets().remove(temaVerde);
-			anchorPane.getStylesheets().add(temaRojo);
-    	} else {
-    		anchorPane.getStylesheets().remove(temaAzul);
-			anchorPane.getStylesheets().remove(temaRojo);
-			anchorPane.getStylesheets().add(temaVerde);
-    	}
+    	Estilo nuevoEstilo;
+        if(singleton.estilo.equals("Azul")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloAzul());
+        } else if(singleton.estilo.equals("Rojo")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloRojo());
+        } else {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloVerde());
+        }
+        nuevoEstilo.cambiarEstilo(null, anchorPane, null);
     }
 
 }

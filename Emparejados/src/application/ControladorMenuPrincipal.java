@@ -3,6 +3,8 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -91,8 +93,7 @@ public class ControladorMenuPrincipal {
         
     }
     
-    public void showFiles(File[] files) {
-    	
+    public void showFiles(File[] files) { 
         for (File file : files) {
             if (file.isDirectory()) {           	
             	for(File archivo : file.listFiles()) {            		
@@ -436,31 +437,15 @@ public class ControladorMenuPrincipal {
     }
     
     public void actualizarEstilo() {
-    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
-        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
-        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(singleton.estilo.equals("Azul")) {
-    		anchorPane.getStylesheets().remove(temaRojo);
-    		anchorPane.getStylesheets().remove(temaVerde);
-    		anchorPane.getStylesheets().add(temaAzul);
-    		circuloSonido.getStylesheets().remove(temaRojo);
-    		circuloSonido.getStylesheets().remove(temaVerde);
-    		circuloSonido.getStylesheets().add(temaAzul);
-    	} else if(singleton.estilo.equals("Rojo")) {
-    		anchorPane.getStylesheets().remove(temaAzul);
-			anchorPane.getStylesheets().remove(temaVerde);
-			anchorPane.getStylesheets().add(temaRojo);
-			circuloSonido.getStylesheets().remove(temaAzul);
-			circuloSonido.getStylesheets().remove(temaVerde);
-			circuloSonido.getStylesheets().add(temaRojo);
-    	} else {
-    		anchorPane.getStylesheets().remove(temaAzul);
-			anchorPane.getStylesheets().remove(temaRojo);
-			anchorPane.getStylesheets().add(temaVerde);
-			circuloSonido.getStylesheets().remove(temaAzul);
-			circuloSonido.getStylesheets().remove(temaRojo);
-			circuloSonido.getStylesheets().add(temaVerde);
-    	}
+    	Estilo nuevoEstilo;
+        if(singleton.estilo.equals("Azul")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloAzul());
+        } else if(singleton.estilo.equals("Rojo")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloRojo());
+        } else {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloVerde());
+        }
+        nuevoEstilo.cambiarEstilo(null, anchorPane, circuloSonido);
     }
     
 }

@@ -380,7 +380,7 @@ public class ControladorMultijugador extends PlantillaPartidas{
    	puntuacionJ2 = new Puntuacion();
    	puntuacionJ1.setNombre(nombreJ1);
    	puntuacionJ2.setNombre(nombreJ2);
-   	puntuacionJ1.iniciarTiempoEntreTurnosMulti();
+   	puntuacionJ1.iniciarTiempoEntreTurnosMulti(singleton.soundOn);
    	puntuacionJ1.getPuntosCambiados().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
    		puntosJ1.setText(Integer.toString(puntuacionJ1.getPuntos()));
        	mostrarPuntos(puntuacionJ1.getPuntos() - puntosAnterioresJ1);
@@ -390,6 +390,7 @@ public class ControladorMultijugador extends PlantillaPartidas{
        	mostrarPuntos(puntuacionJ2.getPuntos() - puntosAnterioresJ2);
 		});
    	puntuacionJ1.getCambioTurno().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
+   		puntosAnterioresJ1 = puntuacionJ1.getPuntos();
    		if(!esPrimeraCarta) {
 			animacionFinTurno.imagen1 = primeraImagen;
 			animacionFinTurno.crearAnimacion();
@@ -399,9 +400,10 @@ public class ControladorMultijugador extends PlantillaPartidas{
    			nombreJ2.setTextFill(Color.GREEN);
    			nombreJ1.setTextFill(Color.BLACK);
    			turnoActual = 2;
-   			puntuacionJ2.iniciarTiempoEntreTurnosMulti();
+   			puntuacionJ2.iniciarTiempoEntreTurnosMulti(singleton.soundOn);
 		});
    	puntuacionJ2.getCambioTurno().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
+   		puntosAnterioresJ2 = puntuacionJ2.getPuntos();
    		if(!esPrimeraCarta) {
 			animacionFinTurno.imagen1 = primeraImagen;
 			animacionFinTurno.crearAnimacion();
@@ -411,7 +413,7 @@ public class ControladorMultijugador extends PlantillaPartidas{
    			nombreJ1.setTextFill(Color.GREEN);
    			nombreJ2.setTextFill(Color.BLACK);
    			turnoActual = 1;
-   			puntuacionJ1.iniciarTiempoEntreTurnosMulti();
+   			puntuacionJ1.iniciarTiempoEntreTurnosMulti(singleton.soundOn);
 		});
    }
    

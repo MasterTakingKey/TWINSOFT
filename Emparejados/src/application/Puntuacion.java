@@ -1,5 +1,7 @@
 package application;
 
+import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl.SingletonIterator;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -86,7 +88,7 @@ public class Puntuacion {
 	    sumaPuntos(bonificacion, false, 0);
 	}
 	
-	public void iniciarTiempoEntreTurnos() {
+	public void iniciarTiempoEntreTurnos(boolean sonido) {
 		tiempoRestante = TIEMPO_ENTRE_TURNOS;
 		timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -96,14 +98,14 @@ public class Puntuacion {
                 	 tiempoRestante--;
 				     if (tiempoRestante < 0) {
 				         timeline.stop();
-				         error.play();
+				         if(sonido)  error.play();				        
 				         sumaPuntos(-2, false, 0);
 				     }
 				   }));
         timeline.playFromStart();
 	}
 	
-	public boolean iniciarTiempoEntreTurnosMulti() {
+	public boolean iniciarTiempoEntreTurnosMulti(boolean sonido) {
 		tiempoRestante = TIEMPO_ENTRE_TURNOS;
 		timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -113,7 +115,7 @@ public class Puntuacion {
                 	 tiempoRestante--;
 				     if (tiempoRestante < 0) {
 				         timeline.stop();
-				         error.play();
+				         if(sonido)  error.play();
 				         sumaPuntos(-2, false, 0);
 				         cambioTurno.setValue(!cambioTurno.getValue());
 				         tieneTurno = false;

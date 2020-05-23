@@ -472,7 +472,7 @@ public class ControladorPartidaEstandar extends PlantillaPartidas {
     	if(esPrimeraCarta) {
     		voltearCarta.play();
     		puntosAnteriores = puntuacion.getPuntos();
-    		puntuacion.iniciarTiempoEntreTurnos();
+    		puntuacion.iniciarTiempoEntreTurnos(singleton.soundOn);
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
     		animacionVoltear.imagen1 = imagenSeleccionada;

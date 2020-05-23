@@ -140,31 +140,15 @@ public class ControladorElegirNombresMultijugador {
 	    }
     
     public void actualizarEstilo() {
-    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
-    	String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
-    	String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(singleton.estilo.equals("Azul")) {
-    		fondo.getStylesheets().remove(temaRojo);
-    		fondo.getStylesheets().remove(temaVerde);
-    		fondo.getStylesheets().add(temaAzul);
-    		circuloSonido.getStylesheets().remove(temaRojo);
-    		circuloSonido.getStylesheets().remove(temaVerde);
-    		circuloSonido.getStylesheets().add(temaAzul);
-	    } else if(singleton.estilo.equals("Rojo")) {
-			fondo.getStylesheets().remove(temaAzul);
-			fondo.getStylesheets().remove(temaVerde);
-			fondo.getStylesheets().add(temaRojo);
-			circuloSonido.getStylesheets().remove(temaAzul);
-			circuloSonido.getStylesheets().remove(temaVerde);
-			circuloSonido.getStylesheets().add(temaRojo);
-		} else {
-			fondo.getStylesheets().remove(temaAzul);
-			fondo.getStylesheets().remove(temaRojo);
-			fondo.getStylesheets().add(temaVerde);
-			circuloSonido.getStylesheets().remove(temaAzul);
-			circuloSonido.getStylesheets().remove(temaRojo);
-			circuloSonido.getStylesheets().add(temaVerde);
-		}
+    	Estilo nuevoEstilo;
+        if(singleton.estilo.equals("Azul")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloAzul());
+        } else if(singleton.estilo.equals("Rojo")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloRojo());
+        } else {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloVerde());
+        }
+        nuevoEstilo.cambiarEstilo(null, null, fondo);
     }
     
     public void corregirTamanyoVentana() {

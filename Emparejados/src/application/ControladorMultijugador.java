@@ -254,6 +254,7 @@ public class ControladorMultijugador extends PlantillaPartidas{
         this.nombreJ2.setText(nombreJ2);
         this.nombreJ1.setTextFill(Color.GREEN);
     }
+    
     @Override
     public void inicializarBaraja() {
     	barajaPartidaEstandar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);
@@ -778,7 +779,7 @@ public class ControladorMultijugador extends PlantillaPartidas{
     public void corregirTamanyoVentana() {
     	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
     		thisStage.setHeight(800);
-    		thisStage.setWidth(910);
+    		thisStage.setWidth(950);
     	}else {
     		thisStage.setHeight(860);
     		thisStage.setWidth(1400);

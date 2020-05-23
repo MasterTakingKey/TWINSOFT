@@ -235,6 +235,7 @@ public class ControladorPartidaEstandar extends PlantillaPartidas {
         nivel = nuevoNivel;
         cartas = singleton.filasPartida*singleton.columnasPartida;
     }
+    
     @Override
     public void inicializarBaraja() {
     	barajaPartidaEstandar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);

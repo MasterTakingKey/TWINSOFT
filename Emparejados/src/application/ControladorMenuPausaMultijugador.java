@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,34 +15,43 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ControladorMenuPause {
+public class ControladorMenuPausaMultijugador {
 
     @FXML
     private Pane pane;
-    
+
     @FXML
     private StackPane circuloHome;
-
-    @FXML
-    private StackPane circuloPlay;
-
-    @FXML
-    private StackPane circuloSonido;
-	
-	@FXML
-    private ImageView imagePlay;
 
     @FXML
     private ImageView imageHome;
 
     @FXML
-    private ImageView imageSound;
-    
+    private StackPane circuloPlay;
+
     @FXML
-    private Label puntos;
+    private ImageView imagePlay;
+
+    @FXML
+    private StackPane circuloSonido;
+
+    @FXML
+    private ImageView imageSound;
+
+    @FXML
+    private Label puntosJ2;
 
     @FXML
     private Label tiempo;
+
+    @FXML
+    private Label nombreJ2;
+
+    @FXML
+    private Label puntosJ1;
+
+    @FXML
+    private Label nombreJ1;
     
     private Musica musicaFondo;
     
@@ -49,9 +59,7 @@ public class ControladorMenuPause {
     
     private Stage thisStage;
     
-    private ControladorPartidaEstandar partidaEstandar;
-    
-    private ControladorPartidaCarta partidaCarta;
+    private ControladorMultijugador multi;
     
     private Image Sound0;
     
@@ -66,14 +74,17 @@ public class ControladorMenuPause {
     private ConfiguracionPartida singleton;
     
     private Boolean esNiveles;
+    
+    private int turnoActual;
  
-    void initDataPartidaEstandar(Stage partida, String tiempo, String puntos, ControladorPartidaEstandar partidaEstandar, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, Boolean niveles) {
+    void initDataMultijugador(Stage partida, String tiempo, String puntosJ1, String puntosJ2, ControladorMultijugador multi, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, Boolean niveles, int turno) {
     	esNiveles = niveles;
     	primaryStage = partida;
-    	this.partidaEstandar = partidaEstandar;
+    	this.multi = multi;
     	singleton = nuevoSingleton;
         tipoPartida = "estandar";
-        actualizarTiempoYPuntos(tiempo, puntos);
+        turnoActual = turno;
+        actualizarTiempoYPuntos(tiempo, puntosJ1, puntosJ2);
         inicializarVariables();
         anyadirIcono();
         corregirTamanyoVentana();
@@ -84,25 +95,10 @@ public class ControladorMenuPause {
         actualizarEstilo();
     }
     
-    void initDataPartidaCarta(Stage partida, String tiempo, String puntos, ControladorPartidaCarta partidaCarta, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, Boolean niveles) {
-    	esNiveles = niveles;
-    	primaryStage = partida;
-    	this.partidaCarta = partidaCarta;
-        singleton = nuevoSingleton;
-        tipoPartida = "carta";
-        actualizarTiempoYPuntos(tiempo, puntos);
-        inicializarVariables();
-        anyadirIcono();
-        corregirTamanyoVentana();
-		actualizarSonido();
-        actualizarImagenSonido();
-        corregirTamanyoVentana();
-        corregirPosicionVentana(ventanaAnterior);
-        actualizarEstilo();
-    }
     
-    public void actualizarTiempoYPuntos(String tiempo, String puntos) {
-    	this.puntos.setText(puntos);
+    public void actualizarTiempoYPuntos(String tiempo, String puntosJ1, String puntosJ2) {
+    	this.puntosJ1.setText(puntosJ1);
+    	this.puntosJ2.setText(puntosJ2);
         this.tiempo.setText(tiempo);
     }
     
@@ -132,7 +128,7 @@ public class ControladorMenuPause {
         ControladorConfirmacionSalirMenuP controladorConfirmacionSalirMenuP = myLoader.<ControladorConfirmacionSalirMenuP>getController();
         singleton.posicionX = thisStage.getX();
   		singleton.posicionY = thisStage.getY();
-        controladorConfirmacionSalirMenuP.inicializarDatos(this, thisStage.getWidth(), thisStage.getHeight(), singleton);
+        controladorConfirmacionSalirMenuP.inicializarDatosMulti(this, thisStage.getWidth(), thisStage.getHeight(), singleton);
         stage.show();
     }
     	
@@ -161,37 +157,23 @@ public class ControladorMenuPause {
 
     @FXML
     void clickPlay(MouseEvent event) throws IOException {
-    	if(tipoPartida.equals("estandar")) {
-        	reanudarPartidaEstandar();
-    	} else if(tipoPartida.equals("carta")) {
-    		reanudarPartidaCarta();
-    	}
+        	reanudarMulti();
+    	
     }
     
-    void reanudarPartidaEstandar() {
+    void reanudarMulti() {
     	musicaFondo.stopMusic();
-    	boolean victoria = partidaEstandar.isVictoria();
-    	boolean derrota = partidaEstandar.isDerrota();
+    	boolean victoria = multi.isVictoria();
+    	boolean derrota = multi.isDerrota();
     	if (!derrota && !victoria) {
     		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
 	    	thisStage.close();
-	    	partidaEstandar.reanudarPartida(singleton.soundOn, "menuPausa");
+	    	multi.reanudarPartida(singleton.soundOn, "menuPausa", turnoActual);
     	}
     	
     }
     
-    void reanudarPartidaCarta() {
-    	musicaFondo.stopMusic();
-    	boolean victoria = partidaCarta.isVictoria();
-    	boolean derrota = partidaCarta.isDerrota();
-    	if (!derrota && !victoria) {
-    		singleton.posicionX = thisStage.getX();
-      		singleton.posicionY = thisStage.getY();
-	    	thisStage.close();
-	    	partidaCarta.reanudarPartida(singleton.soundOn, "menuPausa");
-    	}
-    }
     
     public void restablecerPredeterminados() {
     	
@@ -316,3 +298,4 @@ public class ControladorMenuPause {
     }
 
 }
+

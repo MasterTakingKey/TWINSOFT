@@ -26,7 +26,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
-public class ControladorPartidaCarta {
+public class ControladorPartidaCarta extends PlantillaPartidas {
 
     @FXML
     private ImageView iconoTiempo;
@@ -247,25 +247,9 @@ public class ControladorPartidaCarta {
         esNiveles = niveles;
         nivel = nuevoNivel;
         cartas = singleton.filasPartida*singleton.columnasPartida;
-        inicializarBaraja();
-        inicializarTablero();
-        inicializarCartas();
-    	inicializarVariables();
-    	inicializarAudioClips();
-    	inicializarContadorTiempo();
-    	inicializarPuntuacion();
-    	inicializarAnimaciones();
-    	actualizarSonido();
-    	actualizarImagenSonido();
-    	corregirTamanyoVentana();
-    	corregirPosicionVentana(ventanaAnterior);
-    	actualizarEstilo();
-    	mostrarSiguienteCarta();
-    	if(singleton.mostrarCartasOn) {
-    		mostrarCartas();
-    	}
     }
     
+    @Override
     public void inicializarBaraja() {
     	barajaPartidaCarta = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);
         int cartasInsertadas = 0;
@@ -296,7 +280,8 @@ public class ControladorPartidaCarta {
     	barajaAuxiliar.barajar();
     }
     
-    private void inicializarTablero() {
+    @Override
+    protected void inicializarTablero() {
     	tableroPartida = new Tablero(singleton.filasPartida, singleton.columnasPartida);
     	tableroPartida.llenarTablero(barajaPartidaCarta);
     	tablero.getColumnConstraints().clear();
@@ -316,6 +301,7 @@ public class ControladorPartidaCarta {
         }
     }
     
+    @Override
     public void inicializarCartas() {
     	carta00.setImage(singleton.barajaPartida.getImagenDorso());
     	carta01.setImage(singleton.barajaPartida.getImagenDorso());
@@ -356,6 +342,7 @@ public class ControladorPartidaCarta {
     	carta55.setImage(singleton.barajaPartida.getImagenDorso());
     }
  
+   @Override
    public void inicializarVariables() {
    	   cartasGiradas = 0;
    	   esPrimeraCarta = true;
@@ -369,6 +356,7 @@ public class ControladorPartidaCarta {
        thisStage = (Stage) carta00.getScene().getWindow();
    }
    
+   @Override
    public void inicializarAudioClips() {
    	   voltearCarta = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosVoltear + ".mp3").toString());
        error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
@@ -376,6 +364,7 @@ public class ControladorPartidaCarta {
        mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
    }
    
+   @Override
    public void inicializarContadorTiempo() {
    	    if(singleton.limiteTiempoOn) {
 	        contadorTiempo = new ContadorTiempo();
@@ -390,6 +379,7 @@ public class ControladorPartidaCarta {
    	   }
    }
    
+   @Override
    public void inicializarPuntuacion() {
    	   puntuacion = new Puntuacion();
    	   puntuacion.getPuntosCambiados().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
@@ -398,6 +388,7 @@ public class ControladorPartidaCarta {
 	   });
    }
    
+   @Override
 	public void inicializarAnimaciones() {
        FabricaAnimaciones[] fabrica;
    	
@@ -732,6 +723,7 @@ public class ControladorPartidaCarta {
     	actualizarImagenSonido();
     }
     
+    @Override
     public void actualizarSonido() {
     	if(singleton.soundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
@@ -748,6 +740,7 @@ public class ControladorPartidaCarta {
     	}
     }
     
+    @Override
     public void actualizarImagenSonido() {
         if(singleton.soundOn) {
         	iconoSonido.setImage(Sound1);
@@ -756,6 +749,7 @@ public class ControladorPartidaCarta {
         }
     }
     
+    @Override
     public void corregirTamanyoVentana() {
     	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
     		thisStage.setHeight(950);
@@ -771,7 +765,8 @@ public class ControladorPartidaCarta {
     		pausa.setTranslateX(470);
     	}
     }
-
+    
+    @Override
     public void corregirPosicionVentana(String ventanaAnterior) {
     	if(ventanaAnterior.equals("menuPrincipal")) {
         	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
@@ -808,6 +803,7 @@ public class ControladorPartidaCarta {
     	}
     }
     
+    @Override
     public void actualizarEstilo() {
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
@@ -844,5 +840,13 @@ public class ControladorPartidaCarta {
     	
     	}
     } 
+    
+    @Override
+    public void inicializaMostrarCartas() {
+    	mostrarSiguienteCarta();
+    	if(singleton.mostrarCartasOn) {
+    		mostrarCartas();
+    	}
+    }
     
 }

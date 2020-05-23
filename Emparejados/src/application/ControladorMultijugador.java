@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-public class ControladorMultijugador {
+public class ControladorMultijugador extends PlantillaPartidas{
 	@FXML
     private GridPane tablero;
 	
@@ -253,24 +253,8 @@ public class ControladorMultijugador {
         this.nombreJ1.setText(nombreJ1);
         this.nombreJ2.setText(nombreJ2);
         this.nombreJ1.setTextFill(Color.GREEN);
-        inicializarBaraja();
-        inicializarTablero();
-        inicializarCartas();
-    	inicializarVariables();
-    	inicializarAudioClips();
-    	inicializarContadorTiempo();
-    	inicializarPuntuacion();
-    	inicializarAnimaciones();
-    	actualizarSonido();
-    	actualizarImagenSonido();
-    	corregirTamanyoVentana();
-    	corregirPosicionVentana(ventanaAnterior);
-    	actualizarEstilo();
-    	if(singleton.mostrarCartasOn) {
-    		mostrarCartas();
-    	}
     }
-    
+    @Override
     public void inicializarBaraja() {
     	barajaPartidaEstandar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);
         int cartasInsertadas = 0;
@@ -284,7 +268,8 @@ public class ControladorMultijugador {
     	barajaPartidaEstandar.barajar();
     }
     
-    private void inicializarTablero() {
+    @Override
+    protected void inicializarTablero() {
     	tableroPartida = new Tablero(singleton.filasPartida, singleton.columnasPartida);
     	tableroPartida.llenarTablero(barajaPartidaEstandar);
     	tablero.getColumnConstraints().clear();
@@ -304,6 +289,7 @@ public class ControladorMultijugador {
         }
     }
     
+    @Override
     public void inicializarCartas() {
     	carta00.setImage(singleton.barajaPartida.getImagenDorso());
     	carta01.setImage(singleton.barajaPartida.getImagenDorso());
@@ -344,6 +330,7 @@ public class ControladorMultijugador {
     	carta55.setImage(singleton.barajaPartida.getImagenDorso());
     }
  
+   @Override
    public void inicializarVariables() {
    	cartasGiradas = 0;
    	esPrimeraCarta = true;
@@ -358,6 +345,7 @@ public class ControladorMultijugador {
     turnoActual = 1;
    }
    
+   @Override
    public void inicializarAudioClips() {
    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosVoltear + ".mp3").toString());
        error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
@@ -365,6 +353,7 @@ public class ControladorMultijugador {
        mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
    }
    
+   @Override
    public void inicializarContadorTiempo() {
    	if(singleton.limiteTiempoOn) {
 	        contadorTiempo = new ContadorTiempo();
@@ -379,6 +368,7 @@ public class ControladorMultijugador {
    	}
    }
    
+   @Override
    public void inicializarPuntuacion() {
    	puntuacionJ1 = new Puntuacion();
    	puntuacionJ2 = new Puntuacion();
@@ -392,6 +382,7 @@ public class ControladorMultijugador {
 		});
    }
    
+    @Override
 	public void inicializarAnimaciones() {
        FabricaAnimaciones[] fabrica;
    	
@@ -757,6 +748,7 @@ public class ControladorMultijugador {
     	actualizarImagenSonido();
     }
     
+    @Override
     public void actualizarSonido() {
     	if(singleton.soundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
@@ -773,6 +765,7 @@ public class ControladorMultijugador {
     	}
     }
     
+    @Override
     public void actualizarImagenSonido() {
         if(singleton.soundOn) {
         	iconoSonido.setImage(Sound1);
@@ -781,6 +774,7 @@ public class ControladorMultijugador {
         }
     }
     
+    @Override
     public void corregirTamanyoVentana() {
     	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
     		thisStage.setHeight(800);
@@ -798,6 +792,7 @@ public class ControladorMultijugador {
     	}
     }
 
+    @Override
     public void corregirPosicionVentana(String ventanaAnterior) {
     	if(ventanaAnterior.equals("menuPrincipal")) {
         	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
@@ -842,6 +837,7 @@ public class ControladorMultijugador {
     	}
     }
     
+    @Override
     public void actualizarEstilo() {
     	String tema1 = getClass().getResource("estilo1.css").toExternalForm();
     	String temaBosque = getClass().getResource("estiloBosque.css").toExternalForm();
@@ -871,4 +867,10 @@ public class ControladorMultijugador {
     	}
     }
     
+    @Override
+    void inicializaMostrarCartas(){
+    	if(singleton.mostrarCartasOn) {
+    		mostrarCartas();
+        }
+    }
 }

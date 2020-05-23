@@ -203,6 +203,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 1);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -223,6 +226,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 2);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -243,6 +249,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 3);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -263,6 +272,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 4);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -283,6 +295,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 5);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -303,6 +318,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "seleccionNiveles", true, 6);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -323,6 +341,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaCarta(primaryStage, singleton, "seleccionNiveles", true, 7);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -343,6 +364,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaCarta(primaryStage, singleton, "seleccionNiveles", true, 8);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -363,6 +387,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaCarta(primaryStage, singleton, "seleccionNiveles", true, 9);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -383,6 +410,9 @@ public class ControladorSeleccionNiveles {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaCarta(primaryStage, singleton, "seleccionNiveles", true, 10);
+      		PlantillaPartidas partida = controladorPartida;
+      		partida.ventana = "seleccionNiveles";
+      		partida.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }

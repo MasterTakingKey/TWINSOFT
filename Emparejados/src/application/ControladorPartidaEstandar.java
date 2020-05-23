@@ -25,7 +25,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
-public class ControladorPartidaEstandar {
+public class ControladorPartidaEstandar extends PlantillaPartidas {
 	
 	@FXML
     private GridPane tablero;
@@ -234,24 +234,8 @@ public class ControladorPartidaEstandar {
         esNiveles = niveles;
         nivel = nuevoNivel;
         cartas = singleton.filasPartida*singleton.columnasPartida;
-        inicializarBaraja();
-        inicializarTablero();
-        inicializarCartas();
-    	inicializarVariables();
-    	inicializarAudioClips();
-    	inicializarContadorTiempo();
-    	inicializarPuntuacion();
-    	inicializarAnimaciones();
-    	actualizarSonido();
-    	actualizarImagenSonido();
-    	corregirTamanyoVentana();
-    	corregirPosicionVentana(ventanaAnterior);
-    	actualizarEstilo();
-    	if(singleton.mostrarCartasOn) {
-    		mostrarCartas();
-    	}
     }
-    
+    @Override
     public void inicializarBaraja() {
     	barajaPartidaEstandar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);
         int cartasInsertadas = 0;
@@ -263,9 +247,10 @@ public class ControladorPartidaEstandar {
             }
         }
     	barajaPartidaEstandar.barajar();
+    	
     }
-    
-    private void inicializarTablero() {
+    @Override
+    void inicializarTablero() {
     	tableroPartida = new Tablero(singleton.filasPartida, singleton.columnasPartida);
     	tableroPartida.llenarTablero(barajaPartidaEstandar);
     	tablero.getColumnConstraints().clear();
@@ -283,9 +268,10 @@ public class ControladorPartidaEstandar {
             rowConst.setPercentHeight(100.0 / singleton.filasPartida);
             tablero.getRowConstraints().add(rowConst);         
         }
+        
     }
-    
-    public void inicializarCartas() {
+    @Override
+    void inicializarCartas() {
     	carta00.setImage(singleton.barajaPartida.getImagenDorso());
     	carta01.setImage(singleton.barajaPartida.getImagenDorso());
     	carta02.setImage(singleton.barajaPartida.getImagenDorso());
@@ -324,8 +310,8 @@ public class ControladorPartidaEstandar {
     	carta54.setImage(singleton.barajaPartida.getImagenDorso());
     	carta55.setImage(singleton.barajaPartida.getImagenDorso());
     }
- 
-   public void inicializarVariables() {
+   @Override
+   void inicializarVariables() {
    	cartasGiradas = 0;
    	esPrimeraCarta = true;
    	esVictoria = false;
@@ -338,14 +324,16 @@ public class ControladorPartidaEstandar {
        thisStage = (Stage) carta00.getScene().getWindow();
    }
    
-   public void inicializarAudioClips() {
+   @Override
+   void inicializarAudioClips() {
    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosVoltear + ".mp3").toString());
        error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
        acierto = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosPareja + ".mp3").toString());
        mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
    }
    
-   public void inicializarContadorTiempo() {
+   @Override
+   void inicializarContadorTiempo() {
    	if(singleton.limiteTiempoOn) {
 	        contadorTiempo = new ContadorTiempo();
 	    	contadorTiempo.iniciarTiempoPartida(tiempo, singleton.tiempoPartida);
@@ -359,7 +347,8 @@ public class ControladorPartidaEstandar {
    	}
    }
    
-   public void inicializarPuntuacion() {
+   	@Override
+    void inicializarPuntuacion() {
    	puntuacion = new Puntuacion();
    	puntuacion.getPuntosCambiados().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
    		puntos.setText(Integer.toString(puntuacion.getPuntos()));
@@ -367,7 +356,8 @@ public class ControladorPartidaEstandar {
 		});
    }
    
-	public void inicializarAnimaciones() {
+   	@Override
+	void inicializarAnimaciones() {
        FabricaAnimaciones[] fabrica;
    	
        fabrica = new FabricaAnimaciones[3];
@@ -708,7 +698,8 @@ public class ControladorPartidaEstandar {
     	}
     }
     
-    public void actualizarImagenSonido() {
+    @Override 
+    void actualizarImagenSonido() {
         if(singleton.soundOn) {
         	iconoSonido.setImage(Sound1);
         } else {
@@ -716,7 +707,8 @@ public class ControladorPartidaEstandar {
         }
     }
     
-    public void corregirTamanyoVentana() {
+    @Override
+    void corregirTamanyoVentana() {
     	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
     		thisStage.setHeight(800);
     		thisStage.setWidth(910);
@@ -732,7 +724,8 @@ public class ControladorPartidaEstandar {
     	}
     }
 
-    public void corregirPosicionVentana(String ventanaAnterior) {
+    @Override
+    void corregirPosicionVentana(String ventanaAnterior) {
     	if(ventanaAnterior.equals("menuPrincipal")) {
         	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
         		thisStage.setX(singleton.posicionX + 50);
@@ -768,7 +761,8 @@ public class ControladorPartidaEstandar {
     	}
     }
     
-    public void actualizarEstilo() {
+    @Override
+    void actualizarEstilo() {
     	String tema1 = getClass().getResource("estilo1.css").toExternalForm();
     	String temaBosque = getClass().getResource("estiloBosque.css").toExternalForm();
         String temaCielo = getClass().getResource("estiloCielo.css").toExternalForm();
@@ -795,6 +789,14 @@ public class ControladorPartidaEstandar {
     		tablero.getStylesheets().add(tema1);
     	
     	}
+    	
+    }
+    
+    @Override
+    void inicializaMostrarCartas(){
+    	if(singleton.mostrarCartasOn) {
+    		mostrarCartas();
+        }
     }
     
 }

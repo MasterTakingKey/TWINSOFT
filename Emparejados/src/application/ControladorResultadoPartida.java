@@ -193,6 +193,9 @@ public class ControladorResultadoPartida {
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
             controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "resultadoPartida", esNiveles, nivel);
+            PlantillaPartidas plantillaPartidaEstandar = controladorPartida;
+            plantillaPartidaEstandar.ventana = "resultadoPartida";
+            plantillaPartidaEstandar.InicializarPartida();
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -209,7 +212,10 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, "menuPrincipal", esNiveles, nivel);
+            controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, "resultadoPartida", esNiveles, nivel);
+            PlantillaPartidas plantillaPartidaCarta = controladorPartidaCarta;
+            plantillaPartidaCarta.ventana = "resultadoPartida";
+            plantillaPartidaCarta.InicializarPartida();
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}
@@ -226,7 +232,10 @@ public class ControladorResultadoPartida {
             primaryStage.setResizable(false);
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
-            controladorMultijugador.iniciarMultijugador(primaryStage, singleton, "menuPrincipal", esNiveles, nivel, nombreJ1, nombreJ2);
+            controladorMultijugador.iniciarMultijugador(primaryStage, singleton, "resultadoPartida", esNiveles, nivel, nombreJ1, nombreJ2);
+            PlantillaPartidas plantllaPartidaMulti = controladorMultijugador;
+            plantllaPartidaMulti.ventana = "resultadoPartida";
+            plantllaPartidaMulti.InicializarPartida();
             primaryStage.show();
         	thisStage.close();
     	} catch (IOException e) {}

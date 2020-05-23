@@ -245,6 +245,9 @@ public class ControladorMenuPrincipal {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "menuPrincipal", false, 0);
+      		PlantillaPartidas plantillaPartidaEstandar = controladorPartida;
+      		plantillaPartidaEstandar.ventana = "menuPrincipal";
+      		plantillaPartidaEstandar.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -263,6 +266,9 @@ public class ControladorMenuPrincipal {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, "menuPrincipal", false, 0);
+      		PlantillaPartidas plantillaPartidaCarta = controladorPartidaCarta;
+      		plantillaPartidaCarta.ventana = "menuPrincipal";
+      		plantillaPartidaCarta.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }

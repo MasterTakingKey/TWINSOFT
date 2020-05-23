@@ -137,8 +137,8 @@ public class ControladorResultadoPartida {
     }
 	
 	public void actualizarMulti(String puntuacion, String puntuacionJ2) {
-		puntuacionFinal.setText("Puntuación " + nombreJ1 + ": " + puntuacion);
-		puntuacionFinalJ2.setText("Puntuación " + nombreJ2 + ": " + puntuacionJ2);
+		puntuacionFinal.setText("Puntos " + nombreJ1 + ": " + puntuacion);
+		puntuacionFinalJ2.setText("Puntos " + nombreJ2 + ": " + puntuacionJ2);
 		if(isVictoria) {
 			if(Integer.parseInt(puntuacion) > Integer.parseInt(puntuacionJ2)) {
 				Ganador.setText(nombreJ1 + " GANA!");

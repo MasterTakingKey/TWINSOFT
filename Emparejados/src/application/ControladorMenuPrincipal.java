@@ -137,8 +137,6 @@ public class ControladorMenuPrincipal {
 		
 		
 		singleton.listaBarajas.add(nuevaBaraja);
-		System.out.println(singleton.listaBarajas.get(singleton.listaBarajas.size()-1));
-		System.out.println(singleton.listaBarajas.size());
     }
     
     public void iniciarMenuPrincipalDesdeEditor(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, long tiempoCancion){
@@ -247,6 +245,9 @@ public class ControladorMenuPrincipal {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartida.iniciarPartidaEstandar(primaryStage, singleton, "menuPrincipal", false, 0);
+      		PlantillaPartidas plantillaPartidaEstandar = controladorPartida;
+      		plantillaPartidaEstandar.ventana = "menuPrincipal";
+      		plantillaPartidaEstandar.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -265,6 +266,9 @@ public class ControladorMenuPrincipal {
       		singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		controladorPartidaCarta.iniciarPartidaCarta(primaryStage, singleton, "menuPrincipal", false, 0);
+      		PlantillaPartidas plantillaPartidaCarta = controladorPartidaCarta;
+      		plantillaPartidaCarta.ventana = "menuPrincipal";
+      		plantillaPartidaCarta.InicializarPartida();
       		primaryStage.show();
       	} catch (IOException e) {}
     }
@@ -308,21 +312,21 @@ public class ControladorMenuPrincipal {
     @FXML
     void editorBarajasHandler(ActionEvent event) {
     	try {
-    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaDorso.fxml"));
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/EditorBarajaOpciones.fxml"));
             Parent root = myLoader.load();  
-            Scene scene = new Scene(root); 
-            Stage stage = new Stage();                       
-            stage.setTitle("Seleccione el dorso");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            ControladorEditorBarajaDorso editorDorso = myLoader.<ControladorEditorBarajaDorso>getController(); 
+            Scene scene = new Scene(root);                        
+            primaryStage.setTitle("Editor de barajas");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            ControladorEditorBarajaOpciones editorOpciones = myLoader.<ControladorEditorBarajaOpciones>getController(); 
             singleton.posicionX = thisStage.getX();
       		singleton.posicionY = thisStage.getY();
       		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-            editorDorso.iniciarEditorDorso(primaryStage, singleton, true, listaImagenes, musicaFondo, tiempoMusica);
-            stage.show();
-    	} catch (IOException e) {}
+            editorOpciones.iniciarEditorOpciones(primaryStage, singleton, true, listaImagenes, musicaFondo, tiempoMusica);
+            primaryStage.show();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
     } 
     
     
@@ -416,9 +420,15 @@ public class ControladorMenuPrincipal {
     	} else if(ventanaAnterior.equals("seleccionNiveles")) {
         	thisStage.setX(singleton.posicionX);
         	thisStage.setY(singleton.posicionY - 100);
-    	}else if(ventanaAnterior.equals("editorBaraja")) {
+    	}else if(ventanaAnterior.equals("editorBarajaOpciones")) {
         	thisStage.setX(singleton.posicionX - 200);
-        	thisStage.setY(singleton.posicionY - 40);
+        	thisStage.setY(singleton.posicionY - 120);
+    	}else if(ventanaAnterior.equals("editorBarajaBorrar")) {
+        	thisStage.setX(singleton.posicionX - 175);
+        	thisStage.setY(singleton.posicionY - 145);
+    	}else if(ventanaAnterior.equals("editorBarajaDorso")) {
+        	thisStage.setX(singleton.posicionX - 175);
+        	thisStage.setY(singleton.posicionY + 5);
     	} else {
         	thisStage.setX(singleton.posicionX);
         	thisStage.setY(singleton.posicionY);

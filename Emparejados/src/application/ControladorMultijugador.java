@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-public class ControladorMultijugador {
+public class ControladorMultijugador extends PlantillaPartidas{
 	@FXML
     private GridPane tablero;
 	
@@ -242,7 +242,11 @@ public class ControladorMultijugador {
     
     private Animaciones animacionParejaIncorrecta;
     
+    private Animaciones animacionFinTurno;
+    
     private int turnoActual;
+    
+    private boolean turnoTerminado;
 
     public void iniciarMultijugador(Stage stage, ConfiguracionPartida nuevoSingleton, String ventanaAnterior, boolean niveles, int nuevoNivel, String nombreJ1, String nombreJ2){
     	primaryStage = stage;
@@ -253,24 +257,9 @@ public class ControladorMultijugador {
         this.nombreJ1.setText(nombreJ1);
         this.nombreJ2.setText(nombreJ2);
         this.nombreJ1.setTextFill(Color.GREEN);
-        inicializarBaraja();
-        inicializarTablero();
-        inicializarCartas();
-    	inicializarVariables();
-    	inicializarAudioClips();
-    	inicializarContadorTiempo();
-    	inicializarPuntuacion();
-    	inicializarAnimaciones();
-    	actualizarSonido();
-    	actualizarImagenSonido();
-    	corregirTamanyoVentana();
-    	corregirPosicionVentana(ventanaAnterior);
-    	actualizarEstilo();
-    	if(singleton.mostrarCartasOn) {
-    		mostrarCartas();
-    	}
     }
     
+    @Override
     public void inicializarBaraja() {
     	barajaPartidaEstandar = new Baraja(singleton.barajaPartida.getNombre(), singleton.barajaPartida.getImagenDorso(), cartas);
         int cartasInsertadas = 0;
@@ -284,7 +273,8 @@ public class ControladorMultijugador {
     	barajaPartidaEstandar.barajar();
     }
     
-    private void inicializarTablero() {
+    @Override
+    protected void inicializarTablero() {
     	tableroPartida = new Tablero(singleton.filasPartida, singleton.columnasPartida);
     	tableroPartida.llenarTablero(barajaPartidaEstandar);
     	tablero.getColumnConstraints().clear();
@@ -304,6 +294,7 @@ public class ControladorMultijugador {
         }
     }
     
+    @Override
     public void inicializarCartas() {
     	carta00.setImage(singleton.barajaPartida.getImagenDorso());
     	carta01.setImage(singleton.barajaPartida.getImagenDorso());
@@ -344,6 +335,7 @@ public class ControladorMultijugador {
     	carta55.setImage(singleton.barajaPartida.getImagenDorso());
     }
  
+   @Override
    public void inicializarVariables() {
    	cartasGiradas = 0;
    	esPrimeraCarta = true;
@@ -356,8 +348,10 @@ public class ControladorMultijugador {
        puntosAnyadidos.setVisible(false);
        thisStage = (Stage) carta00.getScene().getWindow();
     turnoActual = 1;
+    turnoTerminado = false;
    }
    
+   @Override
    public void inicializarAudioClips() {
    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosVoltear + ".mp3").toString());
        error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
@@ -365,6 +359,7 @@ public class ControladorMultijugador {
        mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
    }
    
+   @Override
    public void inicializarContadorTiempo() {
    	if(singleton.limiteTiempoOn) {
 	        contadorTiempo = new ContadorTiempo();
@@ -379,9 +374,13 @@ public class ControladorMultijugador {
    	}
    }
    
+   @Override
    public void inicializarPuntuacion() {
    	puntuacionJ1 = new Puntuacion();
    	puntuacionJ2 = new Puntuacion();
+   	puntuacionJ1.setNombre(nombreJ1);
+   	puntuacionJ2.setNombre(nombreJ2);
+   	puntuacionJ1.iniciarTiempoEntreTurnosMulti();
    	puntuacionJ1.getPuntosCambiados().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
    		puntosJ1.setText(Integer.toString(puntuacionJ1.getPuntos()));
        	mostrarPuntos(puntuacionJ1.getPuntos() - puntosAnterioresJ1);
@@ -390,12 +389,37 @@ public class ControladorMultijugador {
    		puntosJ2.setText(Integer.toString(puntuacionJ2.getPuntos()));
        	mostrarPuntos(puntuacionJ2.getPuntos() - puntosAnterioresJ2);
 		});
+   	puntuacionJ1.getCambioTurno().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
+   		if(!esPrimeraCarta) {
+			animacionFinTurno.imagen1 = primeraImagen;
+			animacionFinTurno.crearAnimacion();
+			cartasGiradas--;
+			esPrimeraCarta = true;
+		}
+   			nombreJ2.setTextFill(Color.GREEN);
+   			nombreJ1.setTextFill(Color.BLACK);
+   			turnoActual = 2;
+   			puntuacionJ2.iniciarTiempoEntreTurnosMulti();
+		});
+   	puntuacionJ2.getCambioTurno().addListener((ChangeListener<? super Boolean>) (o, oldVal, newVal) -> {
+   		if(!esPrimeraCarta) {
+			animacionFinTurno.imagen1 = primeraImagen;
+			animacionFinTurno.crearAnimacion();
+			cartasGiradas--;
+			esPrimeraCarta = true;
+		}
+   			nombreJ1.setTextFill(Color.GREEN);
+   			nombreJ2.setTextFill(Color.BLACK);
+   			turnoActual = 1;
+   			puntuacionJ1.iniciarTiempoEntreTurnosMulti();
+		});
    }
    
+    @Override
 	public void inicializarAnimaciones() {
        FabricaAnimaciones[] fabrica;
    	
-       fabrica = new FabricaAnimaciones[3];
+       fabrica = new FabricaAnimaciones[4];
        fabrica[0] = new FabricaAnimacionVoltear();
        if(singleton.efectosVisualesPareja == "Salto") {
        	fabrica[1] = new FabricaAnimacionParejaCorrecta();
@@ -403,6 +427,7 @@ public class ControladorMultijugador {
        	fabrica[1] = new FabricaAnimacionParejaCorrecta2();       	
        }
        fabrica[2] = new FabricaAnimacionParejaIncorrecta();
+       fabrica[3] = new FabricaAnimacionFinTurno(); 
        
        animacionVoltear = fabrica[0].animacionesMetodoFabrica();
        animacionVoltear.stackPane = stackPane;
@@ -415,6 +440,11 @@ public class ControladorMultijugador {
        animacionParejaIncorrecta = fabrica[2].animacionesMetodoFabrica();
        animacionParejaIncorrecta.stackPane = stackPane;
        animacionParejaIncorrecta.baraja = singleton.barajaPartida;
+       
+       animacionFinTurno = fabrica[3].animacionesMetodoFabrica();
+       animacionFinTurno.stackPane = stackPane;
+       animacionFinTurno.baraja = singleton.barajaPartida;
+       
    }
    
     private void mostrarCartas() {
@@ -507,10 +537,8 @@ public class ControladorMultijugador {
     		voltearCarta.play();
     		if(turnoActual == 1) {
     			puntosAnterioresJ1 = puntuacionJ1.getPuntos();
-    			puntuacionJ1.iniciarTiempoEntreTurnos();
     		} else if (turnoActual == 2) {
     			puntosAnterioresJ2 = puntuacionJ2.getPuntos();
-        		puntuacionJ2.iniciarTiempoEntreTurnos();
     		}
     		primeraCarta = cartaSeleccionada;
     		primeraImagen = imagenSeleccionada;
@@ -563,15 +591,11 @@ public class ControladorMultijugador {
     	if(turnoActual == 1) {
 			puntosAnterioresJ1 = puntuacionJ1.getPuntos();
 			puntuacionJ1.sumaPuntos(10, false, 0);
-			turnoActual = 2;
-			nombreJ1.setTextFill(Color.BLACK);
-			nombreJ2.setTextFill(Color.GREEN);
+			puntuacionJ1.setCambioTurno(!puntuacionJ1.getCambioTurno().getValue());
 		} else if (turnoActual == 2) {
 			puntosAnterioresJ2 = puntuacionJ2.getPuntos();
 			puntuacionJ2.sumaPuntos(10, false, 0);
-			turnoActual = 1;
-			nombreJ2.setTextFill(Color.BLACK);
-			nombreJ1.setTextFill(Color.GREEN);
+			puntuacionJ2.setCambioTurno(!puntuacionJ2.getCambioTurno().getValue());
 		}
     	acierto.play();
     	animacionParejaCorrecta.imagen1 = primeraImagen;
@@ -588,15 +612,11 @@ public class ControladorMultijugador {
     	if(turnoActual == 1) {
 			puntosAnterioresJ1 = puntuacionJ1.getPuntos();
 			puntuacionJ1.sumaPuntos(-1, true, numeroVecesGirada(primeraCarta));
-			turnoActual = 2;
-			nombreJ1.setTextFill(Color.BLACK);
-			nombreJ2.setTextFill(Color.GREEN);
+			puntuacionJ1.setCambioTurno(!puntuacionJ1.getCambioTurno().getValue());
 		} else if (turnoActual == 2) {
 			puntosAnterioresJ2 = puntuacionJ2.getPuntos();
 			puntuacionJ2.sumaPuntos(-1, true, numeroVecesGirada(primeraCarta));
-			turnoActual = 1;
-			nombreJ2.setTextFill(Color.BLACK);
-			nombreJ1.setTextFill(Color.GREEN);
+			puntuacionJ2.setCambioTurno(!puntuacionJ2.getCambioTurno().getValue());
 		}
     	parejasFalladas.add(primeraCarta);
     	parejasFalladas.add(segundaCarta);
@@ -757,6 +777,7 @@ public class ControladorMultijugador {
     	actualizarImagenSonido();
     }
     
+    @Override
     public void actualizarSonido() {
     	if(singleton.soundOn) {
     		musicaFondo.getClip().setMicrosecondPosition(tiempoMusica);
@@ -773,6 +794,7 @@ public class ControladorMultijugador {
     	}
     }
     
+    @Override
     public void actualizarImagenSonido() {
         if(singleton.soundOn) {
         	iconoSonido.setImage(Sound1);
@@ -781,10 +803,11 @@ public class ControladorMultijugador {
         }
     }
     
+    @Override
     public void corregirTamanyoVentana() {
     	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
     		thisStage.setHeight(800);
-    		thisStage.setWidth(910);
+    		thisStage.setWidth(950);
     	}else {
     		thisStage.setHeight(860);
     		thisStage.setWidth(1400);
@@ -798,6 +821,7 @@ public class ControladorMultijugador {
     	}
     }
 
+    @Override
     public void corregirPosicionVentana(String ventanaAnterior) {
     	if(ventanaAnterior.equals("menuPrincipal")) {
         	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
@@ -842,6 +866,7 @@ public class ControladorMultijugador {
     	}
     }
     
+    @Override
     public void actualizarEstilo() {
     	String tema1 = getClass().getResource("estilo1.css").toExternalForm();
     	String temaBosque = getClass().getResource("estiloBosque.css").toExternalForm();
@@ -871,4 +896,10 @@ public class ControladorMultijugador {
     	}
     }
     
+    @Override
+    void inicializaMostrarCartas(){
+    	if(singleton.mostrarCartasOn) {
+    		mostrarCartas();
+        }
+    }
 }

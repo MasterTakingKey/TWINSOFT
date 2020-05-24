@@ -753,8 +753,11 @@ public class ControladorMultijugador extends PlantillaPartidas{
     
     public void reanudarPartida(boolean Sound, String ventanaAnterior, int turno) {
     	turnoActual = turno;
-    	puntuacionJ1.playTimeline();
-    	puntuacionJ2.playTimeline();
+    	if(turnoActual == 1) {
+            puntuacionJ1.playTimeline();
+        } else if (turnoActual == 2) {
+            puntuacionJ2.playTimeline();
+        }
     	corregirTamanyoVentana();
     	corregirPosicionVentana(ventanaAnterior);
     	primaryStage.show();

@@ -192,7 +192,7 @@ public class ControladorEditorBarajaParejas {
 	
 	private ConfiguracionPartida singleton;
 	
-	private ArrayList<File> listaImagenes = new ArrayList<File>();
+	public ArrayList<File> listaImagenes = new ArrayList<File>();
 	
 	private Image Sound0;
     
@@ -396,77 +396,85 @@ public class ControladorEditorBarajaParejas {
 	
 	public void aceptarNombre(MouseEvent event) throws IOException {
 		nombreBaraja = nombre.getText();
-		//nombrePane.setDisable(true);
 		if(isValid(nombreBaraja)) {
-			//Crear carpeta en imagenes con el nombre de la baraja
-		
-			new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/" + nombreBaraja).mkdirs();
-				
-			//Guardar todas las imagenes del arrayList en la carpeta anterior
-			boolean nombreDorso = true;
-			String extension = "";
-			int j = listaImagenes.get(0).getName().lastIndexOf('.');
-			if (j > 0) {
-			    extension = listaImagenes.get(0).getName().substring(j+1);
-			}
-			for(File file : listaImagenes) {
-				if(nombreDorso) {
-					Files.copy(file.toPath(),
-					        (new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+nombreBaraja +"/"+ "dorso." + extension)).toPath(),
-					        StandardCopyOption.REPLACE_EXISTING);
-					nombreDorso = false;
-				}else {
-				  Files.copy(file.toPath(),
-				        (new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+nombreBaraja +"/"+ file.getName())).toPath(),
-				        StandardCopyOption.REPLACE_EXISTING);
-				}
-			}
-				
-			barajaCreada.setNombre(nombreBaraja);
-			barajaCreada.setTamanyo(2 * listaImagenes.size() - 2 );
-			imagen = new Image(listaImagenes.get(0).toURI().toString());
-			barajaCreada.setImagenDorso(imagen);
-			
-			Iterator<File> iterator = listaImagenes.iterator();
-			
-			int posicionBaraja = 0;
-			
-			if(iterator.hasNext()) iterator.next();
-			
-			while(iterator.hasNext()) {
-				imagen = new Image( iterator.next().toURI().toString());
-                carta = new Carta(barajaCreada.getImagenDorso(), imagen, posicionBaraja);
-                barajaCreada.getBaraja()[posicionBaraja++] = carta;
-			}
-						
-			singleton.listaBarajas.add(barajaCreada);
-			singleton.barajaPartida = barajaCreada;
-			
-			
-			try {
-	    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
-	            Parent root = myLoader.load();  
-	            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
-	            Scene scene = new Scene(root);
-	            primaryStage.setTitle("Menu Principal");
-	            primaryStage.setScene(scene);
-	            primaryStage.setResizable(false);
-	            
-	            singleton.posicionX = thisStage.getX();
-	      		singleton.posicionY = thisStage.getY();
-	      		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
-	      		musicaFondo.stopMusic();
-	            menuPrincipal.iniciarMenuPrincipalDesdeEditor(primaryStage, false, singleton, ventanaActual, tiempoMusica);
-	            primaryStage.show();
-	    	} catch (IOException e) {
-	                e.printStackTrace();
-	        }
-			
+			prepararArchivos(nombreBaraja);
+			Baraja barajaCreada = crearBaraja(nombreBaraja, this.listaImagenes);
+			anyadirBaraja(barajaCreada);
+			volverAMenu();	
 		} else {
 			Alert alert = new Alert(AlertType.ERROR, "El nombre debe contener al menos un caracter alfanumerico.", ButtonType.OK);
 			alert.showAndWait();
 		}
 		
+	}
+	
+	public void prepararArchivos(String nombreBaraja) throws IOException {
+		new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/" + nombreBaraja).mkdirs();
+		
+		boolean nombreDorso = true;
+		String extension = "";
+		int i = listaImagenes.get(0).getName().lastIndexOf('.');
+		if (i > 0) {
+		    extension = listaImagenes.get(0).getName().substring(i+1);
+		}
+		for(File file : listaImagenes) {
+			if(nombreDorso) {
+				Files.copy(file.toPath(),
+				        (new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+nombreBaraja +"/"+ "dorso." + extension)).toPath(),
+				        StandardCopyOption.REPLACE_EXISTING);
+				nombreDorso = false;
+			}else {
+			  Files.copy(file.toPath(),
+			        (new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+nombreBaraja +"/"+ file.getName())).toPath(),
+			        StandardCopyOption.REPLACE_EXISTING);
+			}
+		}
+	}
+	
+	public Baraja crearBaraja(String nombreBaraja, ArrayList<File> listaImagenes) {
+		barajaCreada.setNombre(nombreBaraja);
+		barajaCreada.setTamanyo(2 * listaImagenes.size() - 2 );
+		imagen = new Image(listaImagenes.get(0).toURI().toString());
+		barajaCreada.setImagenDorso(imagen);
+		
+		Iterator<File> iterator = listaImagenes.iterator();
+		
+		int posicionBaraja = 0;
+		
+		if(iterator.hasNext()) iterator.next();
+		
+		while(iterator.hasNext()) {
+			imagen = new Image( iterator.next().toURI().toString());
+            carta = new Carta(barajaCreada.getImagenDorso(), imagen, posicionBaraja);
+            barajaCreada.getBaraja()[posicionBaraja++] = carta;
+		}
+		return barajaCreada;		
+	}
+	
+	public void anyadirBaraja(Baraja barajaCreada) {
+		singleton.listaBarajas.add(barajaCreada);
+		singleton.barajaPartida = barajaCreada;
+	}
+	
+	public void volverAMenu() {
+		try {
+    		FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/Vista/MenuPrincipal.fxml"));
+            Parent root = myLoader.load();  
+            ControladorMenuPrincipal menuPrincipal = myLoader.<ControladorMenuPrincipal>getController();
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Menu Principal");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            
+            singleton.posicionX = thisStage.getX();
+      		singleton.posicionY = thisStage.getY();
+      		tiempoMusica = musicaFondo.getClip().getMicrosecondPosition();
+      		musicaFondo.stopMusic();
+            menuPrincipal.iniciarMenuPrincipalDesdeEditor(primaryStage, false, singleton, ventanaActual, tiempoMusica);
+            primaryStage.show();
+    	} catch (IOException e) {
+                e.printStackTrace();
+        }
 	}
 
 	@FXML

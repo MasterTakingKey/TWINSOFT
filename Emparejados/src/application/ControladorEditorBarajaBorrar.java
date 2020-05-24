@@ -3,6 +3,8 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,12 +64,7 @@ public class ControladorEditorBarajaBorrar {
         llenarChoiceBox();
         inicializarVariables();
         corregirTamanyoVentana();
-        if(transicion) {
-        	corregirPosicionVentana();
-        }
-        else { 
-        	corregirPosicionVentana2();
-        }
+        corregirPosicionVentana();
         actualizarSonido();
         actualizarImagenSonido();
         actualizarEstilo();
@@ -102,11 +99,12 @@ public class ControladorEditorBarajaBorrar {
         }
 	}
 	
-	public void llenarChoiceBox() {
-        	int i = 3;        	
-    		while(singleton.listaBarajas.size() > i) {
-    			listadoBarajas.getItems().add(singleton.listaBarajas.get(i).getNombre());
-    			i++;
+	public void llenarChoiceBox() { 
+        	Iterator<Baraja> iterator = singleton.listaBarajas.listIterator();
+        	for(int i = 0; i < 3; i++) iterator.next();
+    		
+        	while(iterator.hasNext()) {
+    			listadoBarajas.getItems().add(iterator.next().getNombre());
     		}
     		listadoBarajas.getSelectionModel().select(0);
 	}
@@ -114,18 +112,26 @@ public class ControladorEditorBarajaBorrar {
 
 	@FXML
 	public void BorrarBaraja(MouseEvent event) {
-		int i = 3;
-    	while(singleton.listaBarajas.size() > i) {
-    		if(listadoBarajas.getSelectionModel().getSelectedItem().equals(singleton.listaBarajas.get(i).getNombre())) {
-    			if(singleton.barajaPartida.nombre.equals(listadoBarajas.getSelectionModel().getSelectedItem())) singleton.barajaPartida = singleton.listaBarajas.get(0);
-    			File file = new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+singleton.listaBarajas.get(i).getNombre());
+		ListIterator<Baraja> iterator = singleton.listaBarajas.listIterator();
+		
+		for(int i = 0; i < 3; i++) iterator.next();
+		
+    	while(iterator.hasNext()) {
+    		int indice = iterator.nextIndex();
+    		
+    		if(listadoBarajas.getSelectionModel().getSelectedItem().equals(iterator.next().getNombre())) {
+    			
+    			if(singleton.barajaPartida.nombre.equals(listadoBarajas.getSelectionModel().getSelectedItem())) {
+    				singleton.barajaPartida = singleton.listaBarajas.get(0);
+    			}
+    			
+    			File file = new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+singleton.listaBarajas.get(indice).getNombre());
     			deleteDirectory(file);
-    			singleton.listaBarajas.remove(i);
+    			iterator.remove();
     			listadoBarajas.getItems().remove(listadoBarajas.getSelectionModel().getSelectedIndex());
     			listadoBarajas.getSelectionModel().select(0);
     			break;
-    		    }
-    		i++;
+    		}
     	}
     		
     }
@@ -179,10 +185,6 @@ public class ControladorEditorBarajaBorrar {
 		thisStage.setX(singleton.posicionX - 25);
 		thisStage.setY(singleton.posicionY + 25);
 	}
-	public void corregirPosicionVentana2() {
-		thisStage.setX(singleton.posicionX);
-		thisStage.setY(singleton.posicionY);
-	}
 	
 	public void anyadirIcono() {
         icon = new Image("/imagenes/Icon.png");
@@ -190,22 +192,15 @@ public class ControladorEditorBarajaBorrar {
     }
 	    
 	    
-	    public void actualizarEstilo() {
-	    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
-	        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
-	        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-	    	if(singleton.estilo.equals("Azul")) {
-	    		pane.getStylesheets().remove(temaRojo);
-	    		pane.getStylesheets().remove(temaVerde);
-	    		pane.getStylesheets().add(temaAzul);
-	    	} else if(singleton.estilo.equals("Rojo")) {
-	    		pane.getStylesheets().remove(temaAzul);
-	    		pane.getStylesheets().remove(temaVerde);
-				pane.getStylesheets().add(temaRojo);
-	    	} else {
-	    		pane.getStylesheets().remove(temaAzul);
-	    		pane.getStylesheets().remove(temaRojo);
-	    		pane.getStylesheets().add(temaVerde);
-	    	}
-	    }
+	public void actualizarEstilo() {
+		Estilo nuevoEstilo;
+        if(singleton.estilo.equals("Azul")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloAzul());
+        } else if(singleton.estilo.equals("Rojo")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloRojo());
+        } else {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloVerde());
+        }
+        nuevoEstilo.cambiarEstilo(pane, null, circuloSonido);
+	 }
 }

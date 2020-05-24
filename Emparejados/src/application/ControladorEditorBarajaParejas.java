@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -26,6 +27,7 @@ import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -62,7 +64,8 @@ public class ControladorEditorBarajaParejas {
 	private Label dorsoLabel;
 	@FXML
 	private ImageView iconoSonido;
-
+	@FXML
+	private StackPane circuloSonido;
 	@FXML
 	private Label Pareja1Label;
 
@@ -419,22 +422,25 @@ public class ControladorEditorBarajaParejas {
 				}
 			}
 				
-				//Crear la baraja como tal
-				//Completar
 			barajaCreada.setNombre(nombreBaraja);
 			barajaCreada.setTamanyo(2 * listaImagenes.size() - 2 );
 			imagen = new Image(listaImagenes.get(0).toURI().toString());
 			barajaCreada.setImagenDorso(imagen);
 			
-			int indice = 0;
-            for (int i = 1; i < listaImagenes.size(); i++) { 
-                        imagen = new Image(listaImagenes.get(i).toURI().toString());
-                        carta = new Carta(barajaCreada.getImagenDorso(), imagen, i-1);
-                        barajaCreada.getBaraja()[indice++] = carta;
-             }
+			Iterator<File> iterator = listaImagenes.iterator();
 			
+			int posicionBaraja = 0;
 			
+			if(iterator.hasNext()) iterator.next();
+			
+			while(iterator.hasNext()) {
+				imagen = new Image( iterator.next().toURI().toString());
+                carta = new Carta(barajaCreada.getImagenDorso(), imagen, posicionBaraja);
+                barajaCreada.getBaraja()[posicionBaraja++] = carta;
+			}
+						
 			singleton.listaBarajas.add(barajaCreada);
+			singleton.barajaPartida = barajaCreada;
 			
 			
 			try {
@@ -620,22 +626,15 @@ public class ControladorEditorBarajaParejas {
     }
     
     public void actualizarEstilo() {
-    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
-    	String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
-    	String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(singleton.estilo.equals("Azul")) {
-    		pane.getStylesheets().remove(temaRojo);
-    		pane.getStylesheets().remove(temaVerde);
-    		pane.getStylesheets().add(temaAzul);
-	    } else if(singleton.estilo.equals("Rojo")) {
-			pane.getStylesheets().remove(temaAzul);
-			pane.getStylesheets().remove(temaVerde);
-			pane.getStylesheets().add(temaRojo);
-		} else {
-			pane.getStylesheets().remove(temaAzul);
-			pane.getStylesheets().remove(temaRojo);
-			pane.getStylesheets().add(temaVerde);
-		}
+    	Estilo nuevoEstilo;
+        if(singleton.estilo.equals("Azul")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloAzul());
+        } else if(singleton.estilo.equals("Rojo")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloRojo());
+        } else {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloVerde());
+        }
+        nuevoEstilo.cambiarEstilo(pane, null, circuloSonido);
     }
     
 }

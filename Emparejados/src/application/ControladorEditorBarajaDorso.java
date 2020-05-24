@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -37,6 +38,9 @@ public class ControladorEditorBarajaDorso {
 	private Label pathImagen;
 	@FXML
 	private ImageView iconoSonido;
+	@FXML
+	private StackPane circuloSonido;
+	
 	
 	@FXML
 	private Label dorsoLabel;
@@ -410,21 +414,14 @@ public class ControladorEditorBarajaDorso {
 	    
 	    
 	    public void actualizarEstilo() {
-	    	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
-	        String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
-	        String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-	    	if(singleton.estilo.equals("Azul")) {
-	    		pane.getStylesheets().remove(temaRojo);
-	    		pane.getStylesheets().remove(temaVerde);
-	    		pane.getStylesheets().add(temaAzul);
-	    	} else if(singleton.estilo.equals("Rojo")) {
-	    		pane.getStylesheets().remove(temaAzul);
-	    		pane.getStylesheets().remove(temaVerde);
-				pane.getStylesheets().add(temaRojo);
-	    	} else {
-	    		pane.getStylesheets().remove(temaAzul);
-	    		pane.getStylesheets().remove(temaRojo);
-	    		pane.getStylesheets().add(temaVerde);
-	    	}
+	    	Estilo nuevoEstilo;
+	        if(singleton.estilo.equals("Azul")) {
+	            nuevoEstilo = new Estilo(new EstrategiaEstiloAzul());
+	        } else if(singleton.estilo.equals("Rojo")) {
+	            nuevoEstilo = new Estilo(new EstrategiaEstiloRojo());
+	        } else {
+	            nuevoEstilo = new Estilo(new EstrategiaEstiloVerde());
+	        }
+	        nuevoEstilo.cambiarEstilo(pane, null, circuloSonido);
 	    }
 }

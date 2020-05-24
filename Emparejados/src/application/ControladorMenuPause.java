@@ -270,49 +270,36 @@ public class ControladorMenuPause {
     }
     
     public void actualizarEstilo() {
+    	Estilo nuevoEstilo;
     	String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
         String temaRojo = getClass().getResource("estiloRojo.css").toExternalForm();
         String temaVerde = getClass().getResource("estiloVerde.css").toExternalForm();
-    	if(singleton.estilo.equals("Azul")) {
-    		pane.getStylesheets().remove(temaRojo);
-    		pane.getStylesheets().remove(temaVerde);
-    		pane.getStylesheets().add(temaAzul);
-    		circuloHome.getStylesheets().remove(temaRojo);
-    		circuloHome.getStylesheets().remove(temaVerde);
-    		circuloHome.getStylesheets().add(temaAzul);
-    		circuloPlay.getStylesheets().remove(temaRojo);
-    		circuloPlay.getStylesheets().remove(temaVerde);
-    		circuloPlay.getStylesheets().add(temaAzul);
-    		circuloSonido.getStylesheets().remove(temaRojo);
-    		circuloSonido.getStylesheets().remove(temaVerde);
-    		circuloSonido.getStylesheets().add(temaAzul);
-    	} else if(singleton.estilo.equals("Rojo")) {
-    		pane.getStylesheets().remove(temaAzul);
-			pane.getStylesheets().remove(temaVerde);
-			pane.getStylesheets().add(temaRojo);
-			circuloHome.getStylesheets().remove(temaAzul);
-			circuloHome.getStylesheets().remove(temaVerde);
-			circuloHome.getStylesheets().add(temaRojo);
-			circuloPlay.getStylesheets().remove(temaAzul);
-			circuloPlay.getStylesheets().remove(temaVerde);
-			circuloPlay.getStylesheets().add(temaRojo);
-			circuloSonido.getStylesheets().remove(temaAzul);
-			circuloSonido.getStylesheets().remove(temaVerde);
-			circuloSonido.getStylesheets().add(temaRojo);
-    	} else {
-    		pane.getStylesheets().remove(temaAzul);
-			pane.getStylesheets().remove(temaRojo);
-			pane.getStylesheets().add(temaVerde);
-			circuloHome.getStylesheets().remove(temaAzul);
-			circuloHome.getStylesheets().remove(temaRojo);
-			circuloHome.getStylesheets().add(temaVerde);
-			circuloPlay.getStylesheets().remove(temaAzul);
-			circuloPlay.getStylesheets().remove(temaRojo);
-			circuloPlay.getStylesheets().add(temaVerde);
-			circuloSonido.getStylesheets().remove(temaAzul);
-			circuloSonido.getStylesheets().remove(temaRojo);
-			circuloSonido.getStylesheets().add(temaVerde);
-    	}
+        if(singleton.estilo.equals("Azul")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloAzul());
+            circuloHome.getStylesheets().remove(temaRojo);
+            circuloHome.getStylesheets().remove(temaVerde);
+            circuloHome.getStylesheets().add(temaAzul);
+            circuloPlay.getStylesheets().remove(temaRojo);
+            circuloPlay.getStylesheets().remove(temaVerde);
+            circuloPlay.getStylesheets().add(temaAzul);
+        } else if(singleton.estilo.equals("Rojo")) {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloRojo());
+            circuloHome.getStylesheets().remove(temaAzul);
+            circuloHome.getStylesheets().remove(temaVerde);
+            circuloHome.getStylesheets().add(temaRojo);
+            circuloPlay.getStylesheets().remove(temaAzul);
+            circuloPlay.getStylesheets().remove(temaVerde);
+            circuloPlay.getStylesheets().add(temaRojo);
+        } else {
+            nuevoEstilo = new Estilo(new EstrategiaEstiloVerde());
+            circuloHome.getStylesheets().remove(temaAzul);
+            circuloHome.getStylesheets().remove(temaRojo);
+            circuloHome.getStylesheets().add(temaVerde);
+            circuloPlay.getStylesheets().remove(temaAzul);
+            circuloPlay.getStylesheets().remove(temaRojo);
+            circuloPlay.getStylesheets().add(temaVerde);
+        }
+        nuevoEstilo.cambiarEstilo(pane, null, circuloSonido);
     }
 
 }

@@ -321,22 +321,30 @@ public class ControladorResultadoPartida {
 
     public void corregirPosicionVentana(String ventanaAnterior) {
     	if(ventanaAnterior.equals("partidaEstandar")) {
-        	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
-            	thisStage.setX(singleton.posicionX);
-            	thisStage.setY(singleton.posicionY + 30);
-        	} else {
-        		thisStage.setX(singleton.posicionX + 200);
-            	thisStage.setY(singleton.posicionY + 50);
-        	}
-    	} else if(ventanaAnterior.equals("partidaCarta")) {
-    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
-    	    	thisStage.setX(singleton.posicionX);
-    	    	thisStage.setY(singleton.posicionY + 30);
-        	} else {
-        		thisStage.setX(singleton.posicionX + 250);
-            	thisStage.setY(singleton.posicionY + 200);
-        	}
-    	}
+            if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+                thisStage.setX(singleton.posicionX);
+                thisStage.setY(singleton.posicionY + 30);
+            } else {
+                thisStage.setX(singleton.posicionX + 200);
+                thisStage.setY(singleton.posicionY + 50);
+            }
+        } else if(ventanaAnterior.equals("partidaCarta")) {
+            if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+                thisStage.setX(singleton.posicionX);
+                thisStage.setY(singleton.posicionY + 30);
+            } else {
+                thisStage.setX(singleton.posicionX + 250);
+                thisStage.setY(singleton.posicionY + 200);
+            }
+        } else {
+            if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+                thisStage.setX(singleton.posicionX);
+                thisStage.setY(singleton.posicionY + 30);
+            } else {
+                thisStage.setX(singleton.posicionX + 200);
+                thisStage.setY(singleton.posicionY + 50);
+            }
+        }
     }
     
     public void actualizarEstilo() {

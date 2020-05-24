@@ -663,9 +663,9 @@ public class ControladorMultijugador extends PlantillaPartidas{
     	if(singleton.limiteTiempoOn) {
     		contadorTiempo.parar();
     		if(turnoActual == 1) {
-    			puntuacionJ1.sumarBonificacionVictoria(contadorTiempo.getTiempoRestante(), tableroPartida.getNumParejas());
-    		} else if (turnoActual == 2) {
     			puntuacionJ2.sumarBonificacionVictoria(contadorTiempo.getTiempoRestante(), tableroPartida.getNumParejas());
+    		} else if (turnoActual == 2) {
+    			puntuacionJ1.sumarBonificacionVictoria(contadorTiempo.getTiempoRestante(), tableroPartida.getNumParejas());
     		}
     	}
     	PauseTransition pause = new PauseTransition(Duration.millis(750));
@@ -828,77 +828,37 @@ public class ControladorMultijugador extends PlantillaPartidas{
 
     @Override
     public void corregirPosicionVentana(String ventanaAnterior) {
-    	if(ventanaAnterior.equals("menuPrincipal")) {
-        	if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
-        		thisStage.setX(singleton.posicionX + 50);
-            	thisStage.setY(singleton.posicionY + 50);
-        	} else {
-        		thisStage.setX(250);
-        		thisStage.setY(100);
-        	}
-    	}else if(ventanaAnterior.equals("seleccionNombres")) {
-    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
-        		thisStage.setX(singleton.posicionX - 200);
-            	thisStage.setY(singleton.posicionY - 150);
-        	} else {
-        		thisStage.setX(250);
-        		thisStage.setY(100);
-        	}
-    	} else if(ventanaAnterior.equals("menuPause")) {
-    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
-        		thisStage.setX(singleton.posicionX);
-            	thisStage.setY(singleton.posicionY - 50);
-        	} else {
-        		thisStage.setX(250);
-        		thisStage.setY(100);
-        	}
-    	}  else if(ventanaAnterior.equals("resultadoPartida")) {
-    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
-        		thisStage.setX(singleton.posicionX);
-            	thisStage.setY(singleton.posicionY - 30);
-        	} else {
-        		thisStage.setX(250);
-        		thisStage.setY(100);
-        	}
-    	} else if(ventanaAnterior.equals("seleccionNiveles")) {
-    		if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
-        		thisStage.setX(singleton.posicionX + 50);
-            	thisStage.setY(singleton.posicionY - 75);
-        	} else {
-        		thisStage.setX(250);
-        		thisStage.setY(100);
-        	}
-    	}
+    	if(ventanaAnterior.equals("menuPausa")) {
+            if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+                thisStage.setX(singleton.posicionX);
+                thisStage.setY(singleton.posicionY);
+            } else {
+                thisStage.setX(250);
+                thisStage.setY(100);
+            }
+        }else if(ventanaAnterior.equals("resultadoPartida")) {
+            if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+                thisStage.setX(singleton.posicionX);
+                thisStage.setY(singleton.posicionY);
+            } else {
+                thisStage.setX(250);
+                thisStage.setY(100);
+            }
+        }  else {
+            if(singleton.filasPartida <= 4 && singleton.columnasPartida <= 4) {
+                thisStage.setX(singleton.posicionX - 180);
+                thisStage.setY(singleton.posicionY - 200);
+            } else {
+                thisStage.setX(250);
+                thisStage.setY(100);
+            }
+        }
     }
     
     @Override
     public void actualizarEstilo() {
     	String tema1 = getClass().getResource("estilo1.css").toExternalForm();
-    	String temaBosque = getClass().getResource("estiloBosque.css").toExternalForm();
-        String temaCielo = getClass().getResource("estiloCielo.css").toExternalForm();
-        String temaAgua = getClass().getResource("estiloAgua.css").toExternalForm();
-    	if(nivel == 1 || nivel == 2) {
-    		tablero.getStylesheets().remove(tema1);
-    		tablero.getStylesheets().remove(temaCielo);
-    		tablero.getStylesheets().remove(temaAgua);
-    		tablero.getStylesheets().add(temaBosque);
-    	} else if(nivel == 3 || nivel == 4) {
-    		tablero.getStylesheets().remove(tema1);
-    		tablero.getStylesheets().remove(temaBosque);
-    		tablero.getStylesheets().remove(temaAgua);
-    		tablero.getStylesheets().add(temaCielo);
-    	} else if(nivel == 5 || nivel == 6) {
-    		tablero.getStylesheets().remove(tema1);
-    		tablero.getStylesheets().remove(temaBosque);
-    		tablero.getStylesheets().remove(temaCielo);
-    		tablero.getStylesheets().add(temaAgua);
-    	} else {
-    		tablero.getStylesheets().remove(temaBosque);
-    		tablero.getStylesheets().remove(temaCielo);
-    		tablero.getStylesheets().remove(temaAgua);
-    		tablero.getStylesheets().add(tema1);
-    	
-    	}
+        tablero.getStylesheets().add(tema1);
     }
     
     @Override

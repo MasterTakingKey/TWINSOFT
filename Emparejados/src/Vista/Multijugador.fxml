@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="828.0" prefWidth="1159.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMultijugador">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="828.0" prefWidth="1159.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMultijugador">
    <children>
       <ToolBar maxHeight="-Infinity" prefHeight="48.0" prefWidth="894.0">
          <items>
@@ -30,7 +30,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="45.0" prefWidth="214.0" spacing="8.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="45.0" prefWidth="198.0" spacing="8.0">
                <children>
                   <ImageView fx:id="iconoTiempo" fitHeight="35.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -54,27 +54,30 @@
                   <Font size="21.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="131.0" spacing="8.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="128.0" spacing="8.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="131.0" spacing="8.0">
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="245.0" spacing="8.0">
                      <children>
                         <Label fx:id="nombreJ2" text="J2">
                            <font>
                               <Font size="28.0" />
                            </font>
                         </Label>
-                        <Label fx:id="puntosJ2" prefHeight="35.0" prefWidth="69.0" text="0">
+                        <Label fx:id="puntosJ2" prefHeight="35.0" prefWidth="55.0" text="0">
                            <font>
                               <Font size="21.0" />
                            </font>
                         </Label>
                      </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </HBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="179.0" spacing="20.0">
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="0.0" spacing="20.0">
                <children>
-                  <ImageView fx:id="iconoSonido" fitHeight="43.0" fitWidth="65.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="iconoSonido" fitHeight="43.0" fitWidth="100.0" onMouseClicked="#clickSound" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imagenes/sonido_on_2.png" />
                      </image>
@@ -85,9 +88,6 @@
                      </image>
                   </ImageView>
                </children>
-               <padding>
-                  <Insets right="20.0" />
-               </padding>
             </HBox>
          </items>
          <VBox.margin>

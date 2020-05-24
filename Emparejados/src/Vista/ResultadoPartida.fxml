@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="627.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorResultadoPartida">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="627.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorResultadoPartida">
    <children>
       <Label fx:id="tiempoRestante" layoutX="245.0" layoutY="431.0" prefHeight="47.0" prefWidth="472.0" text="Tiempo Restante: ">
          <font>
@@ -45,12 +45,12 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="Ganador" layoutX="343.0" layoutY="51.0" prefHeight="47.0" prefWidth="202.0" text=" ">
+      <Label fx:id="Ganador" layoutX="473.0" layoutY="329.0" prefHeight="121.0" prefWidth="294.0">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="40.0" />
          </font>
       </Label>
-      <ImageView fx:id="applauseVictoria" fitHeight="570.0" fitWidth="838.0" layoutX="29.0" layoutY="14.0" pickOnBounds="true">
+      <ImageView fx:id="applauseVictoria" fitHeight="627.0" fitWidth="934.0" layoutX="-3.0" layoutY="1.0" pickOnBounds="true">
          <image>
             <Image url="@../imagenes/applause.gif" />
          </image>

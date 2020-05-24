@@ -426,16 +426,17 @@ public class ControladorEditorBarajaParejas {
 			barajaCreada.setTamanyo(2 * listaImagenes.size() - 2 );
 			imagen = new Image(listaImagenes.get(0).toURI().toString());
 			barajaCreada.setImagenDorso(imagen);
+			
 			Iterator<File> iterator = listaImagenes.iterator();
 			
-			int indice = 0;
+			int posicionBaraja = 0;
 			
 			if(iterator.hasNext()) iterator.next();
 			
 			while(iterator.hasNext()) {
 				imagen = new Image( iterator.next().toURI().toString());
-                carta = new Carta(barajaCreada.getImagenDorso(), imagen, indice);
-                barajaCreada.getBaraja()[indice++] = carta;
+                carta = new Carta(barajaCreada.getImagenDorso(), imagen, posicionBaraja);
+                barajaCreada.getBaraja()[posicionBaraja++] = carta;
 			}
 						
 			singleton.listaBarajas.add(barajaCreada);

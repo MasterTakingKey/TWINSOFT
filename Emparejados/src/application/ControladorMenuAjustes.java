@@ -2,6 +2,9 @@ package application;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -190,16 +193,16 @@ public class ControladorMenuAjustes {
 
     
     public void inicializarAjustesPartida() {
-    	int aux = 0;
     	try {
-        	int i = 0;
-    		while(singleton.listaBarajas.get(i) != null) {
-    			barajaPartida.getItems().add(singleton.listaBarajas.get(i).getNombre());
-    			if(singleton.listaBarajas.get(i).getNombre().equals(singleton.barajaPartida.getNombre())) aux = i;
-    			i++;
+        	ListIterator<Baraja> iterator = singleton.listaBarajas.listIterator();
+    		while(iterator.hasNext()) {
+    			int i = iterator.nextIndex();
+    			barajaPartida.getItems().add(iterator.next().getNombre());
+    			if(singleton.listaBarajas.get(i).getNombre().equals(singleton.barajaPartida.getNombre())) {
+    				barajaPartida.getSelectionModel().select(i);
+    			}
     		}	
     	} catch(Exception e) {}
-    	barajaPartida.getSelectionModel().select(aux);
     	
         ArrayList<String> clipsVoltear = new ArrayList<String>();
         clipsVoltear.add("Voltear");

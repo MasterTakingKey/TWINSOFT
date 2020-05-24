@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -98,11 +99,12 @@ public class ControladorEditorBarajaBorrar {
         }
 	}
 	
-	public void llenarChoiceBox() {
-        	int i = 3;        	
-    		while(singleton.listaBarajas.size() > i) {
-    			listadoBarajas.getItems().add(singleton.listaBarajas.get(i).getNombre());
-    			i++;
+	public void llenarChoiceBox() { 
+        	Iterator<Baraja> iterator = singleton.listaBarajas.listIterator();
+        	for(int i = 0; i < 3; i++) iterator.next();
+    		
+        	while(iterator.hasNext()) {
+    			listadoBarajas.getItems().add(iterator.next().getNombre());
     		}
     		listadoBarajas.getSelectionModel().select(0);
 	}
@@ -110,22 +112,26 @@ public class ControladorEditorBarajaBorrar {
 
 	@FXML
 	public void BorrarBaraja(MouseEvent event) {
-		int indice = 3;
-		Iterator<Baraja> iterator = singleton.listaBarajas.iterator();
+		ListIterator<Baraja> iterator = singleton.listaBarajas.listIterator();
+		
 		for(int i = 0; i < 3; i++) iterator.next();
+		
     	while(iterator.hasNext()) {
+    		int indice = iterator.nextIndex();
+    		
     		if(listadoBarajas.getSelectionModel().getSelectedItem().equals(iterator.next().getNombre())) {
+    			
     			if(singleton.barajaPartida.nombre.equals(listadoBarajas.getSelectionModel().getSelectedItem())) {
     				singleton.barajaPartida = singleton.listaBarajas.get(0);
     			}
+    			
     			File file = new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+singleton.listaBarajas.get(indice).getNombre());
     			deleteDirectory(file);
-    			singleton.listaBarajas.remove(indice);
+    			iterator.remove();
     			listadoBarajas.getItems().remove(listadoBarajas.getSelectionModel().getSelectedIndex());
     			listadoBarajas.getSelectionModel().select(0);
     			break;
-    		    }
-    		indice++;
+    		}
     	}
     		
     }

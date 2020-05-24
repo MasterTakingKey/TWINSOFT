@@ -494,15 +494,31 @@ public class ControladorSeleccionNiveles {
     }
     
     public void actualizarEstilo() {
-    	Estilo nuevoEstilo;
-        if(singleton.estilo.equals("Azul")) {
-            nuevoEstilo = new Estilo(new EstrategiaEstiloAzul());
-        } else if(singleton.estilo.equals("Rojo")) {
-            nuevoEstilo = new Estilo(new EstrategiaEstiloRojo());
-        } else {
-            nuevoEstilo = new Estilo(new EstrategiaEstiloVerde());
-        }
-        nuevoEstilo.cambiarEstilo(null, anchorPane, circuloSonido);
+    	String temaAzul = getClass().getResource("estiloAzulNiveles.css").toExternalForm();
+        String temaRojo = getClass().getResource("estiloRojoNiveles.css").toExternalForm();
+        String temaVerde = getClass().getResource("estiloVerdeNiveles.css").toExternalForm();
+    	if(singleton.estilo.equals("Azul")) {
+    		anchorPane.getStylesheets().remove(temaRojo);
+    		anchorPane.getStylesheets().remove(temaVerde);
+    		anchorPane.getStylesheets().add(temaAzul);
+    		circuloSonido.getStylesheets().remove(temaRojo);
+    		circuloSonido.getStylesheets().remove(temaVerde);
+    		circuloSonido.getStylesheets().add(temaAzul);
+    	} else if(singleton.estilo.equals("Rojo")) {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaVerde);
+			anchorPane.getStylesheets().add(temaRojo);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaVerde);
+			circuloSonido.getStylesheets().add(temaRojo);
+    	} else {
+    		anchorPane.getStylesheets().remove(temaAzul);
+			anchorPane.getStylesheets().remove(temaRojo);
+			anchorPane.getStylesheets().add(temaVerde);
+			circuloSonido.getStylesheets().remove(temaAzul);
+			circuloSonido.getStylesheets().remove(temaRojo);
+			circuloSonido.getStylesheets().add(temaVerde);
+    	}
     }
    
 

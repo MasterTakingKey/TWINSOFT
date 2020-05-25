@@ -1,7 +1,5 @@
 package application;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl.SingletonIterator;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -77,15 +75,17 @@ public class Puntuacion {
 		timeline = newTimeline;
 	}
 	
-	public void sumaPuntos(int puntosASumar, boolean parejaIncorrecta, int numeroVecesGirada) {
+	public int sumaPuntos(int puntosASumar, boolean parejaIncorrecta, int numeroVecesGirada) {
 		if (parejaIncorrecta) puntosASumar -= numeroVecesGirada;
 		puntos += puntosASumar;
 		puntosCambiados.setValue(!puntosCambiados.getValue());
+		return puntos;
 	}  	
 	    
-	public void sumarBonificacionVictoria(int tiempoRestante, int numeroParejas) {
+	public int sumarBonificacionVictoria(int tiempoRestante, int numeroParejas) {
 	    int bonificacion = (int) (tiempoRestante * 0.5) + numeroParejas; 
 	    sumaPuntos(bonificacion, false, 0);
+	    return bonificacion;
 	}
 	
 	public void iniciarTiempoEntreTurnos(boolean sonido) {

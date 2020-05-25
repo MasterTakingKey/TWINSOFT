@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="600.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPausaMultijugador">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.7" prefHeight="600.0" prefWidth="895.0" style="-fx-background-color: ffffff;" styleClass="fondoMenu" stylesheets="@../application/estiloAzul.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorMenuPausaMultijugador">
    <children>
       <ImageView fitHeight="118.0" fitWidth="412.0" layoutX="242.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -53,13 +53,13 @@
       </ImageView>
       <Label fx:id="puntosJ2" layoutX="370.0" layoutY="219.0" prefHeight="39.0" prefWidth="102.0" styleClass="label2" text="20" />
       <Label fx:id="tiempo" layoutX="543.0" layoutY="219.0" prefHeight="39.0" prefWidth="128.0" styleClass="label2" text="20" />
-      <Label fx:id="nombreJ2" layoutX="325.0" layoutY="222.0" text="J2">
+      <Label fx:id="nombreJ2" layoutX="325.0" layoutY="219.0" text="J2">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
       <Label fx:id="puntosJ1" layoutX="242.0" layoutY="220.0" prefHeight="39.0" prefWidth="40.0" styleClass="label2" text="20" />
-      <Label fx:id="nombreJ1" layoutX="196.0" layoutY="222.0" text="J1">
+      <Label fx:id="nombreJ1" layoutX="196.0" layoutY="219.0" text="J1">
          <font>
             <Font size="28.0" />
          </font>

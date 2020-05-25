@@ -88,7 +88,7 @@ public class ControladorElegirNombresMultijugador {
           		primaryStage.setResizable(false);
           		singleton.posicionX = thisStage.getX();
           		singleton.posicionY = thisStage.getY();
-          		controladorMulti.iniciarMultijugador(primaryStage, singleton, "menuPrincipal", false, 0, nombreJ1.getText().toUpperCase(), nombreJ2.getText().toUpperCase());
+          		controladorMulti.iniciarMultijugador(primaryStage, singleton, "seleccionNombres", false, 0, nombreJ1.getText().toUpperCase(), nombreJ2.getText().toUpperCase());
           		PlantillaPartidas plantillaPartida = controladorMulti;
           		plantillaPartida.ventana = "menuPrincipal";
           		plantillaPartida.InicializarPartida();

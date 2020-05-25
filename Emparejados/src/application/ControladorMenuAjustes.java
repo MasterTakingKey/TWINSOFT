@@ -119,6 +119,10 @@ public class ControladorMenuAjustes {
 	private String musica7;
 	
 	private String musica8;
+	
+	private String musica9;
+	
+	private String musica10;
 
 
     public void iniciarMenuAjustes(Stage stage, ConfiguracionPartida nuevoSingleton){
@@ -147,6 +151,8 @@ public class ControladorMenuAjustes {
     	musica6 = "Dubstep song ";
     	musica7 = "Wii Main Theme";
     	musica8 = "Wii Sports Theme";
+    	musica9 = "GTA San Andreas Theme";
+    	musica10 = "Ataud meme Theme";
         thisStage = (Stage) aplicar.getScene().getWindow();
     }
     
@@ -160,7 +166,7 @@ public class ControladorMenuAjustes {
     public void cargaMusica(ChoiceBox<String> menu, int musica) { 
     	
     	menu.setItems(FXCollections.observableArrayList(
-    			musica1, musica2, musica3, musica4, musica5, musica6, musica7, musica8)
+    			musica1, musica2, musica3, musica4, musica5, musica6, musica7, musica8, musica9, musica10)
     		);
     	menu.setTooltip(new Tooltip("Selecciona la cancion que quieres para este menu"));
     	int select;
@@ -172,7 +178,9 @@ public class ControladorMenuAjustes {
     		case "Musica5": select = 4; break;
     		case "Musica6": select = 5; break;
     		case "Musica7": select = 6; break;
-    		default: select = 7;
+    		case "Musica8": select = 7; break;
+    		case "Musica9": select = 8; break;
+    		default: select = 9;
     		
     	}
     	menu.getSelectionModel().select(select);
@@ -453,8 +461,12 @@ public class ControladorMenuAjustes {
     		return "Musica6";
     	else if (musica7 == m)
     		return "Musica7";
-    	else
+    	else if (musica8 == m)
     		return "Musica8";
+    	else if (musica9 == m)
+    		return "Musica9";
+    	else
+    		return "Musica10";
 	}
      
     public Baraja deNombreABaraja() {

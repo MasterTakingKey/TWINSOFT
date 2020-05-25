@@ -3,10 +3,6 @@ package application;
 public abstract class PlantillaPartidas {
 	public String ventana;
 	
-	public void setVentana(String ventana) {
-		this.ventana = ventana;
-	}
-	
 	public final void  InicializarPartida(){
 		inicializarBaraja();
         inicializarTablero();

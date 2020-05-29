@@ -30,7 +30,7 @@ public class Puntuacion {
 	public boolean tieneTurno;
 	
 	public Puntuacion() {
-		error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
+		error = new AudioClip(getClass().getResource("/sonidos/Error1.mp3").toString());
 		timeline = new Timeline();
 		puntosCambiados = new SimpleBooleanProperty();
 		puntosCambiados.setValue(false);

@@ -109,7 +109,7 @@ public class ControladorMenuPause {
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[2] +".wav", 0L);
+        musicaFondo = new Musica("/sonidos/"+ singleton.listaMusica[2] +".wav", 0L);
         thisStage = (Stage) imageSound.getScene().getWindow();
         thisStage.setTitle("Menu de Pausa");
     }

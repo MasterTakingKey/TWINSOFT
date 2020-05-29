@@ -3,8 +3,6 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 

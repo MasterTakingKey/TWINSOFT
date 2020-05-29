@@ -2,10 +2,8 @@ package application;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,13 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import javafx.scene.input.MouseEvent;
-
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.control.ChoiceBox;
-
 import javafx.scene.layout.Pane;
 
 public class ControladorEditorBarajaBorrar {
@@ -124,8 +119,8 @@ public class ControladorEditorBarajaBorrar {
     			if(singleton.barajaPartida.nombre.equals(listadoBarajas.getSelectionModel().getSelectedItem())) {
     				singleton.barajaPartida = singleton.listaBarajas.get(0);
     			}
-    			
-    			File file = new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/"+singleton.listaBarajas.get(indice).getNombre());
+    			String path = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "TWINS" + File.separator + "barajasPersonalizadas" + File.separator;
+    			File file = new File(path+singleton.listaBarajas.get(indice).getNombre());
     			deleteDirectory(file);
     			iterator.remove();
     			listadoBarajas.getItems().remove(listadoBarajas.getSelectionModel().getSelectedIndex());

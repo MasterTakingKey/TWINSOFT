@@ -4,17 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-
 import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-
-	
+import javafx.embed.swing.JFXPanel;	
 
 class ControladorEditorBarajaParejasTest {
 	File f1 = new File("/imagenes/baraja_animales/dorso_aldeano.png");

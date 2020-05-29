@@ -2,9 +2,9 @@ package application;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -70,17 +70,26 @@ public class ControladorMenuPrincipal {
     String currentDirectory = System.getProperty("user.dir");
     
     Image imagen;
+    
     Carta carta;
     
+    File customDir;
+    
+    File nivelesFile;
+    
+    File estiloFile;
     
     private ArrayList<File> listaImagenes = new ArrayList<File>();
+    
+    boolean hayEstilo = false;
+    
+    boolean hayNiveles = false;
 
     public void iniciarMenuPrincipal(Stage stage, boolean primeraVez, ConfiguracionPartida nuevoSingleton, String ventanaAnterior){
         primaryStage = stage;
         if(primeraVez) { 
             inicializarSingleton();
-            File[] files = new File(currentDirectory + "/src/imagenes/barajasPersonalizadas/").listFiles();
-        	showFiles(files);
+            crearCarpeta();
         } else {
             singleton = nuevoSingleton;
         }
@@ -93,8 +102,41 @@ public class ControladorMenuPrincipal {
         
     }
     
-    public void showFiles(File[] files) { 
-        for (File file : files) {
+    public void crearCarpeta() {
+    	String path = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "TWINS" + File.separator + "barajasPersonalizadas" + File.separator;
+    	String pathNiveles = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "TWINS" + File.separator + "niveles.save";
+    	String pathEstilo = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "TWINS" + File.separator + "estilo.save";
+    	customDir = new File(path);
+    	nivelesFile = new File(pathNiveles);
+    	estiloFile = new File(pathEstilo);
+    	if(customDir.exists()) {
+    		showFiles();
+    		try {
+    	         this.singleton.nivelesDesbloqueados = (int) GuardarDatosPartida.load(pathNiveles);
+    	         hayNiveles = true;
+    	     }
+    	     catch (Exception e) {}
+    		 try {
+    	         this.singleton.estilo = (String) GuardarDatosPartida.load(pathEstilo);
+    	         hayEstilo = true;
+    	     }
+    	     catch (Exception e) {}
+    	} else {
+    		customDir.mkdirs();
+    		try {
+    			//nivelesFile.getParentFile().mkdirs(); 
+    			nivelesFile.createNewFile();
+    			//estiloFile.getParentFile().mkdirs(); 
+    			estiloFile.createNewFile();
+    		} catch(IOException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    
+    public void showFiles() {
+        File[] files = new File(customDir.getPath()).listFiles();
+    	for (File file : files) {
             if (file.isDirectory()) {           	
             	for(File archivo : file.listFiles()) {            		
             		listaImagenes.add(archivo);
@@ -209,26 +251,15 @@ public class ControladorMenuPrincipal {
     	singleton.efectosVisualesVoltear = "Giro";
     	singleton.efectosVisualesPareja = "Salto";
     	
-    	 try {
-             this.singleton.nivelesDesbloqueados = (int) GuardarDatosPartida.load("niveles.save");
-         }
-         catch (Exception e) {
-             singleton.nivelesDesbloqueados = 1;
-         }
-    	 
-    	 try {
-             this.singleton.estilo = (String) GuardarDatosPartida.load("estilo.save");
-         }
-         catch (Exception e) {
-             singleton.estilo = "Azul";
-         }
-
+    	if(!hayEstilo) singleton.estilo = "Azul";
+    		
+    	if(!hayNiveles)	singleton.nivelesDesbloqueados = 1;
 	}
     
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
+        musicaFondo = new Musica("/sonidos/"+ singleton.listaMusica[1] +".wav", 0L);
         thisStage = (Stage) anchorPane.getScene().getWindow();
     }
 

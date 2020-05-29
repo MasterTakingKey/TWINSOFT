@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -123,9 +124,9 @@ public class ControladorResultadoPartida {
 
 	public void inicializarVariables(String puntuacion, String tiempo) {
     	thisStage = (Stage) jugar.getScene().getWindow();
-        victoria = new AudioClip(getClass().getResource("/sonidos/victoria.mp3").toString());
+        victoria = new AudioClip(getClass().getResource("/sonidos/Victoria.mp3").toString());
         applauseSound = new AudioClip(getClass().getResource("/sonidos/applause.wav").toString());
-        derrota = new AudioClip(getClass().getResource("/sonidos/derrota1.mp3").toString());
+        derrota = new AudioClip(getClass().getResource("/sonidos/Derrota1.mp3").toString());
         explosion = new AudioClip(getClass().getResource("/sonidos/Explosion.wav").toString());
         puntuacionFinal.setText(puntuacionFinal.getText() + puntuacion);
         String minutos = tiempo.substring(0, tiempo.length() - 3);
@@ -301,7 +302,8 @@ public class ControladorResultadoPartida {
     		if(nivel == singleton.nivelesDesbloqueados) {
     			singleton.nivelesDesbloqueados++;
     			 try {
-    		            GuardarDatosPartida.save(singleton.nivelesDesbloqueados, "niveles.save");
+    				 	String pathNiveles = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "TWINS" + File.separator + "niveles.save";
+    		            GuardarDatosPartida.save(singleton.nivelesDesbloqueados, pathNiveles);
     		        }
     		     catch (Exception e) {}
     		}

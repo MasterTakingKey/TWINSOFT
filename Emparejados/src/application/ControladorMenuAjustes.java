@@ -1,10 +1,9 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -142,7 +141,7 @@ public class ControladorMenuAjustes {
     public void inicializarVariables() {
     	Sound0 = new Image("/imagenes/sonido_off.png");
         Sound1 = new Image("/imagenes/sonido_on.png");
-        musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[2] +".wav", 0L);
+        musicaFondo = new Musica("/sonidos/"+ singleton.listaMusica[2] +".wav", 0L);
         musica1 = "Main Theme";
         musica2 = "Tema Tranquilo";
         musica3 = "Tema Hipster";
@@ -352,7 +351,8 @@ public class ControladorMenuAjustes {
 	            actualizaMusicas();
 	            singleton.estilo = tema.getSelectionModel().getSelectedItem();
 	            try {
-		            GuardarDatosPartida.save(singleton.estilo, "estilo.save");
+	            	String pathEstilo = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "TWINS" + File.separator + "estilo.save";
+		            GuardarDatosPartida.save(singleton.estilo, pathEstilo);
 		        }
 	            catch (Exception e) {}
 	            singleton.barajaPartida = deNombreABaraja();

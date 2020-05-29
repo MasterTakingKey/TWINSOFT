@@ -318,7 +318,7 @@ public class ControladorPartidaEstandar extends PlantillaPartidas {
    	esVictoria = false;
    	esDerrota = false;
    	parejasFalladas = new ArrayList<Carta>(tableroPartida.getNumParejas());
-   	musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[0] +".wav", 0L);
+   	musicaFondo = new Musica("/sonidos/"+ singleton.listaMusica[0] +".wav", 0L);
    	Sound0 = new Image("/imagenes/sonido_off_2.png");
        Sound1 = new Image("/imagenes/sonido_on_2.png");
        puntosAnyadidos.setVisible(false);
@@ -327,10 +327,10 @@ public class ControladorPartidaEstandar extends PlantillaPartidas {
    
    @Override
    void inicializarAudioClips() {
-   	voltearCarta = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosVoltear + ".mp3").toString());
-       error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
+   	   voltearCarta = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosVoltear + ".mp3").toString());
+       error = new AudioClip(getClass().getResource("/sonidos/Error1.mp3").toString());
        acierto = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosPareja + ".mp3").toString());
-       mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
+       mismaCarta = new AudioClip(getClass().getResource("/sonidos/Error2.mp3").toString());
    }
    
    @Override
@@ -764,10 +764,10 @@ public class ControladorPartidaEstandar extends PlantillaPartidas {
     
     @Override
     void actualizarEstilo() {
-    	String tema1 = getClass().getResource("estilo1.css").toExternalForm();
-    	String temaBosque = getClass().getResource("estiloBosque.css").toExternalForm();
-        String temaCielo = getClass().getResource("estiloCielo.css").toExternalForm();
-        String temaAgua = getClass().getResource("estiloAgua.css").toExternalForm();
+    	String tema1 = getClass().getResource("/application/estilo1.css").toExternalForm();
+    	String temaBosque = getClass().getResource("/application/estiloBosque.css").toExternalForm();
+        String temaCielo = getClass().getResource("/application/estiloCielo.css").toExternalForm();
+        String temaAgua = getClass().getResource("/application/estiloAgua.css").toExternalForm();
     	if(nivel == 1 || nivel == 2) {
     		tablero.getStylesheets().remove(tema1);
     		tablero.getStylesheets().remove(temaCielo);

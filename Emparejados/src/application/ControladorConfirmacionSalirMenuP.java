@@ -59,13 +59,13 @@ public class ControladorConfirmacionSalirMenuP {
     
     @FXML
     void aceptarHandler(ActionEvent event) {
-    	if(tipoPartida.equals("UnJugador")) {
-            menuPausa.volverMenuPrincipal();
-            thisStage.close();
-        } else if(tipoPartida.equals("Multijugador")) {
-            menuPausaMulti.volverMenuPrincipal();
-            thisStage.close();
-        }
+            	if(tipoPartida.equals("UnJugador")) {
+            		menuPausa.volverMenuPrincipal();
+            		thisStage.close();
+            	} else if(tipoPartida.equals("Multijugador")) {
+            		menuPausaMulti.volverMenuPrincipal();
+            		thisStage.close();
+            	}
     }
 
     @FXML

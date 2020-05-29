@@ -8,7 +8,7 @@ public class EstrategiaEstiloAzul extends EstrategiaEstilos {
 
 	@Override
 	public void actualizarEstilo(Pane pane, AnchorPane anchorPane, StackPane circuloSonido) {
-		String temaAzul = getClass().getResource("estiloAzul.css").toExternalForm();
+		String temaAzul = getClass().getResource("/application/estiloAzul.css").toExternalForm();
         if(pane != null) {
     		pane.getStylesheets().add(temaAzul);
         }

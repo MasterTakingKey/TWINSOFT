@@ -1,6 +1,7 @@
 package application;
 
-import java.io.File;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -12,9 +13,10 @@ public class Musica {
 	long tiempoMusica;
 	
 	public Musica(String musicPath, long tiempoMusica) {
-    	File musicFile = new File(musicPath);
+		InputStream is= getClass().getResourceAsStream(musicPath);
+		InputStream buffer = new BufferedInputStream(is);
     	try {
-    		AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicFile);
+    		AudioInputStream audioInput = AudioSystem.getAudioInputStream(buffer);
     		clip = AudioSystem.getClip();
     		clip.open(audioInput);
     		clip.setMicrosecondPosition(tiempoMusica);

@@ -2,7 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -21,7 +20,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -342,7 +340,7 @@ public class ControladorMultijugador extends PlantillaPartidas{
    	esVictoria = false;
    	esDerrota = false;
    	parejasFalladas = new ArrayList<Carta>(tableroPartida.getNumParejas());
-   	musicaFondo = new Musica("src/sonidos/"+ singleton.listaMusica[0] +".wav", 0L);
+   	musicaFondo = new Musica("/sonidos/"+ singleton.listaMusica[0] +".wav", 0L);
    	Sound0 = new Image("/imagenes/sonido_off_2.png");
        Sound1 = new Image("/imagenes/sonido_on_2.png");
        puntosAnyadidos.setVisible(false);
@@ -354,9 +352,9 @@ public class ControladorMultijugador extends PlantillaPartidas{
    @Override
    public void inicializarAudioClips() {
    	voltearCarta = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosVoltear + ".mp3").toString());
-       error = new AudioClip(getClass().getResource("/sonidos/error1.mp3").toString());
+       error = new AudioClip(getClass().getResource("/sonidos/Error1.mp3").toString());
        acierto = new AudioClip(getClass().getResource("/sonidos/" + singleton.efectosSonorosPareja + ".mp3").toString());
-       mismaCarta = new AudioClip(getClass().getResource("/sonidos/error2.mp3").toString());
+       mismaCarta = new AudioClip(getClass().getResource("/sonidos/Error2.mp3").toString());
    }
    
    @Override
@@ -857,7 +855,7 @@ public class ControladorMultijugador extends PlantillaPartidas{
     
     @Override
     public void actualizarEstilo() {
-    	String tema1 = getClass().getResource("estilo1.css").toExternalForm();
+    	String tema1 = getClass().getResource("/application/estilo1.css").toExternalForm();
         tablero.getStylesheets().add(tema1);
     }
     
